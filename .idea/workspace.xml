@@ -3,7 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="5c69ee5f-b6f0-4947-a093-1e0c69dbe395" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/config-repo/eureka-server.properties" beforeDir="false" afterPath="$PROJECT_DIR$/config-repo/dev/eureka-server.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/config-repo/dev/eureka-server.properties" beforeDir="false" afterPath="$PROJECT_DIR$/config-repo/eureka-server/eureka-server.properties" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/config-server/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/config-server/src/main/resources/application.properties" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
