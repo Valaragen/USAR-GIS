@@ -4,5 +4,7 @@
     <file url="file://$PROJECT_DIR$/config-server" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/eureka-server" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/gateway-server" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/usargis-api" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/web-ui" charset="UTF-8" />
   </component>
 </project>

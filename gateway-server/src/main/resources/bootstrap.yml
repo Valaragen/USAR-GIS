@@ -1,0 +1,38 @@
+spring:
+  application:
+    name: gateway-server
+  security:
+    user:
+      name: gatewayConnect
+      password: gatewayConnect5684Password
+  cloud:
+    config:
+      discovery:
+        service-id: config-server
+        enabled: true
+      username: configConnect
+      password: configConnect7584Password
+      fail-fast: true
+
+      ###### GATEWAY ######
+    gateway:
+      discovery:
+        locator:
+          enabled: true
+
+      routes:
+        - id: usargis-api
+          uri: lb://USARGIS-API
+          predicates:
+            - Path=/api/**
+    loadbalancer:
+      ribbon:
+        enabled: false
+
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:9102/eureka/
+
+
