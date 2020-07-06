@@ -1,0 +1,10 @@
+{
+  "realm": "USAR-GIS",
+  "auth-server-url": "http://localhost:8180/auth/",
+  "ssl-required": "external",
+  "resource": "web-ui",
+  "credentials": {
+    "secret": "8f5f6aec-ac03-4bf3-b9dd-bad50a478536"
+  },
+  "confidential-port": 0
+}

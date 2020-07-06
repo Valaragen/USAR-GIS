@@ -2,20 +2,37 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="5c69ee5f-b6f0-4947-a093-1e0c69dbe395" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/encodings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/usargis-api/src/main/java/com/usargis/usargisapi/config/SpringKeycloakSecurityConfiguration.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/usargis-api/src/test/java/com/usargis/usargisapi/SpringKeycloakSecurityTest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/usargis-api/src/test/java/com/usargis/usargisapi/controller/TestController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web-ui/src/main/java/com/usargis/webui/config/SpringKeycloakSecurityConfiguration.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web-ui/src/main/resources/keycloak.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/config-server/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/config-server/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/eureka-server/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/eureka-server/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gateway-server/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/gateway-server/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/usargis-api/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/usargis-api/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/usargis-api/src/main/java/com/usargis/usargisapi/web/controller/TestController.java" beforeDir="false" afterPath="$PROJECT_DIR$/usargis-api/src/main/java/com/usargis/usargisapi/web/controller/Controller.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/usargis-api/src/main/resources/bootstrap.properties" beforeDir="false" afterPath="$PROJECT_DIR$/usargis-api/src/main/resources/bootstrap.properties" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/web-ui/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/web-ui/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/web-ui/src/main/resources/bootstrap.properties" beforeDir="false" afterPath="$PROJECT_DIR$/web-ui/src/main/resources/bootstrap.properties" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="DatabaseView">
+    <option name="SHOW_INTERMEDIATE" value="true" />
+    <option name="GROUP_DATA_SOURCES" value="true" />
+    <option name="GROUP_SCHEMA" value="true" />
+    <option name="GROUP_CONTENTS" value="false" />
+    <option name="SORT_POSITIONED" value="false" />
+    <option name="SHOW_EMPTY_GROUPS" value="false" />
+    <option name="AUTO_SCROLL_FROM_SOURCE" value="false" />
+    <option name="HIDDEN_KINDS">
+      <set />
+    </option>
+    <expand />
+    <select />
   </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
@@ -47,7 +64,7 @@
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/keycloak-10.0.2/modules/system/layers/keycloak/org" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/web-ui/src/main/resources/templates" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.tslint" value="true" />
     <property name="node.js.path.for.package.eslint" value="project" />
@@ -60,16 +77,22 @@
     <property name="settings.editor.selected.configurable" value="spring" />
   </component>
   <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\Openclassroom\12-\USAR-GIS\web-ui\src\main\resources\templates" />
+      <recent name="D:\Openclassroom\12-\USAR-GIS\keycloak-10.0.2\modules\system\layers\keycloak\org" />
+      <recent name="D:\Openclassroom\12-\USAR-GIS" />
+      <recent name="D:\Openclassroom\12-\USAR-GIS\config-repo\eureka-server" />
+    </key>
+    <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="com.usargis.webui.config" />
+      <recent name="com.usargis.usargisapi.controller" />
+    </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="D:\Openclassroom\12-\USAR-GIS\web-ui\src\main\resources" />
       <recent name="D:\Openclassroom\12-\USAR-GIS\keycloak-10.0.2\modules\system\layers\keycloak\org\postgresql\main" />
       <recent name="D:\Openclassroom\12-\USAR-GIS\config-repo" />
       <recent name="D:\Openclassroom\12-\USAR-GIS\config-repo\dev" />
       <recent name="D:\Openclassroom\12-\USAR-GIS" />
-    </key>
-    <key name="CopyFile.RECENT_KEYS">
-      <recent name="D:\Openclassroom\12-\USAR-GIS\keycloak-10.0.2\modules\system\layers\keycloak\org" />
-      <recent name="D:\Openclassroom\12-\USAR-GIS" />
-      <recent name="D:\Openclassroom\12-\USAR-GIS\config-repo\eureka-server" />
     </key>
   </component>
   <component name="RunDashboard">
@@ -89,14 +112,45 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Spring Boot.GatewayServerApplication">
+  <component name="RunManager" selected="Spring Boot.WebUiApplication">
     <configuration name="keycloak" type="BatchConfigurationType" factoryName="Batch">
       <module name="usar-gis" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/keycloak-10.0.2/bin" />
       <option name="PARENT_ENVS" value="true" />
       <option name="SCRIPT_NAME" value="standalone.bat" />
-      <option name="PARAMETERS" value="-Djboss.socket.binding.port-offset=-10" />
+      <option name="PARAMETERS" value="-Djboss.socket.binding.port-offset=100" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="SpringKeycloakSecurityTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="usargis-api" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.usargis.usargisapi.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="com.usargis.usargisapi" />
+      <option name="MAIN_CLASS_NAME" value="com.usargis.usargisapi.SpringKeycloakSecurityTest" />
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="SpringKeycloakSecurityTest.testUnsecuredPathIsAllowedForAll" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="usargis-api" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.usargis.usargisapi.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="com.usargis.usargisapi" />
+      <option name="MAIN_CLASS_NAME" value="com.usargis.usargisapi.SpringKeycloakSecurityTest" />
+      <option name="METHOD_NAME" value="testUnsecuredPathIsAllowedForAll" />
+      <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -143,7 +197,15 @@
       <item itemvalue="Spring Boot.GatewayServerApplication" />
       <item itemvalue="Spring Boot.UsargisApiApplication" />
       <item itemvalue="Spring Boot.WebUiApplication" />
+      <item itemvalue="JUnit.SpringKeycloakSecurityTest" />
+      <item itemvalue="JUnit.SpringKeycloakSecurityTest.testUnsecuredPathIsAllowedForAll" />
     </list>
+    <recent_temporary>
+      <list>
+        <item itemvalue="JUnit.SpringKeycloakSecurityTest" />
+        <item itemvalue="JUnit.SpringKeycloakSecurityTest.testUnsecuredPathIsAllowedForAll" />
+      </list>
+    </recent_temporary>
   </component>
   <component name="ServiceViewManager">
     <option name="allServicesViewState">
@@ -153,6 +215,11 @@
             <path>
               <item name="services root" type="e789fda9:ObjectUtils$Sentinel" />
               <item name="com.intellij.execution.services.ServiceModel$ServiceGroupNode@6aa15767" type="7427dc5b:ServiceModel$ServiceGroupNode" />
+            </path>
+            <path>
+              <item name="services root" type="e789fda9:ObjectUtils$Sentinel" />
+              <item name="com.intellij.execution.services.ServiceModel$ServiceGroupNode@6aa15767" type="7427dc5b:ServiceModel$ServiceGroupNode" />
+              <item name="com.intellij.execution.services.ServiceModel$ServiceGroupNode@edf273e3" type="7427dc5b:ServiceModel$ServiceGroupNode" />
             </path>
             <path>
               <item name="services root" type="e789fda9:ObjectUtils$Sentinel" />
@@ -184,7 +251,7 @@
       <workItem from="1593777949076" duration="15838000" />
       <workItem from="1593874219679" duration="13354000" />
       <workItem from="1593964537774" duration="2261000" />
-      <workItem from="1594026406972" duration="3879000" />
+      <workItem from="1594026406972" duration="24734000" />
     </task>
     <servers />
   </component>
