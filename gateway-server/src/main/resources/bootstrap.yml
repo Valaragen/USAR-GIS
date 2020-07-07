@@ -10,8 +10,8 @@ spring:
       discovery:
         service-id: config-server
         enabled: true
-      username: configConnect
-      password: configConnect7584Password
+      username: ${CONFIG_USERNAME}
+      password: ${CONFIG_PASSWORD}
       fail-fast: true
 
       ###### GATEWAY ######

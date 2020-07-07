@@ -3,8 +3,17 @@
   <component name="ChangeListManager">
     <list default="true" id="5c69ee5f-b6f0-4947-a093-1e0c69dbe395" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/config-server/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/config-server/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/config-server/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/config-server/src/main/resources/application.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/eureka-server/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/eureka-server/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/eureka-server/src/main/resources/bootstrap.properties" beforeDir="false" afterPath="$PROJECT_DIR$/eureka-server/src/main/resources/bootstrap.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gateway-server/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/gateway-server/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gateway-server/src/main/resources/bootstrap.yml" beforeDir="false" afterPath="$PROJECT_DIR$/gateway-server/src/main/resources/bootstrap.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/usargis-api/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/usargis-api/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/usargis-api/src/main/resources/bootstrap.properties" beforeDir="false" afterPath="$PROJECT_DIR$/usargis-api/src/main/resources/bootstrap.properties" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/web-ui/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/web-ui/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/web-ui/src/main/java/com/usargis/webui/config/SpringKeycloakSecurityConfiguration.java" beforeDir="false" afterPath="$PROJECT_DIR$/web-ui/src/main/java/com/usargis/webui/config/SpringKeycloakSecurityConfiguration.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/web-ui/src/main/resources/bootstrap.properties" beforeDir="false" afterPath="$PROJECT_DIR$/web-ui/src/main/resources/bootstrap.properties" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -49,6 +58,7 @@
   </component>
   <component name="PropertiesComponent">
     <property name="ASKED_ADD_EXTERNAL_FILES" value="true" />
+    <property name="ExpandSpringBootJavaOptionsPanel" value="true" />
     <property name="RequestMappingsPanelOrder0" value="0" />
     <property name="RequestMappingsPanelOrder1" value="1" />
     <property name="RequestMappingsPanelWidth0" value="75" />
@@ -104,7 +114,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Spring Boot.WebUiApplication">
+  <component name="RunManager" selected="Spring Boot.GatewayServerApplication">
     <configuration name="keycloak" type="BatchConfigurationType" factoryName="Batch">
       <module name="usar-gis" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -150,6 +160,11 @@
     <configuration name="ConfigServerApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
       <module name="config-server" />
       <option name="SPRING_BOOT_MAIN_CLASS" value="com.usargis.configserver.ConfigServerApplication" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <envs>
+        <env name="CONFIG_USERNAME" value="configConnect" />
+        <env name="CONFIG_PASSWORD" value="configConnect7584Password" />
+      </envs>
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -157,6 +172,11 @@
     <configuration name="EurekaServerApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
       <module name="eureka-server" />
       <option name="SPRING_BOOT_MAIN_CLASS" value="com.usargis.eurekaserver.EurekaServerApplication" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <envs>
+        <env name="CONFIG_USERNAME" value="configConnect" />
+        <env name="CONFIG_PASSWORD" value="configConnect7584Password" />
+      </envs>
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -164,6 +184,11 @@
     <configuration name="GatewayServerApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
       <module name="gateway-server" />
       <option name="SPRING_BOOT_MAIN_CLASS" value="com.usargis.gatewayserver.GatewayServerApplication" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <envs>
+        <env name="CONFIG_USERNAME" value="configConnect" />
+        <env name="CONFIG_PASSWORD" value="configConnect7584Password" />
+      </envs>
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -171,6 +196,11 @@
     <configuration name="UsargisApiApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
       <module name="usargis-api" />
       <option name="SPRING_BOOT_MAIN_CLASS" value="com.usargis.usargisapi.UsargisApiApplication" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <envs>
+        <env name="CONFIG_USERNAME" value="configConnect" />
+        <env name="CONFIG_PASSWORD" value="configConnect7584Password" />
+      </envs>
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -178,19 +208,24 @@
     <configuration name="WebUiApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
       <module name="web-ui" />
       <option name="SPRING_BOOT_MAIN_CLASS" value="com.usargis.webui.WebUiApplication" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <envs>
+        <env name="CONFIG_USERNAME" value="configConnect" />
+        <env name="CONFIG_PASSWORD" value="configConnect7584Password" />
+      </envs>
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
     <list>
       <item itemvalue="Batch.keycloak" />
+      <item itemvalue="JUnit.SpringKeycloakSecurityTest" />
+      <item itemvalue="JUnit.SpringKeycloakSecurityTest.testUnsecuredPathIsAllowedForAll" />
       <item itemvalue="Spring Boot.ConfigServerApplication" />
       <item itemvalue="Spring Boot.EurekaServerApplication" />
       <item itemvalue="Spring Boot.GatewayServerApplication" />
       <item itemvalue="Spring Boot.UsargisApiApplication" />
       <item itemvalue="Spring Boot.WebUiApplication" />
-      <item itemvalue="JUnit.SpringKeycloakSecurityTest" />
-      <item itemvalue="JUnit.SpringKeycloakSecurityTest.testUnsecuredPathIsAllowedForAll" />
     </list>
     <recent_temporary>
       <list>
@@ -206,12 +241,17 @@
           <expand>
             <path>
               <item name="services root" type="e789fda9:ObjectUtils$Sentinel" />
-              <item name="com.intellij.execution.services.ServiceModel$ServiceGroupNode@6aa15767" type="7427dc5b:ServiceModel$ServiceGroupNode" />
+              <item name="com.intellij.execution.services.ServiceModel$ServiceGroupNode@c6759294" type="7427dc5b:ServiceModel$ServiceGroupNode" />
             </path>
             <path>
               <item name="services root" type="e789fda9:ObjectUtils$Sentinel" />
-              <item name="com.intellij.execution.services.ServiceModel$ServiceGroupNode@6aa15767" type="7427dc5b:ServiceModel$ServiceGroupNode" />
-              <item name="com.intellij.execution.services.ServiceModel$ServiceGroupNode@6cd468b7" type="7427dc5b:ServiceModel$ServiceGroupNode" />
+              <item name="com.intellij.execution.services.ServiceModel$ServiceGroupNode@c6759294" type="7427dc5b:ServiceModel$ServiceGroupNode" />
+              <item name="com.intellij.execution.services.ServiceModel$ServiceGroupNode@4a10a718" type="7427dc5b:ServiceModel$ServiceGroupNode" />
+            </path>
+            <path>
+              <item name="services root" type="e789fda9:ObjectUtils$Sentinel" />
+              <item name="com.intellij.execution.services.ServiceModel$ServiceGroupNode@c6759294" type="7427dc5b:ServiceModel$ServiceGroupNode" />
+              <item name="com.intellij.execution.services.ServiceModel$ServiceGroupNode@8a0f912b" type="7427dc5b:ServiceModel$ServiceGroupNode" />
             </path>
           </expand>
           <select />
@@ -238,7 +278,8 @@
       <workItem from="1593777949076" duration="15838000" />
       <workItem from="1593874219679" duration="13354000" />
       <workItem from="1593964537774" duration="2261000" />
-      <workItem from="1594026406972" duration="26622000" />
+      <workItem from="1594026406972" duration="26690000" />
+      <workItem from="1594125095242" duration="6774000" />
     </task>
     <servers />
   </component>
