@@ -2,17 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="5c69ee5f-b6f0-4947-a093-1e0c69dbe395" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/usargis-api/src/main/java/com/usargis/usargisapi/config/SpringKeycloakSecurityConfiguration.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/usargis-api/src/test/java/com/usargis/usargisapi/SpringKeycloakSecurityTest.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/usargis-api/src/test/java/com/usargis/usargisapi/controller/TestController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/web-ui/src/main/java/com/usargis/webui/config/SpringKeycloakSecurityConfiguration.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/web-ui/src/main/resources/keycloak.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/usargis-api/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/usargis-api/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/usargis-api/src/main/java/com/usargis/usargisapi/web/controller/TestController.java" beforeDir="false" afterPath="$PROJECT_DIR$/usargis-api/src/main/java/com/usargis/usargisapi/web/controller/Controller.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/usargis-api/src/main/resources/bootstrap.properties" beforeDir="false" afterPath="$PROJECT_DIR$/usargis-api/src/main/resources/bootstrap.properties" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/web-ui/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/web-ui/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/web-ui/src/main/resources/bootstrap.properties" beforeDir="false" afterPath="$PROJECT_DIR$/web-ui/src/main/resources/bootstrap.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/web-ui/src/main/java/com/usargis/webui/config/SpringKeycloakSecurityConfiguration.java" beforeDir="false" afterPath="$PROJECT_DIR$/web-ui/src/main/java/com/usargis/webui/config/SpringKeycloakSecurityConfiguration.java" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -219,11 +211,6 @@
             <path>
               <item name="services root" type="e789fda9:ObjectUtils$Sentinel" />
               <item name="com.intellij.execution.services.ServiceModel$ServiceGroupNode@6aa15767" type="7427dc5b:ServiceModel$ServiceGroupNode" />
-              <item name="com.intellij.execution.services.ServiceModel$ServiceGroupNode@edf273e3" type="7427dc5b:ServiceModel$ServiceGroupNode" />
-            </path>
-            <path>
-              <item name="services root" type="e789fda9:ObjectUtils$Sentinel" />
-              <item name="com.intellij.execution.services.ServiceModel$ServiceGroupNode@6aa15767" type="7427dc5b:ServiceModel$ServiceGroupNode" />
               <item name="com.intellij.execution.services.ServiceModel$ServiceGroupNode@6cd468b7" type="7427dc5b:ServiceModel$ServiceGroupNode" />
             </path>
           </expand>
@@ -251,7 +238,7 @@
       <workItem from="1593777949076" duration="15838000" />
       <workItem from="1593874219679" duration="13354000" />
       <workItem from="1593964537774" duration="2261000" />
-      <workItem from="1594026406972" duration="24734000" />
+      <workItem from="1594026406972" duration="26622000" />
     </task>
     <servers />
   </component>

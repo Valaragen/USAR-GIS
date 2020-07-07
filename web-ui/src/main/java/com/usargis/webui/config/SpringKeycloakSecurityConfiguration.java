@@ -13,16 +13,12 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.core.authority.mapping.SimpleAuthorityMapper;
 import org.springframework.security.core.session.SessionRegistryImpl;
 import org.springframework.security.web.authentication.logout.LogoutFilter;
 import org.springframework.security.web.authentication.preauth.x509.X509AuthenticationFilter;
 import org.springframework.security.web.authentication.session.RegisterSessionAuthenticationStrategy;
 import org.springframework.security.web.authentication.session.SessionAuthenticationStrategy;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 
 public class SpringKeycloakSecurityConfiguration {
@@ -74,23 +70,19 @@ public class SpringKeycloakSecurityConfiguration {
                     // use previously declared bean
                     .sessionAuthenticationStrategy(sessionAuthenticationStrategy())
 
-
                     // keycloak filters for securisation
                     .and()
                     .addFilterBefore(keycloakPreAuthActionsFilter(), LogoutFilter.class)
                     .addFilterBefore(keycloakAuthenticationProcessingFilter(), X509AuthenticationFilter.class)
                     .exceptionHandling().authenticationEntryPoint(authenticationEntryPoint())
 
-
                     // delegate logout endpoint to spring security
 
                     .and()
                     .logout()
                     .addLogoutHandler(keycloakLogoutHandler())
-                    .logoutUrl("/logout").logoutSuccessHandler(
-                    // logout handler for API
-                    (HttpServletRequest request, HttpServletResponse response, Authentication authentication) ->
-                            response.setStatus(HttpServletResponse.SC_OK))
+                    .logoutUrl("/logout")
+                    .logoutSuccessUrl("/")
                     .and().apply(new CommonSpringKeycloakSecurityAdapter());
         }
     }
@@ -102,6 +94,9 @@ public class SpringKeycloakSecurityConfiguration {
             // any method that adds another configurer
             // must be done in the init method
             http
+                    // TODO CSRF
+                    .csrf().disable()
+
                     .authorizeRequests()
                     .mvcMatchers(HttpMethod.OPTIONS).permitAll()
                     .mvcMatchers("/logout", "/", "/unsecured").permitAll()
