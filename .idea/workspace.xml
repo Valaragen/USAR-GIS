@@ -2,18 +2,36 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="5c69ee5f-b6f0-4947-a093-1e0c69dbe395" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/usargis-api/src/main/java/com/usargis/usargisapi/model/Availability.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/usargis-api/src/main/java/com/usargis/usargisapi/model/Event.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/usargis-api/src/main/java/com/usargis/usargisapi/model/EventStatus.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/usargis-api/src/main/java/com/usargis/usargisapi/model/Group.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/usargis-api/src/main/java/com/usargis/usargisapi/model/Inscription.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/usargis-api/src/main/java/com/usargis/usargisapi/model/InscriptionStatus.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/usargis-api/src/main/java/com/usargis/usargisapi/model/Mission.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/usargis-api/src/main/java/com/usargis/usargisapi/model/MissionStatus.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/usargis-api/src/main/java/com/usargis/usargisapi/model/Notification.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/usargis-api/src/main/java/com/usargis/usargisapi/model/NotificationMessage.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/usargis-api/src/main/java/com/usargis/usargisapi/model/NotificationMessageContentType.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/usargis-api/src/main/java/com/usargis/usargisapi/model/NotificationMessageSendingMode.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/usargis-api/src/main/java/com/usargis/usargisapi/model/NotificationStatus.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/usargis-api/src/main/java/com/usargis/usargisapi/model/Team.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/usargis-api/src/main/java/com/usargis/usargisapi/model/TeamMember.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/usargis-api/src/main/java/com/usargis/usargisapi/model/UserInfo.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/usargis-api/src/main/java/com/usargis/usargisapi/model/common/ModelEntity.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/usargis-api/src/main/java/com/usargis/usargisapi/model/common/ModelEntityWithLongId.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/usargis-api/src/main/java/com/usargis/usargisapi/model/converter/EventStatusConverter.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/usargis-api/src/main/java/com/usargis/usargisapi/model/converter/MissionStatusConverter.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/usargis-api/src/main/java/com/usargis/usargisapi/model/converter/NotificationMessageContentTypeConverter.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/usargis-api/src/main/java/com/usargis/usargisapi/model/converter/NotificationMessageSendingModeConverter.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/usargis-api/src/main/java/com/usargis/usargisapi/model/converter/NotificationStatusConverter.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/usargis-api/src/main/java/com/usargis/usargisapi/model/embeddable/InscriptionId.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/usargis-api/src/main/java/com/usargis/usargisapi/model/embeddable/NotificationMessageId.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/usargis-api/src/main/java/com/usargis/usargisapi/model/embeddable/TeamMemberId.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/usargis-api/src/main/java/com/usargis/usargisapi/util/Constant.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/config-server/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/config-server/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/config-server/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/config-server/src/main/resources/application.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/eureka-server/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/eureka-server/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/eureka-server/src/main/resources/bootstrap.properties" beforeDir="false" afterPath="$PROJECT_DIR$/eureka-server/src/main/resources/bootstrap.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gateway-server/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/gateway-server/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gateway-server/src/main/resources/bootstrap.yml" beforeDir="false" afterPath="$PROJECT_DIR$/gateway-server/src/main/resources/bootstrap.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/usargis-api/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/usargis-api/pom.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/usargis-api/src/main/resources/bootstrap.properties" beforeDir="false" afterPath="$PROJECT_DIR$/usargis-api/src/main/resources/bootstrap.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/web-ui/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/web-ui/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/web-ui/src/main/resources/bootstrap.properties" beforeDir="false" afterPath="$PROJECT_DIR$/web-ui/src/main/resources/bootstrap.properties" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -32,12 +50,53 @@
     <option name="HIDDEN_KINDS">
       <set />
     </option>
-    <expand />
+    <expand>
+      <path>
+        <item name="Database" type="3277223f:DatabaseStructure$DbRootGroup" />
+        <item name="USARGIS_DB@localhost" type="feb32156:DbDataSourceImpl" />
+      </path>
+      <path>
+        <item name="Database" type="3277223f:DatabaseStructure$DbRootGroup" />
+        <item name="USARGIS_DB@localhost" type="feb32156:DbDataSourceImpl" />
+        <item name="databases" type="d4e8921:DatabaseStructure$FamilyGroup" />
+      </path>
+      <path>
+        <item name="Database" type="3277223f:DatabaseStructure$DbRootGroup" />
+        <item name="USARGIS_DB@localhost" type="feb32156:DbDataSourceImpl" />
+        <item name="databases" type="d4e8921:DatabaseStructure$FamilyGroup" />
+        <item name="USARGIS_DB: database" type="162271b6:PgImplModel$Database" />
+      </path>
+      <path>
+        <item name="Database" type="3277223f:DatabaseStructure$DbRootGroup" />
+        <item name="USARGIS_DB@localhost" type="feb32156:DbDataSourceImpl" />
+        <item name="databases" type="d4e8921:DatabaseStructure$FamilyGroup" />
+        <item name="USARGIS_DB: database" type="162271b6:PgImplModel$Database" />
+        <item name="schemas" type="d4e8921:DatabaseStructure$FamilyGroup" />
+      </path>
+      <path>
+        <item name="Database" type="3277223f:DatabaseStructure$DbRootGroup" />
+        <item name="USARGIS_DB@localhost" type="feb32156:DbDataSourceImpl" />
+        <item name="databases" type="d4e8921:DatabaseStructure$FamilyGroup" />
+        <item name="USARGIS_DB: database" type="162271b6:PgImplModel$Database" />
+        <item name="schemas" type="d4e8921:DatabaseStructure$FamilyGroup" />
+        <item name="public: schema" type="983ebcf7:PgImplModel$Schema" />
+      </path>
+      <path>
+        <item name="Database" type="3277223f:DatabaseStructure$DbRootGroup" />
+        <item name="USARGIS_DB@localhost" type="feb32156:DbDataSourceImpl" />
+        <item name="databases" type="d4e8921:DatabaseStructure$FamilyGroup" />
+        <item name="USARGIS_DB: database" type="162271b6:PgImplModel$Database" />
+        <item name="schemas" type="d4e8921:DatabaseStructure$FamilyGroup" />
+        <item name="public: schema" type="983ebcf7:PgImplModel$Schema" />
+        <item name="tables" type="d4e8921:DatabaseStructure$FamilyGroup" />
+      </path>
+    </expand>
     <select />
   </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
+        <option value="Enum" />
         <option value="Class" />
       </list>
     </option>
@@ -58,6 +117,7 @@
   </component>
   <component name="PropertiesComponent">
     <property name="ASKED_ADD_EXTERNAL_FILES" value="true" />
+    <property name="DatabaseDriversLRU" value="postgresql" />
     <property name="ExpandSpringBootJavaOptionsPanel" value="true" />
     <property name="RequestMappingsPanelOrder0" value="0" />
     <property name="RequestMappingsPanelOrder1" value="1" />
@@ -79,22 +139,28 @@
     <property name="settings.editor.selected.configurable" value="spring" />
   </component>
   <component name="RecentsManager">
-    <key name="CopyFile.RECENT_KEYS">
-      <recent name="D:\Openclassroom\12-\USAR-GIS\web-ui\src\main\resources\templates" />
-      <recent name="D:\Openclassroom\12-\USAR-GIS\keycloak-10.0.2\modules\system\layers\keycloak\org" />
-      <recent name="D:\Openclassroom\12-\USAR-GIS" />
-      <recent name="D:\Openclassroom\12-\USAR-GIS\config-repo\eureka-server" />
-    </key>
-    <key name="CopyClassDialog.RECENTS_KEY">
-      <recent name="com.usargis.webui.config" />
-      <recent name="com.usargis.usargisapi.controller" />
-    </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="D:\Openclassroom\12-\USAR-GIS\web-ui\src\main\resources" />
       <recent name="D:\Openclassroom\12-\USAR-GIS\keycloak-10.0.2\modules\system\layers\keycloak\org\postgresql\main" />
       <recent name="D:\Openclassroom\12-\USAR-GIS\config-repo" />
       <recent name="D:\Openclassroom\12-\USAR-GIS\config-repo\dev" />
       <recent name="D:\Openclassroom\12-\USAR-GIS" />
+    </key>
+    <key name="CreateClassDialog.RecentsKey">
+      <recent name="com.usargis.usargisapi.model" />
+    </key>
+    <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="com.usargis.usargisapi.model.embeddable" />
+      <recent name="com.usargis.usargisapi.model.converter" />
+      <recent name="com.usargis.usargisapi.model" />
+      <recent name="com.usargis.webui.config" />
+      <recent name="com.usargis.usargisapi.controller" />
+    </key>
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\Openclassroom\12-\USAR-GIS\web-ui\src\main\resources\templates" />
+      <recent name="D:\Openclassroom\12-\USAR-GIS\keycloak-10.0.2\modules\system\layers\keycloak\org" />
+      <recent name="D:\Openclassroom\12-\USAR-GIS" />
+      <recent name="D:\Openclassroom\12-\USAR-GIS\config-repo\eureka-server" />
     </key>
   </component>
   <component name="RunDashboard">
@@ -114,7 +180,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Spring Boot.GatewayServerApplication">
+  <component name="RunManager" selected="Spring Boot.UsargisApiApplication">
     <configuration name="keycloak" type="BatchConfigurationType" factoryName="Batch">
       <module name="usar-gis" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -130,7 +196,7 @@
       <module name="usargis-api" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="com.usargis.usargisapi.*" />
+          <option name="PATTERN" value="com.usargis.usargisapi.model.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
@@ -145,7 +211,7 @@
       <module name="usargis-api" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="com.usargis.usargisapi.*" />
+          <option name="PATTERN" value="com.usargis.usargisapi.model.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
@@ -200,6 +266,9 @@
       <envs>
         <env name="CONFIG_USERNAME" value="configConnect" />
         <env name="CONFIG_PASSWORD" value="configConnect7584Password" />
+        <env name="DB_NAME" value="USARGIS_DB" />
+        <env name="DB_USERNAME" value="postgres" />
+        <env name="DB_PASSWORD" value="admin" />
       </envs>
       <method v="2">
         <option name="Make" enabled="true" />
@@ -241,17 +310,21 @@
           <expand>
             <path>
               <item name="services root" type="e789fda9:ObjectUtils$Sentinel" />
-              <item name="com.intellij.execution.services.ServiceModel$ServiceGroupNode@c6759294" type="7427dc5b:ServiceModel$ServiceGroupNode" />
+              <item name="com.intellij.execution.services.ServiceModel$ServiceGroupNode@f2715a81" type="7427dc5b:ServiceModel$ServiceGroupNode" />
             </path>
             <path>
               <item name="services root" type="e789fda9:ObjectUtils$Sentinel" />
-              <item name="com.intellij.execution.services.ServiceModel$ServiceGroupNode@c6759294" type="7427dc5b:ServiceModel$ServiceGroupNode" />
-              <item name="com.intellij.execution.services.ServiceModel$ServiceGroupNode@4a10a718" type="7427dc5b:ServiceModel$ServiceGroupNode" />
+              <item name="com.intellij.execution.services.ServiceModel$ServiceGroupNode@f2715a81" type="7427dc5b:ServiceModel$ServiceGroupNode" />
+              <item name="com.intellij.execution.services.ServiceModel$ServiceGroupNode@87b201e2" type="7427dc5b:ServiceModel$ServiceGroupNode" />
             </path>
             <path>
               <item name="services root" type="e789fda9:ObjectUtils$Sentinel" />
-              <item name="com.intellij.execution.services.ServiceModel$ServiceGroupNode@c6759294" type="7427dc5b:ServiceModel$ServiceGroupNode" />
-              <item name="com.intellij.execution.services.ServiceModel$ServiceGroupNode@8a0f912b" type="7427dc5b:ServiceModel$ServiceGroupNode" />
+              <item name="com.intellij.execution.services.ServiceModel$ServiceGroupNode@8db3ff4e" type="7427dc5b:ServiceModel$ServiceGroupNode" />
+            </path>
+            <path>
+              <item name="services root" type="e789fda9:ObjectUtils$Sentinel" />
+              <item name="com.intellij.execution.services.ServiceModel$ServiceGroupNode@8db3ff4e" type="7427dc5b:ServiceModel$ServiceGroupNode" />
+              <item name="com.intellij.execution.services.ServiceModel$ServiceNode@382849e8" type="9fbbdea:ServiceModel$ServiceNode" />
             </path>
           </expand>
           <select />
@@ -279,7 +352,11 @@
       <workItem from="1593874219679" duration="13354000" />
       <workItem from="1593964537774" duration="2261000" />
       <workItem from="1594026406972" duration="26690000" />
-      <workItem from="1594125095242" duration="6774000" />
+      <workItem from="1594125095242" duration="12762000" />
+      <workItem from="1594196376653" duration="21251000" />
+      <workItem from="1594291364413" duration="14732000" />
+      <workItem from="1594368879934" duration="5876000" />
+      <workItem from="1594388766962" duration="10132000" />
     </task>
     <servers />
   </component>
