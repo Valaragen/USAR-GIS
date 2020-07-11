@@ -19,11 +19,11 @@ public class Notification extends ModelEntityWithLongId {
     private LocalDateTime sendingDate;
     private NotificationStatus status;
 
-    @ManyToOne
-    private UserInfo userInfo;
+    @ManyToOne(optional = false)
+    private UserInfo author;
 
     @JsonIgnoreProperties({"id.notification"})
-    @OneToMany(mappedBy = "id.notification")
+    @OneToMany(mappedBy = "id.notification", orphanRemoval = true)
     @ToString.Exclude
     @EqualsAndHashCode.Exclude
     private List<NotificationMessage> notificationMessages;

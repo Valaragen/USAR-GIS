@@ -3,6 +3,8 @@ package com.usargis.usargisapi.model;
 import com.usargis.usargisapi.model.common.ModelEntityWithLongId;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -15,6 +17,7 @@ import java.time.LocalDateTime;
 public class Event extends ModelEntityWithLongId {
     @Column(length = 100)
     private String name;
+    @Column(nullable = false)
     private EventStatus status;
     @Column(length = 5000)
     private String description;
@@ -26,7 +29,9 @@ public class Event extends ModelEntityWithLongId {
     private LocalDateTime inscriptionStartDate;
     private LocalDateTime inscriptionsEndDate;
 
+    @CreationTimestamp
     private LocalDateTime creationDate;
+    @UpdateTimestamp
     private LocalDateTime lastEditionDate;
     private String address;
 

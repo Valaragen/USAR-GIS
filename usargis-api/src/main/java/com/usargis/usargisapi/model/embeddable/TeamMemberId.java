@@ -15,8 +15,8 @@ import java.io.Serializable;
 @AllArgsConstructor
 @Embeddable
 public class TeamMemberId implements Serializable {
-    @ManyToOne
+    @ManyToOne(optional = false)
     private Team team;
-    @ManyToOne
+    @ManyToOne(optional = false)
     private UserInfo userInfo;
 }

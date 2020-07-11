@@ -19,11 +19,11 @@ public class Team extends ModelEntityWithLongId {
     @Column(length = 50)
     private String name;
 
-    @ManyToOne
+    @ManyToOne(optional = false)
     private Mission mission;
 
     @JsonIgnoreProperties({"id.team"})
-    @OneToMany(mappedBy = "id.team")
+    @OneToMany(mappedBy = "id.team", orphanRemoval = true)
     @ToString.Exclude
     @EqualsAndHashCode.Exclude
     private List<TeamMember> teamMembers;

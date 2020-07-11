@@ -16,8 +16,8 @@ import java.io.Serializable;
 @AllArgsConstructor
 @Embeddable
 public class InscriptionId implements Serializable {
-    @ManyToOne
+    @ManyToOne(optional = false)
     private UserInfo userInfo;
-    @ManyToOne
+    @ManyToOne(optional = false)
     private Event event;
 }
