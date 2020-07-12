@@ -1,19 +1,32 @@
 package com.usargis.usargisapi.util;
 
 public abstract class Constant {
-    //ROLES
+    //### ROLES ###
     public static final String MEMBER_ROLE = "MEMBER";
     public static final String LEADER_ROLE = "LEADER";
     public static final String ADMIN_ROLE = "ADMIN";
 
-    //PATH
+    //### PATH ###
     public static final Object SLASH = "/";
     public static final Object REDIRECT = "redirect:";
     public static final String SLASH_ID_PATH = "/{id}";
     public static final String SLASH_STRING_PATH = "/{string}";
     public static final String SLASH_NAME_PATH = "/{name}";
 
-    //STATUS
+    public static final String V1_PATH = "/v1";
+    public static final String AVAILABILITIES_PATH = "/availabilities";
+    public static final String EVENTS_PATH = "/events";
+    public static final String GROUPS_PATH = "/groups";
+    public static final String INSCRIPTIONS_PATH = "/inscriptions";
+    public static final String MISSIONS_PATH = "/missions";
+    public static final String NOTIFICATIONS_PATH = "/notifications";
+    public static final String NOTIFICATION_MESSAGES_PATH = "/notification-messages";
+    public static final String TEAMS_PATH = "/teams";
+    public static final String TEAM_MEMBERS_PATH = "/team-members";
+    public static final String USERS = "/users";
+
+
+    //### STATUS ###
     public static final String STATUS_PENDING_CODE = "PE";
     public static final String STATUS_PENDING = "pending";
     public static final String STATUS_PLANNED_CODE = "PL";
@@ -35,7 +48,7 @@ public abstract class Constant {
     public static final String STATUS_VALIDATED_CODE = "VA";
     public static final String STATUS_VALIDATED = "validated";
 
-    //NOTIFICATION MESSAGE SENDING MODE
+    //### NOTIFICATION MESSAGE SENDING MODE ###
     public static final String NMSM_APP_CODE = "A";
     public static final String NMSM_APP = "APP";
     public static final String NMSM_MAIL_CODE = "M";
@@ -43,7 +56,7 @@ public abstract class Constant {
     public static final String NMSM_PHONE_CODE = "P";
     public static final String NMSM_PHONE = "PHONE";
 
-    //NOTIFICATION MESSAGE SENDING TYPE
+    //### NOTIFICATION MESSAGE SENDING TYPE ###
     public static final String NMCT_HTML_CODE = "H";
     public static final String NMCT_HTML = "HTML";
     public static final String NMCT_TEXT_CODE = "T";

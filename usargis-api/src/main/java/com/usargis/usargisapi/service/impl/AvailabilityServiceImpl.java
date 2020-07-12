@@ -2,10 +2,18 @@ package com.usargis.usargisapi.service.impl;
 
 import com.usargis.usargisapi.model.Availability;
 import com.usargis.usargisapi.repository.AvailabilityRepository;
+import com.usargis.usargisapi.search.AvailabilitySearch;
 import com.usargis.usargisapi.service.contract.AvailabilityService;
+import com.usargis.usargisapi.util.ErrorConstant;
+import com.usargis.usargisapi.util.NullAwareBeanUtilsBean;
+import com.usargis.usargisapi.web.exception.NotFoundException;
+import org.apache.commons.beanutils.BeanUtilsBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.lang.reflect.InvocationTargetException;
+import java.text.MessageFormat;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -31,5 +39,20 @@ public class AvailabilityServiceImpl implements AvailabilityService {
     @Override
     public void delete(Availability availability) {
         availabilityRepository.delete(availability);
+    }
+
+    @Override
+    public List<Availability> searchAll(AvailabilitySearch availabilitySearch) {
+        return availabilityRepository.searchAll(availabilitySearch);
+    }
+
+    @Override
+    public Availability update(Long id, Availability availabilityDetails) throws InvocationTargetException, IllegalAccessException {
+        Availability currentAvailability = findById(id).orElseThrow(() -> new NotFoundException(MessageFormat.format(ErrorConstant.NO_AVAILABILITY_FOUND_FOR_ID, id)));
+        availabilityDetails.setId(null);
+        BeanUtilsBean notNull = new NullAwareBeanUtilsBean();
+        notNull.copyProperties(currentAvailability, availabilityDetails);
+
+        return save(currentAvailability);
     }
 }
