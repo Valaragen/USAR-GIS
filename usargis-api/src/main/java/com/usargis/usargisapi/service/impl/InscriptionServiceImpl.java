@@ -7,6 +7,7 @@ import com.usargis.usargisapi.service.contract.InscriptionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -17,6 +18,11 @@ public class InscriptionServiceImpl implements InscriptionService {
     @Autowired
     public InscriptionServiceImpl(InscriptionRepository inscriptionRepository) {
         this.inscriptionRepository = inscriptionRepository;
+    }
+
+    @Override
+    public List<Inscription> findAll() {
+        return inscriptionRepository.findAll();
     }
 
     @Override

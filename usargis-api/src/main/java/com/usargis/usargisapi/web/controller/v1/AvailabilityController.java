@@ -41,7 +41,7 @@ public class AvailabilityController {
     @GetMapping(Constant.AVAILABILITIES_PATH + Constant.SLASH_ID_PATH)
     public ResponseEntity<Availability> getAvailabilityById(@PathVariable Long id) {
         Optional<Availability> availability = availabilityService.findById(id);
-        Availability result = availability.orElseThrow(() -> new NotFoundException("No availability found"));
+        Availability result = availability.orElseThrow(() -> new NotFoundException(MessageFormat.format(ErrorConstant.NO_AVAILABILITY_FOUND_FOR_ID, id)));
         return new ResponseEntity<>(result, HttpStatus.FOUND);
     }
 

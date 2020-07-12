@@ -27,6 +27,11 @@ public class AvailabilityServiceImpl implements AvailabilityService {
     }
 
     @Override
+    public List<Availability> findAll() {
+        return availabilityRepository.findAll();
+    }
+
+    @Override
     public Optional<Availability> findById(Long id) {
         return availabilityRepository.findById(id);
     }
@@ -48,11 +53,11 @@ public class AvailabilityServiceImpl implements AvailabilityService {
 
     @Override
     public Availability update(Long id, Availability availabilityDetails) throws InvocationTargetException, IllegalAccessException {
-        Availability currentAvailability = findById(id).orElseThrow(() -> new NotFoundException(MessageFormat.format(ErrorConstant.NO_AVAILABILITY_FOUND_FOR_ID, id)));
+        Availability availability = findById(id).orElseThrow(() -> new NotFoundException(MessageFormat.format(ErrorConstant.NO_AVAILABILITY_FOUND_FOR_ID, id)));
         availabilityDetails.setId(null);
         BeanUtilsBean notNull = new NullAwareBeanUtilsBean();
-        notNull.copyProperties(currentAvailability, availabilityDetails);
+        notNull.copyProperties(availability, availabilityDetails);
 
-        return save(currentAvailability);
+        return save(availability);
     }
 }

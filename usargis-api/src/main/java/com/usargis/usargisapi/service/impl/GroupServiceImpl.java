@@ -6,6 +6,7 @@ import com.usargis.usargisapi.service.contract.GroupService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -16,6 +17,11 @@ public class GroupServiceImpl implements GroupService {
     @Autowired
     public GroupServiceImpl(GroupRepository groupRepository) {
         this.groupRepository = groupRepository;
+    }
+
+    @Override
+    public List<Group> findAll() {
+        return groupRepository.findAll();
     }
 
     @Override

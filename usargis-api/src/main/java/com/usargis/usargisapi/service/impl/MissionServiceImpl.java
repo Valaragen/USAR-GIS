@@ -6,6 +6,7 @@ import com.usargis.usargisapi.service.contract.MissionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -16,6 +17,11 @@ public class MissionServiceImpl implements MissionService {
     @Autowired
     public MissionServiceImpl(MissionRepository missionRepository) {
         this.missionRepository = missionRepository;
+    }
+
+    @Override
+    public List<Mission> findAll() {
+        return missionRepository.findAll();
     }
 
     @Override

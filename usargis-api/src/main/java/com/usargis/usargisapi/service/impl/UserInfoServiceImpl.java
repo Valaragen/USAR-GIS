@@ -5,6 +5,7 @@ import com.usargis.usargisapi.repository.UserInfoRepository;
 import com.usargis.usargisapi.service.contract.UserInfoService;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -14,6 +15,11 @@ public class UserInfoServiceImpl implements UserInfoService {
 
     public UserInfoServiceImpl(UserInfoRepository userInfoRepository) {
         this.userInfoRepository = userInfoRepository;
+    }
+
+    @Override
+    public List<UserInfo> findAll() {
+        return userInfoRepository.findAll();
     }
 
     @Override

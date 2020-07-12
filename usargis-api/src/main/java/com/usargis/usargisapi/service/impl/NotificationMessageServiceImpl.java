@@ -7,6 +7,7 @@ import com.usargis.usargisapi.service.contract.NotificationMessageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -17,6 +18,11 @@ public class NotificationMessageServiceImpl implements NotificationMessageServic
     @Autowired
     public NotificationMessageServiceImpl(NotificationMessageRepository notificationMessageRepository) {
         this.notificationMessageRepository = notificationMessageRepository;
+    }
+
+    @Override
+    public List<NotificationMessage> findAll() {
+        return notificationMessageRepository.findAll();
     }
 
     @Override

@@ -7,6 +7,7 @@ import com.usargis.usargisapi.service.contract.TeamMemberService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -17,6 +18,11 @@ public class TeamMemberServiceImpl implements TeamMemberService {
     @Autowired
     public TeamMemberServiceImpl(TeamMemberRepository teamMemberRepository) {
         this.teamMemberRepository = teamMemberRepository;
+    }
+
+    @Override
+    public List<TeamMember> findAll() {
+        return teamMemberRepository.findAll();
     }
 
     @Override

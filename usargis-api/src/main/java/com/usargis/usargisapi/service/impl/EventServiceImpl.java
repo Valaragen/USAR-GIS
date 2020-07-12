@@ -6,6 +6,7 @@ import com.usargis.usargisapi.service.contract.EventService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -16,6 +17,11 @@ public class EventServiceImpl implements EventService {
     @Autowired
     public EventServiceImpl(EventRepository eventRepository) {
         this.eventRepository = eventRepository;
+    }
+
+    @Override
+    public List<Event> findAll() {
+        return eventRepository.findAll();
     }
 
     @Override
@@ -32,4 +38,6 @@ public class EventServiceImpl implements EventService {
     public void delete(Event event) {
         eventRepository.delete(event);
     }
+
+
 }
