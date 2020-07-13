@@ -4,14 +4,14 @@ spring:
   security:
     user:
       name: gatewayConnect
-      password: gatewayConnect5684Password
+      password: ENC(1mXg1SYmDc8jM+WGWcLagUPIPbw+yl4hDG0dx3kuJQGTqg2MgA0JSVU8hIV8AyJAz8cSKiwF8X2FZEGBLR/HuQ==)
   cloud:
     config:
       discovery:
         service-id: config-server
         enabled: true
-      username: ${CONFIG_USERNAME}
-      password: ${CONFIG_PASSWORD}
+      username: configConnect
+      password: ENC(nYw+gQ3Ie+vv9tdrT4QgXCbI/GdvxilZhv1Cbc7PesZx8DBhdwNbY1ZIXNhTGCqA343MLtlH1XHmpgu4/9ixAg==)
       fail-fast: true
 
       ###### GATEWAY ######
@@ -35,4 +35,6 @@ eureka:
     service-url:
       defaultZone: http://localhost:9102/eureka/
 
-
+jasypt:
+  encryptor:
+    password: dev-secret

@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 import javax.persistence.*;
+import java.util.HashSet;
 import java.util.Set;
 
 @EqualsAndHashCode(callSuper = true)
@@ -22,5 +23,5 @@ public class NotificationMessage extends ModelEntity {
     @ElementCollection
     @CollectionTable(name = "notification_message_sending_modes", joinColumns = {@JoinColumn(name = "notification_message_notification_id"), @JoinColumn(name = "notification_message_notification_message_content_type")})
     @Column(name = "notification_message_sending_mode")
-    private Set<NotificationMessageSendingMode> sendingModes;
+    private Set<NotificationMessageSendingMode> sendingModes = new HashSet<>();
 }

@@ -10,6 +10,7 @@ import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @EqualsAndHashCode(callSuper = true)
@@ -26,5 +27,5 @@ public class Notification extends ModelEntityWithLongId {
     @OneToMany(mappedBy = "id.notification", orphanRemoval = true)
     @ToString.Exclude
     @EqualsAndHashCode.Exclude
-    private List<NotificationMessage> notificationMessages;
+    private List<NotificationMessage> notificationMessages = new ArrayList<>();
 }

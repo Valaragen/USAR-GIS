@@ -7,6 +7,8 @@ import lombok.EqualsAndHashCode;
 import lombok.ToString;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -15,7 +17,7 @@ import java.util.Set;
 @Entity
 public class UserInfo extends ModelEntity {
     @Id
-    public String UUID;
+    private String UUID;
 
     @Column(nullable = false)
     private String username;
@@ -37,8 +39,8 @@ public class UserInfo extends ModelEntity {
     @OneToMany(mappedBy = "id.userInfo", orphanRemoval = true)
     @ToString.Exclude
     @EqualsAndHashCode.Exclude
-    private List<TeamMember> inTeams;
+    private List<TeamMember> inTeams = new ArrayList<>();
 
     @ManyToMany(mappedBy = "users")
-    private Set<Group> groups;
+    private Set<Group> groups = new HashSet<>();
 }
