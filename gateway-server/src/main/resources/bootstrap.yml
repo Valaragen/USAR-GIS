@@ -15,35 +15,32 @@ spring:
       discovery:
         locator:
           enabled: true
-      default-filters:
-        - TokenRelay
+      ### ROUTES ###
       routes:
         - id: usargis-api
           uri: lb://USARGIS-API
           predicates:
-            - Path=/api/**
+            - Path=/usargis-api/**
+          filters:
+            - RewritePath=/usargis-api(?<segment>/?.*), /$\{segment}
+            - RemoveRequestHeader=Cookie
     loadbalancer:
       ribbon:
         enabled: false
-  ### KEYCLOAK ###
+
+
   security:
     oauth2:
-      client:
-        provider:
-          keycloak:
-            issuer-uri: http://localhost:8180/auth/realms/USAR-GIS
-            authorization-uri: http://localhost:8180/auth/realms/USAR-GIS/protocol/openid-connect/auth
-            token-uri: http://localhost:8180/auth/realms/USAR-GIS/protocol/openid-connect/token
-            user-info-uri: http://localhost:8180/auth/realms/USAR-GIS/protocol/openid-connect/userinfo
-            jwk-set-uri: http://localhost:8180/auth/realms/USAR-GIS/protocol/openid-connect/certs
-            user-name-attribute: preferred_username
-
-
+      resourceserver:
+        jwt:
+          issuer-uri: http://localhost:8180/auth/realms/USAR-GIS
+          jwk-set-uri: http://localhost:8180/auth/realms/USAR-GIS/protocol/openid-connect/certs
 
 eureka:
   client:
     service-url:
       defaultZone: http://localhost:9102/eureka/
+
 
 jasypt:
   encryptor:
