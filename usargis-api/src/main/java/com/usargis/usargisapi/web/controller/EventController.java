@@ -1,4 +1,4 @@
-package com.usargis.usargisapi.web.controller.v1;
+package com.usargis.usargisapi.web.controller;
 
 import com.usargis.usargisapi.model.Event;
 import com.usargis.usargisapi.service.contract.EventService;
@@ -8,14 +8,15 @@ import com.usargis.usargisapi.web.exception.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.text.MessageFormat;
 import java.util.List;
 import java.util.Optional;
 
+@PreAuthorize("hasRole('" + Constant.ADMIN_ROLE + "')")
 @RestController
-@RequestMapping(Constant.V1_PATH)
 public class EventController {
 
     private EventService eventService;
@@ -31,14 +32,14 @@ public class EventController {
         if (events.isEmpty()) {
             throw new NotFoundException(ErrorConstant.NO_EVENTS_FOUND);
         }
-        return new ResponseEntity<>(events, HttpStatus.FOUND);
+        return new ResponseEntity<>(events, HttpStatus.OK);
     }
 
     @GetMapping(Constant.EVENTS_PATH + Constant.SLASH_ID_PATH)
     public ResponseEntity<Event> getEventById(@PathVariable Long id) {
         Optional<Event> event = eventService.findById(id);
         Event result = event.orElseThrow(() -> new NotFoundException(MessageFormat.format(ErrorConstant.NO_EVENT_FOUND_FOR_ID, id)));
-        return new ResponseEntity<>(result, HttpStatus.FOUND);
+        return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
     @PostMapping(Constant.EVENTS_PATH)

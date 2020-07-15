@@ -12,6 +12,8 @@ import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.Authentication;
@@ -112,6 +114,17 @@ public class SpringKeycloakSecurityConfiguration {
         }
     }
 
+    @EnableWebSecurity
+    @EnableGlobalMethodSecurity(prePostEnabled = true)
+    @ConditionalOnProperty(name = "keycloak.enabled", havingValue = "false")
+    static class noKeycloakConfigurationAdapter extends WebSecurityConfigurerAdapter {
+        @Override
+        protected void configure(HttpSecurity http) throws Exception {
+            // use the common configuration to validate matchers
+            http.apply(new SpringKeycloakSecurityConfiguration.CommonSpringKeycloakSecurityAdapter());
+        }
+    }
+
     public static class CommonSpringKeycloakSecurityAdapter extends AbstractHttpConfigurer<CommonSpringKeycloakSecurityAdapter, HttpSecurity> {
 
         @Override
@@ -130,12 +143,7 @@ public class SpringKeycloakSecurityConfiguration {
                     .authorizeRequests()
                     .mvcMatchers(HttpMethod.OPTIONS).permitAll()
 
-                    .mvcMatchers("/logout", "/", "/unsecured").permitAll()
-                    .mvcMatchers("/member").hasRole("MEMBER")
-                    .mvcMatchers("/leader").hasRole("LEADER")
-                    .mvcMatchers("/admin").hasRole("ADMIN")
-
-                    .anyRequest().denyAll();
+                    .anyRequest().authenticated();
 
         }
     }

@@ -1,4 +1,4 @@
-package com.usargis.usargisapi.web.controller.v1;
+package com.usargis.usargisapi.web.controller;
 
 import com.usargis.usargisapi.model.Mission;
 import com.usargis.usargisapi.service.contract.MissionService;
@@ -8,14 +8,15 @@ import com.usargis.usargisapi.web.exception.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.text.MessageFormat;
 import java.util.List;
 import java.util.Optional;
 
+@PreAuthorize("hasRole('" + Constant.ADMIN_ROLE + "')")
 @RestController
-@RequestMapping(Constant.V1_PATH)
 public class MissionController {
 
     private MissionService missionService;
@@ -31,14 +32,14 @@ public class MissionController {
         if (missions.isEmpty()) {
             throw new NotFoundException(ErrorConstant.NO_MISSIONS_FOUND);
         }
-        return new ResponseEntity<>(missions, HttpStatus.FOUND);
+        return new ResponseEntity<>(missions, HttpStatus.OK);
     }
 
     @GetMapping(Constant.MISSIONS_PATH + Constant.SLASH_ID_PATH)
     public ResponseEntity<Mission> getMissionById(@PathVariable Long id) {
         Optional<Mission> mission = missionService.findById(id);
         Mission result = mission.orElseThrow(() -> new NotFoundException(MessageFormat.format(ErrorConstant.NO_MISSION_FOUND_FOR_ID, id)));
-        return new ResponseEntity<>(result, HttpStatus.FOUND);
+        return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
     @PostMapping(Constant.MISSIONS_PATH)

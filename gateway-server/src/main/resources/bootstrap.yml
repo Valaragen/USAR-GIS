@@ -1,10 +1,6 @@
 spring:
   application:
     name: gateway-server
-  security:
-    user:
-      name: gatewayConnect
-      password: ENC(1mXg1SYmDc8jM+WGWcLagUPIPbw+yl4hDG0dx3kuJQGTqg2MgA0JSVU8hIV8AyJAz8cSKiwF8X2FZEGBLR/HuQ==)
   cloud:
     config:
       discovery:
@@ -19,7 +15,8 @@ spring:
       discovery:
         locator:
           enabled: true
-
+      default-filters:
+        - TokenRelay
       routes:
         - id: usargis-api
           uri: lb://USARGIS-API
@@ -28,6 +25,19 @@ spring:
     loadbalancer:
       ribbon:
         enabled: false
+  ### KEYCLOAK ###
+  security:
+    oauth2:
+      client:
+        provider:
+          keycloak:
+            issuer-uri: http://localhost:8180/auth/realms/USAR-GIS
+            authorization-uri: http://localhost:8180/auth/realms/USAR-GIS/protocol/openid-connect/auth
+            token-uri: http://localhost:8180/auth/realms/USAR-GIS/protocol/openid-connect/token
+            user-info-uri: http://localhost:8180/auth/realms/USAR-GIS/protocol/openid-connect/userinfo
+            jwk-set-uri: http://localhost:8180/auth/realms/USAR-GIS/protocol/openid-connect/certs
+            user-name-attribute: preferred_username
+
 
 
 eureka:

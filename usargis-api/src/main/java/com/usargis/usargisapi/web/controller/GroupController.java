@@ -1,4 +1,4 @@
-package com.usargis.usargisapi.web.controller.v1;
+package com.usargis.usargisapi.web.controller;
 
 import com.usargis.usargisapi.model.Group;
 import com.usargis.usargisapi.service.contract.GroupService;
@@ -8,14 +8,15 @@ import com.usargis.usargisapi.web.exception.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.text.MessageFormat;
 import java.util.List;
 import java.util.Optional;
 
+@PreAuthorize("hasRole('" + Constant.ADMIN_ROLE + "')")
 @RestController
-@RequestMapping(Constant.V1_PATH)
 public class GroupController {
 
     private GroupService groupService;
@@ -31,14 +32,14 @@ public class GroupController {
         if (groups.isEmpty()) {
             throw new NotFoundException(ErrorConstant.NO_GROUPS_FOUND);
         }
-        return new ResponseEntity<>(groups, HttpStatus.FOUND);
+        return new ResponseEntity<>(groups, HttpStatus.OK);
     }
 
     @GetMapping(Constant.GROUPS_PATH + Constant.SLASH_ID_PATH)
     public ResponseEntity<Group> getGroupById(@PathVariable Long id) {
         Optional<Group> group = groupService.findById(id);
         Group result = group.orElseThrow(() -> new NotFoundException(MessageFormat.format(ErrorConstant.NO_GROUP_FOUND_FOR_ID, id)));
-        return new ResponseEntity<>(result, HttpStatus.FOUND);
+        return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
     @PostMapping(Constant.GROUPS_PATH)

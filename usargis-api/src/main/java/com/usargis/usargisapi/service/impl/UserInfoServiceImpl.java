@@ -3,11 +3,20 @@ package com.usargis.usargisapi.service.impl;
 import com.usargis.usargisapi.model.UserInfo;
 import com.usargis.usargisapi.repository.UserInfoRepository;
 import com.usargis.usargisapi.service.contract.UserInfoService;
+import com.usargis.usargisapi.web.exception.AccessForbiddenException;
+import lombok.extern.slf4j.Slf4j;
+import org.keycloak.KeycloakPrincipal;
+import org.keycloak.representations.AccessToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
 
+@Slf4j
 @Service
 public class UserInfoServiceImpl implements UserInfoService {
 
@@ -36,4 +45,24 @@ public class UserInfoServiceImpl implements UserInfoService {
     public void delete(UserInfo userInfo) {
         userInfoRepository.delete(userInfo);
     }
+
+    @Override
+    public Optional<UserInfo> findByUsername(String username) {
+        return userInfoRepository.findByUsername(username);
+    }
+
+    @Override
+    public boolean hasAccess(String pathUsername) {
+        pathUsername = pathUsername.toLowerCase();
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+
+        if (principal instanceof KeycloakPrincipal) {
+            AccessToken tokenName = ((KeycloakPrincipal) principal).getKeycloakSecurityContext().getToken();
+            return tokenName.getPreferredUsername().equals(pathUsername);
+        }
+
+        return false;
+    }
+
+
 }

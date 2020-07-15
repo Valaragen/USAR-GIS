@@ -1,4 +1,4 @@
-package com.usargis.usargisapi.web.controller.v1;
+package com.usargis.usargisapi.web.controller;
 
 import com.usargis.usargisapi.model.Notification;
 import com.usargis.usargisapi.service.contract.NotificationService;
@@ -8,14 +8,15 @@ import com.usargis.usargisapi.web.exception.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.text.MessageFormat;
 import java.util.List;
 import java.util.Optional;
 
+@PreAuthorize("hasRole('" + Constant.LEADER_ROLE + "')")
 @RestController
-@RequestMapping(Constant.V1_PATH)
 public class NotificationController {
 
     private NotificationService notificationService;
@@ -31,14 +32,14 @@ public class NotificationController {
         if (notifications.isEmpty()) {
             throw new NotFoundException(ErrorConstant.NO_NOTIFICATIONS_FOUND);
         }
-        return new ResponseEntity<>(notifications, HttpStatus.FOUND);
+        return new ResponseEntity<>(notifications, HttpStatus.OK);
     }
 
     @GetMapping(Constant.NOTIFICATIONS_PATH + Constant.SLASH_ID_PATH)
     public ResponseEntity<Notification> getNotificationById(@PathVariable Long id) {
         Optional<Notification> notification = notificationService.findById(id);
         Notification result = notification.orElseThrow(() -> new NotFoundException(MessageFormat.format(ErrorConstant.NO_NOTIFICATION_FOUND_FOR_ID, id)));
-        return new ResponseEntity<>(result, HttpStatus.FOUND);
+        return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
     @PostMapping(Constant.NOTIFICATIONS_PATH)
