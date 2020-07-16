@@ -91,7 +91,7 @@ class UserInfoServiceImplTest {
     }
 
     @Nested
-    class hasAccessTest {
+    class isSameUsernameThanAuthenticatedUserTest {
         private String tokenUsername = "currentuser";
         private Authentication authentication = Mockito.mock(Authentication.class);
         private KeycloakPrincipal keycloakPrincipal = Mockito.mock(KeycloakPrincipal.class);
@@ -109,37 +109,37 @@ class UserInfoServiceImplTest {
         }
 
         @Test
-        void hasAccess_tokenUsernameIsDifferentThanGivenUsername_returnFalse() {
+        void isSameUsernameThanAuthenticatedUser_tokenUsernameIsDifferentThanGivenUsername_returnFalse() {
             String givenUsername = "randomUsername";
             Mockito.when(accessToken.getPreferredUsername()).thenReturn(tokenUsername);
 
             SecurityContextHolder.setContext(securityContext);
 
-            boolean result = objectToTest.hasAccess(givenUsername);
+            boolean result = objectToTest.isSameUsernameThanAuthenticatedUser(givenUsername);
 
             Assertions.assertThat(result).isFalse();
         }
 
         @Test
-        void hasAccess_tokenUsernameIsSameThanGivenUsername_returnTrue() {
+        void isSameUsernameThanAuthenticatedUser_tokenUsernameIsSameThanGivenUsername_returnTrue() {
             String givenUsername = tokenUsername;
             Mockito.when(accessToken.getPreferredUsername()).thenReturn(tokenUsername);
 
             SecurityContextHolder.setContext(securityContext);
 
-            boolean result = objectToTest.hasAccess(givenUsername);
+            boolean result = objectToTest.isSameUsernameThanAuthenticatedUser(givenUsername);
 
             Assertions.assertThat(result).isTrue();
         }
 
         @Test
-        void hasAccess_shouldNotBeCaseSensitive() {
+        void isSameUsernameThanAuthenticatedUser_shouldNotBeCaseSensitive() {
             String givenUsername = tokenUsername.toUpperCase();
             Mockito.when(accessToken.getPreferredUsername()).thenReturn(tokenUsername);
 
             SecurityContextHolder.setContext(securityContext);
 
-            boolean result = objectToTest.hasAccess(givenUsername);
+            boolean result = objectToTest.isSameUsernameThanAuthenticatedUser(givenUsername);
 
             Assertions.assertThat(result).isTrue();
         }

@@ -2,10 +2,9 @@ package com.usargis.usargisapi.security;
 
 import com.usargis.usargisapi.config.SpringKeycloakSecurityConfiguration;
 import com.usargis.usargisapi.repository.UserInfoRepository;
-import com.usargis.usargisapi.security.securityTestController.KeycloakSecurityTestController;
+import com.usargis.usargisapi.security.testController.KeycloakSecurityTestController;
 import com.usargis.usargisapi.security.testutils.WithMockKeycloakUser;
 import com.usargis.usargisapi.service.contract.UserInfoService;
-import com.usargis.usargisapi.service.impl.UserInfoServiceImpl;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;

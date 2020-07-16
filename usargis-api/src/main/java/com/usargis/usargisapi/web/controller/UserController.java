@@ -38,10 +38,10 @@ public class UserController {
         return new ResponseEntity<>(userInfos, HttpStatus.OK);
     }
 
-    @PreAuthorize("hasRole('" + Constant.LEADER_ROLE + "') or @userInfoServiceImpl.hasAccess(#string)")
+    @PreAuthorize("hasRole('" + Constant.LEADER_ROLE + "') or @userInfoServiceImpl.isSameUsernameThanAuthenticatedUser(#string)")
     @GetMapping(Constant.USERS + Constant.SLASH_STRING_PATH)
     public ResponseEntity<UserInfo> getUserByUsername(@PathVariable String string) {
-        userInfoService.hasAccess(string);
+        userInfoService.findByUsername(string);
         Optional<UserInfo> userInfo = userInfoService.findByUsername(string);
         UserInfo result = userInfo.orElseThrow(() -> new NotFoundException(MessageFormat.format(ErrorConstant.NO_USER_FOUND_FOR_ID, string)));
         return new ResponseEntity<>(result, HttpStatus.OK);

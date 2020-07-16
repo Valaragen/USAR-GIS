@@ -1,4 +1,4 @@
-package com.usargis.usargisapi.security.securityTestController;
+package com.usargis.usargisapi.security.testController;
 
 import com.usargis.usargisapi.util.Constant;
 import org.springframework.http.HttpStatus;
@@ -32,7 +32,7 @@ public class KeycloakSecurityTestController {
     }
 
     @GetMapping("/sameuser/{user}")
-    @PreAuthorize("@userInfoServiceImpl.hasAccess(#user)")
+    @PreAuthorize("@userInfoServiceImpl.isSameUsernameThanAuthenticatedUser(#user)")
     public ResponseEntity<String> sameUserAccess(@PathVariable String user) {
         return new ResponseEntity<>("Authorized", HttpStatus.OK);
     }

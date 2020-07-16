@@ -52,7 +52,7 @@ public class UserInfoServiceImpl implements UserInfoService {
     }
 
     @Override
-    public boolean hasAccess(String username) {
+    public boolean isSameUsernameThanAuthenticatedUser(String username) {
         username = username.toLowerCase();
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
