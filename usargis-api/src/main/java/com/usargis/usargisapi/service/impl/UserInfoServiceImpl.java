@@ -52,13 +52,13 @@ public class UserInfoServiceImpl implements UserInfoService {
     }
 
     @Override
-    public boolean hasAccess(String pathUsername) {
-        pathUsername = pathUsername.toLowerCase();
+    public boolean hasAccess(String username) {
+        username = username.toLowerCase();
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
         if (principal instanceof KeycloakPrincipal) {
-            AccessToken tokenName = ((KeycloakPrincipal) principal).getKeycloakSecurityContext().getToken();
-            return tokenName.getPreferredUsername().equals(pathUsername);
+            AccessToken accessToken = ((KeycloakPrincipal) principal).getKeycloakSecurityContext().getToken();
+            return accessToken.getPreferredUsername().toLowerCase().equals(username);
         }
 
         return false;

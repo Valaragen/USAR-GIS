@@ -6,6 +6,7 @@ import com.usargis.usargisapi.service.impl.UserInfoServiceImpl;
 import com.usargis.usargisapi.util.ErrorConstant;
 import com.usargis.usargisapi.web.exception.NotFoundException;
 import org.assertj.core.api.Assertions;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -26,8 +27,8 @@ class UserControllerTest {
 
     private UserInfoService userInfoService = Mockito.mock(UserInfoServiceImpl.class);
 
-    @BeforeEach
-    void setup() {
+    @BeforeAll
+    void setupAll() {
         objectToTest = new UserController(userInfoService);
     }
 

@@ -83,7 +83,6 @@ public class SpringKeycloakSecurityConfiguration {
 
                     // keycloak filters for securisation
                     .and()
-                    .addFilterBefore(keycloakPreAuthActionsFilter(), LogoutFilter.class)
                     .addFilterBefore(keycloakAuthenticationProcessingFilter(), X509AuthenticationFilter.class)
                     .exceptionHandling().authenticationEntryPoint(authenticationEntryPoint())
 
@@ -92,14 +91,7 @@ public class SpringKeycloakSecurityConfiguration {
                     // delegate logout endpoint to spring security
 
                     .and()
-                    .logout()
-                    .addLogoutHandler(keycloakLogoutHandler())
-                    .logoutUrl("/logout").logoutSuccessHandler(
-                    // logout handler for API
-                    (HttpServletRequest request, HttpServletResponse response, Authentication authentication) ->
-                            response.setStatus(HttpServletResponse.SC_OK)
-            )
-                    .and().apply(new CommonSpringKeycloakSecurityAdapter());
+                    .apply(new CommonSpringKeycloakSecurityAdapter());
         }
 
         @Bean

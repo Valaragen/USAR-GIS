@@ -2,9 +2,7 @@ package com.usargis.usargisapi.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.usargis.usargisapi.model.common.ModelEntity;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.ToString;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -14,6 +12,7 @@ import java.util.Set;
 
 @EqualsAndHashCode(callSuper = true)
 @Data
+@Setter(AccessLevel.PRIVATE)
 @Entity
 public class UserInfo extends ModelEntity {
     @Id
@@ -42,4 +41,13 @@ public class UserInfo extends ModelEntity {
 
     @ManyToMany(mappedBy = "users")
     private Set<Group> groups = new HashSet<>();
+
+    private void setUsername(String username) {
+        this.username = username.toLowerCase();
+    }
+
+    private void setEmail(String email) {
+        this.email = email.toLowerCase();
+    }
+
 }

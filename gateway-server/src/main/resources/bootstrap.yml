@@ -28,7 +28,6 @@ spring:
       ribbon:
         enabled: false
 
-
   security:
     oauth2:
       resourceserver:
