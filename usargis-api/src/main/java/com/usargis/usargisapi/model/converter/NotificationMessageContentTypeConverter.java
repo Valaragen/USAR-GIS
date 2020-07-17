@@ -1,7 +1,6 @@
 package com.usargis.usargisapi.model.converter;
 
 import com.usargis.usargisapi.model.NotificationMessageContentType;
-import com.usargis.usargisapi.model.NotificationMessageSendingMode;
 
 import javax.persistence.AttributeConverter;
 import javax.persistence.Converter;

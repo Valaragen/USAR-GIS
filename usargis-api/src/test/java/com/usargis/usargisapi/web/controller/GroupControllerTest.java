@@ -2,7 +2,6 @@ package com.usargis.usargisapi.web.controller;
 
 import com.usargis.usargisapi.model.Group;
 import com.usargis.usargisapi.service.contract.GroupService;
-import com.usargis.usargisapi.service.impl.GroupServiceImpl;
 import com.usargis.usargisapi.util.ErrorConstant;
 import com.usargis.usargisapi.web.exception.NotFoundException;
 import org.assertj.core.api.Assertions;

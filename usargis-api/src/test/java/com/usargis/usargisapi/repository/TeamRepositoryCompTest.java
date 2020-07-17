@@ -6,7 +6,6 @@ import com.usargis.usargisapi.model.UserInfo;
 import com.usargis.usargisapi.testutils.objectMother.MissionMother;
 import com.usargis.usargisapi.testutils.objectMother.TeamMother;
 import com.usargis.usargisapi.testutils.objectMother.UserInfoMother;
-import lombok.extern.slf4j.Slf4j;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -51,7 +50,7 @@ class TeamRepositoryCompTest {
 
     @Test
     void findById_shouldFindTeamInDbById() {
-        Team teamToFind =  sampleTeam;
+        Team teamToFind = sampleTeam;
 
         Optional<Team> result = objectToTest.findById(teamToFind.getId());
 
@@ -73,7 +72,7 @@ class TeamRepositoryCompTest {
 
     @Test
     void delete_shouldDeleteInDb() {
-        Team teamToDelete =  sampleTeam;
+        Team teamToDelete = sampleTeam;
 
         objectToTest.delete(teamToDelete);
 

@@ -1,7 +1,6 @@
 package com.usargis.usargisapi.model.converter;
 
 import com.usargis.usargisapi.model.EventStatus;
-import com.usargis.usargisapi.model.MissionStatus;
 
 import javax.persistence.AttributeConverter;
 import javax.persistence.Converter;

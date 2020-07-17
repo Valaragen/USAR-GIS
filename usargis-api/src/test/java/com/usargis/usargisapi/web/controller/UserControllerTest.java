@@ -2,11 +2,9 @@ package com.usargis.usargisapi.web.controller;
 
 import com.usargis.usargisapi.model.UserInfo;
 import com.usargis.usargisapi.service.contract.UserInfoService;
-import com.usargis.usargisapi.service.impl.UserInfoServiceImpl;
 import com.usargis.usargisapi.util.ErrorConstant;
 import com.usargis.usargisapi.web.exception.NotFoundException;
 import org.assertj.core.api.Assertions;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;

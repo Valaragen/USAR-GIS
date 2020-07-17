@@ -67,7 +67,7 @@ class NotificationRepositoryCompTest {
 
     @Test
     void delete_shouldDeleteInDb() {
-        Notification notificationToDelete =  sampleNotification;
+        Notification notificationToDelete = sampleNotification;
 
         objectToTest.delete(notificationToDelete);
 

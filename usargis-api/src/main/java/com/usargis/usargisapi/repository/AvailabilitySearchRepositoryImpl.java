@@ -20,7 +20,7 @@ public class AvailabilitySearchRepositoryImpl implements AvailabilitySearchRepos
     public List<Availability> searchAll(AvailabilitySearch availabilitySearch) {
         CriteriaBuilder cb = entityManager.getCriteriaBuilder();
         CriteriaQuery<Availability> query = cb.createQuery(Availability.class);
-        Root<Availability> availabilityRoot =  query.from(Availability.class);
+        Root<Availability> availabilityRoot = query.from(Availability.class);
 
         List<Predicate> andPredicates = new ArrayList<>();
 

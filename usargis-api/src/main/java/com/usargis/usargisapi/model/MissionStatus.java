@@ -3,9 +3,9 @@ package com.usargis.usargisapi.model;
 import com.usargis.usargisapi.util.Constant;
 
 public enum MissionStatus {
-    ONFOCUS(Constant.STATUS_ONFOCUS_CODE , Constant.STATUS_ONFOCUS),
-    TEAMENGAGEMENT(Constant.STATUS_TEAMENGAGEMENT_CODE , Constant.STATUS_TEAMENGAGEMENT),
-    ONGOING(Constant.STATUS_ONGOING_CODE , Constant.STATUS_ONGOING),
+    ONFOCUS(Constant.STATUS_ONFOCUS_CODE, Constant.STATUS_ONFOCUS),
+    TEAMENGAGEMENT(Constant.STATUS_TEAMENGAGEMENT_CODE, Constant.STATUS_TEAMENGAGEMENT),
+    ONGOING(Constant.STATUS_ONGOING_CODE, Constant.STATUS_ONGOING),
     FINISHED(Constant.STATUS_FINISHED_CODE, Constant.STATUS_FINISHED),
     CANCELLED(Constant.STATUS_CANCELLED_CODE, Constant.STATUS_CANCELLED);
 
@@ -20,6 +20,7 @@ public enum MissionStatus {
     public String getCode() {
         return code;
     }
+
     public String getName() {
         return name;
     }

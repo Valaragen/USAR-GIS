@@ -11,6 +11,7 @@ public @interface WithMockKeycloakUser {
     /**
      * Convenience mechanism for specifying the username. The default is "user". If
      * {@link #username()} is specified it will be used instead of {@link #value()}
+     *
      * @return
      */
     String value() default "user";
@@ -19,6 +20,7 @@ public @interface WithMockKeycloakUser {
      * The username to be used. Note that {@link #value()} is a synonym for
      * {@link #username()}, but if {@link #username()} is specified it will take
      * precedence.
+     *
      * @return
      */
     String username() default "";
@@ -26,11 +28,12 @@ public @interface WithMockKeycloakUser {
     /**
      * The roles to use. The default is "USER".
      */
-    String[] roles() default { "USER" };
+    String[] roles() default {"USER"};
 
     /**
      * The keycloak resource users has the roles. By default it will pick up the
      * resource defined in the {keycloak.resource} configuration
+     *
      * @return
      */
     String resource() default "";

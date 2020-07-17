@@ -67,7 +67,7 @@ class EventRepositoryCompTest {
 
     @Test
     void delete_shouldDeleteInDb() {
-        Event eventToDelete =  sampleEvent;
+        Event eventToDelete = sampleEvent;
 
         objectToTest.delete(eventToDelete);
 

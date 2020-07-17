@@ -1,6 +1,5 @@
 package com.usargis.usargisapi.model.converter;
 
-import com.usargis.usargisapi.model.MissionStatus;
 import com.usargis.usargisapi.model.NotificationStatus;
 
 import javax.persistence.AttributeConverter;

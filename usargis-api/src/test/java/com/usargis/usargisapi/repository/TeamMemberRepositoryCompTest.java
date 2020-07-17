@@ -57,7 +57,7 @@ class TeamMemberRepositoryCompTest {
 
     @Test
     void findById_shouldFindTeamMemberInDbById() {
-        TeamMember teamMemberToFind =  sampleTeamMember;
+        TeamMember teamMemberToFind = sampleTeamMember;
 
         Optional<TeamMember> result = objectToTest.findById(teamMemberToFind.getId());
 
@@ -78,7 +78,7 @@ class TeamMemberRepositoryCompTest {
 
     @Test
     void delete_shouldDeleteInDb() {
-        TeamMember teamMemberToDelete =  sampleTeamMember;
+        TeamMember teamMemberToDelete = sampleTeamMember;
 
         objectToTest.delete(teamMemberToDelete);
 

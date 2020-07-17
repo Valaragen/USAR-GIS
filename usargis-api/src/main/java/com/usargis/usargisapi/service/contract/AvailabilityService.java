@@ -9,5 +9,6 @@ import java.util.List;
 
 public interface AvailabilityService extends CRUDService<Availability, Long> {
     List<Availability> searchAll(AvailabilitySearch availabilitySearch);
+
     Availability update(Long id, Availability availabilityDetails) throws InvocationTargetException, IllegalAccessException;
 }

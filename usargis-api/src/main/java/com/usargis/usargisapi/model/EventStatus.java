@@ -3,7 +3,7 @@ package com.usargis.usargisapi.model;
 import com.usargis.usargisapi.util.Constant;
 
 public enum EventStatus {
-    PENDING(Constant.STATUS_PENDING_CODE , Constant.STATUS_PENDING),
+    PENDING(Constant.STATUS_PENDING_CODE, Constant.STATUS_PENDING),
     FINISHED(Constant.STATUS_FINISHED_CODE, Constant.STATUS_FINISHED),
     CANCELLED(Constant.STATUS_CANCELLED_CODE, Constant.STATUS_CANCELLED);
 
@@ -18,6 +18,7 @@ public enum EventStatus {
     public String getCode() {
         return code;
     }
+
     public String getName() {
         return name;
     }

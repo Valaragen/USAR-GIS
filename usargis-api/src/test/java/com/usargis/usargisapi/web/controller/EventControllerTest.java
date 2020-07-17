@@ -2,7 +2,6 @@ package com.usargis.usargisapi.web.controller;
 
 import com.usargis.usargisapi.model.Event;
 import com.usargis.usargisapi.service.contract.EventService;
-import com.usargis.usargisapi.service.impl.EventServiceImpl;
 import com.usargis.usargisapi.util.ErrorConstant;
 import com.usargis.usargisapi.web.exception.NotFoundException;
 import org.assertj.core.api.Assertions;

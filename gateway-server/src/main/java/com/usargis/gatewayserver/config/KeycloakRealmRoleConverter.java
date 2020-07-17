@@ -20,7 +20,7 @@ public class KeycloakRealmRoleConverter implements Converter<Jwt, Collection<Gra
     @Override
     public Collection<GrantedAuthority> convert(final Jwt jwt) {
         final Map<String, Object> realmAccess = (Map<String, Object>) jwt.getClaims().get(REALM_ACCESS);
-        return ((List<String>)realmAccess.get(ROLES)).stream()
+        return ((List<String>) realmAccess.get(ROLES)).stream()
                 .map(roleName -> ROLE_PREFIX + roleName)
                 .map(SimpleGrantedAuthority::new)
                 .collect(Collectors.toList());

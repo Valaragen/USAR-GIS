@@ -1,9 +1,7 @@
 package com.usargis.usargisapi.repository;
 
 import com.usargis.usargisapi.model.Group;
-import com.usargis.usargisapi.model.UserInfo;
 import com.usargis.usargisapi.testutils.objectMother.GroupMother;
-import com.usargis.usargisapi.testutils.objectMother.UserInfoMother;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -65,7 +63,7 @@ class GroupsRepositoryCompTest {
 
     @Test
     void delete_shouldDeleteInDb() {
-        Group groupToDelete =  sampleGroup;
+        Group groupToDelete = sampleGroup;
 
         objectToTest.delete(groupToDelete);
 

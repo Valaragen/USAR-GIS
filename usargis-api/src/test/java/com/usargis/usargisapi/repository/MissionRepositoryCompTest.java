@@ -67,7 +67,7 @@ class MissionRepositoryCompTest {
 
     @Test
     void delete_shouldDeleteInDb() {
-        Mission missionToDelete =  sampleMission;
+        Mission missionToDelete = sampleMission;
 
         objectToTest.delete(missionToDelete);
 

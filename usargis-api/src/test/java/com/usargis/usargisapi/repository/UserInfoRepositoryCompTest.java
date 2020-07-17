@@ -43,7 +43,7 @@ class UserInfoRepositoryCompTest {
 
     @Test
     void findById_shouldFindUserInDbById() {
-        UserInfo userToFind =  sampleUser;
+        UserInfo userToFind = sampleUser;
 
         Optional<UserInfo> result = objectToTest.findById(sampleUser.getUUID());
 
@@ -66,7 +66,7 @@ class UserInfoRepositoryCompTest {
 
     @Test
     void delete_shouldDeleteInDb() {
-        UserInfo userToDelete =  sampleUser;
+        UserInfo userToDelete = sampleUser;
 
         objectToTest.delete(userToDelete);
 
@@ -75,7 +75,7 @@ class UserInfoRepositoryCompTest {
 
     @Test
     void findByUsername_shouldFindUserInDbByUsername() {
-        UserInfo userToFind =  sampleUser;
+        UserInfo userToFind = sampleUser;
 
         Optional<UserInfo> result = objectToTest.findByUsername(userToFind.getUsername());
 

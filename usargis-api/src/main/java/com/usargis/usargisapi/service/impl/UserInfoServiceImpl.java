@@ -3,14 +3,7 @@ package com.usargis.usargisapi.service.impl;
 import com.usargis.usargisapi.model.UserInfo;
 import com.usargis.usargisapi.repository.UserInfoRepository;
 import com.usargis.usargisapi.service.contract.UserInfoService;
-import com.usargis.usargisapi.web.exception.AccessForbiddenException;
 import lombok.extern.slf4j.Slf4j;
-import org.keycloak.KeycloakPrincipal;
-import org.keycloak.representations.AccessToken;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.User;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

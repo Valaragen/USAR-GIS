@@ -1,7 +1,6 @@
 package com.usargis.usargisapi.model.embeddable;
 
 import com.usargis.usargisapi.model.Event;
-import com.usargis.usargisapi.model.Team;
 import com.usargis.usargisapi.model.UserInfo;
 import lombok.AllArgsConstructor;
 import lombok.Data;

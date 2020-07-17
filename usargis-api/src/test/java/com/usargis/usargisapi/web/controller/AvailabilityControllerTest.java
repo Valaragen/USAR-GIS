@@ -3,7 +3,6 @@ package com.usargis.usargisapi.web.controller;
 import com.usargis.usargisapi.model.Availability;
 import com.usargis.usargisapi.search.AvailabilitySearch;
 import com.usargis.usargisapi.service.contract.AvailabilityService;
-import com.usargis.usargisapi.service.impl.AvailabilityServiceImpl;
 import com.usargis.usargisapi.util.ErrorConstant;
 import com.usargis.usargisapi.web.exception.NotFoundException;
 import org.assertj.core.api.Assertions;
@@ -34,6 +33,7 @@ class AvailabilityControllerTest {
     @Nested
     class searchAllAvailabilitiesTest {
         private final AvailabilitySearch searchParameters = new AvailabilitySearch();
+
         @Test
         void searchAllAvailabilities_shouldCallServiceLayer() {
             Mockito.when(availabilityService.searchAll(searchParameters)).thenReturn(Collections.singletonList(new Availability()));

@@ -15,7 +15,7 @@ public class EventMother {
                 .creationDate(LocalDateTime.now())
                 .author(UserInfoMother.sampleAuthor().build())
                 .startDate(LocalDateTime.now())
-                .endDate(LocalDateTime.now().plus(2,ChronoUnit.HOURS))
+                .endDate(LocalDateTime.now().plus(2, ChronoUnit.HOURS))
                 .latitude(1.2555515)
                 .longitude(1.2554844)
                 .status(EventStatus.FINISHED)

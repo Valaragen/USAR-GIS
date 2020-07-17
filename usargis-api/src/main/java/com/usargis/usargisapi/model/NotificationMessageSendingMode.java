@@ -3,9 +3,9 @@ package com.usargis.usargisapi.model;
 import com.usargis.usargisapi.util.Constant;
 
 public enum NotificationMessageSendingMode {
-    APP(Constant.NMSM_APP_CODE , Constant.NMSM_APP),
-    MAIL(Constant.NMSM_MAIL_CODE , Constant.NMSM_MAIL),
-    PHONE(Constant.NMSM_PHONE_CODE , Constant.NMSM_PHONE);
+    APP(Constant.NMSM_APP_CODE, Constant.NMSM_APP),
+    MAIL(Constant.NMSM_MAIL_CODE, Constant.NMSM_MAIL),
+    PHONE(Constant.NMSM_PHONE_CODE, Constant.NMSM_PHONE);
 
     private String code;
     private String name;
@@ -18,6 +18,7 @@ public enum NotificationMessageSendingMode {
     public String getCode() {
         return code;
     }
+
     public String getName() {
         return name;
     }
