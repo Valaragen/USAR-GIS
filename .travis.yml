@@ -18,5 +18,5 @@ addons:
     organization: valaragen
 
 script:
-#- mvn clean verify -T C1 -Pcoverage,all-test
+- mvn clean verify -T C1 -Pcoverage,all-test
 - mvn sonar:sonar -Dsonar.projectKey=Valaragen_USAR-GIS
