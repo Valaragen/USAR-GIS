@@ -28,7 +28,6 @@
         <jacoco-version>0.8.5</jacoco-version>
 
         <!-- Sonarcloud (mvn verify sonar:sonar)-->
-        <sonar.projectKey>Valaragen_USAR-GIS</sonar.projectKey>
         <sonar.organization>valaragen</sonar.organization>
         <sonar.host.url>https://sonarcloud.io</sonar.host.url>
     </properties>
