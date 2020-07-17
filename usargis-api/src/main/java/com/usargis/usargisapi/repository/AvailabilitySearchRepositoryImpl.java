@@ -34,7 +34,7 @@ public class AvailabilitySearchRepositoryImpl implements AvailabilitySearchRepos
         }
 
         if (availabilitySearch.getMissionId() != null) {
-            andPredicates.add(cb.like(missionPath.get("id"), Long.toString(availabilitySearch.getMissionId())));
+            andPredicates.add(cb.equal(missionPath.get("id"), availabilitySearch.getMissionId()));
         }
 
         query.select(availabilityRoot)

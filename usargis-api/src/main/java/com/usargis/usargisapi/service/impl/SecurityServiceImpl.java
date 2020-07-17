@@ -1,6 +1,6 @@
 package com.usargis.usargisapi.service.impl;
 
-import com.usargis.usargisapi.repository.SecurityService;
+import com.usargis.usargisapi.service.contract.SecurityService;
 import org.keycloak.KeycloakPrincipal;
 import org.keycloak.representations.AccessToken;
 import org.springframework.security.core.context.SecurityContextHolder;

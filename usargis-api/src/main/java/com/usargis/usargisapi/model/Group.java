@@ -12,7 +12,7 @@ import java.util.Set;
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = true)
 @Data
-@Entity
+@Entity(name = "_group")
 public class Group extends ModelEntityWithLongId {
     @Column(length = 50, nullable = false, unique = true)
     private String name;

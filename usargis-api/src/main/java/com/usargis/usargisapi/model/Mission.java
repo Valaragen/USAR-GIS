@@ -30,6 +30,8 @@ public class Mission extends ModelEntityWithLongId {
     private LocalDateTime plannedStartDate;
     private Integer expectedDurationInDays;
     private String address;
+    private Double latitude;
+    private Double longitude;
 
     @CreationTimestamp
     private LocalDateTime creationDate;

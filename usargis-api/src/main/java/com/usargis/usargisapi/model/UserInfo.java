@@ -24,6 +24,7 @@ public class UserInfo extends ModelEntity {
     @Column(nullable = false, unique = true)
     private String username;
 
+    @Column(unique = true)
     private String email;
     private boolean emailVerified;
 

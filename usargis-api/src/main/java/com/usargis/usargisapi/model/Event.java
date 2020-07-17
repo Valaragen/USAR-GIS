@@ -30,6 +30,8 @@ public class Event extends ModelEntityWithLongId {
     private boolean isInscriptionValidationRequired;
     private LocalDateTime inscriptionStartDate;
     private LocalDateTime inscriptionsEndDate;
+    private Double latitude;
+    private Double longitude;
 
     @CreationTimestamp
     private LocalDateTime creationDate;

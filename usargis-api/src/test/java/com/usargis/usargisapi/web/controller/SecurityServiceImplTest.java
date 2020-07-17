@@ -1,6 +1,6 @@
 package com.usargis.usargisapi.web.controller;
 
-import com.usargis.usargisapi.repository.SecurityService;
+import com.usargis.usargisapi.service.contract.SecurityService;
 import com.usargis.usargisapi.service.impl.SecurityServiceImpl;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
