@@ -18,4 +18,4 @@ addons:
 
 script:
   - mvn clean verify -T C1 -Pcoverage,all-test
-  - sonar:sonar -Dsonar.projectKey=Valaragen_USAR-GIS
+  - mvn sonar:sonar -Dsonar.projectKey=Valaragen_USAR-GIS
