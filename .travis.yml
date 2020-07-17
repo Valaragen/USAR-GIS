@@ -1,0 +1,20 @@
+language: java
+
+cache:
+  directories:
+    - $HOME/.m2
+
+# safelist
+branches:
+  only:
+    - master
+    - develop
+
+addons:
+  sonarcloud:
+    organization: "valaragen"
+    token:
+      secure: X2ExvQ1Cvgd2P10wjUqYQ4Hs1Cc9l2P3hUl3hT6BRO2ww/LJOvxh+B8vcue2S+aQSdHzSVAq/j+bbrCSeWrTxre2MfnzIPjefq4ScV6+2Ri+hoVCs/OeFqCqMNBedz3RE0iqLzraiKr55+mWFpOuw8c+bQjGYrBahgz8VlnRtaTyEJwOdBeIfs0TETK9c5Yg+RL3TBX9quGizpUckMIykkUQtReSrGf/iorQluClfJ6eldRYddOzl9cXYSqAVzItbYHpi1daPnpKtpguWizZDysIt5zg0zgtI/asaf6xWx8Lln2ylOj71GL5mpRZN0K8qhHJPYXbGUYJaw0KL1PStQVmQUiZ5Qa05PPMlmkiJXuRnffBAlQ6y22zLTjfM426c/7QqQtcEg6efFPuuz8cNBiIBWIX0Q1BQKyTSIKN15qcbtySwQz/rkPLb0QfE5+Fe89d0TIam4k/8IujdZyGDJ15aLtmLvpOg3aY/uW5UVwH8Qjo55gGRJpUVp+a3/LS6Nq6v+3CosmwE4/NuIZvvG2q7e7UYamuHDdonoIUSbyhSBhnFJL7k4Z98cktzGA6+Ba0C32q8Gna4yzc3c4HXGHlaAMLrA1boEjAIVbf8dSvAsjiAMOzy07DS3DNhs/Ec8Pj/aTPxfsOJM4c5gNpgubDRZRSVkEqNVvPVtkofGw=
+
+script:
+  - mvn clean verify sonar:sonar -Dsonar.projectKey=Valaragen_USAR-GIS -Pcoverage,all-test
