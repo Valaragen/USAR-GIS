@@ -1,9 +1,5 @@
 language: java
 
-#env:
-#  global:
-#    secure: Zcwq/18EfmykX0ZizsPOxsFTh7WSuvxgl5NY3DVbJRJBmmG6fZWhP87MzYNKWButAKbc5dQjN967SyZyOpuNthk+oBd0Zh6k+ZmMu23CDtqsza5w/oM4xGtK+omGZc4wvGW+ZBCbfIdomWcCaC0j41tNCF13Hdwl8YnbCNtM/jnsQ4GxXGmo5nW/UfgIhHeQdhD+xXpRrIxhF1AByTmlqP4aH5ZYzaXVoqAchc+gNBCuQoSQJjxYilfIPnpZ8KmQ0jfx/ZuzMcmiLxE6RPQLl0t+zyezpcBdKSQwaKQVrYY89lWYQ97N/qAwm7Qw4SRYZHJBVoTKxe0E1cqVju8jqxkpFNbyNLUcHsO0dwfaMmTzoWmk+Ma7G2j+V9k4ZSiR//nGBMWPfVVWXYjVSrtAD5UWVQolfq4zoC7WKXSkcV9u+wxmmfuxDd3YZifdo2eU/b8r+rVpfGEffopNXqIfDh8lKzKT0Vhc/HuLbZzwoZTwOJT9dimczoIYS2FUlwi+bb+JoIkbHKKsjaGLqhE4VLcAwRHm/nlMvwitIpvK/O7GCDTopP0Ei9MRYbkRmN9dIPbgwPHOT8lI+MgVB4aGnBh0PfXuPnE/IGLzhR+MjnIQ8a0uAEHZAvIq36wYeczJ8ZxxNn/bhaTa0NWahtU+/zta5oGGMHzeWzd9FUKBTIc=
-
 cache:
   directories:
   - "$HOME/.m2/repository"
@@ -17,5 +13,5 @@ addons:
     organization: valaragen
 
 script:
-#- mvn clean verify -T C1 -Pcoverage,all-test
+- mvn clean verify -T C1 -Pcoverage,all-test
 - mvn sonar:sonar -Dsonar.projectKey=Valaragen_USAR-GIS
