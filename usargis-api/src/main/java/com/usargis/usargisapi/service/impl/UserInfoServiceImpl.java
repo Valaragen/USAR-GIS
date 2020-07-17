@@ -51,18 +51,4 @@ public class UserInfoServiceImpl implements UserInfoService {
         return userInfoRepository.findByUsername(username);
     }
 
-    @Override
-    public boolean isSameUsernameThanAuthenticatedUser(String username) {
-        username = username.toLowerCase();
-        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-
-        if (principal instanceof KeycloakPrincipal) {
-            AccessToken accessToken = ((KeycloakPrincipal) principal).getKeycloakSecurityContext().getToken();
-            return accessToken.getPreferredUsername().toLowerCase().equals(username);
-        }
-
-        return false;
-    }
-
-
 }

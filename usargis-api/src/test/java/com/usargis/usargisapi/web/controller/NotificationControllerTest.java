@@ -23,7 +23,7 @@ class NotificationControllerTest {
 
     private NotificationController objectToTest;
 
-    private NotificationService notificationService = Mockito.mock(NotificationServiceImpl.class);
+    private NotificationService notificationService = Mockito.mock(NotificationService.class);
 
     @BeforeEach
     void setup() {
@@ -139,6 +139,7 @@ class NotificationControllerTest {
 
             objectToTest.deleteNotification(notificationToDeleteId);
 
+            Mockito.verify(notificationService).findById(notificationToDeleteId);
             Mockito.verify(notificationService).delete(foundNotificationToDelete);
         }
 

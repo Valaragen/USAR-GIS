@@ -13,7 +13,6 @@ import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.test.context.ActiveProfiles;
 
 import java.text.MessageFormat;
 import java.util.ArrayList;
@@ -25,10 +24,10 @@ class UserControllerTest {
 
     private UserController objectToTest;
 
-    private UserInfoService userInfoService = Mockito.mock(UserInfoServiceImpl.class);
+    private UserInfoService userInfoService = Mockito.mock(UserInfoService.class);
 
-    @BeforeAll
-    void setupAll() {
+    @BeforeEach
+    void setup() {
         objectToTest = new UserController(userInfoService);
     }
 
@@ -141,6 +140,7 @@ class UserControllerTest {
 
             objectToTest.deleteUser(userToDeleteUUID);
 
+            Mockito.verify(userInfoService).findById(userToDeleteUUID);
             Mockito.verify(userInfoService).delete(foundUserToDelete);
         }
 

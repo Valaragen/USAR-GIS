@@ -7,5 +7,4 @@ import java.util.Optional;
 
 public interface UserInfoService extends CRUDService<UserInfo, String> {
     Optional<UserInfo> findByUsername(String username);
-    boolean isSameUsernameThanAuthenticatedUser(String username);
 }

@@ -2,12 +2,14 @@ package com.usargis.usargisapi.model;
 
 import com.usargis.usargisapi.model.common.ModelEntity;
 import com.usargis.usargisapi.model.embeddable.TeamMemberId;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
+import lombok.*;
 
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 @EqualsAndHashCode(callSuper = true)
 @Data
 @Entity

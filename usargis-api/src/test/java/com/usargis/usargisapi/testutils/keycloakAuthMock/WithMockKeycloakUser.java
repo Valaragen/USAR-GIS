@@ -1,4 +1,4 @@
-package com.usargis.usargisapi.security.testutils;
+package com.usargis.usargisapi.testutils.keycloakAuthMock;
 
 import org.springframework.security.test.context.support.WithSecurityContext;
 

@@ -32,7 +32,7 @@ public class KeycloakSecurityTestController {
     }
 
     @GetMapping("/sameuser/{user}")
-    @PreAuthorize("@userInfoServiceImpl.isSameUsernameThanAuthenticatedUser(#user)")
+    @PreAuthorize("@securityServiceImpl.isSameUsernameThanAuthenticatedUser(#user)")
     public ResponseEntity<String> sameUserAccess(@PathVariable String user) {
         return new ResponseEntity<>("Authorized", HttpStatus.OK);
     }

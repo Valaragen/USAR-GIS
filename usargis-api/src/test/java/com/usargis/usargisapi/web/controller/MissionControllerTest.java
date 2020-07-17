@@ -23,7 +23,7 @@ class MissionControllerTest {
 
     private MissionController objectToTest;
 
-    private MissionService missionService = Mockito.mock(MissionServiceImpl.class);
+    private MissionService missionService = Mockito.mock(MissionService.class);
 
     @BeforeEach
     void setup() {
@@ -139,6 +139,7 @@ class MissionControllerTest {
 
             objectToTest.deleteMission(missionToDeleteId);
 
+            Mockito.verify(missionService).findById(missionToDeleteId);
             Mockito.verify(missionService).delete(foundMissionToDelete);
         }
 

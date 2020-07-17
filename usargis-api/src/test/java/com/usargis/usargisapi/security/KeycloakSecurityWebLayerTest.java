@@ -1,9 +1,9 @@
 package com.usargis.usargisapi.security;
 
 import com.usargis.usargisapi.config.SpringKeycloakSecurityConfiguration;
-import com.usargis.usargisapi.repository.UserInfoRepository;
+import com.usargis.usargisapi.repository.SecurityService;
 import com.usargis.usargisapi.security.testController.KeycloakSecurityTestController;
-import com.usargis.usargisapi.security.testutils.WithMockKeycloakUser;
+import com.usargis.usargisapi.testutils.keycloakAuthMock.WithMockKeycloakUser;
 import com.usargis.usargisapi.service.contract.UserInfoService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,17 +20,18 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @ActiveProfiles("test")
-@WebMvcTest(value = {KeycloakSecurityTestController.class, UserInfoService.class})
+@WebMvcTest(value = {KeycloakSecurityTestController.class, SecurityService.class})
 @Import(SpringKeycloakSecurityConfiguration.class)
 class KeycloakSecurityWebLayerTest {
     @Autowired
     private MockMvc mockMvc;
 
-    @Autowired
+    @MockBean
     private UserInfoService userInfoService;
 
-    @MockBean
-    private UserInfoRepository userInfoRepository;
+    @Autowired
+    private SecurityService securityService;
+
 
     @Test
     @WithMockKeycloakUser(roles = "LEADER")

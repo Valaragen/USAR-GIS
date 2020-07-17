@@ -2,13 +2,15 @@ package com.usargis.usargisapi.model;
 
 import com.usargis.usargisapi.model.common.ModelEntity;
 import com.usargis.usargisapi.model.embeddable.NotificationMessageId;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
 
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 @EqualsAndHashCode(callSuper = true)
 @Data
 @Entity
@@ -20,6 +22,7 @@ public class NotificationMessage extends ModelEntity {
     @Column(length = 100)
     private String subject;
 
+    @Builder.Default
     @ElementCollection
     @CollectionTable(name = "notification_message_sending_modes", joinColumns = {@JoinColumn(name = "notification_message_notification_id"), @JoinColumn(name = "notification_message_notification_message_content_type")})
     @Column(name = "notification_message_sending_mode")

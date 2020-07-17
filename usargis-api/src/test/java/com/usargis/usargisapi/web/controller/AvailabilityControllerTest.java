@@ -24,7 +24,7 @@ class AvailabilityControllerTest {
 
     private AvailabilityController objectToTest;
 
-    private AvailabilityService availabilityService = Mockito.mock(AvailabilityServiceImpl.class);
+    private AvailabilityService availabilityService = Mockito.mock(AvailabilityService.class);
 
     @BeforeEach
     void setup() {
@@ -141,6 +141,7 @@ class AvailabilityControllerTest {
 
             objectToTest.deleteAvailability(availabilityToDeleteId);
 
+            Mockito.verify(availabilityService).findById(availabilityToDeleteId);
             Mockito.verify(availabilityService).delete(foundAvailabilityToDelete);
         }
 

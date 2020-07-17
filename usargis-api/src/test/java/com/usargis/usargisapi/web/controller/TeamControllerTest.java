@@ -23,7 +23,7 @@ class TeamControllerTest {
 
     private TeamController objectToTest;
 
-    private TeamService teamService = Mockito.mock(TeamServiceImpl.class);
+    private TeamService teamService = Mockito.mock(TeamService.class);
 
     @BeforeEach
     void setup() {
@@ -139,6 +139,7 @@ class TeamControllerTest {
 
             objectToTest.deleteTeam(teamToDeleteId);
 
+            Mockito.verify(teamService).findById(teamToDeleteId);
             Mockito.verify(teamService).delete(foundTeamToDelete);
         }
 

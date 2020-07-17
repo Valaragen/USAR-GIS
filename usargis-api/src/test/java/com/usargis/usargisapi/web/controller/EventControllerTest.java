@@ -23,7 +23,7 @@ class EventControllerTest {
 
     private EventController objectToTest;
 
-    private EventService eventService = Mockito.mock(EventServiceImpl.class);
+    private EventService eventService = Mockito.mock(EventService.class);
 
     @BeforeEach
     void setup() {
@@ -139,6 +139,7 @@ class EventControllerTest {
 
             objectToTest.deleteEvent(eventToDeleteId);
 
+            Mockito.verify(eventService).findById(eventToDeleteId);
             Mockito.verify(eventService).delete(foundEventToDelete);
         }
 

@@ -23,7 +23,7 @@ class GroupControllerTest {
 
     private GroupController objectToTest;
 
-    private GroupService groupService = Mockito.mock(GroupServiceImpl.class);
+    private GroupService groupService = Mockito.mock(GroupService.class);
 
     @BeforeEach
     void setup() {
@@ -139,6 +139,7 @@ class GroupControllerTest {
 
             objectToTest.deleteGroup(groupToDeleteId);
 
+            Mockito.verify(groupService).findById(groupToDeleteId);
             Mockito.verify(groupService).delete(foundGroupToDelete);
         }
 

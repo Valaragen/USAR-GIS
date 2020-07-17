@@ -10,6 +10,9 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 @EqualsAndHashCode(callSuper = true)
 @Data
 @Setter(AccessLevel.PRIVATE)
@@ -33,12 +36,14 @@ public class UserInfo extends ModelEntity {
 
     private String formattedAddress;
 
+    @Builder.Default
     @JsonIgnoreProperties({"id.userInfo"})
     @OneToMany(mappedBy = "id.userInfo", orphanRemoval = true)
     @ToString.Exclude
     @EqualsAndHashCode.Exclude
     private List<TeamMember> inTeams = new ArrayList<>();
 
+    @Builder.Default
     @ManyToMany(mappedBy = "users")
     private Set<Group> groups = new HashSet<>();
 

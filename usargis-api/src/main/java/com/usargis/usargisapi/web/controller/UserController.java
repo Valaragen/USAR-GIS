@@ -1,6 +1,7 @@
 package com.usargis.usargisapi.web.controller;
 
 import com.usargis.usargisapi.model.UserInfo;
+import com.usargis.usargisapi.repository.SecurityService;
 import com.usargis.usargisapi.service.contract.UserInfoService;
 import com.usargis.usargisapi.util.Constant;
 import com.usargis.usargisapi.util.ErrorConstant;
@@ -38,10 +39,9 @@ public class UserController {
         return new ResponseEntity<>(userInfos, HttpStatus.OK);
     }
 
-    @PreAuthorize("hasRole('" + Constant.LEADER_ROLE + "') or @userInfoServiceImpl.isSameUsernameThanAuthenticatedUser(#string)")
+    @PreAuthorize("hasRole('" + Constant.LEADER_ROLE + "') or @securityServiceImpl.isSameUsernameThanAuthenticatedUser(#string)")
     @GetMapping(Constant.USERS + Constant.SLASH_STRING_PATH)
     public ResponseEntity<UserInfo> getUserByUsername(@PathVariable String string) {
-        userInfoService.findByUsername(string);
         Optional<UserInfo> userInfo = userInfoService.findByUsername(string);
         UserInfo result = userInfo.orElseThrow(() -> new NotFoundException(MessageFormat.format(ErrorConstant.NO_USER_FOUND_FOR_ID, string)));
         return new ResponseEntity<>(result, HttpStatus.OK);

@@ -2,8 +2,7 @@ package com.usargis.usargisapi.model;
 
 import com.usargis.usargisapi.model.common.ModelEntity;
 import com.usargis.usargisapi.model.embeddable.InscriptionId;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
+import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.Column;
@@ -11,6 +10,9 @@ import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import java.time.LocalDateTime;
 
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 @EqualsAndHashCode(callSuper = true)
 @Data
 @Entity
