@@ -17,6 +17,7 @@
 
     <properties>
         <java.version>1.8</java.version>
+        <sonar.coverage.jacoco.xmlReportPaths>${basedir}\target\site\jacoco\jacoco.xml</sonar.coverage.jacoco.xmlReportPaths>
     </properties>
 
     <dependencies>
