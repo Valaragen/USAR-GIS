@@ -1,7 +1,6 @@
 package com.usargis.usargisapi.core.dto;
 
 import com.usargis.usargisapi.core.model.NotificationMessageSendingMode;
-import lombok.Data;
 import lombok.Value;
 import org.hibernate.validator.constraints.Length;
 

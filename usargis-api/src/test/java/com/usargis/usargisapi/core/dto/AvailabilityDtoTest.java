@@ -1,7 +1,6 @@
 package com.usargis.usargisapi.core.dto;
 
 import com.usargis.usargisapi.core.model.Availability;
-import com.usargis.usargisapi.core.model.Event;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.modelmapper.ModelMapper;
