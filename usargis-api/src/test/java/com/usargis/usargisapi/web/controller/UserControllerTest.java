@@ -128,26 +128,26 @@ class UserControllerTest {
 
     @Nested
     class deleteUserTest {
-        private final String userToDeleteUUID = "1";
+        private final String userToDeleteUuid = "1";
         private final UserInfo foundUserToDelete = new UserInfo();
 
         @Test
         void deleteUser_shouldCallServiceLayer() {
-            Mockito.when(userInfoService.findById(userToDeleteUUID)).thenReturn(Optional.of(foundUserToDelete));
+            Mockito.when(userInfoService.findById(userToDeleteUuid)).thenReturn(Optional.of(foundUserToDelete));
             Mockito.doNothing().when(userInfoService).delete(foundUserToDelete);
 
-            objectToTest.deleteUser(userToDeleteUUID);
+            objectToTest.deleteUser(userToDeleteUuid);
 
-            Mockito.verify(userInfoService).findById(userToDeleteUUID);
+            Mockito.verify(userInfoService).findById(userToDeleteUuid);
             Mockito.verify(userInfoService).delete(foundUserToDelete);
         }
 
         @Test
         void deleteUser_userDeleted_returnResponseEntityWithStatusNoContent() {
-            Mockito.when(userInfoService.findById(userToDeleteUUID)).thenReturn(Optional.of(foundUserToDelete));
+            Mockito.when(userInfoService.findById(userToDeleteUuid)).thenReturn(Optional.of(foundUserToDelete));
             Mockito.doNothing().when(userInfoService).delete(foundUserToDelete);
 
-            ResponseEntity result = objectToTest.deleteUser(userToDeleteUUID);
+            ResponseEntity result = objectToTest.deleteUser(userToDeleteUuid);
 
             Assertions.assertThat(result.getStatusCode())
                     .isEqualTo(HttpStatus.NO_CONTENT);

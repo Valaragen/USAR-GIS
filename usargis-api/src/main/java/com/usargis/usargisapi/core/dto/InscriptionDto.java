@@ -6,7 +6,7 @@ import lombok.Data;
 import java.time.LocalDateTime;
 
 @Data
-public class InscriptionDTO {
+public class InscriptionDto {
     private InscriptionStatus inscriptionStatus;
     private LocalDateTime inscriptionDate;
 }

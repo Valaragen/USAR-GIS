@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Data
-public class NotificationDTO {
+public class NotificationDto {
     private LocalDateTime sendingDate;
     private NotificationStatus status;
 

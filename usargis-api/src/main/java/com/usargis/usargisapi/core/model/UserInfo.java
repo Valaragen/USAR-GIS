@@ -19,7 +19,7 @@ import java.util.Set;
 @Entity
 public class UserInfo extends ModelEntity {
     @Id
-    private String UUID;
+    private String uuid;
 
     @Column(nullable = false, unique = true)
     private String username;

@@ -3,7 +3,7 @@ package com.usargis.usargisapi.core.dto;
 import lombok.Data;
 
 @Data
-public class UserInfoDTO {
+public class UserInfoDto {
     private String username;
 
     private String email;

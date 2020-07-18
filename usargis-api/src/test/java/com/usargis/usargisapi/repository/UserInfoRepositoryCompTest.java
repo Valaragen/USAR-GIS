@@ -45,7 +45,7 @@ class UserInfoRepositoryCompTest {
     void findById_shouldFindUserInDbById() {
         UserInfo userToFind = sampleUser;
 
-        Optional<UserInfo> result = objectToTest.findById(sampleUser.getUUID());
+        Optional<UserInfo> result = objectToTest.findById(sampleUser.getUuid());
 
         Assertions.assertThat(result.isPresent()).isTrue();
         Assertions.assertThat(result.get()).isEqualTo(userToFind);
@@ -54,7 +54,7 @@ class UserInfoRepositoryCompTest {
     @Test
     void save_shouldAddUserInDb() {
         UserInfo userInfoToSave = UserInfoMother.sample()
-                .UUID("TEST_UUID")
+                .uuid("TEST_UUID")
                 .username(("pepe"))
                 .email("pepeTest@gmail.com")
                 .build();

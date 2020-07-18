@@ -4,6 +4,6 @@ import lombok.Data;
 
 
 @Data
-public class GroupDTO {
+public class GroupDto {
     private String name;
 }

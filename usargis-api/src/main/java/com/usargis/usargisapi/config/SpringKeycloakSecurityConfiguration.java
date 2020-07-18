@@ -130,7 +130,13 @@ public class SpringKeycloakSecurityConfiguration {
 
                     .authorizeRequests()
                     .mvcMatchers(HttpMethod.OPTIONS).permitAll()
-
+                    //Swagger uris
+                    .mvcMatchers("/v2/api-docs",
+                    "/configuration/ui",
+                    "/swagger-resources/**",
+                    "/configuration/security",
+                    "/swagger-ui.html",
+                    "/webjars/**").permitAll()
                     .anyRequest().authenticated();
 
         }

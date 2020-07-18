@@ -6,7 +6,7 @@ import lombok.Data;
 import java.time.LocalDateTime;
 
 @Data
-public class EventDTO {
+public class EventDto {
     private String name;
     private EventStatus status;
     private String description;

@@ -6,7 +6,7 @@ import lombok.Data;
 import java.time.LocalDateTime;
 
 @Data
-public class MissionDTO {
+public class MissionDto {
     private String name;
     private MissionStatus status;
     private String description;

@@ -4,7 +4,7 @@ import com.usargis.usargisapi.core.model.Mission;
 import lombok.Data;
 
 @Data
-public class TeamDTO {
+public class TeamDto {
     private String name;
     private Mission mission;
 }

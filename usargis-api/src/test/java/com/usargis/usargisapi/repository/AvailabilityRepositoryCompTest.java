@@ -86,7 +86,7 @@ class AvailabilityRepositoryCompTest {
     @Test
     void searchAll_userUUIDGiven_shouldFindByUUID() {
         AvailabilitySearch availabilitySearch = new AvailabilitySearch();
-        availabilitySearch.setUserUUID(sampleUser.getUUID());
+        availabilitySearch.setUserUUID(sampleUser.getUuid());
 
         List<Availability> result = objectToTest.searchAll(availabilitySearch);
 
@@ -109,7 +109,7 @@ class AvailabilityRepositoryCompTest {
     void searchAll_givenAvailabilitySearch_shouldFindAllGivenParameters() {
         AvailabilitySearch availabilitySearch = new AvailabilitySearch();
         availabilitySearch.setMissionId(sampleFinishedMission.getId());
-        availabilitySearch.setUserUUID(sampleUser.getUUID());
+        availabilitySearch.setUserUUID(sampleUser.getUuid());
 
         List<Availability> result = objectToTest.searchAll(availabilitySearch);
 

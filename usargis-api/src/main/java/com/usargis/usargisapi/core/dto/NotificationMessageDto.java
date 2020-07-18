@@ -7,7 +7,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Data
-public class NotificationMessageDTO {
+public class NotificationMessageDto {
     private String content;
     private String subject;
 
