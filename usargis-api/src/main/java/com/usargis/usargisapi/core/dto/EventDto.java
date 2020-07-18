@@ -5,8 +5,9 @@ import lombok.Data;
 
 import java.time.LocalDateTime;
 
-@Data
-public class EventDto {
+public abstract class EventDto {
+    private EventDto(){};
+
     private String name;
     private EventStatus status;
     private String description;

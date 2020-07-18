@@ -20,6 +20,6 @@ public class TeamMember extends ModelEntity {
     @NotNull
     @EmbeddedId
     private TeamMemberId id;
-    
+
     private boolean isConfirmedByUser;
 }
