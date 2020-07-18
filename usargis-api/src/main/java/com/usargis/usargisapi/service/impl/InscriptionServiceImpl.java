@@ -1,7 +1,7 @@
 package com.usargis.usargisapi.service.impl;
 
-import com.usargis.usargisapi.model.Inscription;
-import com.usargis.usargisapi.model.embeddable.InscriptionId;
+import com.usargis.usargisapi.core.model.Inscription;
+import com.usargis.usargisapi.core.model.embeddable.InscriptionId;
 import com.usargis.usargisapi.repository.InscriptionRepository;
 import com.usargis.usargisapi.service.contract.InscriptionService;
 import org.springframework.beans.factory.annotation.Autowired;

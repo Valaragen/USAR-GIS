@@ -1,8 +1,8 @@
 package com.usargis.usargisapi.service.impl;
 
-import com.usargis.usargisapi.model.Availability;
+import com.usargis.usargisapi.core.model.Availability;
+import com.usargis.usargisapi.core.search.AvailabilitySearch;
 import com.usargis.usargisapi.repository.AvailabilityRepository;
-import com.usargis.usargisapi.search.AvailabilitySearch;
 import com.usargis.usargisapi.service.contract.AvailabilityService;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;

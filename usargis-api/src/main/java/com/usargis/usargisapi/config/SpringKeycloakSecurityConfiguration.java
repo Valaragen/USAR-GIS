@@ -32,7 +32,7 @@ public class SpringKeycloakSecurityConfiguration {
     @KeycloakConfiguration
     @EnableGlobalMethodSecurity(prePostEnabled = true)
     @ConditionalOnProperty(name = "keycloak.enabled", havingValue = "true", matchIfMissing = true)
-    public static class keycloakConfigurationAdapter extends KeycloakWebSecurityConfigurerAdapter {
+    public static class KeycloakConfigurationAdapter extends KeycloakWebSecurityConfigurerAdapter {
 
         /**
          * Defines the session authentication strategy.
@@ -59,7 +59,7 @@ public class SpringKeycloakSecurityConfiguration {
          * Required to handle spring boot configurations
          */
         @Bean
-        public KeycloakConfigResolver KeycloakConfigResolver() {
+        public KeycloakConfigResolver keycloakConfigResolver() {
             return new KeycloakSpringBootConfigResolver();
         }
 

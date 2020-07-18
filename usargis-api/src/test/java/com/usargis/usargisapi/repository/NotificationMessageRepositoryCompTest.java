@@ -1,7 +1,7 @@
 package com.usargis.usargisapi.repository;
 
-import com.usargis.usargisapi.model.*;
-import com.usargis.usargisapi.model.embeddable.NotificationMessageId;
+import com.usargis.usargisapi.core.model.embeddable.NotificationMessageId;
+import com.usargis.usargisapi.core.model.*;
 import com.usargis.usargisapi.testutils.objectMother.NotificationMessageMother;
 import com.usargis.usargisapi.testutils.objectMother.NotificationMother;
 import com.usargis.usargisapi.testutils.objectMother.UserInfoMother;

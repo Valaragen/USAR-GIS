@@ -1,7 +1,7 @@
 package com.usargis.usargisapi.web.controller;
 
-import com.usargis.usargisapi.model.Availability;
-import com.usargis.usargisapi.search.AvailabilitySearch;
+import com.usargis.usargisapi.core.model.Availability;
+import com.usargis.usargisapi.core.search.AvailabilitySearch;
 import com.usargis.usargisapi.service.contract.AvailabilityService;
 import com.usargis.usargisapi.util.Constant;
 import com.usargis.usargisapi.util.ErrorConstant;

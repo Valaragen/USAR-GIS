@@ -1,7 +1,7 @@
 package com.usargis.usargisapi.repository;
 
-import com.usargis.usargisapi.model.Notification;
-import com.usargis.usargisapi.model.UserInfo;
+import com.usargis.usargisapi.core.model.Notification;
+import com.usargis.usargisapi.core.model.UserInfo;
 import com.usargis.usargisapi.testutils.objectMother.NotificationMother;
 import com.usargis.usargisapi.testutils.objectMother.UserInfoMother;
 import org.assertj.core.api.Assertions;

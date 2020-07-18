@@ -1,6 +1,6 @@
 package com.usargis.usargisapi.web.controller;
 
-import com.usargis.usargisapi.model.Notification;
+import com.usargis.usargisapi.core.model.Notification;
 import com.usargis.usargisapi.service.contract.NotificationService;
 import com.usargis.usargisapi.util.ErrorConstant;
 import com.usargis.usargisapi.web.exception.NotFoundException;

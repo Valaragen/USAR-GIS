@@ -1,6 +1,6 @@
 package com.usargis.usargisapi.web.controller;
 
-import com.usargis.usargisapi.model.Event;
+import com.usargis.usargisapi.core.model.Event;
 import com.usargis.usargisapi.service.contract.EventService;
 import com.usargis.usargisapi.util.ErrorConstant;
 import com.usargis.usargisapi.web.exception.NotFoundException;

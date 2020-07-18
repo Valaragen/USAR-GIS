@@ -1,7 +1,7 @@
 package com.usargis.usargisapi.testutils.objectMother;
 
-import com.usargis.usargisapi.model.Mission;
-import com.usargis.usargisapi.model.MissionStatus;
+import com.usargis.usargisapi.core.model.Mission;
+import com.usargis.usargisapi.core.model.MissionStatus;
 
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;

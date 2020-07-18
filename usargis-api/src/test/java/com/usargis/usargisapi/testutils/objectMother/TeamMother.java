@@ -1,6 +1,6 @@
 package com.usargis.usargisapi.testutils.objectMother;
 
-import com.usargis.usargisapi.model.Team;
+import com.usargis.usargisapi.core.model.Team;
 
 public class TeamMother {
     public static Team.TeamBuilder sample() {

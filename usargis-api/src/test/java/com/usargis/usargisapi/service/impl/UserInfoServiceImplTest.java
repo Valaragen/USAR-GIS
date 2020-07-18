@@ -1,6 +1,6 @@
 package com.usargis.usargisapi.service.impl;
 
-import com.usargis.usargisapi.model.UserInfo;
+import com.usargis.usargisapi.core.model.UserInfo;
 import com.usargis.usargisapi.repository.UserInfoRepository;
 import com.usargis.usargisapi.service.contract.UserInfoService;
 import org.assertj.core.api.Assertions;

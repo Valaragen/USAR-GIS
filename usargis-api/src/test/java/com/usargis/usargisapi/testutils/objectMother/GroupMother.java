@@ -1,6 +1,6 @@
 package com.usargis.usargisapi.testutils.objectMother;
 
-import com.usargis.usargisapi.model.Group;
+import com.usargis.usargisapi.core.model.Group;
 
 public class GroupMother {
     public static Group.GroupBuilder sample() {

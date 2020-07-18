@@ -1,7 +1,7 @@
 package com.usargis.usargisapi.testutils.objectMother;
 
-import com.usargis.usargisapi.model.TeamMember;
-import com.usargis.usargisapi.model.embeddable.TeamMemberId;
+import com.usargis.usargisapi.core.model.TeamMember;
+import com.usargis.usargisapi.core.model.embeddable.TeamMemberId;
 
 public class TeamMemberMother {
     public static TeamMember.TeamMemberBuilder sample() {

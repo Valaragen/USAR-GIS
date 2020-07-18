@@ -1,6 +1,6 @@
 package com.usargis.usargisapi.web.controller;
 
-import com.usargis.usargisapi.model.UserInfo;
+import com.usargis.usargisapi.core.model.UserInfo;
 import com.usargis.usargisapi.service.contract.UserInfoService;
 import com.usargis.usargisapi.util.Constant;
 import com.usargis.usargisapi.util.ErrorConstant;

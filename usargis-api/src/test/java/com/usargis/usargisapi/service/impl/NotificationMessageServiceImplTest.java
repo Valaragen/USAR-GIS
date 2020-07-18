@@ -1,7 +1,7 @@
 package com.usargis.usargisapi.service.impl;
 
-import com.usargis.usargisapi.model.NotificationMessage;
-import com.usargis.usargisapi.model.embeddable.NotificationMessageId;
+import com.usargis.usargisapi.core.model.NotificationMessage;
+import com.usargis.usargisapi.core.model.embeddable.NotificationMessageId;
 import com.usargis.usargisapi.repository.NotificationMessageRepository;
 import com.usargis.usargisapi.service.contract.NotificationMessageService;
 import org.assertj.core.api.Assertions;

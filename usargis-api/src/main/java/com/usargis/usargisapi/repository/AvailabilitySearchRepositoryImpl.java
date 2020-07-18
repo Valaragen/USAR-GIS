@@ -1,9 +1,9 @@
 package com.usargis.usargisapi.repository;
 
-import com.usargis.usargisapi.model.Availability;
-import com.usargis.usargisapi.model.Mission;
-import com.usargis.usargisapi.model.UserInfo;
-import com.usargis.usargisapi.search.AvailabilitySearch;
+import com.usargis.usargisapi.core.model.Availability;
+import com.usargis.usargisapi.core.model.Mission;
+import com.usargis.usargisapi.core.model.UserInfo;
+import com.usargis.usargisapi.core.search.AvailabilitySearch;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;

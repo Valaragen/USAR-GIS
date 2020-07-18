@@ -1,6 +1,6 @@
 package com.usargis.usargisapi.testutils.objectMother;
 
-import com.usargis.usargisapi.model.Availability;
+import com.usargis.usargisapi.core.model.Availability;
 
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;

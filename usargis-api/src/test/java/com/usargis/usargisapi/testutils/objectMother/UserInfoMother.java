@@ -1,6 +1,6 @@
 package com.usargis.usargisapi.testutils.objectMother;
 
-import com.usargis.usargisapi.model.UserInfo;
+import com.usargis.usargisapi.core.model.UserInfo;
 
 public class UserInfoMother {
     public static UserInfo.UserInfoBuilder sample() {

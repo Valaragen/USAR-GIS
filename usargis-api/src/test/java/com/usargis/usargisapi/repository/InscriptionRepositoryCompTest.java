@@ -1,9 +1,9 @@
 package com.usargis.usargisapi.repository;
 
-import com.usargis.usargisapi.model.Event;
-import com.usargis.usargisapi.model.Inscription;
-import com.usargis.usargisapi.model.UserInfo;
-import com.usargis.usargisapi.model.embeddable.InscriptionId;
+import com.usargis.usargisapi.core.model.Event;
+import com.usargis.usargisapi.core.model.Inscription;
+import com.usargis.usargisapi.core.model.UserInfo;
+import com.usargis.usargisapi.core.model.embeddable.InscriptionId;
 import com.usargis.usargisapi.testutils.objectMother.EventMother;
 import com.usargis.usargisapi.testutils.objectMother.InscriptionMother;
 import com.usargis.usargisapi.testutils.objectMother.UserInfoMother;

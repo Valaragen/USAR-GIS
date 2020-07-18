@@ -1,7 +1,7 @@
 package com.usargis.usargisapi.testutils.objectMother;
 
-import com.usargis.usargisapi.model.Notification;
-import com.usargis.usargisapi.model.NotificationStatus;
+import com.usargis.usargisapi.core.model.Notification;
+import com.usargis.usargisapi.core.model.NotificationStatus;
 
 import java.time.LocalDateTime;
 

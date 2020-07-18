@@ -1,8 +1,8 @@
 package com.usargis.usargisapi.repository;
 
-import com.usargis.usargisapi.model.Mission;
-import com.usargis.usargisapi.model.Team;
-import com.usargis.usargisapi.model.UserInfo;
+import com.usargis.usargisapi.core.model.Mission;
+import com.usargis.usargisapi.core.model.Team;
+import com.usargis.usargisapi.core.model.UserInfo;
 import com.usargis.usargisapi.testutils.objectMother.MissionMother;
 import com.usargis.usargisapi.testutils.objectMother.TeamMother;
 import com.usargis.usargisapi.testutils.objectMother.UserInfoMother;

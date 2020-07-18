@@ -1,7 +1,7 @@
 package com.usargis.usargisapi.service.impl;
 
-import com.usargis.usargisapi.model.TeamMember;
-import com.usargis.usargisapi.model.embeddable.TeamMemberId;
+import com.usargis.usargisapi.core.model.TeamMember;
+import com.usargis.usargisapi.core.model.embeddable.TeamMemberId;
 import com.usargis.usargisapi.repository.TeamMemberRepository;
 import com.usargis.usargisapi.service.contract.TeamMemberService;
 import org.assertj.core.api.Assertions;

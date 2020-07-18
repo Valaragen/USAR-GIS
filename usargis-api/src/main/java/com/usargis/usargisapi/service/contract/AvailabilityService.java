@@ -1,7 +1,7 @@
 package com.usargis.usargisapi.service.contract;
 
-import com.usargis.usargisapi.model.Availability;
-import com.usargis.usargisapi.search.AvailabilitySearch;
+import com.usargis.usargisapi.core.model.Availability;
+import com.usargis.usargisapi.core.search.AvailabilitySearch;
 import com.usargis.usargisapi.service.contract.common.CRUDService;
 
 import java.lang.reflect.InvocationTargetException;

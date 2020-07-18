@@ -1,9 +1,9 @@
 package com.usargis.usargisapi.testutils.objectMother;
 
-import com.usargis.usargisapi.model.NotificationMessage;
-import com.usargis.usargisapi.model.NotificationMessageContentType;
-import com.usargis.usargisapi.model.NotificationMessageSendingMode;
-import com.usargis.usargisapi.model.embeddable.NotificationMessageId;
+import com.usargis.usargisapi.core.model.NotificationMessage;
+import com.usargis.usargisapi.core.model.NotificationMessageContentType;
+import com.usargis.usargisapi.core.model.NotificationMessageSendingMode;
+import com.usargis.usargisapi.core.model.embeddable.NotificationMessageId;
 
 import java.util.Collections;
 import java.util.HashSet;

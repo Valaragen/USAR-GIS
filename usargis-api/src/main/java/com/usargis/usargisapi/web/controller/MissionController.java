@@ -1,6 +1,6 @@
 package com.usargis.usargisapi.web.controller;
 
-import com.usargis.usargisapi.model.Mission;
+import com.usargis.usargisapi.core.model.Mission;
 import com.usargis.usargisapi.service.contract.MissionService;
 import com.usargis.usargisapi.util.Constant;
 import com.usargis.usargisapi.util.ErrorConstant;

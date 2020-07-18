@@ -1,7 +1,7 @@
 package com.usargis.usargisapi.testutils.objectMother;
 
-import com.usargis.usargisapi.model.Event;
-import com.usargis.usargisapi.model.EventStatus;
+import com.usargis.usargisapi.core.model.Event;
+import com.usargis.usargisapi.core.model.EventStatus;
 
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;

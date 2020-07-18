@@ -1,8 +1,8 @@
 package com.usargis.usargisapi.testutils.objectMother;
 
-import com.usargis.usargisapi.model.Inscription;
-import com.usargis.usargisapi.model.InscriptionStatus;
-import com.usargis.usargisapi.model.embeddable.InscriptionId;
+import com.usargis.usargisapi.core.model.Inscription;
+import com.usargis.usargisapi.core.model.InscriptionStatus;
+import com.usargis.usargisapi.core.model.embeddable.InscriptionId;
 
 import java.time.LocalDateTime;
 

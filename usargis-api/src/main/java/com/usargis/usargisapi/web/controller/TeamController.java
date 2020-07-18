@@ -1,6 +1,6 @@
 package com.usargis.usargisapi.web.controller;
 
-import com.usargis.usargisapi.model.Team;
+import com.usargis.usargisapi.core.model.Team;
 import com.usargis.usargisapi.service.contract.TeamService;
 import com.usargis.usargisapi.util.Constant;
 import com.usargis.usargisapi.util.ErrorConstant;

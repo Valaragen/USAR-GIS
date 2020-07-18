@@ -1,6 +1,6 @@
 package com.usargis.usargisapi.service.impl;
 
-import com.usargis.usargisapi.model.Mission;
+import com.usargis.usargisapi.core.model.Mission;
 import com.usargis.usargisapi.repository.MissionRepository;
 import com.usargis.usargisapi.service.contract.MissionService;
 import org.assertj.core.api.Assertions;

@@ -1,6 +1,6 @@
 package com.usargis.usargisapi.service.contract;
 
-import com.usargis.usargisapi.model.UserInfo;
+import com.usargis.usargisapi.core.model.UserInfo;
 import com.usargis.usargisapi.service.contract.common.CRUDService;
 
 import java.util.Optional;

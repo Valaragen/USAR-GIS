@@ -1,6 +1,6 @@
 package com.usargis.usargisapi.service.impl;
 
-import com.usargis.usargisapi.model.Event;
+import com.usargis.usargisapi.core.model.Event;
 import com.usargis.usargisapi.repository.EventRepository;
 import com.usargis.usargisapi.service.contract.EventService;
 import org.assertj.core.api.Assertions;

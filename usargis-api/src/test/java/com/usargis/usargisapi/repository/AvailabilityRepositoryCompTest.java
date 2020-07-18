@@ -1,9 +1,9 @@
 package com.usargis.usargisapi.repository;
 
-import com.usargis.usargisapi.model.Availability;
-import com.usargis.usargisapi.model.Mission;
-import com.usargis.usargisapi.model.UserInfo;
-import com.usargis.usargisapi.search.AvailabilitySearch;
+import com.usargis.usargisapi.core.model.Availability;
+import com.usargis.usargisapi.core.model.Mission;
+import com.usargis.usargisapi.core.model.UserInfo;
+import com.usargis.usargisapi.core.search.AvailabilitySearch;
 import com.usargis.usargisapi.testutils.objectMother.AvailabilityMother;
 import com.usargis.usargisapi.testutils.objectMother.MissionMother;
 import com.usargis.usargisapi.testutils.objectMother.UserInfoMother;
@@ -58,8 +58,8 @@ class AvailabilityRepositoryCompTest {
 
         Optional<Availability> result = objectToTest.findById(availabilityToFind.getId());
 
-        Assertions.assertThat(result.isPresent()).isTrue();
-        Assertions.assertThat(result.get()).isEqualTo(availabilityToFind);
+        Assertions.assertThat(result).isPresent();
+        Assertions.assertThat(result).contains(availabilityToFind);
     }
 
     @Test

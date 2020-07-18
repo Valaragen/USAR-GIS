@@ -1,7 +1,7 @@
 package com.usargis.usargisapi.repository;
 
-import com.usargis.usargisapi.model.Event;
-import com.usargis.usargisapi.model.UserInfo;
+import com.usargis.usargisapi.core.model.Event;
+import com.usargis.usargisapi.core.model.UserInfo;
 import com.usargis.usargisapi.testutils.objectMother.EventMother;
 import com.usargis.usargisapi.testutils.objectMother.UserInfoMother;
 import org.assertj.core.api.Assertions;

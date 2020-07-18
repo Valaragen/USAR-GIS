@@ -1,6 +1,6 @@
 package com.usargis.usargisapi.service.impl;
 
-import com.usargis.usargisapi.model.Group;
+import com.usargis.usargisapi.core.model.Group;
 import com.usargis.usargisapi.repository.GroupRepository;
 import com.usargis.usargisapi.service.contract.GroupService;
 import org.assertj.core.api.Assertions;
