@@ -1,27 +1,43 @@
 package com.usargis.usargisapi.core.dto;
 
-import com.usargis.usargisapi.core.model.MissionStatus;
-import lombok.Data;
+import lombok.Value;
+import org.hibernate.validator.constraints.Length;
 
 import java.time.LocalDateTime;
 
-@Data
-public class MissionDto {
-    private String name;
-    private MissionStatus status;
-    private String description;
+public abstract class MissionDto {
+    private MissionDto() {
+    }
 
-    private LocalDateTime startDate;
-    private LocalDateTime endDate;
+    //Interfaces to inherit hibernate validation
+    private interface Name {
+        @Length(min = 2, max = 100)
+        String getName();
+    }
 
-    private LocalDateTime plannedStartDate;
-    private Integer expectedDurationInDays;
-    private String address;
-    private Double latitude;
-    private Double longitude;
+    private interface Description {
+        @Length(max = 5000)
+        String getDescription();
+    }
 
-    private LocalDateTime creationDate;
-    private LocalDateTime lastEditionDate;
+    private interface Address {
+        @Length(max = 200)
+        String getAddress();
+    }
 
-    private String authorUUID;
+    @Value
+    public static class PostRequest implements Name, Description, Address {
+        //Fields inheriting from validation
+        private String name;
+        private String description;
+        private String address;
+
+        //Fields specific to this DTO
+        private LocalDateTime startDate;
+        private LocalDateTime endDate;
+        private LocalDateTime plannedStartDate;
+        private Integer expectedDurationInDays;
+        private Double latitude;
+        private Double longitude;
+    }
 }

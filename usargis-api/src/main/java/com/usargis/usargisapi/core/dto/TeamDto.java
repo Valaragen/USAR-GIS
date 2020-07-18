@@ -1,10 +1,29 @@
 package com.usargis.usargisapi.core.dto;
 
-import com.usargis.usargisapi.core.model.Mission;
-import lombok.Data;
+import lombok.Value;
+import org.hibernate.validator.constraints.Length;
 
-@Data
-public class TeamDto {
-    private String name;
-    private Mission mission;
+import javax.validation.constraints.NotNull;
+
+public abstract class TeamDto {
+    private TeamDto() {
+    }
+
+    //Interfaces to inherit hibernate validation
+    private interface Name {
+        @Length(max = 50)
+        String getName();
+    }
+
+    private interface MissionId {
+        @NotNull
+        Long getMissionId();
+    }
+
+    @Value
+    public static class PostRequest implements Name, MissionId {
+        //Fields inheriting from validation
+        private String name;
+        private Long missionId;
+    }
 }

@@ -1,19 +1,25 @@
 package com.usargis.usargisapi.core.dto;
 
-import com.usargis.usargisapi.core.model.NotificationMessage;
-import com.usargis.usargisapi.core.model.NotificationStatus;
-import lombok.Data;
+import lombok.Value;
 
+import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
 
-@Data
-public class NotificationDto {
-    private LocalDateTime sendingDate;
-    private NotificationStatus status;
+public abstract class NotificationDto {
+    private NotificationDto() {
+    }
 
-    private String authorUUID;
+    //Interfaces to inherit hibernate validation
+    private interface SendingDate {
+        @NotNull
+        LocalDateTime getSendingDate();
+    }
 
-    private List<NotificationMessage> notificationMessages = new ArrayList<>();
+    @Value
+    public static class PostRequest implements SendingDate {
+        //Fields inheriting from validation
+        private LocalDateTime sendingDate;
+    }
+
+
 }

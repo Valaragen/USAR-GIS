@@ -43,6 +43,7 @@ public class Event extends ModelEntityWithLongId {
     private LocalDateTime creationDate;
     @UpdateTimestamp
     private LocalDateTime lastEditionDate;
+    @Length(max = 200)
     private String address;
 
     @NotNull
