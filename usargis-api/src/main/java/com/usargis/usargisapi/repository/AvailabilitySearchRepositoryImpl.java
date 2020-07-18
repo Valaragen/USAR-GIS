@@ -27,10 +27,10 @@ public class AvailabilitySearchRepositoryImpl implements AvailabilitySearchRepos
         Path<UserInfo> userInfoPath = availabilityRoot.get("userInfo");
         Path<Mission> missionPath = availabilityRoot.get("mission");
 
-        if (availabilitySearch.getUserUUID() != null) {
-            andPredicates.add(cb.like(userInfoPath.get("UUID"), availabilitySearch.getUserUUID()));
+        if (availabilitySearch.getUserUuid() != null) {
+            andPredicates.add(cb.like(userInfoPath.get("uuid"), availabilitySearch.getUserUuid()));
         } else {
-            andPredicates.add(cb.like(userInfoPath.get("UUID"), "%"));
+            andPredicates.add(cb.like(userInfoPath.get("uuid"), "%"));
         }
 
         if (availabilitySearch.getMissionId() != null) {

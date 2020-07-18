@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.Embeddable;
 import javax.persistence.ManyToOne;
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 
 @Data
@@ -15,8 +16,10 @@ import java.io.Serializable;
 @AllArgsConstructor
 @Embeddable
 public class TeamMemberId implements Serializable {
+    @NotNull
     @ManyToOne(optional = false)
     private Team team;
+    @NotNull
     @ManyToOne(optional = false)
     private UserInfo userInfo;
 }

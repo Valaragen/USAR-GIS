@@ -8,6 +8,8 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.Embeddable;
 import javax.persistence.ManyToOne;
+import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 
 @Data
@@ -15,8 +17,10 @@ import java.io.Serializable;
 @AllArgsConstructor
 @Embeddable
 public class InscriptionId implements Serializable {
+    @NotNull
     @ManyToOne(optional = false)
     private UserInfo userInfo;
+    @NotNull
     @ManyToOne(optional = false)
     private Event event;
 }

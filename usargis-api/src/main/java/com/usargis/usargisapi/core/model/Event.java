@@ -4,10 +4,14 @@ import com.usargis.usargisapi.core.model.common.ModelEntityWithLongId;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
+import org.hibernate.validator.constraints.Length;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
+import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 import java.time.LocalDateTime;
 
 @Builder
@@ -17,10 +21,13 @@ import java.time.LocalDateTime;
 @Data
 @Entity
 public class Event extends ModelEntityWithLongId {
+    @Length(min = 2, max = 100)
     @Column(length = 100)
     private String name;
+    @NotNull
     @Column(nullable = false)
     private EventStatus status;
+    @Length(max = 5000)
     @Column(length = 5000)
     private String description;
     private LocalDateTime startDate;
@@ -30,6 +37,7 @@ public class Event extends ModelEntityWithLongId {
     private boolean isInscriptionValidationRequired;
     private LocalDateTime inscriptionStartDate;
     private LocalDateTime inscriptionsEndDate;
+
     private Double latitude;
     private Double longitude;
 
@@ -39,6 +47,7 @@ public class Event extends ModelEntityWithLongId {
     private LocalDateTime lastEditionDate;
     private String address;
 
+    @NotNull
     @ManyToOne(optional = false)
     private UserInfo author;
 

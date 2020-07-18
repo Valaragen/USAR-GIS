@@ -1,6 +1,7 @@
 package com.usargis.usargisapi.core.dto;
 
 import com.usargis.usargisapi.core.model.Availability;
+import com.usargis.usargisapi.core.model.Event;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.modelmapper.ModelMapper;
@@ -32,6 +33,7 @@ class AvailabilityDtoTest {
         AvailabilityDto.Create availabilityDto = new AvailabilityDto.Create(null, null, LocalDateTime.now(), LocalDateTime.now());
         ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
         Validator validator = factory.getValidator();
+
         Set<ConstraintViolation<AvailabilityDto.Create>> violations = validator.validate(availabilityDto);
 
         Assertions.assertThat(violations).hasSize(2);
@@ -42,6 +44,7 @@ class AvailabilityDtoTest {
         AvailabilityDto.Response availabilityDto = new AvailabilityDto.Response(null, null, null, null, null);
         ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
         Validator validator = factory.getValidator();
+
         Set<ConstraintViolation<AvailabilityDto.Response>> violations = validator.validate(availabilityDto);
 
         Assertions.assertThat(violations).hasSize(2);

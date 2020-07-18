@@ -2,6 +2,7 @@ package com.usargis.usargisapi.core.model;
 
 import com.usargis.usargisapi.core.model.common.ModelEntityWithLongId;
 import lombok.*;
+import org.hibernate.validator.constraints.Length;
 
 import javax.persistence.*;
 import java.util.HashSet;
@@ -14,6 +15,7 @@ import java.util.Set;
 @Data
 @Entity(name = "_group")
 public class Group extends ModelEntityWithLongId {
+    @Length(min = 1, max = 50)
     @Column(length = 50, nullable = false, unique = true)
     private String name;
 

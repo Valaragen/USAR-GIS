@@ -4,6 +4,6 @@ import lombok.Data;
 
 @Data
 public class AvailabilitySearch {
-    private String userUUID;
+    private String userUuid;
     private Long missionId;
 }

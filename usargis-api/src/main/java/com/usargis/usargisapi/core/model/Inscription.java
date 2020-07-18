@@ -8,6 +8,8 @@ import org.hibernate.annotations.CreationTimestamp;
 import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
+import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 
 @Builder
@@ -17,9 +19,12 @@ import java.time.LocalDateTime;
 @Data
 @Entity
 public class Inscription extends ModelEntity {
+    @Valid
+    @NotNull
     @EmbeddedId
     private InscriptionId id;
 
+    @NotNull
     @Column(nullable = false)
     private InscriptionStatus inscriptionStatus;
     @CreationTimestamp

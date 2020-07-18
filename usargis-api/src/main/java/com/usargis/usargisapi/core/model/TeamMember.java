@@ -6,6 +6,8 @@ import lombok.*;
 
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
+import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
 
 @Builder
 @AllArgsConstructor
@@ -14,8 +16,10 @@ import javax.persistence.Entity;
 @Data
 @Entity
 public class TeamMember extends ModelEntity {
+    @Valid
+    @NotNull
     @EmbeddedId
     private TeamMemberId id;
-
+    
     private boolean isConfirmedByUser;
 }

@@ -9,6 +9,7 @@ import lombok.NoArgsConstructor;
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
 import javax.persistence.ManyToOne;
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 
 @Data
@@ -16,8 +17,10 @@ import java.io.Serializable;
 @AllArgsConstructor
 @Embeddable
 public class NotificationMessageId implements Serializable {
+    @NotNull
     @ManyToOne(optional = false)
     private Notification notification;
+    @NotNull
     @Column(nullable = false)
     private NotificationMessageContentType contentType;
 }
