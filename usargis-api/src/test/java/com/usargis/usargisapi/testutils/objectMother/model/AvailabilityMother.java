@@ -1,4 +1,4 @@
-package com.usargis.usargisapi.testutils.objectMother;
+package com.usargis.usargisapi.testutils.objectMother.model;
 
 import com.usargis.usargisapi.core.model.Availability;
 

@@ -3,13 +3,12 @@ package com.usargis.usargisapi.core.dto;
 import com.usargis.usargisapi.core.model.Availability;
 import com.usargis.usargisapi.service.contract.ModelMapperService;
 import com.usargis.usargisapi.service.impl.ModelMapperServiceImpl;
-import com.usargis.usargisapi.testutils.objectMother.AvailabilityMother;
+import com.usargis.usargisapi.testutils.objectMother.dto.AvailabilityDtoMother;
+import com.usargis.usargisapi.testutils.objectMother.model.AvailabilityMother;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.modelmapper.ModelMapper;
-
-import java.time.LocalDateTime;
 
 class AvailabilityDtoTest {
 
@@ -19,11 +18,12 @@ class AvailabilityDtoTest {
     @Nested
     class AvailabilityCreateDto {
         @Test
-        void availabilityCreateDto_checkMapping() {
-            AvailabilityDto.Create availabilityCreateDto = new AvailabilityDto.Create(null, null, LocalDateTime.now(), LocalDateTime.now());
+        void availabilityCreateDto_mapDtoToEntity_shouldMapCorrectly() {
+            AvailabilityDto.Create availabilityCreateDto = AvailabilityDtoMother.createSample().build();
 
             Availability availability = modelMapperService.map(availabilityCreateDto, Availability.class);
 
+            Assertions.assertThat(availability.getId()).isNull();
             Assertions.assertThat(availability.getMission()).isNull();
             Assertions.assertThat(availability.getUserInfo()).isNull();
             Assertions.assertThat(availability.getEndDate()).isEqualTo(availabilityCreateDto.getEndDate());
@@ -34,11 +34,12 @@ class AvailabilityDtoTest {
     @Nested
     class AvailabilityUpdateDto {
         @Test
-        void availabilityUpdateDto_checkMapping() {
-            AvailabilityDto.Update availabilityUpdateDto = new AvailabilityDto.Update(LocalDateTime.now(), LocalDateTime.now());
+        void availabilityUpdateDto_mapDtoToEntity_shouldMapCorrectly() {
+            AvailabilityDto.Update availabilityUpdateDto = AvailabilityDtoMother.updateSample().build();
 
             Availability availability = modelMapperService.map(availabilityUpdateDto, Availability.class);
 
+            Assertions.assertThat(availability.getId()).isNull();
             Assertions.assertThat(availability.getMission()).isNull();
             Assertions.assertThat(availability.getUserInfo()).isNull();
             Assertions.assertThat(availability.getEndDate()).isEqualTo(availabilityUpdateDto.getEndDate());
@@ -49,10 +50,10 @@ class AvailabilityDtoTest {
     @Nested
     class AvailabilityResponseDto {
         @Test
-        void availabilityResponseDto_checkMapping() {
+        void availabilityResponseDto_mapEntityToDto_shouldMapCorrectly() {
             Availability availability = AvailabilityMother.sample().build();
             availability.setId(1L);
-            availability.getMission().setId(1L);
+            availability.getMission().setId(4L);
 
             AvailabilityDto.Response availabilityResponseDto = modelMapperService.map(availability, AvailabilityDto.Response.class);
 
@@ -62,6 +63,4 @@ class AvailabilityDtoTest {
             Assertions.assertThat(availabilityResponseDto.getMissionId()).isEqualTo(availability.getMission().getId());
         }
     }
-
-
 }

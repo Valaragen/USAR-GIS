@@ -1,5 +1,6 @@
 package com.usargis.usargisapi.core.dto;
 
+import lombok.Builder;
 import lombok.Data;
 import lombok.Value;
 
@@ -12,9 +13,9 @@ public abstract class AvailabilityDto {
     }
 
     //Interfaces to inherit hibernate validation
-    private interface UserUuid {
+    private interface UserInfoId {
         @NotBlank
-        String getUserUuid();
+        String getUserInfoId();
     }
 
     private interface MissionId {
@@ -22,10 +23,11 @@ public abstract class AvailabilityDto {
         Long getMissionId();
     }
 
+    @Builder
     @Value
-    public static class Create implements UserUuid, MissionId {
+    public static class Create implements UserInfoId, MissionId {
         //Fields inheriting from validation
-        String userUuid;
+        String userInfoId;
         Long missionId;
 
         //Fields specific to this DTO
@@ -33,6 +35,7 @@ public abstract class AvailabilityDto {
         LocalDateTime endDate;
     }
 
+    @Builder
     @Value
     public static class Update {
         //Fields specific to this DTO
@@ -41,9 +44,9 @@ public abstract class AvailabilityDto {
     }
 
     @Data
-    public static class Response implements UserUuid, MissionId {
+    public static class Response implements UserInfoId, MissionId {
         //Fields inheriting from validation
-        String userUuid;
+        String userInfoId;
         Long missionId;
 
         //Fields specific to this DTO

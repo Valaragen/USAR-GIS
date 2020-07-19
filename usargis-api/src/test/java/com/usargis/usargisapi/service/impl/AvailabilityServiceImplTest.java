@@ -6,6 +6,7 @@ import com.usargis.usargisapi.repository.AvailabilityRepository;
 import com.usargis.usargisapi.service.contract.AvailabilityService;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import org.modelmapper.ModelMapper;
@@ -84,5 +85,11 @@ class AvailabilityServiceImplTest {
 
         Assertions.assertThat(result).isEqualTo(returnedAvailabilityList);
         Mockito.verify(availabilityRepository).searchAll(availabilitySearch);
+    }
+
+    @Test
+    @Disabled
+    void create_shouldConvertDtoCallRepositoryAndReturnAvailability() {
+//        AvailabilityDto.Create AvailabilityCreateDto = new AvailabilityDto.Create(null, null, null, null);
     }
 }

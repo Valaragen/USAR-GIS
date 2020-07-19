@@ -1,7 +1,7 @@
 package com.usargis.usargisapi.repository;
 
 import com.usargis.usargisapi.core.model.UserInfo;
-import com.usargis.usargisapi.testutils.objectMother.UserInfoMother;
+import com.usargis.usargisapi.testutils.objectMother.model.UserInfoMother;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -45,7 +45,7 @@ class UserInfoRepositoryCompTest {
     void findById_shouldFindUserInDbById() {
         UserInfo userToFind = sampleUser;
 
-        Optional<UserInfo> result = objectToTest.findById(sampleUser.getUuid());
+        Optional<UserInfo> result = objectToTest.findById(sampleUser.getId());
 
         Assertions.assertThat(result.isPresent()).isTrue();
         Assertions.assertThat(result.get()).isEqualTo(userToFind);
@@ -54,7 +54,7 @@ class UserInfoRepositoryCompTest {
     @Test
     void save_shouldAddUserInDb() {
         UserInfo userInfoToSave = UserInfoMother.sample()
-                .uuid("TEST_UUID")
+                .id("TEST_UUID")
                 .username(("pepe"))
                 .email("pepeTest@gmail.com")
                 .build();

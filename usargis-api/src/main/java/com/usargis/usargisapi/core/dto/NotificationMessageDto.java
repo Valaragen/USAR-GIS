@@ -1,10 +1,11 @@
 package com.usargis.usargisapi.core.dto;
 
+import com.usargis.usargisapi.core.model.NotificationMessageContentType;
 import com.usargis.usargisapi.core.model.NotificationMessageSendingMode;
-import lombok.Value;
+import lombok.Builder;
+import lombok.Data;
 import org.hibernate.validator.constraints.Length;
 
-import java.util.HashSet;
 import java.util.Set;
 
 public abstract class NotificationMessageDto {
@@ -22,13 +23,27 @@ public abstract class NotificationMessageDto {
         String getSubject();
     }
 
-    @Value
+    @Builder
+    @Data
     public static class PostRequest implements Content, Subject {
+        //Fields inheriting from validation
+        private String content;
+        private String subject;
+        private NotificationMessageContentType contentType;
+
+        //Fields specific to this DTO
+        private Set<NotificationMessageSendingMode> sendingModes;
+    }
+
+    @Data
+    public static class Response implements Content, Subject {
         //Fields inheriting from validation
         private String content;
         private String subject;
 
         //Fields specific to this DTO
-        private Set<NotificationMessageSendingMode> sendingModes = new HashSet<>();
+        private Long notificationId;
+        private NotificationMessageContentType contentType;
+        private Set<NotificationMessageSendingMode> sendingModes;
     }
 }

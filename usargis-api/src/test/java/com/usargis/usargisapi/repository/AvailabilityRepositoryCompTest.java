@@ -4,9 +4,9 @@ import com.usargis.usargisapi.core.model.Availability;
 import com.usargis.usargisapi.core.model.Mission;
 import com.usargis.usargisapi.core.model.UserInfo;
 import com.usargis.usargisapi.core.search.AvailabilitySearch;
-import com.usargis.usargisapi.testutils.objectMother.AvailabilityMother;
-import com.usargis.usargisapi.testutils.objectMother.MissionMother;
-import com.usargis.usargisapi.testutils.objectMother.UserInfoMother;
+import com.usargis.usargisapi.testutils.objectMother.model.AvailabilityMother;
+import com.usargis.usargisapi.testutils.objectMother.model.MissionMother;
+import com.usargis.usargisapi.testutils.objectMother.model.UserInfoMother;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -86,7 +86,7 @@ class AvailabilityRepositoryCompTest {
     @Test
     void searchAll_userUuidGiven_shouldFindByUuid() {
         AvailabilitySearch availabilitySearch = new AvailabilitySearch();
-        availabilitySearch.setUserUuid(sampleUser.getUuid());
+        availabilitySearch.setUserId(sampleUser.getId());
 
         List<Availability> result = objectToTest.searchAll(availabilitySearch);
 
@@ -109,7 +109,7 @@ class AvailabilityRepositoryCompTest {
     void searchAll_givenAvailabilitySearch_shouldFindAllGivenParameters() {
         AvailabilitySearch availabilitySearch = new AvailabilitySearch();
         availabilitySearch.setMissionId(sampleFinishedMission.getId());
-        availabilitySearch.setUserUuid(sampleUser.getUuid());
+        availabilitySearch.setUserId(sampleUser.getId());
 
         List<Availability> result = objectToTest.searchAll(availabilitySearch);
 

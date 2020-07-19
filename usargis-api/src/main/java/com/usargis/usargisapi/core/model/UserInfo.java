@@ -15,11 +15,11 @@ import java.util.Set;
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = true)
 @Data
-@Setter(AccessLevel.PRIVATE)
+//@Setter(AccessLevel.PRIVATE)
 @Entity
 public class UserInfo extends ModelEntity {
     @Id
-    private String uuid;
+    private String id;
 
     @Column(nullable = false, unique = true)
     private String username;

@@ -1,5 +1,8 @@
 package com.usargis.usargisapi.core.dto;
 
+import com.usargis.usargisapi.core.model.MissionStatus;
+import lombok.Builder;
+import lombok.Data;
 import lombok.Value;
 import org.hibernate.validator.constraints.Length;
 
@@ -25,6 +28,7 @@ public abstract class MissionDto {
         String getAddress();
     }
 
+    @Builder
     @Value
     public static class PostRequest implements Name, Description, Address {
         //Fields inheriting from validation
@@ -39,5 +43,26 @@ public abstract class MissionDto {
         private Integer expectedDurationInDays;
         private Double latitude;
         private Double longitude;
+    }
+
+    @Data
+    public static class Response implements Name, Description, Address {
+        //Fields inheriting from validation
+        private String name;
+        private String description;
+        private String address;
+
+        //Fields specific to this DTO
+        private Long id;
+        private MissionStatus status;
+        private LocalDateTime startDate;
+        private LocalDateTime endDate;
+        private LocalDateTime plannedStartDate;
+        private Integer expectedDurationInDays;
+        private Double latitude;
+        private Double longitude;
+        private LocalDateTime creationDate;
+        private LocalDateTime lastEditionDate;
+        private String authorId;
     }
 }

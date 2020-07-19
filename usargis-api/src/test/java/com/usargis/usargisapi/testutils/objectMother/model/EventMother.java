@@ -1,4 +1,4 @@
-package com.usargis.usargisapi.testutils.objectMother;
+package com.usargis.usargisapi.testutils.objectMother.model;
 
 import com.usargis.usargisapi.core.model.Event;
 import com.usargis.usargisapi.core.model.EventStatus;
@@ -16,11 +16,13 @@ public class EventMother {
                 .author(UserInfoMother.sampleAuthor().build())
                 .startDate(LocalDateTime.now())
                 .endDate(LocalDateTime.now().plus(2, ChronoUnit.HOURS))
-                .latitude(1.2555515)
-                .longitude(1.2554844)
                 .status(EventStatus.FINISHED)
+                .maxInscriptionsNumber(30)
+                .isInscriptionRequired(true)
+                .isInscriptionValidationRequired(true)
                 .inscriptionStartDate(LocalDateTime.now().minus(30, ChronoUnit.DAYS))
                 .inscriptionsEndDate(LocalDateTime.now())
-                .isInscriptionRequired(true);
+                .latitude(1.2555515)
+                .longitude(1.2554844);
     }
 }
