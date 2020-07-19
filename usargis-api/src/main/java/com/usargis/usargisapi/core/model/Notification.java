@@ -23,6 +23,7 @@ public class Notification extends ModelEntityWithLongId {
     @NotNull
     @Column(nullable = false)
     private LocalDateTime sendingDate;
+
     @NotNull
     @Column(nullable = false)
     private NotificationStatus status;

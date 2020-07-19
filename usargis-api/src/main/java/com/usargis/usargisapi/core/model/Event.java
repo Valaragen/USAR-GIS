@@ -22,9 +22,10 @@ public class Event extends ModelEntityWithLongId {
     @Length(min = 2, max = 100)
     @Column(length = 100)
     private String name;
+    @Builder.Default
     @NotNull
     @Column(nullable = false)
-    private EventStatus status;
+    private EventStatus status = EventStatus.PENDING;
     @Length(max = 5000)
     @Column(length = 5000)
     private String description;

@@ -8,6 +8,7 @@ import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
+import org.modelmapper.ModelMapper;
 
 import java.util.Collections;
 import java.util.List;
@@ -18,6 +19,8 @@ class AvailabilityServiceImplTest {
     private AvailabilityService objectToTest;
 
     private AvailabilityRepository availabilityRepository = Mockito.mock(AvailabilityRepository.class);
+
+    private ModelMapper modelMapper = new ModelMapper();
 
     @BeforeEach
     void setup() {

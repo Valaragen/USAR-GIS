@@ -3,12 +3,12 @@ package com.usargis.usargisapi.service.contract.common;
 import java.util.List;
 import java.util.Optional;
 
-public interface CRUDService<U, T> {
-    List<U> findAll();
+public interface CRUDService<ENTITY, ID> {
+    List<ENTITY> findAll();
 
-    Optional<U> findById(T id);
+    Optional<ENTITY> findById(ID id);
 
-    U save(U object);
+    ENTITY save(ENTITY object);
 
-    void delete(U object);
+    void delete(ENTITY object);
 }

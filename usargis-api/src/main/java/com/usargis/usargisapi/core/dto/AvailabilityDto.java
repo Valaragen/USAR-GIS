@@ -1,5 +1,6 @@
 package com.usargis.usargisapi.core.dto;
 
+import lombok.Data;
 import lombok.Value;
 
 import javax.validation.constraints.NotBlank;
@@ -39,7 +40,7 @@ public abstract class AvailabilityDto {
         LocalDateTime endDate;
     }
 
-    @Value
+    @Data
     public static class Response implements UserUuid, MissionId {
         //Fields inheriting from validation
         String userUuid;

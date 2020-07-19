@@ -22,9 +22,10 @@ public class Mission extends ModelEntityWithLongId {
     @Length(min = 2, max = 100)
     @Column(length = 100, nullable = false)
     private String name;
+    @Builder.Default
     @NotNull
     @Column(nullable = false)
-    private MissionStatus status;
+    private MissionStatus status = MissionStatus.ONFOCUS;
     @Length(max = 5000)
     @Column(length = 5000)
     private String description;

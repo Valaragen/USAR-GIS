@@ -24,9 +24,10 @@ public class Inscription extends ModelEntity {
     @EmbeddedId
     private InscriptionId id;
 
+    @Builder.Default
     @NotNull
     @Column(nullable = false)
-    private InscriptionStatus inscriptionStatus;
+    private InscriptionStatus inscriptionStatus = InscriptionStatus.WAITING_FOR_VALIDATION;
     @CreationTimestamp
     private LocalDateTime inscriptionDate;
 }

@@ -1,52 +1,67 @@
 package com.usargis.usargisapi.core.dto;
 
 import com.usargis.usargisapi.core.model.Availability;
+import com.usargis.usargisapi.service.contract.ModelMapperService;
+import com.usargis.usargisapi.service.impl.ModelMapperServiceImpl;
+import com.usargis.usargisapi.testutils.objectMother.AvailabilityMother;
 import org.assertj.core.api.Assertions;
+import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.modelmapper.ModelMapper;
 
-import javax.validation.ConstraintViolation;
-import javax.validation.Validation;
-import javax.validation.Validator;
-import javax.validation.ValidatorFactory;
 import java.time.LocalDateTime;
-import java.util.Set;
 
 class AvailabilityDtoTest {
 
     private ModelMapper modelMapper = new ModelMapper();
+    private ModelMapperService modelMapperService = new ModelMapperServiceImpl(modelMapper);
 
-    @Test
-    void checkMapping() {
-        AvailabilityDto.Create availabilityDto = new AvailabilityDto.Create(null, null, LocalDateTime.now(), LocalDateTime.now());
-        Availability availability = modelMapper.map(availabilityDto, Availability.class);
+    @Nested
+    class AvailabilityCreateDto {
+        @Test
+        void availabilityCreateDto_checkMapping() {
+            AvailabilityDto.Create availabilityCreateDto = new AvailabilityDto.Create(null, null, LocalDateTime.now(), LocalDateTime.now());
 
-        Assertions.assertThat(availability.getMission()).isNull();
-        Assertions.assertThat(availability.getUserInfo()).isNull();
-        Assertions.assertThat(availability.getEndDate()).isEqualTo(availabilityDto.getEndDate());
-        Assertions.assertThat(availability.getStartDate()).isEqualTo(availabilityDto.getStartDate());
+            Availability availability = modelMapperService.map(availabilityCreateDto, Availability.class);
+
+            Assertions.assertThat(availability.getMission()).isNull();
+            Assertions.assertThat(availability.getUserInfo()).isNull();
+            Assertions.assertThat(availability.getEndDate()).isEqualTo(availabilityCreateDto.getEndDate());
+            Assertions.assertThat(availability.getStartDate()).isEqualTo(availabilityCreateDto.getStartDate());
+        }
     }
 
-    @Test
-    void checkAvailabilityCreateDtoValidation() {
-        AvailabilityDto.Create availabilityDto = new AvailabilityDto.Create(null, null, LocalDateTime.now(), LocalDateTime.now());
-        ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
-        Validator validator = factory.getValidator();
+    @Nested
+    class AvailabilityUpdateDto {
+        @Test
+        void availabilityUpdateDto_checkMapping() {
+            AvailabilityDto.Update availabilityUpdateDto = new AvailabilityDto.Update(LocalDateTime.now(), LocalDateTime.now());
 
-        Set<ConstraintViolation<AvailabilityDto.Create>> violations = validator.validate(availabilityDto);
+            Availability availability = modelMapperService.map(availabilityUpdateDto, Availability.class);
 
-        Assertions.assertThat(violations).hasSize(2);
+            Assertions.assertThat(availability.getMission()).isNull();
+            Assertions.assertThat(availability.getUserInfo()).isNull();
+            Assertions.assertThat(availability.getEndDate()).isEqualTo(availabilityUpdateDto.getEndDate());
+            Assertions.assertThat(availability.getStartDate()).isEqualTo(availabilityUpdateDto.getStartDate());
+        }
     }
 
-    @Test
-    void checkAvailabilityResponseDtoValidation() {
-        AvailabilityDto.Response availabilityDto = new AvailabilityDto.Response(null, null, null, null, null);
-        ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
-        Validator validator = factory.getValidator();
+    @Nested
+    class AvailabilityResponseDto {
+        @Test
+        void availabilityResponseDto_checkMapping() {
+            Availability availability = AvailabilityMother.sample().build();
+            availability.setId(1L);
+            availability.getMission().setId(1L);
 
-        Set<ConstraintViolation<AvailabilityDto.Response>> violations = validator.validate(availabilityDto);
+            AvailabilityDto.Response availabilityResponseDto = modelMapperService.map(availability, AvailabilityDto.Response.class);
 
-        Assertions.assertThat(violations).hasSize(2);
+            Assertions.assertThat(availabilityResponseDto.getEndDate()).isEqualTo(availability.getEndDate());
+            Assertions.assertThat(availabilityResponseDto.getStartDate()).isEqualTo(availability.getStartDate());
+            Assertions.assertThat(availabilityResponseDto.getId()).isEqualTo(availability.getId());
+            Assertions.assertThat(availabilityResponseDto.getMissionId()).isEqualTo(availability.getMission().getId());
+        }
     }
+
 
 }
