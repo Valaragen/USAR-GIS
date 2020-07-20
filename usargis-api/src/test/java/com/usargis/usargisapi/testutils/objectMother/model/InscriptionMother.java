@@ -5,8 +5,6 @@ import com.usargis.usargisapi.core.model.InscriptionStatus;
 import com.usargis.usargisapi.core.model.embeddable.InscriptionId;
 import com.usargis.usargisapi.testutils.TestConstant;
 
-import java.time.LocalDateTime;
-
 public class InscriptionMother {
     public static Inscription.InscriptionBuilder sampleValidated() {
         return Inscription.builder()

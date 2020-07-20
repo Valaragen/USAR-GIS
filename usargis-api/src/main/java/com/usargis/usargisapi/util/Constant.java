@@ -1,6 +1,9 @@
 package com.usargis.usargisapi.util;
 
 public abstract class Constant {
+    private Constant() {
+    }
+
     //### ROLES ###
     public static final String MEMBER_ROLE = "MEMBER";
     public static final String LEADER_ROLE = "LEADER";

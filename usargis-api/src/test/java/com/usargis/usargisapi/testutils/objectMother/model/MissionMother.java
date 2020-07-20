@@ -4,9 +4,6 @@ import com.usargis.usargisapi.core.model.Mission;
 import com.usargis.usargisapi.core.model.MissionStatus;
 import com.usargis.usargisapi.testutils.TestConstant;
 
-import java.time.LocalDateTime;
-import java.time.temporal.ChronoUnit;
-
 public class MissionMother {
     public static Mission.MissionBuilder sampleFinished() {
         return Mission.builder()

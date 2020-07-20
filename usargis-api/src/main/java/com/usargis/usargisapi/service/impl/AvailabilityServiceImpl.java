@@ -5,9 +5,7 @@ import com.usargis.usargisapi.core.search.AvailabilitySearch;
 import com.usargis.usargisapi.repository.AvailabilityRepository;
 import com.usargis.usargisapi.service.contract.AvailabilityService;
 import com.usargis.usargisapi.util.ErrorConstant;
-import com.usargis.usargisapi.util.NullAwareBeanUtilsBean;
 import com.usargis.usargisapi.web.exception.NotFoundException;
-import org.apache.commons.beanutils.BeanUtilsBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -55,8 +53,6 @@ public class AvailabilityServiceImpl implements AvailabilityService {
     public Availability update(Long id, Availability availabilityDetails) throws InvocationTargetException, IllegalAccessException {
         Availability availability = findById(id).orElseThrow(() -> new NotFoundException(MessageFormat.format(ErrorConstant.NO_AVAILABILITY_FOUND_FOR_ID, id)));
         availabilityDetails.setId(null);
-        BeanUtilsBean notNull = new NullAwareBeanUtilsBean();
-        notNull.copyProperties(availability, availabilityDetails);
 
         return save(availability);
     }

@@ -4,9 +4,6 @@ import com.usargis.usargisapi.core.model.Event;
 import com.usargis.usargisapi.core.model.EventStatus;
 import com.usargis.usargisapi.testutils.TestConstant;
 
-import java.time.LocalDateTime;
-import java.time.temporal.ChronoUnit;
-
 public class EventMother {
     public static Event.EventBuilder sampleFinished() {
         return Event.builder()

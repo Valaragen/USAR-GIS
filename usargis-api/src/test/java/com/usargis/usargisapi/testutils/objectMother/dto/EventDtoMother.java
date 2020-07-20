@@ -3,9 +3,6 @@ package com.usargis.usargisapi.testutils.objectMother.dto;
 import com.usargis.usargisapi.core.dto.EventDto;
 import com.usargis.usargisapi.testutils.TestConstant;
 
-import java.time.LocalDateTime;
-import java.time.temporal.ChronoUnit;
-
 public class EventDtoMother {
     public static EventDto.PostRequest.PostRequestBuilder postRequestSample() {
         return EventDto.PostRequest.builder()

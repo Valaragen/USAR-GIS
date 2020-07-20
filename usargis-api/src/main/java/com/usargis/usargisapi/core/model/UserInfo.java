@@ -51,11 +51,11 @@ public class UserInfo extends ModelEntity {
     @EqualsAndHashCode.Exclude
     private Set<Group> groups = new HashSet<>();
 
-    private void setUsername(String username) {
+    public void setUsername(String username) {
         this.username = username.toLowerCase();
     }
 
-    private void setEmail(String email) {
+    public void setEmail(String email) {
         this.email = email.toLowerCase();
     }
 

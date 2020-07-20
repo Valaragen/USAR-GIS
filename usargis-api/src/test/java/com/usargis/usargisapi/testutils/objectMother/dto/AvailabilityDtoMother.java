@@ -3,9 +3,6 @@ package com.usargis.usargisapi.testutils.objectMother.dto;
 import com.usargis.usargisapi.core.dto.AvailabilityDto;
 import com.usargis.usargisapi.testutils.TestConstant;
 
-import java.time.LocalDateTime;
-import java.time.temporal.ChronoUnit;
-
 public class AvailabilityDtoMother {
     public static AvailabilityDto.Create.CreateBuilder createSample() {
         return AvailabilityDto.Create.builder()
