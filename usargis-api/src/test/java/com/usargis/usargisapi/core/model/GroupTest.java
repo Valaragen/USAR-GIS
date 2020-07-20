@@ -1,4 +1,4 @@
-package com.usargis.usargisapi.core;
+package com.usargis.usargisapi.core.model;
 
 import com.usargis.usargisapi.core.model.Group;
 import org.junit.jupiter.api.Assertions;

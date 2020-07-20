@@ -13,6 +13,7 @@ import java.util.Set;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
+@ToString(callSuper = true)
 @EqualsAndHashCode(callSuper = true)
 @Data
 //@Setter(AccessLevel.PRIVATE)
@@ -46,6 +47,8 @@ public class UserInfo extends ModelEntity {
 
     @Builder.Default
     @ManyToMany(mappedBy = "users")
+    @ToString.Exclude
+    @EqualsAndHashCode.Exclude
     private Set<Group> groups = new HashSet<>();
 
     private void setUsername(String username) {

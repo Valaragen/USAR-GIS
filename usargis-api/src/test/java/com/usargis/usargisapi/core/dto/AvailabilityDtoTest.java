@@ -29,6 +29,22 @@ class AvailabilityDtoTest {
             Assertions.assertThat(availability.getEndDate()).isEqualTo(availabilityCreateDto.getEndDate());
             Assertions.assertThat(availability.getStartDate()).isEqualTo(availabilityCreateDto.getStartDate());
         }
+
+        @Test
+        void availabilityCreateDto_mergeDtoToEntity_shouldMapCorrectly() {
+            Long availabilityId = 5L;
+            Availability availability = AvailabilityMother.sample().build();
+            availability.setId(availabilityId);
+            AvailabilityDto.Create availabilityCreateDto = AvailabilityDtoMother.createSample().build();
+
+            modelMapperService.merge(availabilityCreateDto, availability);
+
+            Assertions.assertThat(availability.getId()).isEqualTo(availabilityId);
+            Assertions.assertThat(availability.getMission()).isNotNull();
+            Assertions.assertThat(availability.getUserInfo()).isNotNull();
+            Assertions.assertThat(availability.getEndDate()).isEqualTo(availabilityCreateDto.getEndDate());
+            Assertions.assertThat(availability.getStartDate()).isEqualTo(availabilityCreateDto.getStartDate());
+        }
     }
 
     @Nested

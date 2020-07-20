@@ -11,6 +11,7 @@ import java.util.Set;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
+@ToString(callSuper = true)
 @EqualsAndHashCode(callSuper = true)
 @Data
 @Entity(name = "_group")
@@ -21,6 +22,8 @@ public class Group extends ModelEntityWithLongId {
 
     @Builder.Default
     @ManyToMany
+    @ToString.Exclude
+    @EqualsAndHashCode.Exclude
     @JoinTable(
             name = "user_in_group",
             joinColumns = @JoinColumn(name = "user_info_id"),

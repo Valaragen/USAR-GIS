@@ -13,28 +13,30 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/keycloak-test")
 public class KeycloakSecurityTestController {
 
+    public static final String AUTHORIZED = "Authorized";
+
     @GetMapping("/admin")
     @PreAuthorize("hasRole('" + Constant.ADMIN_ROLE + "')")
     public ResponseEntity<String> adminAccess() {
-        return new ResponseEntity<>("Authorized", HttpStatus.OK);
+        return new ResponseEntity<>(AUTHORIZED, HttpStatus.OK);
     }
 
     @GetMapping("/leader")
     @PreAuthorize("hasRole('" + Constant.LEADER_ROLE + "')")
     public ResponseEntity<String> leaderAccess() {
-        return new ResponseEntity<>("Authorized", HttpStatus.OK);
+        return new ResponseEntity<>(AUTHORIZED, HttpStatus.OK);
     }
 
     @GetMapping("/member")
     @PreAuthorize("hasRole('" + Constant.MEMBER_ROLE + "')")
     public ResponseEntity<String> memberAccess() {
-        return new ResponseEntity<>("Authorized", HttpStatus.OK);
+        return new ResponseEntity<>(AUTHORIZED, HttpStatus.OK);
     }
 
     @GetMapping("/sameuser/{user}")
     @PreAuthorize("@securityServiceImpl.isSameUsernameThanAuthenticatedUser(#user)")
     public ResponseEntity<String> sameUserAccess(@PathVariable String user) {
-        return new ResponseEntity<>("Authorized", HttpStatus.OK);
+        return new ResponseEntity<>(AUTHORIZED, HttpStatus.OK);
     }
 
 }
