@@ -1,23 +1,23 @@
 package com.usargis.usargisapi.core.model;
 
-import com.usargis.usargisapi.testutils.objectMother.model.NotificationMother;
+import com.usargis.usargisapi.testutils.objectMother.model.TeamMother;
 import nl.jqno.equalsverifier.EqualsVerifier;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-class NotificationTest {
+class TeamTest {
 
-    private Notification objectToTest;
+    private Team objectToTest;
 
     @BeforeEach
     void setup() {
-        objectToTest = NotificationMother.sampleSent().build();
+        objectToTest = TeamMother.sample().build();
     }
 
     @Test
     void equalsTest() {
-        EqualsVerifier.forClass(Notification.class);
+        EqualsVerifier.forClass(Team.class);
     }
 
     @Test

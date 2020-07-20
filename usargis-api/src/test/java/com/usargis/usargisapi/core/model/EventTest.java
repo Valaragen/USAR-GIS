@@ -1,23 +1,23 @@
 package com.usargis.usargisapi.core.model;
 
-import com.usargis.usargisapi.testutils.objectMother.model.GroupMother;
+import com.usargis.usargisapi.testutils.objectMother.model.EventMother;
 import nl.jqno.equalsverifier.EqualsVerifier;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-class GroupTest {
+class EventTest {
 
-    private Group objectToTest;
+    private Event objectToTest;
 
     @BeforeEach
     void setup() {
-        objectToTest = GroupMother.sample().build();
+        objectToTest = EventMother.sampleFinished().build();
     }
 
     @Test
     void equalsTest() {
-        EqualsVerifier.forClass(Group.class);
+        EqualsVerifier.forClass(Event.class);
     }
 
     @Test

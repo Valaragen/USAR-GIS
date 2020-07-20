@@ -1,23 +1,23 @@
 package com.usargis.usargisapi.core.model;
 
-import com.usargis.usargisapi.testutils.objectMother.model.GroupMother;
+import com.usargis.usargisapi.testutils.objectMother.model.InscriptionMother;
 import nl.jqno.equalsverifier.EqualsVerifier;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-class GroupTest {
+class InscriptionTest {
 
-    private Group objectToTest;
+    private Inscription objectToTest;
 
     @BeforeEach
     void setup() {
-        objectToTest = GroupMother.sample().build();
+        objectToTest = InscriptionMother.sampleValidated().build();
     }
 
     @Test
     void equalsTest() {
-        EqualsVerifier.forClass(Group.class);
+        EqualsVerifier.forClass(Inscription.class);
     }
 
     @Test

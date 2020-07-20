@@ -20,24 +20,24 @@ class AvailabilityTest {
         EqualsVerifier.forClass(Availability.class);
     }
 
-    @Test
-    void equals_availabilitiesWithSameContent_shouldReturnTrue() {
-        Availability availabilityToCompare = AvailabilityMother.sample().build();
-
-        boolean result = objectToTest.equals(availabilityToCompare);
-
-        Assertions.assertThat(result).isTrue();
-    }
-
-    @Test
-    void equals_differentAvailabilities_shouldReturnFalse() {
-        Availability availabilityToCompare = AvailabilityMother.sample().build();
-        availabilityToCompare.setId(1L);
-
-        boolean result = objectToTest.equals(availabilityToCompare);
-
-        Assertions.assertThat(result).isFalse();
-    }
+//    @Test
+//    void equals_availabilitiesWithSameContent_shouldReturnTrue() {
+//        Availability availabilityToCompare = AvailabilityMother.sample().build();
+//
+//        boolean result = objectToTest.equals(availabilityToCompare);
+//
+//        Assertions.assertThat(result).isTrue();
+//    }
+//
+//    @Test
+//    void equals_differentAvailabilities_shouldReturnFalse() {
+//        Availability availabilityToCompare = AvailabilityMother.sample().build();
+//        availabilityToCompare.setId(1L);
+//
+//        boolean result = objectToTest.equals(availabilityToCompare);
+//
+//        Assertions.assertThat(result).isFalse();
+//    }
 
     @Test
     void toString_shouldWork() {

@@ -1,28 +1,28 @@
 package com.usargis.usargisapi.core.model;
 
-import com.usargis.usargisapi.core.model.Group;
-import org.junit.jupiter.api.Assertions;
+import com.usargis.usargisapi.testutils.objectMother.model.GroupMother;
+import nl.jqno.equalsverifier.EqualsVerifier;
+import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.util.HashSet;
-
 class GroupTest {
+
     private Group objectToTest;
 
     @BeforeEach
     void setup() {
-        objectToTest = new Group();
+        objectToTest = GroupMother.sample().build();
     }
 
     @Test
-    void newInstanceTest() {
-        String name = "test";
-        objectToTest = new Group(name, new HashSet<>());
-
-        Assertions.assertEquals(objectToTest.getName(), name);
-        Assertions.assertTrue(objectToTest.getUsers().isEmpty());
+    void equalsTest() {
+        EqualsVerifier.forClass(Group.class);
     }
 
+    @Test
+    void toString_shouldWork() {
+        Assertions.assertThat(objectToTest.toString()).isNotBlank();
+    }
 
 }

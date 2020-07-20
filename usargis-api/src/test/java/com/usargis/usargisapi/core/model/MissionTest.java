@@ -1,23 +1,23 @@
 package com.usargis.usargisapi.core.model;
 
-import com.usargis.usargisapi.testutils.objectMother.model.InscriptionMother;
+import com.usargis.usargisapi.testutils.objectMother.model.MissionMother;
 import nl.jqno.equalsverifier.EqualsVerifier;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-class InscriptionTest {
+class MissionTest {
 
-    private Inscription objectToTest;
+    private Mission objectToTest;
 
     @BeforeEach
     void setup() {
-        objectToTest = InscriptionMother.sampleValidated().build();
+        objectToTest = MissionMother.sampleFinished().build();
     }
 
     @Test
     void equalsTest() {
-        EqualsVerifier.forClass(Inscription.class);
+        EqualsVerifier.forClass(Mission.class);
     }
 
     @Test
