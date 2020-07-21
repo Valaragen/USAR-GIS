@@ -34,25 +34,15 @@ class AvailabilityControllerTest {
     @Nested
     class searchAllAvailabilitiesTest {
         private final AvailabilitySearch searchParameters = new AvailabilitySearch();
-        private final List<Availability> availabilities = Arrays.asList(new Availability(), new Availability());
+        private final List<Availability> availabilitiesFound = Arrays.asList(new Availability(), new Availability());
 
         @Test
         void searchAllAvailabilities_shouldCallServiceLayer() {
-            Mockito.when(availabilityService.searchAll(searchParameters)).thenReturn(availabilities);
+            Mockito.when(availabilityService.searchAll(searchParameters)).thenReturn(availabilitiesFound);
 
             objectToTest.searchForAvailabilities(searchParameters);
 
             Mockito.verify(availabilityService).searchAll(searchParameters);
-        }
-
-        @Test
-        void searchAllAvailabilities_shouldConvertAvailabilitiesToListOfResponseDto() {
-            Mockito.when(availabilityService.searchAll(searchParameters)).thenReturn(availabilities);
-            Mockito.when(modelMapperService.map(Mockito.any(Availability.class), Mockito.any())).thenReturn(new AvailabilityDto.Response());
-
-            objectToTest.searchForAvailabilities(searchParameters);
-
-            Mockito.verify(modelMapperService, Mockito.times(availabilities.size())).map(Mockito.any(Availability.class), Mockito.any());
         }
 
         @Test
@@ -65,14 +55,24 @@ class AvailabilityControllerTest {
         }
 
         @Test
+        void searchAllAvailabilities_shouldConvertAvailabilitiesToListOfResponseDto() {
+            Mockito.when(availabilityService.searchAll(searchParameters)).thenReturn(availabilitiesFound);
+            Mockito.when(modelMapperService.map(Mockito.any(Availability.class), Mockito.any())).thenReturn(new AvailabilityDto.Response());
+
+            objectToTest.searchForAvailabilities(searchParameters);
+
+            Mockito.verify(modelMapperService, Mockito.times(availabilitiesFound.size())).map(Mockito.any(Availability.class), Mockito.any());
+        }
+
+        @Test
         void searchAllAvailabilities_availabilityFound_returnStatusOkWithListOfAvailabilitiesResponseDto() {
-            Mockito.when(availabilityService.searchAll(searchParameters)).thenReturn(availabilities);
+            Mockito.when(availabilityService.searchAll(searchParameters)).thenReturn(availabilitiesFound);
             Mockito.when(modelMapperService.map(Mockito.any(Availability.class), Mockito.any())).thenReturn(new AvailabilityDto.Response());
 
             ResponseEntity<List<AvailabilityDto.Response>> result = objectToTest.searchForAvailabilities(searchParameters);
 
             Assertions.assertThat(result.getStatusCode()).isEqualTo(HttpStatus.OK);
-            Assertions.assertThat(Objects.requireNonNull(result.getBody()).size()).isEqualTo(availabilities.size());
+            Assertions.assertThat(Objects.requireNonNull(result.getBody()).size()).isEqualTo(availabilitiesFound.size());
         }
     }
 
@@ -194,7 +194,7 @@ class AvailabilityControllerTest {
         }
 
         @Test
-        void updateAvailabilityTest_availabilityCreated_returnStatusCreatedAndAvailabilityResponseDto() {
+        void updateAvailabilityTest_availabilityCreated_returnStatusOkAndAvailabilityResponseDto() {
             Mockito.when(availabilityService.update(availabilityId, availabilityToUpdate))
                     .thenReturn(updateAvailability);
             Mockito.when(modelMapperService.map(updateAvailability, AvailabilityDto.Response.class))
@@ -232,13 +232,12 @@ class AvailabilityControllerTest {
             Mockito.when(availabilityService.findById(availabilityToDeleteId)).thenReturn(Optional.of(foundAvailabilityToDelete));
             Mockito.doNothing().when(availabilityService).delete(foundAvailabilityToDelete);
 
-            ResponseEntity<Availability> result = objectToTest.deleteAvailability(availabilityToDeleteId);
+            ResponseEntity result = objectToTest.deleteAvailability(availabilityToDeleteId);
 
             Assertions.assertThat(result.getStatusCode())
                     .isEqualTo(HttpStatus.NO_CONTENT);
             Assertions.assertThat(result.getBody())
-                    .isEqualTo(null);
+                    .isNull();
         }
     }
-
 }
