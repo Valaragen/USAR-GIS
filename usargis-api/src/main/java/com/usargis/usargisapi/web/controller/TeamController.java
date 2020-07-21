@@ -1,6 +1,10 @@
 package com.usargis.usargisapi.web.controller;
 
+import com.usargis.usargisapi.core.dto.TeamDto;
 import com.usargis.usargisapi.core.model.Team;
+import com.usargis.usargisapi.core.model.Team;
+import com.usargis.usargisapi.service.contract.ModelMapperService;
+import com.usargis.usargisapi.service.contract.TeamService;
 import com.usargis.usargisapi.service.contract.TeamService;
 import com.usargis.usargisapi.util.Constant;
 import com.usargis.usargisapi.util.ErrorConstant;
@@ -14,47 +18,56 @@ import org.springframework.web.bind.annotation.*;
 import java.text.MessageFormat;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @PreAuthorize("hasRole('" + Constant.ADMIN_ROLE + "')")
 @RestController
 public class TeamController {
 
     private TeamService teamService;
+    private ModelMapperService modelMapperService;
 
     @Autowired
-    public TeamController(TeamService teamService) {
+    public TeamController(TeamService teamService, ModelMapperService modelMapperService) {
         this.teamService = teamService;
+        this.modelMapperService = modelMapperService;
     }
 
-    @PreAuthorize("hasRole('" + Constant.LEADER_ROLE + "')")
     @GetMapping(Constant.TEAMS_PATH)
-    public ResponseEntity<List<Team>> findAllTeams() {
+    public ResponseEntity<List<TeamDto.Response>> findAllTeams() {
         List<Team> teams = teamService.findAll();
         if (teams.isEmpty()) {
             throw new NotFoundException(ErrorConstant.NO_TEAMS_FOUND);
         }
-        return new ResponseEntity<>(teams, HttpStatus.OK);
+        return new ResponseEntity<>(teams.stream().map(this::convertToResponseDto).collect(Collectors.toList()), HttpStatus.OK);
     }
 
-    @PreAuthorize("hasRole('" + Constant.LEADER_ROLE + "')")
     @GetMapping(Constant.TEAMS_PATH + Constant.SLASH_ID_PATH)
-    public ResponseEntity<Team> getTeamById(@PathVariable Long id) {
-        Optional<Team> team = teamService.findById(id);
-        Team result = team.orElseThrow(() -> new NotFoundException(MessageFormat.format(ErrorConstant.NO_TEAM_FOUND_FOR_ID, id)));
-        return new ResponseEntity<>(result, HttpStatus.OK);
+    public ResponseEntity<TeamDto.Response> getTeamById(@PathVariable Long id) {
+        Optional<Team> teamOptional = teamService.findById(id);
+        Team team = teamOptional.orElseThrow(() -> new NotFoundException(MessageFormat.format(ErrorConstant.NO_TEAM_FOUND_FOR_ID, id)));
+        return new ResponseEntity<>(convertToResponseDto(team), HttpStatus.OK);
     }
 
-    @PreAuthorize("hasRole('" + Constant.LEADER_ROLE + "')")
     @PostMapping(Constant.TEAMS_PATH)
-    public ResponseEntity<Team> createNewTeam(@RequestBody Team team) {
-        Team result = teamService.save(team);
-        return new ResponseEntity<>(result, HttpStatus.CREATED);
+    public ResponseEntity<TeamDto.Response> createNewTeam(@RequestBody TeamDto.PostRequest teamCreateDto) {
+        Team team = teamService.create(teamCreateDto);
+        return new ResponseEntity<>(convertToResponseDto(team), HttpStatus.CREATED);
+    }
+
+    @PutMapping(Constant.TEAMS_PATH + Constant.SLASH_ID_PATH)
+    public ResponseEntity<TeamDto.Response> updateTeam(@PathVariable Long id, @RequestBody TeamDto.PostRequest updateDto) {
+        Team team = teamService.update(id, updateDto);
+        return new ResponseEntity<>(convertToResponseDto(team), HttpStatus.OK);
     }
 
     @DeleteMapping(Constant.TEAMS_PATH + Constant.SLASH_ID_PATH)
-    public ResponseEntity<Team> deleteTeam(@PathVariable Long id) {
+    public ResponseEntity deleteTeam(@PathVariable Long id) {
         teamService.delete(teamService.findById(id).orElseThrow(() -> new NotFoundException(MessageFormat.format(ErrorConstant.NO_TEAM_FOUND_FOR_ID, id))));
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
+    private TeamDto.Response convertToResponseDto(Team team) {
+        return modelMapperService.map(team, TeamDto.Response.class);
+    }
 }

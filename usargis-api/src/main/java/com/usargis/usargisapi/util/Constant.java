@@ -21,7 +21,7 @@ public abstract class Constant {
     public static final String NOTIFICATION_MESSAGES_PATH = "/notification-messages";
     public static final String TEAMS_PATH = "/teams";
     public static final String TEAM_MEMBERS_PATH = "/team-members";
-    public static final String USERS = "/users";
+    public static final String USERS_PATH = "/users";
     //### STATUS ###
     public static final String STATUS_PENDING_CODE = "PE";
     public static final String STATUS_PENDING = "pending";

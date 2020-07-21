@@ -1,5 +1,6 @@
 package com.usargis.usargisapi.service.impl;
 
+import com.usargis.usargisapi.core.dto.UserInfoDto;
 import com.usargis.usargisapi.core.model.UserInfo;
 import com.usargis.usargisapi.repository.UserInfoRepository;
 import com.usargis.usargisapi.service.contract.UserInfoService;
@@ -42,6 +43,16 @@ public class UserInfoServiceImpl implements UserInfoService {
     @Override
     public Optional<UserInfo> findByUsername(String username) {
         return userInfoRepository.findByUsername(username);
+    }
+
+    @Override
+    public UserInfo create(UserInfoDto.PostRequest createDto) {
+        return null;
+    }
+
+    @Override
+    public UserInfo update(String id, UserInfoDto.PostRequest updateDto) {
+        return null;
     }
 
 }
