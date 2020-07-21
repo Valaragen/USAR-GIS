@@ -1,5 +1,6 @@
 package com.usargis.usargisapi.service.impl;
 
+import com.usargis.usargisapi.core.dto.NotificationDto;
 import com.usargis.usargisapi.core.model.Notification;
 import com.usargis.usargisapi.repository.NotificationRepository;
 import com.usargis.usargisapi.service.contract.NotificationService;
@@ -37,5 +38,15 @@ public class NotificationServiceImpl implements NotificationService {
     @Override
     public void delete(Notification notification) {
         notificationRepository.delete(notification);
+    }
+
+    @Override
+    public Notification create(NotificationDto.PostRequest createDto) {
+        return null;
+    }
+
+    @Override
+    public Notification update(Long id, NotificationDto.PostRequest updateDto) {
+        return null;
     }
 }

@@ -1,5 +1,6 @@
 package com.usargis.usargisapi.service.impl;
 
+import com.usargis.usargisapi.core.dto.MissionDto;
 import com.usargis.usargisapi.core.model.Mission;
 import com.usargis.usargisapi.repository.MissionRepository;
 import com.usargis.usargisapi.service.contract.MissionService;
@@ -37,5 +38,15 @@ public class MissionServiceImpl implements MissionService {
     @Override
     public void delete(Mission mission) {
         missionRepository.delete(mission);
+    }
+
+    @Override
+    public Mission create(MissionDto.PostRequest createDto) {
+        return null;
+    }
+
+    @Override
+    public Mission update(Long id, MissionDto.PostRequest updateDto) {
+        return null;
     }
 }

@@ -1,5 +1,6 @@
 package com.usargis.usargisapi.service.impl;
 
+import com.usargis.usargisapi.core.dto.EventDto;
 import com.usargis.usargisapi.core.model.Event;
 import com.usargis.usargisapi.repository.EventRepository;
 import com.usargis.usargisapi.service.contract.EventService;
@@ -39,5 +40,13 @@ public class EventServiceImpl implements EventService {
         eventRepository.delete(event);
     }
 
+    @Override
+    public Event create(EventDto.PostRequest createDto) {
+        return null;
+    }
 
+    @Override
+    public Event update(Long id, EventDto.PostRequest updateDto) {
+        return null;
+    }
 }

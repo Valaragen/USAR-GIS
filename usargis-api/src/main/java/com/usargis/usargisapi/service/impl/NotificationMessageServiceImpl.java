@@ -1,5 +1,6 @@
 package com.usargis.usargisapi.service.impl;
 
+import com.usargis.usargisapi.core.dto.NotificationMessageDto;
 import com.usargis.usargisapi.core.model.NotificationMessage;
 import com.usargis.usargisapi.core.model.embeddable.NotificationMessageId;
 import com.usargis.usargisapi.repository.NotificationMessageRepository;
@@ -38,5 +39,15 @@ public class NotificationMessageServiceImpl implements NotificationMessageServic
     @Override
     public void delete(NotificationMessage notificationMessage) {
         notificationMessageRepository.delete(notificationMessage);
+    }
+
+    @Override
+    public NotificationMessage create(NotificationMessageDto.PostRequest createDto) {
+        return null;
+    }
+
+    @Override
+    public NotificationMessage update(Long id, NotificationMessageDto.PostRequest updateDto) {
+        return null;
     }
 }

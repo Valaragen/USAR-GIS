@@ -29,6 +29,7 @@ public class Inscription extends ModelEntity {
     @NotNull
     @Column(nullable = false)
     private InscriptionStatus inscriptionStatus = InscriptionStatus.WAITING_FOR_VALIDATION;
+
     @CreationTimestamp
     private LocalDateTime inscriptionDate;
 }

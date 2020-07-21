@@ -1,5 +1,6 @@
 package com.usargis.usargisapi.service.impl;
 
+import com.usargis.usargisapi.core.dto.TeamDto;
 import com.usargis.usargisapi.core.model.Team;
 import com.usargis.usargisapi.repository.TeamRepository;
 import com.usargis.usargisapi.service.contract.TeamService;
@@ -37,5 +38,15 @@ public class TeamServiceImpl implements TeamService {
     @Override
     public void delete(Team team) {
         teamRepository.delete(team);
+    }
+
+    @Override
+    public Team create(TeamDto.PostRequest createDto) {
+        return null;
+    }
+
+    @Override
+    public Team update(Long id, TeamDto.PostRequest updateDto) {
+        return null;
     }
 }

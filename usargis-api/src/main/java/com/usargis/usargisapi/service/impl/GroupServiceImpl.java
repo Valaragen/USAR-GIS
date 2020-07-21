@@ -1,5 +1,6 @@
 package com.usargis.usargisapi.service.impl;
 
+import com.usargis.usargisapi.core.dto.GroupDto;
 import com.usargis.usargisapi.core.model.Group;
 import com.usargis.usargisapi.repository.GroupRepository;
 import com.usargis.usargisapi.service.contract.GroupService;
@@ -37,5 +38,15 @@ public class GroupServiceImpl implements GroupService {
     @Override
     public void delete(Group group) {
         groupRepository.delete(group);
+    }
+
+    @Override
+    public Group create(GroupDto.PostRequest createDto) {
+        return null;
+    }
+
+    @Override
+    public Group update(Long id, GroupDto.PostRequest updateDto) {
+        return null;
     }
 }

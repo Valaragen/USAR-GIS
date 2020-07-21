@@ -5,7 +5,6 @@ import com.usargis.usargisapi.core.model.Availability;
 import com.usargis.usargisapi.core.search.AvailabilitySearch;
 import com.usargis.usargisapi.service.contract.common.CRUDService;
 
-import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 
 public interface AvailabilityService extends CRUDService<Availability, Long> {

@@ -1,5 +1,6 @@
 package com.usargis.usargisapi.service.impl;
 
+import com.usargis.usargisapi.core.dto.InscriptionDto;
 import com.usargis.usargisapi.core.model.Inscription;
 import com.usargis.usargisapi.core.model.embeddable.InscriptionId;
 import com.usargis.usargisapi.repository.InscriptionRepository;
@@ -38,5 +39,15 @@ public class InscriptionServiceImpl implements InscriptionService {
     @Override
     public void delete(Inscription inscription) {
         inscriptionRepository.delete(inscription);
+    }
+
+    @Override
+    public Inscription create(InscriptionDto.PostRequest createDto) {
+        return null;
+    }
+
+    @Override
+    public Inscription update(Long id, InscriptionDto.PostRequest updateDto) {
+        return null;
     }
 }
