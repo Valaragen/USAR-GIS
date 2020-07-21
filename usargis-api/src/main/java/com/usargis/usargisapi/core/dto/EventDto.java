@@ -28,7 +28,7 @@ public interface EventDto {
 
     @Builder
     @Value
-    class PostRequest implements Name, Description, Address {
+    class PostRequest implements EventDto, Name, Description, Address {
         //Fields inheriting from validation
         private String name;
         private String description;
@@ -47,7 +47,7 @@ public interface EventDto {
     }
 
     @Data
-    class Response implements Name, Description, Address {
+    class Response implements EventDto, Name, Description, Address {
         //Fields inheriting from validation
         private String name;
         private String description;

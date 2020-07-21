@@ -42,7 +42,7 @@ public interface AvailabilityDto {
     }
 
     @Data
-    class Response implements UserInfoId, MissionId, AvailabilityDto {
+    class Response implements AvailabilityDto, UserInfoId, MissionId {
         //Fields inheriting from validation
         String userInfoId;
         Long missionId;

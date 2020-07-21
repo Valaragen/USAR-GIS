@@ -23,7 +23,7 @@ public interface NotificationMessageDto {
 
     @Builder
     @Data
-    class PostRequest implements Content, Subject {
+    class PostRequest implements NotificationMessageDto, Content, Subject {
         //Fields inheriting from validation
         private String content;
         private String subject;
@@ -34,7 +34,7 @@ public interface NotificationMessageDto {
     }
 
     @Data
-    class Response implements Content, Subject {
+    class Response implements NotificationMessageDto, Content, Subject {
         //Fields inheriting from validation
         private String content;
         private String subject;

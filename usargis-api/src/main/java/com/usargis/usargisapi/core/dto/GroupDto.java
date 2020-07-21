@@ -15,13 +15,13 @@ public interface GroupDto {
 
     @Builder
     @Value
-    class PostRequest implements Name {
+    class PostRequest implements GroupDto, Name {
         //Fields inheriting from validation
         private String name;
     }
 
     @Data
-    class Response implements Name {
+    class Response implements GroupDto, Name {
         //Fields inheriting from validation
         private String name;
 

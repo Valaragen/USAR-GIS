@@ -18,13 +18,13 @@ public interface NotificationDto {
 
     @Builder
     @Value
-    class PostRequest implements SendingDate {
+    class PostRequest implements NotificationDto, SendingDate {
         //Fields inheriting from validation
         private LocalDateTime sendingDate;
     }
 
     @Data
-    class Response implements SendingDate {
+    class Response implements NotificationDto, SendingDate {
         //Fields inheriting from validation
         private LocalDateTime sendingDate;
 
