@@ -1,5 +1,6 @@
 package com.usargis.usargisapi.service.impl;
 
+import com.usargis.usargisapi.core.dto.AvailabilityDto;
 import com.usargis.usargisapi.core.model.Availability;
 import com.usargis.usargisapi.core.search.AvailabilitySearch;
 import com.usargis.usargisapi.repository.AvailabilityRepository;
@@ -9,7 +10,6 @@ import com.usargis.usargisapi.web.exception.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.lang.reflect.InvocationTargetException;
 import java.text.MessageFormat;
 import java.util.List;
 import java.util.Optional;
@@ -50,10 +50,12 @@ public class AvailabilityServiceImpl implements AvailabilityService {
     }
 
     @Override
-    public Availability update(Long id, Availability availabilityDetails) throws InvocationTargetException, IllegalAccessException {
-        Availability availability = findById(id).orElseThrow(() -> new NotFoundException(MessageFormat.format(ErrorConstant.NO_AVAILABILITY_FOUND_FOR_ID, id)));
-        availabilityDetails.setId(null);
+    public Availability create(AvailabilityDto.Create createDto) {
+        return null;
+    }
 
-        return save(availability);
+    @Override
+    public Availability update(Long id, AvailabilityDto.Update updateDto) {
+        return null;
     }
 }
