@@ -1,21 +1,16 @@
 package com.usargis.usargisapi.util;
 
 public abstract class Constant {
-    private Constant() {
-    }
-
     //### ROLES ###
     public static final String MEMBER_ROLE = "MEMBER";
     public static final String LEADER_ROLE = "LEADER";
     public static final String ADMIN_ROLE = "ADMIN";
-
     //### PATH ###
     public static final Object SLASH = "/";
     public static final Object REDIRECT = "redirect:";
     public static final String SLASH_ID_PATH = "/{id}";
     public static final String SLASH_STRING_PATH = "/{string}";
     public static final String SLASH_NAME_PATH = "/{name}";
-
     public static final String V1_PATH = "/v1";
     public static final String AVAILABILITIES_PATH = "/availabilities";
     public static final String EVENTS_PATH = "/events";
@@ -27,8 +22,6 @@ public abstract class Constant {
     public static final String TEAMS_PATH = "/teams";
     public static final String TEAM_MEMBERS_PATH = "/team-members";
     public static final String USERS = "/users";
-
-
     //### STATUS ###
     public static final String STATUS_PENDING_CODE = "PE";
     public static final String STATUS_PENDING = "pending";
@@ -50,7 +43,6 @@ public abstract class Constant {
     public static final String STATUS_WAITING_FOR_VALIDATION = "waitingForValidation";
     public static final String STATUS_VALIDATED_CODE = "VA";
     public static final String STATUS_VALIDATED = "validated";
-
     //### NOTIFICATION MESSAGE SENDING MODE ###
     public static final String NMSM_APP_CODE = "A";
     public static final String NMSM_APP = "APP";
@@ -58,12 +50,13 @@ public abstract class Constant {
     public static final String NMSM_MAIL = "MAIL";
     public static final String NMSM_PHONE_CODE = "P";
     public static final String NMSM_PHONE = "PHONE";
-
     //### NOTIFICATION MESSAGE SENDING TYPE ###
     public static final String NMCT_HTML_CODE = "H";
     public static final String NMCT_HTML = "HTML";
     public static final String NMCT_TEXT_CODE = "T";
     public static final String NMCT_TEXT = "TEXT";
+    private Constant() {
+    }
 
 
 }
