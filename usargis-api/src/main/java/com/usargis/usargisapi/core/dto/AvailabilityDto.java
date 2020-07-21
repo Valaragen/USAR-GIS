@@ -52,5 +52,4 @@ public interface AvailabilityDto {
         LocalDateTime startDate;
         LocalDateTime endDate;
     }
-
 }
