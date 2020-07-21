@@ -4,7 +4,7 @@ import com.usargis.usargisapi.config.SpringKeycloakSecurityConfiguration;
 import com.usargis.usargisapi.security.testController.KeycloakSecurityTestController;
 import com.usargis.usargisapi.service.contract.SecurityService;
 import com.usargis.usargisapi.service.contract.UserInfoService;
-import com.usargis.usargisapi.testutils.keycloakAuthMock.WithMockKeycloakUser;
+import com.usargis.usargisapi.util.keycloakAuthMock.WithMockKeycloakUser;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;

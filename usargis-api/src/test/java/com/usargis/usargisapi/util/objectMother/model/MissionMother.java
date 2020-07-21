@@ -1,8 +1,8 @@
-package com.usargis.usargisapi.testutils.objectMother.model;
+package com.usargis.usargisapi.util.objectMother.model;
 
 import com.usargis.usargisapi.core.model.Mission;
 import com.usargis.usargisapi.core.model.MissionStatus;
-import com.usargis.usargisapi.testutils.TestConstant;
+import com.usargis.usargisapi.util.TestConstant;
 
 public class MissionMother {
     public static Mission.MissionBuilder sampleFinished() {

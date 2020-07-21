@@ -1,7 +1,7 @@
 package com.usargis.usargisapi.repository;
 
 import com.usargis.usargisapi.core.model.Group;
-import com.usargis.usargisapi.testutils.objectMother.model.GroupMother;
+import com.usargis.usargisapi.util.objectMother.model.GroupMother;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

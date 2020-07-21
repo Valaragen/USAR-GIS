@@ -1,7 +1,7 @@
-package com.usargis.usargisapi.testutils.objectMother.dto;
+package com.usargis.usargisapi.util.objectMother.dto;
 
 import com.usargis.usargisapi.core.dto.EventDto;
-import com.usargis.usargisapi.testutils.TestConstant;
+import com.usargis.usargisapi.util.TestConstant;
 
 public class EventDtoMother {
     public static EventDto.PostRequest.PostRequestBuilder postRequestSample() {

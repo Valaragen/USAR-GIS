@@ -1,8 +1,8 @@
-package com.usargis.usargisapi.testutils.objectMother.model;
+package com.usargis.usargisapi.util.objectMother.model;
 
 import com.usargis.usargisapi.core.model.Event;
 import com.usargis.usargisapi.core.model.EventStatus;
-import com.usargis.usargisapi.testutils.TestConstant;
+import com.usargis.usargisapi.util.TestConstant;
 
 public class EventMother {
     public static Event.EventBuilder sampleFinished() {

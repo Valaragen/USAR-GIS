@@ -1,9 +1,9 @@
-package com.usargis.usargisapi.testutils.objectMother.model;
+package com.usargis.usargisapi.util.objectMother.model;
 
 import com.usargis.usargisapi.core.model.Inscription;
 import com.usargis.usargisapi.core.model.InscriptionStatus;
 import com.usargis.usargisapi.core.model.embeddable.InscriptionId;
-import com.usargis.usargisapi.testutils.TestConstant;
+import com.usargis.usargisapi.util.TestConstant;
 
 public class InscriptionMother {
     public static Inscription.InscriptionBuilder sampleValidated() {

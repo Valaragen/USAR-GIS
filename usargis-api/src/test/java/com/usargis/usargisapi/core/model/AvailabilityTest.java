@@ -1,6 +1,6 @@
 package com.usargis.usargisapi.core.model;
 
-import com.usargis.usargisapi.testutils.objectMother.model.AvailabilityMother;
+import com.usargis.usargisapi.util.objectMother.model.AvailabilityMother;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

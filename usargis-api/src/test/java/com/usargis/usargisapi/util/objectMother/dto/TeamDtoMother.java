@@ -1,4 +1,4 @@
-package com.usargis.usargisapi.testutils.objectMother.dto;
+package com.usargis.usargisapi.util.objectMother.dto;
 
 import com.usargis.usargisapi.core.dto.TeamDto;
 

@@ -1,4 +1,4 @@
-package com.usargis.usargisapi.testutils;
+package com.usargis.usargisapi.util;
 
 import java.time.LocalDateTime;
 

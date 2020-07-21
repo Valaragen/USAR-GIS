@@ -2,9 +2,9 @@ package com.usargis.usargisapi.repository;
 
 import com.usargis.usargisapi.core.model.*;
 import com.usargis.usargisapi.core.model.embeddable.NotificationMessageId;
-import com.usargis.usargisapi.testutils.objectMother.model.NotificationMessageMother;
-import com.usargis.usargisapi.testutils.objectMother.model.NotificationMother;
-import com.usargis.usargisapi.testutils.objectMother.model.UserInfoMother;
+import com.usargis.usargisapi.util.objectMother.model.NotificationMessageMother;
+import com.usargis.usargisapi.util.objectMother.model.NotificationMother;
+import com.usargis.usargisapi.util.objectMother.model.UserInfoMother;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

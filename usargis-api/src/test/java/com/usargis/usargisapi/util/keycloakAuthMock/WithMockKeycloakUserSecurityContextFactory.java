@@ -1,4 +1,4 @@
-package com.usargis.usargisapi.testutils.keycloakAuthMock;
+package com.usargis.usargisapi.util.keycloakAuthMock;
 
 import lombok.extern.slf4j.Slf4j;
 import org.keycloak.KeycloakPrincipal;

@@ -1,4 +1,4 @@
-package com.usargis.usargisapi.testutils.objectMother.model;
+package com.usargis.usargisapi.util.objectMother.model;
 
 import com.usargis.usargisapi.core.model.TeamMember;
 import com.usargis.usargisapi.core.model.embeddable.TeamMemberId;
