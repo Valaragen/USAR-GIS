@@ -1,13 +1,25 @@
 package com.usargis.usargisapi.service.impl;
 
+import com.usargis.usargisapi.core.dto.EventDto;
 import com.usargis.usargisapi.core.model.Event;
+import com.usargis.usargisapi.core.model.UserInfo;
 import com.usargis.usargisapi.repository.EventRepository;
 import com.usargis.usargisapi.service.contract.EventService;
+import com.usargis.usargisapi.service.contract.ModelMapperService;
+import com.usargis.usargisapi.service.contract.SecurityService;
+import com.usargis.usargisapi.service.contract.UserInfoService;
+import com.usargis.usargisapi.util.ErrorConstant;
+import com.usargis.usargisapi.util.objectMother.dto.EventDtoMother;
+import com.usargis.usargisapi.util.objectMother.model.EventMother;
+import com.usargis.usargisapi.util.objectMother.model.UserInfoMother;
+import com.usargis.usargisapi.web.exception.NotFoundException;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
+import java.text.MessageFormat;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
@@ -17,10 +29,13 @@ class EventServiceImplTest {
     private EventService objectToTest;
 
     private EventRepository eventRepository = Mockito.mock(EventRepository.class);
+    private UserInfoService userInfoService = Mockito.mock(UserInfoService.class);
+    private ModelMapperService modelMapperService = Mockito.mock(ModelMapperService.class);
+    private SecurityService securityService = Mockito.mock(SecurityService.class);
 
     @BeforeEach
     void setup() {
-        objectToTest = new EventServiceImpl(eventRepository);
+        objectToTest = new EventServiceImpl(eventRepository, userInfoService, modelMapperService, securityService);
     }
 
 
@@ -70,4 +85,94 @@ class EventServiceImplTest {
         Mockito.verify(eventRepository).delete(eventToDelete);
     }
 
+    @Nested
+    class createTest {
+        private EventDto.PostRequest eventPostRequestDto = EventDtoMother.postRequestSample().build();
+        private UserInfo authorToLink = UserInfoMother.sampleAuthor().build();
+        private String userNameFromToken = authorToLink.getUsername();
+        private Event savedEvent = EventMother.sampleFinished().build();
+
+        @BeforeEach
+        void setup() {
+            Mockito.when(securityService.getUsernameFromToken()).thenReturn(userNameFromToken);
+            Mockito.when(userInfoService.findByUsername(userNameFromToken)).thenReturn(Optional.of(authorToLink));
+            Mockito.when(eventRepository.save(Mockito.any())).thenReturn(savedEvent);
+        }
+
+        @Test
+        void create_noUserForGivenUsername_throwNotFoundException() {
+            Mockito.when(userInfoService.findByUsername(userNameFromToken)).thenReturn(Optional.empty());
+
+            Assertions.assertThatThrownBy(() -> {
+                objectToTest.create(eventPostRequestDto);
+            }).isInstanceOf(NotFoundException.class)
+                    .hasMessage(MessageFormat.format(ErrorConstant.NO_USER_FOUND_FOR_USERNAME, userNameFromToken));
+        }
+
+        @Test
+        void create_shouldMapDtoInEvent() {
+            objectToTest.create(eventPostRequestDto);
+
+            Mockito.verify(modelMapperService).map(Mockito.any(EventDto.class), Mockito.any(Event.class));
+        }
+
+        @Test
+        void create_shouldSaveNewEntity() {
+            objectToTest.create(eventPostRequestDto);
+
+            Mockito.verify(eventRepository).save(Mockito.any(Event.class));
+        }
+
+        @Test
+        void create_shouldReturnSavedEvent() {
+            Event result = objectToTest.create(eventPostRequestDto);
+
+            Assertions.assertThat(result).isEqualTo(savedEvent);
+        }
+    }
+
+    @Nested
+    class updateTest {
+        private Long givenId = 1L;
+        private Event eventToUpdate = EventMother.sampleFinished().build();
+        private EventDto.PostRequest eventUpdateDto = EventDtoMother.postRequestSample().build();
+        private Event savedEvent = EventMother.sampleFinished().build();
+
+        @BeforeEach
+        void setup() {
+            Mockito.when(eventRepository.findById(givenId)).thenReturn(Optional.ofNullable(eventToUpdate));
+            Mockito.when(eventRepository.save(Mockito.any())).thenReturn(savedEvent);
+        }
+
+        @Test
+        void update_noEventForGivenId_throwNotFoundException() {
+            Mockito.when(eventRepository.findById(givenId)).thenReturn(Optional.empty());
+
+            Assertions.assertThatThrownBy(() -> {
+                objectToTest.update(givenId, eventUpdateDto);
+            }).isInstanceOf(NotFoundException.class)
+                    .hasMessage(MessageFormat.format(ErrorConstant.NO_EVENT_FOUND_FOR_ID, givenId));
+        }
+
+        @Test
+        void update_shouldMapDtoInEvent() {
+            objectToTest.update(givenId, eventUpdateDto);
+
+            Mockito.verify(modelMapperService).map(Mockito.any(EventDto.class), Mockito.any(Event.class));
+        }
+
+        @Test
+        void update_shouldSaveNewEntity() {
+            objectToTest.update(givenId, eventUpdateDto);
+
+            Mockito.verify(eventRepository).save(Mockito.any(Event.class));
+        }
+
+        @Test
+        void update_shouldReturnSavedEvent() {
+            Event result = objectToTest.update(givenId, eventUpdateDto);
+
+            Assertions.assertThat(result).isEqualTo(savedEvent);
+        }
+    }
 }

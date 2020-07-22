@@ -22,6 +22,8 @@ public abstract class ErrorConstant {
     public static final String NO_TEAM_MEMBER_FOUND = "No team member found";
     public static final String NO_TEAM_MEMBER_FOUND_FOR_ID = "Team member not found for this id : {0}";
 
+    public static final String ERROR_READ_TOKEN_EXCEPTION = "Cannot read token";
+
     private ErrorConstant() {
     }
 

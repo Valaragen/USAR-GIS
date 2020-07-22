@@ -35,11 +35,11 @@ class AvailabilityServiceImplTest {
     private UserInfoService userInfoService = Mockito.mock(UserInfoService.class);
     private MissionService missionService = Mockito.mock(MissionService.class);
 
-    private ModelMapperService modelMapper = Mockito.mock(ModelMapperServiceImpl.class);
+    private ModelMapperService modelMapperService = Mockito.mock(ModelMapperService.class);
 
     @BeforeEach
     void setup() {
-        objectToTest = new AvailabilityServiceImpl(availabilityRepository, userInfoService, missionService, modelMapper);
+        objectToTest = new AvailabilityServiceImpl(availabilityRepository, userInfoService, missionService, modelMapperService);
     }
 
 
@@ -140,7 +140,7 @@ class AvailabilityServiceImplTest {
         void create_shouldMapDtoInAvailability() {
             objectToTest.create(availabilityCreateDto);
 
-            Mockito.verify(modelMapper).map(Mockito.any(AvailabilityDto.class), Mockito.any(Availability.class));
+            Mockito.verify(modelMapperService).map(Mockito.any(AvailabilityDto.class), Mockito.any(Availability.class));
         }
 
         @Test
@@ -185,7 +185,7 @@ class AvailabilityServiceImplTest {
         void update_shouldMapDtoInAvailability() {
             objectToTest.update(givenId, availabilityUpdateDto);
 
-            Mockito.verify(modelMapper).map(Mockito.any(AvailabilityDto.class), Mockito.any(Availability.class));
+            Mockito.verify(modelMapperService).map(Mockito.any(AvailabilityDto.class), Mockito.any(Availability.class));
         }
 
         @Test
