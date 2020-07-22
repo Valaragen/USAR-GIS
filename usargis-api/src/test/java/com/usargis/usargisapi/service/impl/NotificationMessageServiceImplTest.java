@@ -1,13 +1,29 @@
 package com.usargis.usargisapi.service.impl;
 
+import com.usargis.usargisapi.core.dto.NotificationMessageDto;
+import com.usargis.usargisapi.core.model.Notification;
 import com.usargis.usargisapi.core.model.NotificationMessage;
+import com.usargis.usargisapi.core.model.NotificationMessage;
+import com.usargis.usargisapi.core.model.UserInfo;
 import com.usargis.usargisapi.repository.NotificationMessageRepository;
+import com.usargis.usargisapi.service.contract.NotificationService;
+import com.usargis.usargisapi.service.contract.ModelMapperService;
 import com.usargis.usargisapi.service.contract.NotificationMessageService;
+import com.usargis.usargisapi.service.contract.UserInfoService;
+import com.usargis.usargisapi.util.ErrorConstant;
+import com.usargis.usargisapi.util.objectMother.dto.NotificationMessageDtoMother;
+import com.usargis.usargisapi.util.objectMother.model.NotificationMother;
+import com.usargis.usargisapi.util.objectMother.model.NotificationMessageMother;
+import com.usargis.usargisapi.util.objectMother.model.UserInfoMother;
+import com.usargis.usargisapi.web.exception.NotFoundException;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
+import org.mockito.AdditionalAnswers;
 import org.mockito.Mockito;
 
+import java.text.MessageFormat;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
@@ -17,10 +33,12 @@ class NotificationMessageServiceImplTest {
     private NotificationMessageService objectToTest;
 
     private NotificationMessageRepository notificationMessageRepository = Mockito.mock(NotificationMessageRepository.class);
+    private NotificationService notificationService = Mockito.mock(NotificationService.class);
+    private ModelMapperService modelMapperService = Mockito.mock(ModelMapperService.class);
 
     @BeforeEach
     void setup() {
-        objectToTest = new NotificationMessageServiceImpl(notificationMessageRepository);
+        objectToTest = new NotificationMessageServiceImpl(notificationMessageRepository, notificationService, modelMapperService);
     }
 
 
@@ -70,4 +88,101 @@ class NotificationMessageServiceImplTest {
         Mockito.verify(notificationMessageRepository).delete(notificationMessageToDelete);
     }
 
+    @Nested
+    class createTest {
+        private NotificationMessageDto.PostRequest notificationMessageCreateDto = NotificationMessageDtoMother.postRequestSample().build();
+        private Notification notificationToLink = NotificationMother.sampleSent().build();
+        private NotificationMessage savedNotificationMessage = NotificationMessageMother.sample().build();
+
+        @BeforeEach
+        void setup() {
+            Mockito.when(notificationService.findById(notificationMessageCreateDto.getNotificationId())).thenReturn(Optional.of(notificationToLink));
+            Mockito.when(notificationMessageRepository.save(Mockito.any(NotificationMessage.class))).thenReturn(savedNotificationMessage);
+        }
+
+        @Test
+        void create_noNotificationForGivenId_throwNotFoundException() {
+            Mockito.when(notificationService.findById(notificationMessageCreateDto.getNotificationId())).thenReturn(Optional.empty());
+
+            Assertions.assertThatThrownBy(() -> {
+                objectToTest.create(notificationMessageCreateDto);
+            }).isInstanceOf(NotFoundException.class)
+                    .hasMessage(MessageFormat.format(ErrorConstant.NO_NOTIFICATION_FOUND_FOR_ID, notificationMessageCreateDto.getNotificationId()));
+        }
+
+        @Test
+        void create_shouldMapDtoInNotificationMessage() {
+            objectToTest.create(notificationMessageCreateDto);
+
+            Mockito.verify(modelMapperService).map(Mockito.any(NotificationMessageDto.class), Mockito.any(NotificationMessage.class));
+        }
+
+        @Test
+        void create_shouldSaveNewEntity() {
+            objectToTest.create(notificationMessageCreateDto);
+
+            Mockito.verify(notificationMessageRepository).save(Mockito.any(NotificationMessage.class));
+        }
+
+        @Test
+        void create_shouldReturnSavedNotificationMessage() {
+            NotificationMessage result = objectToTest.create(notificationMessageCreateDto);
+
+            Assertions.assertThat(result).isEqualTo(savedNotificationMessage);
+        }
+
+        @Test
+        void create_returnedAbilityShouldContainLinkedEntities() {
+            Mockito.when(notificationMessageRepository.save(Mockito.any(NotificationMessage.class))).then(AdditionalAnswers.returnsFirstArg());
+
+            NotificationMessage result = objectToTest.create(notificationMessageCreateDto);
+
+            Assertions.assertThat(result.getNotification()).isEqualTo(notificationToLink);
+        }
+    }
+
+    @Nested
+    class updateTest {
+        private Long givenId = 1L;
+        private NotificationMessage notificationMessageToUpdate = NotificationMessageMother.sample().build();
+        private NotificationMessageDto.PostRequest notificationMessageUpdateDto = NotificationMessageDtoMother.postRequestSample().build();
+        private NotificationMessage savedNotificationMessage = NotificationMessageMother.sample().build();
+
+        @BeforeEach
+        void setup() {
+            Mockito.when(notificationMessageRepository.findById(givenId)).thenReturn(Optional.ofNullable(notificationMessageToUpdate));
+            Mockito.when(notificationMessageRepository.save(Mockito.any(NotificationMessage.class))).thenReturn(savedNotificationMessage);
+        }
+
+        @Test
+        void update_noNotificationMessageForGivenId_throwNotFoundException() {
+            Mockito.when(notificationMessageRepository.findById(givenId)).thenReturn(Optional.empty());
+
+            Assertions.assertThatThrownBy(() -> {
+                objectToTest.update(givenId, notificationMessageUpdateDto);
+            }).isInstanceOf(NotFoundException.class)
+                    .hasMessage(MessageFormat.format(ErrorConstant.NO_NOTIFICATION_MESSAGE_FOUND_FOR_ID, givenId));
+        }
+
+        @Test
+        void update_shouldMapDtoInNotificationMessage() {
+            objectToTest.update(givenId, notificationMessageUpdateDto);
+
+            Mockito.verify(modelMapperService).map(Mockito.any(NotificationMessageDto.class), Mockito.any(NotificationMessage.class));
+        }
+
+        @Test
+        void update_shouldSaveNewEntity() {
+            objectToTest.update(givenId, notificationMessageUpdateDto);
+
+            Mockito.verify(notificationMessageRepository).save(Mockito.any(NotificationMessage.class));
+        }
+
+        @Test
+        void update_shouldReturnSavedNotificationMessage() {
+            NotificationMessage result = objectToTest.update(givenId, notificationMessageUpdateDto);
+
+            Assertions.assertThat(result).isEqualTo(savedNotificationMessage);
+        }
+    }
 }

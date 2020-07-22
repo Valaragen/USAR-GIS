@@ -197,5 +197,4 @@ class InscriptionServiceImplTest {
             Assertions.assertThat(result).isEqualTo(savedInscription);
         }
     }
-
 }

@@ -76,5 +76,4 @@ public class EventServiceImpl implements EventService {
         modelMapperService.map(updateDto, eventToUpdate);
         return save(eventToUpdate);
     }
-
 }
