@@ -1,11 +1,8 @@
 package com.usargis.usargisapi.core.dto;
 
-import com.usargis.usargisapi.core.model.InscriptionStatus;
 import lombok.Builder;
 import lombok.Data;
 import lombok.Value;
-
-import java.time.LocalDateTime;
 
 public interface TeamMemberDto {
 
@@ -23,7 +20,6 @@ public interface TeamMemberDto {
         private Long id;
         private Long teamId;
         private String userInfoId;
-        private InscriptionStatus inscriptionStatus;
-        private LocalDateTime inscriptionDate;
+        private boolean isConfirmedByUser;
     }
 }

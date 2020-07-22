@@ -10,6 +10,7 @@ import java.util.HashSet;
 public class NotificationMessageDtoMother {
     public static NotificationMessageDto.PostRequest.PostRequestBuilder postRequestSample() {
         return NotificationMessageDto.PostRequest.builder()
+                .notificationId(1L)
                 .contentType(NotificationMessageContentType.TEXT)
                 .content("sample content")
                 .subject("sample subject")

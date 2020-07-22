@@ -1,11 +1,7 @@
 package com.usargis.usargisapi.service.impl;
 
-import com.usargis.usargisapi.core.dto.AvailabilityDto;
-import com.usargis.usargisapi.core.dto.NotificationMessageDto;
-import com.usargis.usargisapi.core.dto.TeamDto;
-import com.usargis.usargisapi.core.model.Availability;
-import com.usargis.usargisapi.core.model.NotificationMessage;
-import com.usargis.usargisapi.core.model.Team;
+import com.usargis.usargisapi.core.dto.*;
+import com.usargis.usargisapi.core.model.*;
 import com.usargis.usargisapi.service.contract.ModelMapperService;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.PropertyMap;
@@ -25,7 +21,7 @@ public class ModelMapperServiceImpl implements ModelMapperService {
 
     //Mapping rules
     private void configureModelMapper() {
-        //Availability Create DTO To entity
+        //Availability Create DTO to entity
         PropertyMap<AvailabilityDto.Create, Availability> availabilityCreateToEntityPropertyMap = new PropertyMap<AvailabilityDto.Create, Availability>() {
             protected void configure() {
                 skip().setId(null);
@@ -45,7 +41,37 @@ public class ModelMapperServiceImpl implements ModelMapperService {
                 };
         modelMapper.addMappings(teamPostRequestToEntityPropertyMap);
 
+        //Inscription PostRequest DTO to entity
+        PropertyMap<InscriptionDto.PostRequest, Inscription> inscriptionPostRequestToEntityPropertyMap =
+                new PropertyMap<InscriptionDto.PostRequest, Inscription>() {
+                    protected void configure() {
+                        skip().setId(null);
+                        skip().setEvent(null);
+                        skip().setUserInfo(null);
+                    }
+                };
+        modelMapper.addMappings(inscriptionPostRequestToEntityPropertyMap);
 
+        //TeamMember PostRequest DTO to entity
+        PropertyMap<TeamMemberDto.PostRequest, TeamMember> teamMemberPostRequestToEntityPropertyMap =
+                new PropertyMap<TeamMemberDto.PostRequest, TeamMember>() {
+                    protected void configure() {
+                        skip().setId(null);
+                        skip().setTeam(null);
+                        skip().setUserInfo(null);
+                    }
+                };
+        modelMapper.addMappings(teamMemberPostRequestToEntityPropertyMap);
+
+        //NotificationMessage PostRequest DTO to entity
+        PropertyMap<NotificationMessageDto.PostRequest, NotificationMessage> notificationMessagePostRequestToEntityPropertyMap =
+                new PropertyMap<NotificationMessageDto.PostRequest, NotificationMessage>() {
+                    protected void configure() {
+                        skip().setId(null);
+                        skip().setNotification(null);
+                    }
+                };
+        modelMapper.addMappings(notificationMessagePostRequestToEntityPropertyMap);
     }
 
     @Override

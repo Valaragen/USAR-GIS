@@ -18,7 +18,7 @@ import java.util.Set;
 @Data
 @Entity
 @Table(uniqueConstraints =
-        @UniqueConstraint(columnNames = {"notification_id", "contentType"})
+@UniqueConstraint(columnNames = {"notification_id", "contentType"})
 )
 public class NotificationMessage extends ModelEntityWithLongId {
 

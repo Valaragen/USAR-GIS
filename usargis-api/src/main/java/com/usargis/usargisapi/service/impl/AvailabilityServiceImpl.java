@@ -5,12 +5,9 @@ import com.usargis.usargisapi.core.model.Availability;
 import com.usargis.usargisapi.core.search.AvailabilitySearch;
 import com.usargis.usargisapi.repository.AvailabilityRepository;
 import com.usargis.usargisapi.service.contract.AvailabilityService;
-import com.usargis.usargisapi.util.ErrorConstant;
-import com.usargis.usargisapi.web.exception.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.text.MessageFormat;
 import java.util.List;
 import java.util.Optional;
 

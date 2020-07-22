@@ -1,7 +1,6 @@
 package com.usargis.usargisapi.service.contract;
 
 import com.usargis.usargisapi.core.dto.GroupDto;
-import com.usargis.usargisapi.core.model.Availability;
 import com.usargis.usargisapi.core.model.Group;
 import com.usargis.usargisapi.service.contract.common.CRUDService;
 

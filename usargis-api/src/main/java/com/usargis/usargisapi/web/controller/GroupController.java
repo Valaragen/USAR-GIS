@@ -2,8 +2,6 @@ package com.usargis.usargisapi.web.controller;
 
 import com.usargis.usargisapi.core.dto.GroupDto;
 import com.usargis.usargisapi.core.model.Group;
-import com.usargis.usargisapi.core.model.Group;
-import com.usargis.usargisapi.service.contract.GroupService;
 import com.usargis.usargisapi.service.contract.GroupService;
 import com.usargis.usargisapi.service.contract.ModelMapperService;
 import com.usargis.usargisapi.util.Constant;
@@ -12,7 +10,6 @@ import com.usargis.usargisapi.web.exception.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.text.MessageFormat;

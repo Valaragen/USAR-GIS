@@ -7,9 +7,4 @@ public class GroupDtoMother {
         return GroupDto.PostRequest.builder()
                 .name("sampleGroup name");
     }
-
-    public static GroupDto.PostRequest.PostRequestBuilder responseSample() {
-        return GroupDto.PostRequest.builder()
-                .name("sampleGroup name");
-    }
 }

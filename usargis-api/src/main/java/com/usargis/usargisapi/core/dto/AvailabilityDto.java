@@ -2,7 +2,6 @@ package com.usargis.usargisapi.core.dto;
 
 import lombok.Builder;
 import lombok.Data;
-import lombok.EqualsAndHashCode;
 import lombok.Value;
 
 import javax.validation.constraints.NotBlank;

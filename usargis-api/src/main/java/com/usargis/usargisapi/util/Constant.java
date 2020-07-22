@@ -57,6 +57,7 @@ public abstract class Constant {
     public static final String NMCT_HTML = "HTML";
     public static final String NMCT_TEXT_CODE = "T";
     public static final String NMCT_TEXT = "TEXT";
+
     private Constant() {
     }
 
