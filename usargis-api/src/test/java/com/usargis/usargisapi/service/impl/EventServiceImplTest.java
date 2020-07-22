@@ -17,6 +17,7 @@ import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
+import org.mockito.AdditionalAnswers;
 import org.mockito.Mockito;
 
 import java.text.MessageFormat;
@@ -96,7 +97,7 @@ class EventServiceImplTest {
         void setup() {
             Mockito.when(securityService.getUsernameFromToken()).thenReturn(userNameFromToken);
             Mockito.when(userInfoService.findByUsername(userNameFromToken)).thenReturn(Optional.of(authorToLink));
-            Mockito.when(eventRepository.save(Mockito.any())).thenReturn(savedEvent);
+            Mockito.when(eventRepository.save(Mockito.any(Event.class))).thenReturn(savedEvent);
         }
 
         @Test
@@ -129,6 +130,15 @@ class EventServiceImplTest {
 
             Assertions.assertThat(result).isEqualTo(savedEvent);
         }
+
+        @Test
+        void create_returnedAbilityShouldContainLinkedEntities() {
+            Mockito.when(eventRepository.save(Mockito.any(Event.class))).then(AdditionalAnswers.returnsFirstArg());
+
+            Event result = objectToTest.create(eventPostRequestDto);
+
+            Assertions.assertThat(result.getAuthor()).isEqualTo(authorToLink);
+        }
     }
 
     @Nested
@@ -141,7 +151,7 @@ class EventServiceImplTest {
         @BeforeEach
         void setup() {
             Mockito.when(eventRepository.findById(givenId)).thenReturn(Optional.ofNullable(eventToUpdate));
-            Mockito.when(eventRepository.save(Mockito.any())).thenReturn(savedEvent);
+            Mockito.when(eventRepository.save(Mockito.any(Event.class))).thenReturn(savedEvent);
         }
 
         @Test

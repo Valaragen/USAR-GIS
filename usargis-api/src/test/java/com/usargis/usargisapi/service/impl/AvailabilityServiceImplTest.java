@@ -20,6 +20,7 @@ import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
+import org.mockito.AdditionalAnswers;
 import org.mockito.Mockito;
 
 import java.text.MessageFormat;
@@ -113,7 +114,7 @@ class AvailabilityServiceImplTest {
         void setup() {
             Mockito.when(userInfoService.findByUsername(availabilityCreateDto.getUserInfoUsername())).thenReturn(Optional.of(userToLink));
             Mockito.when(missionService.findById(availabilityCreateDto.getMissionId())).thenReturn(Optional.of(missionToLink));
-            Mockito.when(availabilityRepository.save(Mockito.any())).thenReturn(savedAvailability);
+            Mockito.when(availabilityRepository.save(Mockito.any(Availability.class))).thenReturn(savedAvailability);
         }
 
         @Test
@@ -156,6 +157,16 @@ class AvailabilityServiceImplTest {
 
             Assertions.assertThat(result).isEqualTo(savedAvailability);
         }
+
+        @Test
+        void create_returnedAbilityShouldContainLinkedEntities() {
+            Mockito.when(availabilityRepository.save(Mockito.any(Availability.class))).then(AdditionalAnswers.returnsFirstArg());
+
+            Availability result = objectToTest.create(availabilityCreateDto);
+
+            Assertions.assertThat(result.getUserInfo()).isEqualTo(userToLink);
+            Assertions.assertThat(result.getMission()).isEqualTo(missionToLink);
+        }
     }
 
     @Nested
@@ -168,7 +179,7 @@ class AvailabilityServiceImplTest {
         @BeforeEach
         void setup() {
             Mockito.when(availabilityRepository.findById(givenId)).thenReturn(Optional.ofNullable(availabilityToUpdate));
-            Mockito.when(availabilityRepository.save(Mockito.any())).thenReturn(savedAvailability);
+            Mockito.when(availabilityRepository.save(Mockito.any(Availability.class))).thenReturn(savedAvailability);
         }
 
         @Test
