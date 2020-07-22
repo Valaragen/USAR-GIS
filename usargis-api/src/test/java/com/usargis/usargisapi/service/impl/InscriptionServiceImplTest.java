@@ -1,7 +1,6 @@
 package com.usargis.usargisapi.service.impl;
 
 import com.usargis.usargisapi.core.model.Inscription;
-import com.usargis.usargisapi.core.model.embeddable.InscriptionId;
 import com.usargis.usargisapi.repository.InscriptionRepository;
 import com.usargis.usargisapi.service.contract.InscriptionService;
 import org.assertj.core.api.Assertions;
@@ -41,7 +40,7 @@ class InscriptionServiceImplTest {
     void findById_shouldCallRepositoryAndReturnOptional() {
         Inscription inscriptionFound = new Inscription();
         Optional<Inscription> expectedResult = Optional.of(inscriptionFound);
-        InscriptionId inscriptionIdToFind = new InscriptionId();
+        Long inscriptionIdToFind = 1L;
         Mockito.when(inscriptionRepository.findById(inscriptionIdToFind)).thenReturn(expectedResult);
 
         Optional<Inscription> result = objectToTest.findById(inscriptionIdToFind);

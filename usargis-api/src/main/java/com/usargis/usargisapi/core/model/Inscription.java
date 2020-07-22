@@ -1,14 +1,10 @@
 package com.usargis.usargisapi.core.model;
 
-import com.usargis.usargisapi.core.model.common.ModelEntity;
-import com.usargis.usargisapi.core.model.embeddable.InscriptionId;
+import com.usargis.usargisapi.core.model.common.ModelEntityWithLongId;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 
-import javax.persistence.Column;
-import javax.persistence.EmbeddedId;
-import javax.persistence.Entity;
-import javax.validation.Valid;
+import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 
@@ -19,11 +15,16 @@ import java.time.LocalDateTime;
 @EqualsAndHashCode(callSuper = true)
 @Data
 @Entity
-public class Inscription extends ModelEntity {
-    @Valid
+@Table(uniqueConstraints = {
+        @UniqueConstraint(columnNames = {"user_info_id", "event_id"})
+})
+public class Inscription extends ModelEntityWithLongId {
     @NotNull
-    @EmbeddedId
-    private InscriptionId id;
+    @ManyToOne(optional = false)
+    private UserInfo userInfo;
+    @NotNull
+    @ManyToOne(optional = false)
+    private Event event;
 
     @Builder.Default
     @NotNull

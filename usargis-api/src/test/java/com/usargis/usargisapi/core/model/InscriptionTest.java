@@ -1,6 +1,5 @@
 package com.usargis.usargisapi.core.model;
 
-import com.usargis.usargisapi.core.model.embeddable.InscriptionId;
 import com.usargis.usargisapi.util.objectMother.model.InscriptionMother;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -27,7 +26,7 @@ class InscriptionTest {
     @Test
     void equals_differentInscriptions_shouldReturnFalse() {
         Inscription inscriptionToCompare = InscriptionMother.sampleValidated().build();
-        inscriptionToCompare.setId(new InscriptionId());
+        inscriptionToCompare.setId(1L);
 
         boolean result = objectToTest.equals(inscriptionToCompare);
 
