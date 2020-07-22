@@ -61,6 +61,6 @@ public interface MissionDto {
         private Double longitude;
         private LocalDateTime creationDate;
         private LocalDateTime lastEditionDate;
-        private String authorId;
+        private String authorUsername;
     }
 }

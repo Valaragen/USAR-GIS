@@ -6,6 +6,6 @@ public class TeamMemberDtoMother {
     public static TeamMemberDto.PostRequest.PostRequestBuilder postRequestSample() {
         return TeamMemberDto.PostRequest.builder()
                 .teamId(1L)
-                .userInfoId("test");
+                .userInfoUsername("test");
     }
 }

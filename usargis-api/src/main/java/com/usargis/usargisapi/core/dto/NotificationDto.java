@@ -31,6 +31,6 @@ public interface NotificationDto {
         //Fields specific to this DTO
         private Long id;
         private NotificationStatus status;
-        private String authorId;
+        private String authorUsername;
     }
 }

@@ -6,7 +6,7 @@ import com.usargis.usargisapi.util.TestConstant;
 public class AvailabilityDtoMother {
     public static AvailabilityDto.Create.CreateBuilder createSample() {
         return AvailabilityDto.Create.builder()
-                .userInfoId("sample")
+                .userInfoUsername("sample")
                 .missionId(1L)
                 .startDate(TestConstant.SAMPLE_LOCAL_DATE_TIME)
                 .endDate(TestConstant.SAMPLE_LOCAL_DATE_TIME);

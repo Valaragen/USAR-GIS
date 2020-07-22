@@ -5,7 +5,7 @@ import com.usargis.usargisapi.core.dto.InscriptionDto;
 public class InscriptionDtoMother {
     public static InscriptionDto.PostRequest.PostRequestBuilder postRequestSample() {
         return InscriptionDto.PostRequest.builder()
-                .userInfoId("test")
+                .userInfoUsername("test")
                 .eventId(1L);
     }
 }

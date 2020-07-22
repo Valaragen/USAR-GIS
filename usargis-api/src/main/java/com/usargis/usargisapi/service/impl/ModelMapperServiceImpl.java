@@ -80,7 +80,7 @@ public class ModelMapperServiceImpl implements ModelMapperService {
     }
 
     @Override
-    public void merge(Object source, Object destination) {
-        modelMapper.map(source, destination);
+    public void map(Object source, Object destinationType) {
+        modelMapper.map(source, destinationType);
     }
 }

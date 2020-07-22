@@ -10,9 +10,9 @@ import java.time.LocalDateTime;
 
 public interface AvailabilityDto {
     //Interfaces to inherit hibernate validation
-    interface UserInfoId {
+    interface UserInfoUsername {
         @NotBlank
-        String getUserInfoId();
+        String getUserInfoUsername();
     }
 
     interface MissionId {
@@ -22,9 +22,9 @@ public interface AvailabilityDto {
 
     @Builder
     @Value
-    class Create implements UserInfoId, MissionId, AvailabilityDto {
+    class Create implements UserInfoUsername, MissionId, AvailabilityDto {
         //Fields inheriting from validation
-        String userInfoId;
+        String userInfoUsername;
         Long missionId;
 
         //Fields specific to this DTO
@@ -41,9 +41,9 @@ public interface AvailabilityDto {
     }
 
     @Data
-    class Response implements AvailabilityDto, UserInfoId, MissionId {
+    class Response implements AvailabilityDto, UserInfoUsername, MissionId {
         //Fields inheriting from validation
-        String userInfoId;
+        String userInfoUsername;
         Long missionId;
 
         //Fields specific to this DTO

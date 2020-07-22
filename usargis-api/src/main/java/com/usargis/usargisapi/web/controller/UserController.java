@@ -42,7 +42,7 @@ public class UserController implements ApiRestController {
     @GetMapping(Constant.USERS_PATH + Constant.SLASH_ID_PATH)
     public ResponseEntity<UserInfoDto.Response> getUserInfoById(@PathVariable String id) {
         Optional<UserInfo> userInfoOptional = userInfoService.findById(id);
-        UserInfo userInfo = userInfoOptional.orElseThrow(() -> new NotFoundException(MessageFormat.format(ErrorConstant.NO_USER_FOUND_FOR_ID, id)));
+        UserInfo userInfo = userInfoOptional.orElseThrow(() -> new NotFoundException(MessageFormat.format(ErrorConstant.NO_USER_FOUND_FOR_USERNAME, id)));
         return new ResponseEntity<>(convertToResponseDto(userInfo), HttpStatus.OK);
     }
 
@@ -60,7 +60,7 @@ public class UserController implements ApiRestController {
 
     @DeleteMapping(Constant.USERS_PATH + Constant.SLASH_ID_PATH)
     public ResponseEntity deleteUserInfo(@PathVariable String id) {
-        userInfoService.delete(userInfoService.findById(id).orElseThrow(() -> new NotFoundException(MessageFormat.format(ErrorConstant.NO_USER_FOUND_FOR_ID, id))));
+        userInfoService.delete(userInfoService.findById(id).orElseThrow(() -> new NotFoundException(MessageFormat.format(ErrorConstant.NO_USER_FOUND_FOR_USERNAME, id))));
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 

@@ -65,7 +65,7 @@ class EventDtoTest {
             Assertions.assertThat(eventResponseDto.getInscriptionsEndDate()).isEqualTo(event.getInscriptionsEndDate());
             Assertions.assertThat(eventResponseDto.getLatitude()).isEqualTo(event.getLatitude());
             Assertions.assertThat(eventResponseDto.getLongitude()).isEqualTo(event.getLongitude());
-            Assertions.assertThat(eventResponseDto.getAuthorId()).isEqualTo(event.getAuthor().getId());
+            Assertions.assertThat(eventResponseDto.getAuthorUsername()).isEqualTo(event.getAuthor().getUsername());
             Assertions.assertThat(eventResponseDto.getStatus()).isEqualTo(event.getStatus());
             Assertions.assertThat(eventResponseDto.getCreationDate()).isEqualTo(event.getCreationDate());
             Assertions.assertThat(eventResponseDto.getLastEditionDate()).isEqualTo(event.getLastEditionDate());

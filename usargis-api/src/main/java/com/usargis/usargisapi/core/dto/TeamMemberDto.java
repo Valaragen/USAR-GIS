@@ -11,7 +11,7 @@ public interface TeamMemberDto {
     class PostRequest implements TeamMemberDto {
         //Fields specific to this DTO
         private Long teamId;
-        private String userInfoId;
+        private String userInfoUsername;
     }
 
     @Data
@@ -19,7 +19,7 @@ public interface TeamMemberDto {
         //Fields specific to this DTO
         private Long id;
         private Long teamId;
-        private String userInfoId;
+        private String userInfoUsername;
         private boolean isConfirmedByUser;
     }
 }

@@ -42,7 +42,7 @@ class NotificationDtoTest {
             Assertions.assertThat(notificationResponseDto.getId()).isEqualTo(notification.getId());
             Assertions.assertThat(notificationResponseDto.getStatus()).isEqualTo(notification.getStatus());
             Assertions.assertThat(notificationResponseDto.getSendingDate()).isEqualTo(notification.getSendingDate());
-            Assertions.assertThat(notificationResponseDto.getAuthorId()).isEqualTo(notification.getAuthor().getId());
+            Assertions.assertThat(notificationResponseDto.getAuthorUsername()).isEqualTo(notification.getAuthor().getUsername());
         }
     }
 }

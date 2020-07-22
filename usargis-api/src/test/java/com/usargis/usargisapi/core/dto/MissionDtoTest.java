@@ -62,7 +62,7 @@ class MissionDtoTest {
             Assertions.assertThat(missionResponseDto.getLongitude()).isEqualTo(mission.getLongitude());
             Assertions.assertThat(missionResponseDto.getCreationDate()).isEqualTo(mission.getCreationDate());
             Assertions.assertThat(missionResponseDto.getLastEditionDate()).isEqualTo(mission.getLastEditionDate());
-            Assertions.assertThat(missionResponseDto.getAuthorId()).isEqualTo(mission.getAuthor().getId());
+            Assertions.assertThat(missionResponseDto.getAuthorUsername()).isEqualTo(mission.getAuthor().getUsername());
         }
     }
 }

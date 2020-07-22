@@ -42,7 +42,7 @@ class TeamMemberDtoTest {
 
             Assertions.assertThat(teamMemberResponseDto.getId()).isEqualTo(teamMember.getId());
             Assertions.assertThat(teamMemberResponseDto.getTeamId()).isEqualTo(teamMember.getTeam().getId());
-            Assertions.assertThat(teamMemberResponseDto.getUserInfoId()).isEqualTo(teamMember.getUserInfo().getId());
+            Assertions.assertThat(teamMemberResponseDto.getUserInfoUsername()).isEqualTo(teamMember.getUserInfo().getUsername());
             Assertions.assertThat(teamMemberResponseDto.isConfirmedByUser()).isEqualTo(teamMember.isConfirmedByUser());
         }
     }

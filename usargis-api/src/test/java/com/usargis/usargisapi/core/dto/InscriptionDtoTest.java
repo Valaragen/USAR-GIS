@@ -43,7 +43,7 @@ class InscriptionDtoTest {
 
             Assertions.assertThat(inscriptionResponseDto.getId()).isEqualTo(inscription.getId());
             Assertions.assertThat(inscriptionResponseDto.getEventId()).isEqualTo(inscription.getEvent().getId());
-            Assertions.assertThat(inscriptionResponseDto.getUserInfoId()).isEqualTo(inscription.getUserInfo().getId());
+            Assertions.assertThat(inscriptionResponseDto.getUserInfoUsername()).isEqualTo(inscription.getUserInfo().getUsername());
             Assertions.assertThat(inscriptionResponseDto.getInscriptionDate()).isEqualTo(inscription.getInscriptionDate());
             Assertions.assertThat(inscriptionResponseDto.getInscriptionStatus()).isEqualTo(inscription.getInscriptionStatus());
         }

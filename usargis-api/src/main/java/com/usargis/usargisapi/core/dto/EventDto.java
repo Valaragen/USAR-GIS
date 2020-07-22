@@ -70,6 +70,6 @@ public interface EventDto {
         private LocalDateTime creationDate;
         private LocalDateTime lastEditionDate;
 
-        private String authorId;
+        private String authorUsername;
     }
 }

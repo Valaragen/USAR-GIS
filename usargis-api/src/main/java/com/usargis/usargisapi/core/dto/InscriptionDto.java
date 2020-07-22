@@ -14,7 +14,7 @@ public interface InscriptionDto {
     class PostRequest implements InscriptionDto {
         //Fields specific to this DTO
         private Long eventId;
-        private String userInfoId;
+        private String userInfoUsername;
     }
 
     @Data
@@ -22,7 +22,7 @@ public interface InscriptionDto {
         //Fields specific to this DTO
         private Long id;
         private Long eventId;
-        private String userInfoId;
+        private String userInfoUsername;
         private InscriptionStatus inscriptionStatus;
         private LocalDateTime inscriptionDate;
     }
