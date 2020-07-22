@@ -32,7 +32,7 @@ class NotificationMessageRepositoryCompTest {
 
     private UserInfo sampleNotificationMessageAuthor = UserInfoMother.sampleAuthor().build();
     private Notification sampleNotification = NotificationMother.sampleSent().author(sampleNotificationMessageAuthor)
-            .build();
+            .event(null).mission(null).build();
     private NotificationMessage sampleNotificationMessage = NotificationMessageMother.sample()
             .notification(sampleNotification)
             .contentType(NotificationMessageContentType.TEXT)

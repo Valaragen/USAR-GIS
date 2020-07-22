@@ -72,6 +72,17 @@ public class ModelMapperServiceImpl implements ModelMapperService {
                     }
                 };
         modelMapper.addMappings(notificationMessagePostRequestToEntityPropertyMap);
+
+        //Notification PostRequest DTO to entity
+        PropertyMap<NotificationDto.PostRequest, Notification> notificationPostRequestToEntityPropertyMap =
+                new PropertyMap<NotificationDto.PostRequest, Notification>() {
+                    protected void configure() {
+                        skip().setId(null);
+                        skip().setMission(null);
+                        skip().setEvent(null);
+                    }
+                };
+        modelMapper.addMappings(notificationPostRequestToEntityPropertyMap);
     }
 
     @Override

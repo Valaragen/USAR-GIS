@@ -21,6 +21,8 @@ public interface NotificationDto {
     class PostRequest implements NotificationDto, SendingDate {
         //Fields inheriting from validation
         private LocalDateTime sendingDate;
+        private Long missionId;
+        private Long eventId;
     }
 
     @Data
@@ -30,6 +32,8 @@ public interface NotificationDto {
 
         //Fields specific to this DTO
         private Long id;
+        private Long missionId;
+        private Long eventId;
         private NotificationStatus status;
         private String authorUsername;
     }

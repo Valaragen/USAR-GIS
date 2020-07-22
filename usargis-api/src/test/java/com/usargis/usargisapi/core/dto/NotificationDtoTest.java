@@ -24,6 +24,8 @@ class NotificationDtoTest {
             Notification notification = modelMapperService.map(notificationPostRequestDto, Notification.class);
 
             Assertions.assertThat(notification.getId()).isNull();
+            Assertions.assertThat(notification.getMission()).isNull();
+            Assertions.assertThat(notification.getEvent()).isNull();
             Assertions.assertThat(notification.getNotificationMessages()).isEmpty();
             Assertions.assertThat(notification.getSendingDate()).isEqualTo(notificationPostRequestDto.getSendingDate());
         }
