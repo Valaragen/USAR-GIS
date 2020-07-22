@@ -17,8 +17,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-@RestController
-public class TeamController implements ApiController {
+public class TeamController implements ApiRestController {
 
     private TeamService teamService;
     private ModelMapperService modelMapperService;
@@ -33,7 +32,7 @@ public class TeamController implements ApiController {
     public ResponseEntity<List<TeamDto.Response>> findAllTeams() {
         List<Team> teams = teamService.findAll();
         if (teams.isEmpty()) {
-            throw new NotFoundException(ErrorConstant.NO_TEAMS_FOUND);
+            throw new NotFoundException(ErrorConstant.NO_TEAM_FOUND);
         }
         return new ResponseEntity<>(teams.stream().map(this::convertToResponseDto).collect(Collectors.toList()), HttpStatus.OK);
     }

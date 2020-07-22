@@ -17,8 +17,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-@RestController
-public class EventController implements ApiController {
+public class EventController implements ApiRestController {
 
     private EventService eventService;
     private ModelMapperService modelMapperService;
@@ -33,7 +32,7 @@ public class EventController implements ApiController {
     public ResponseEntity<List<EventDto.Response>> findAllEvents() {
         List<Event> events = eventService.findAll();
         if (events.isEmpty()) {
-            throw new NotFoundException(ErrorConstant.NO_EVENTS_FOUND);
+            throw new NotFoundException(ErrorConstant.NO_EVENT_FOUND);
         }
         return new ResponseEntity<>(events.stream().map(this::convertToResponseDto).collect(Collectors.toList()), HttpStatus.OK);
     }

@@ -48,7 +48,7 @@ class TeamControllerTest {
 
             Assertions.assertThatThrownBy(() -> objectToTest.findAllTeams())
                     .isInstanceOf(NotFoundException.class)
-                    .hasMessage(ErrorConstant.NO_TEAMS_FOUND);
+                    .hasMessage(ErrorConstant.NO_TEAM_FOUND);
         }
 
         @Test

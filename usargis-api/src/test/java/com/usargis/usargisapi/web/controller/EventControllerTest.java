@@ -49,7 +49,7 @@ class EventControllerTest {
 
             Assertions.assertThatThrownBy(() -> objectToTest.findAllEvents())
                     .isInstanceOf(NotFoundException.class)
-                    .hasMessage(ErrorConstant.NO_EVENTS_FOUND);
+                    .hasMessage(ErrorConstant.NO_EVENT_FOUND);
         }
 
         @Test

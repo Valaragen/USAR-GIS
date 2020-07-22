@@ -18,8 +18,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-@RestController
-public class AvailabilityController implements ApiController {
+public class AvailabilityController implements ApiRestController {
 
     private AvailabilityService availabilityService;
     private ModelMapperService modelMapperService;
@@ -34,7 +33,7 @@ public class AvailabilityController implements ApiController {
     public ResponseEntity<List<AvailabilityDto.Response>> searchForAvailabilities(AvailabilitySearch availabilitySearch) {
         List<Availability> availabilities = availabilityService.searchAll(availabilitySearch);
         if (availabilities.isEmpty()) {
-            throw new NotFoundException(ErrorConstant.NO_AVAILABILITIES_FOUND);
+            throw new NotFoundException(ErrorConstant.NO_AVAILABILITY_FOUND);
         }
         return new ResponseEntity<>(availabilities.stream().map(this::convertToResponseDto).collect(Collectors.toList()), HttpStatus.OK);
     }

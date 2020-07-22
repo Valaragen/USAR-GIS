@@ -19,8 +19,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Slf4j
-@RestController
-public class UserController implements ApiController {
+public class UserController implements ApiRestController {
 
     private UserInfoService userInfoService;
     private ModelMapperService modelMapperService;
@@ -35,7 +34,7 @@ public class UserController implements ApiController {
     public ResponseEntity<List<UserInfoDto.Response>> findAllUserInfos() {
         List<UserInfo> userInfos = userInfoService.findAll();
         if (userInfos.isEmpty()) {
-            throw new NotFoundException(ErrorConstant.NO_USERS_FOUND);
+            throw new NotFoundException(ErrorConstant.NO_USER_FOUND);
         }
         return new ResponseEntity<>(userInfos.stream().map(this::convertToResponseDto).collect(Collectors.toList()), HttpStatus.OK);
     }

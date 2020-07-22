@@ -2,10 +2,8 @@ package com.usargis.usargisapi.web.controller;
 
 import com.usargis.usargisapi.core.dto.NotificationDto;
 import com.usargis.usargisapi.core.model.Notification;
-import com.usargis.usargisapi.core.model.Notification;
 import com.usargis.usargisapi.service.contract.NotificationService;
 import com.usargis.usargisapi.service.contract.ModelMapperService;
-import com.usargis.usargisapi.service.contract.NotificationService;
 import com.usargis.usargisapi.util.ErrorConstant;
 import com.usargis.usargisapi.util.objectMother.dto.NotificationDtoMother;
 import com.usargis.usargisapi.web.exception.NotFoundException;
@@ -50,7 +48,7 @@ class NotificationControllerTest {
 
             Assertions.assertThatThrownBy(() -> objectToTest.findAllNotifications())
                     .isInstanceOf(NotFoundException.class)
-                    .hasMessage(ErrorConstant.NO_NOTIFICATIONS_FOUND);
+                    .hasMessage(ErrorConstant.NO_NOTIFICATION_FOUND);
         }
 
         @Test

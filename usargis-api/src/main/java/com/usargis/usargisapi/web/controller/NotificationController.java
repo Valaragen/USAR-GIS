@@ -17,8 +17,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-@RestController
-public class NotificationController implements ApiController {
+public class NotificationController implements ApiRestController {
 
     private NotificationService notificationService;
     private ModelMapperService modelMapperService;
@@ -33,7 +32,7 @@ public class NotificationController implements ApiController {
     public ResponseEntity<List<NotificationDto.Response>> findAllNotifications() {
         List<Notification> notifications = notificationService.findAll();
         if (notifications.isEmpty()) {
-            throw new NotFoundException(ErrorConstant.NO_NOTIFICATIONS_FOUND);
+            throw new NotFoundException(ErrorConstant.NO_NOTIFICATION_FOUND);
         }
         return new ResponseEntity<>(notifications.stream().map(this::convertToResponseDto).collect(Collectors.toList()), HttpStatus.OK);
     }

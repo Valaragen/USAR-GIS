@@ -48,7 +48,7 @@ class UserControllerTest {
 
             Assertions.assertThatThrownBy(() -> objectToTest.findAllUserInfos())
                     .isInstanceOf(NotFoundException.class)
-                    .hasMessage(ErrorConstant.NO_USERS_FOUND);
+                    .hasMessage(ErrorConstant.NO_USER_FOUND);
         }
 
         @Test

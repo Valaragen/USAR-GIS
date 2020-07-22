@@ -51,7 +51,7 @@ class AvailabilityControllerTest {
 
             Assertions.assertThatThrownBy(() -> objectToTest.searchForAvailabilities(searchParameters))
                     .isInstanceOf(NotFoundException.class)
-                    .hasMessage(ErrorConstant.NO_AVAILABILITIES_FOUND);
+                    .hasMessage(ErrorConstant.NO_AVAILABILITY_FOUND);
         }
 
         @Test

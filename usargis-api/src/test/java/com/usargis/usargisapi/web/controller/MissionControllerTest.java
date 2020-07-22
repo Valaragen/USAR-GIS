@@ -48,7 +48,7 @@ class MissionControllerTest {
 
             Assertions.assertThatThrownBy(() -> objectToTest.findAllMissions())
                     .isInstanceOf(NotFoundException.class)
-                    .hasMessage(ErrorConstant.NO_MISSIONS_FOUND);
+                    .hasMessage(ErrorConstant.NO_MISSION_FOUND);
         }
 
         @Test

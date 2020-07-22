@@ -48,7 +48,7 @@ class GroupControllerTest {
 
             Assertions.assertThatThrownBy(() -> objectToTest.findAllGroups())
                     .isInstanceOf(NotFoundException.class)
-                    .hasMessage(ErrorConstant.NO_GROUPS_FOUND);
+                    .hasMessage(ErrorConstant.NO_GROUP_FOUND);
         }
 
         @Test

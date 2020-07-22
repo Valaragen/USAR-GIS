@@ -17,8 +17,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-@RestController
-public class GroupController implements ApiController {
+public class GroupController implements ApiRestController {
 
     private GroupService groupService;
     private ModelMapperService modelMapperService;
@@ -33,7 +32,7 @@ public class GroupController implements ApiController {
     public ResponseEntity<List<GroupDto.Response>> findAllGroups() {
         List<Group> groups = groupService.findAll();
         if (groups.isEmpty()) {
-            throw new NotFoundException(ErrorConstant.NO_GROUPS_FOUND);
+            throw new NotFoundException(ErrorConstant.NO_GROUP_FOUND);
         }
         return new ResponseEntity<>(groups.stream().map(this::convertToResponseDto).collect(Collectors.toList()), HttpStatus.OK);
     }

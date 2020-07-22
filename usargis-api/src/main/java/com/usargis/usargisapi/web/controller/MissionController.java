@@ -17,8 +17,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-@RestController
-public class MissionController implements ApiController {
+public class MissionController implements ApiRestController {
 
     private MissionService missionService;
     private ModelMapperService modelMapperService;
@@ -33,7 +32,7 @@ public class MissionController implements ApiController {
     public ResponseEntity<List<MissionDto.Response>> findAllMissions() {
         List<Mission> missions = missionService.findAll();
         if (missions.isEmpty()) {
-            throw new NotFoundException(ErrorConstant.NO_MISSIONS_FOUND);
+            throw new NotFoundException(ErrorConstant.NO_MISSION_FOUND);
         }
         return new ResponseEntity<>(missions.stream().map(this::convertToResponseDto).collect(Collectors.toList()), HttpStatus.OK);
     }
