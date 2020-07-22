@@ -20,6 +20,7 @@ public interface TeamMemberDto {
     @Data
     class Response implements TeamMemberDto {
         //Fields specific to this DTO
+        private Long id;
         private Long teamId;
         private String userInfoId;
         private InscriptionStatus inscriptionStatus;

@@ -2,7 +2,6 @@ package com.usargis.usargisapi.service.impl;
 
 import com.usargis.usargisapi.core.dto.TeamMemberDto;
 import com.usargis.usargisapi.core.model.TeamMember;
-import com.usargis.usargisapi.core.model.embeddable.TeamMemberId;
 import com.usargis.usargisapi.repository.TeamMemberRepository;
 import com.usargis.usargisapi.service.contract.TeamMemberService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,7 +26,7 @@ public class TeamMemberServiceImpl implements TeamMemberService {
     }
 
     @Override
-    public Optional<TeamMember> findById(TeamMemberId id) {
+    public Optional<TeamMember> findById(Long id) {
         return teamMemberRepository.findById(id);
     }
 

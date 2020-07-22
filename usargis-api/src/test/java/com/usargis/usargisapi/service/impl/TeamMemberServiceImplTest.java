@@ -1,7 +1,6 @@
 package com.usargis.usargisapi.service.impl;
 
 import com.usargis.usargisapi.core.model.TeamMember;
-import com.usargis.usargisapi.core.model.embeddable.TeamMemberId;
 import com.usargis.usargisapi.repository.TeamMemberRepository;
 import com.usargis.usargisapi.service.contract.TeamMemberService;
 import org.assertj.core.api.Assertions;
@@ -41,7 +40,7 @@ class TeamMemberServiceImplTest {
     void findById_shouldCallRepositoryAndReturnOptional() {
         TeamMember teamMemberFound = new TeamMember();
         Optional<TeamMember> expectedResult = Optional.of(teamMemberFound);
-        TeamMemberId teamMemberIdToFind = new TeamMemberId();
+        Long teamMemberIdToFind = 1L;
         Mockito.when(teamMemberRepository.findById(teamMemberIdToFind)).thenReturn(expectedResult);
 
         Optional<TeamMember> result = objectToTest.findById(teamMemberIdToFind);

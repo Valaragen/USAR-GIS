@@ -35,24 +35,6 @@ public class ModelMapperServiceImpl implements ModelMapperService {
         };
         modelMapper.addMappings(availabilityCreateToEntityPropertyMap);
 
-        //NotificationMessage PostRequest DTO to entity
-        PropertyMap<NotificationMessageDto.PostRequest, NotificationMessage> notificationMessagePostRequestToEntityPropertyMap =
-                new PropertyMap<NotificationMessageDto.PostRequest, NotificationMessage>() {
-                    protected void configure() {
-                        map().getId().setContentType(source.getContentType());
-                    }
-                };
-        modelMapper.addMappings(notificationMessagePostRequestToEntityPropertyMap);
-
-        //NotificationMessage entity to Response DTO
-        PropertyMap<NotificationMessage, NotificationMessageDto.Response> notificationMessageEntityToResponsePropertyMap =
-                new PropertyMap<NotificationMessage, NotificationMessageDto.Response>() {
-                    protected void configure() {
-                        map().setContentType(source.getId().getContentType());
-                    }
-                };
-        modelMapper.addMappings(notificationMessageEntityToResponsePropertyMap);
-
         //Team PostRequest DTO to entity
         PropertyMap<TeamDto.PostRequest, Team> teamPostRequestToEntityPropertyMap =
                 new PropertyMap<TeamDto.PostRequest, Team>() {

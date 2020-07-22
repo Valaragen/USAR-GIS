@@ -1,7 +1,6 @@
 package com.usargis.usargisapi.service.impl;
 
 import com.usargis.usargisapi.core.model.NotificationMessage;
-import com.usargis.usargisapi.core.model.embeddable.NotificationMessageId;
 import com.usargis.usargisapi.repository.NotificationMessageRepository;
 import com.usargis.usargisapi.service.contract.NotificationMessageService;
 import org.assertj.core.api.Assertions;
@@ -41,7 +40,7 @@ class NotificationMessageServiceImplTest {
     void findById_shouldCallRepositoryAndReturnOptional() {
         NotificationMessage notificationMessageFound = new NotificationMessage();
         Optional<NotificationMessage> expectedResult = Optional.of(notificationMessageFound);
-        NotificationMessageId notificationMessageIdToFind = new NotificationMessageId();
+        Long notificationMessageIdToFind = 1L;
         Mockito.when(notificationMessageRepository.findById(notificationMessageIdToFind)).thenReturn(expectedResult);
 
         Optional<NotificationMessage> result = objectToTest.findById(notificationMessageIdToFind);

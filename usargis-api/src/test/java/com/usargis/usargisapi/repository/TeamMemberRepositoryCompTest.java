@@ -4,7 +4,6 @@ import com.usargis.usargisapi.core.model.Mission;
 import com.usargis.usargisapi.core.model.Team;
 import com.usargis.usargisapi.core.model.TeamMember;
 import com.usargis.usargisapi.core.model.UserInfo;
-import com.usargis.usargisapi.core.model.embeddable.TeamMemberId;
 import com.usargis.usargisapi.util.objectMother.model.MissionMother;
 import com.usargis.usargisapi.util.objectMother.model.TeamMemberMother;
 import com.usargis.usargisapi.util.objectMother.model.TeamMother;
@@ -37,7 +36,9 @@ class TeamMemberRepositoryCompTest {
     private UserInfo sampleMissionAuthor = UserInfoMother.sampleAuthor().build();
     private Mission sampleMission = MissionMother.sampleFinished().author(sampleMissionAuthor).build();
     private Team sampleTeam = TeamMother.sample().mission(sampleMission).build();
-    private TeamMember sampleTeamMember = TeamMemberMother.sample().id(new TeamMemberId(sampleTeam, sampleUser)).build();
+    private TeamMember sampleTeamMember = TeamMemberMother.sample()
+            .team(sampleTeam)
+            .userInfo(sampleUser).build();
 
     @BeforeEach
     void setup() {
@@ -68,7 +69,8 @@ class TeamMemberRepositoryCompTest {
     @Test
     void save_shouldAddTeamMemberInDb() {
         TeamMember teamMemberToSave = TeamMemberMother.sample()
-                .id(new TeamMemberId(sampleTeam, sampleMissionAuthor))
+                .team(sampleTeam)
+                .userInfo(sampleMissionAuthor)
                 .build();
 
         objectToTest.save(teamMemberToSave);

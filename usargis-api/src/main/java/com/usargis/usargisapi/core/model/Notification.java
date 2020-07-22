@@ -34,8 +34,8 @@ public class Notification extends ModelEntityWithLongId {
     private UserInfo author;
 
     @Builder.Default
-    @JsonIgnoreProperties({"id.notification"})
-    @OneToMany(mappedBy = "id.notification", orphanRemoval = true)
+    @JsonIgnoreProperties({"notification"})
+    @OneToMany(mappedBy = "notification", orphanRemoval = true)
     @ToString.Exclude
     @EqualsAndHashCode.Exclude
     private List<NotificationMessage> notificationMessages = new ArrayList<>();

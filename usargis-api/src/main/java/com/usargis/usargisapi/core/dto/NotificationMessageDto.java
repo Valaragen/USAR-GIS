@@ -27,9 +27,10 @@ public interface NotificationMessageDto {
         //Fields inheriting from validation
         private String content;
         private String subject;
-        private NotificationMessageContentType contentType;
 
         //Fields specific to this DTO
+        private Long notificationId;
+        private NotificationMessageContentType contentType;
         private Set<NotificationMessageSendingMode> sendingModes;
     }
 
@@ -40,6 +41,7 @@ public interface NotificationMessageDto {
         private String subject;
 
         //Fields specific to this DTO
+        private Long id;
         private Long notificationId;
         private NotificationMessageContentType contentType;
         private Set<NotificationMessageSendingMode> sendingModes;

@@ -84,7 +84,7 @@ class AvailabilityRepositoryCompTest {
     }
 
     @Test
-    void searchAll_userUuidGiven_shouldFindByUuid() {
+    void searchAll_userIdGiven_shouldFindByUuid() {
         AvailabilitySearch availabilitySearch = new AvailabilitySearch();
         availabilitySearch.setUserId(sampleUser.getId());
 
