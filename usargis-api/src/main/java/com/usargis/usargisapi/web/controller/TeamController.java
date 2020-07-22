@@ -20,9 +20,8 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-@PreAuthorize("hasRole('" + Constant.ADMIN_ROLE + "')")
 @RestController
-public class TeamController {
+public class TeamController implements ApiController {
 
     private TeamService teamService;
     private ModelMapperService modelMapperService;

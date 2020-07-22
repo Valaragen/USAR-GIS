@@ -21,10 +21,9 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-@PreAuthorize("hasRole('" + Constant.ADMIN_ROLE + "')")
 @Slf4j
 @RestController
-public class UserController {
+public class UserController implements ApiController {
 
     private UserInfoService userInfoService;
     private ModelMapperService modelMapperService;

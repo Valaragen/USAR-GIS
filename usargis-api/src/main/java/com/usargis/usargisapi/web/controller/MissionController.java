@@ -18,9 +18,8 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-@PreAuthorize("hasRole('" + Constant.ADMIN_ROLE + "')")
 @RestController
-public class MissionController {
+public class MissionController implements ApiController {
 
     private MissionService missionService;
     private ModelMapperService modelMapperService;

@@ -18,9 +18,8 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-@PreAuthorize("hasRole('" + Constant.LEADER_ROLE + "')")
 @RestController
-public class NotificationController {
+public class NotificationController implements ApiController {
 
     private NotificationService notificationService;
     private ModelMapperService modelMapperService;

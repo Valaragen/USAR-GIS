@@ -18,9 +18,8 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-@PreAuthorize("hasRole('" + Constant.ADMIN_ROLE + "')")
 @RestController
-public class EventController {
+public class EventController implements ApiController {
 
     private EventService eventService;
     private ModelMapperService modelMapperService;
