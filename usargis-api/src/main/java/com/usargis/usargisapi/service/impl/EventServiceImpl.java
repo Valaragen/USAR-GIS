@@ -70,8 +70,9 @@ public class EventServiceImpl implements EventService {
     @Override
     public Event update(Long id, EventDto.PostRequest updateDto) {
         Event eventToUpdate = findById(id).orElseThrow(() -> new NotFoundException(
-                MessageFormat.format(ErrorConstant.NO_EVENT_FOUND_FOR_ID, id)
-        ));
+                        MessageFormat.format(ErrorConstant.NO_EVENT_FOUND_FOR_ID, id)
+                )
+        );
         modelMapperService.map(updateDto, eventToUpdate);
         return save(eventToUpdate);
     }

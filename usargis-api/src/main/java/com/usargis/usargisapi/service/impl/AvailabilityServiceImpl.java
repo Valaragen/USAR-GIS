@@ -87,5 +87,4 @@ public class AvailabilityServiceImpl implements AvailabilityService {
         modelMapperService.map(updateDto, availabilityToUpdate);
         return save(availabilityToUpdate);
     }
-
 }
