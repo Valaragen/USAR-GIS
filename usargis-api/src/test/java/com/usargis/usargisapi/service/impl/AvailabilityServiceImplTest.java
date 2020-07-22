@@ -159,7 +159,7 @@ class AvailabilityServiceImplTest {
         }
 
         @Test
-        void create_returnedAbilityShouldContainLinkedEntities() {
+        void create_returnedAvailabilityShouldContainLinkedEntities() {
             Mockito.when(availabilityRepository.save(Mockito.any(Availability.class))).then(AdditionalAnswers.returnsFirstArg());
 
             Availability result = objectToTest.create(availabilityCreateDto);

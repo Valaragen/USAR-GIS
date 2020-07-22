@@ -143,7 +143,7 @@ class InscriptionServiceImplTest {
         }
 
         @Test
-        void create_returnedAbilityShouldContainLinkedEntities() {
+        void create_returnedInscriptionShouldContainLinkedEntities() {
             Mockito.when(inscriptionRepository.save(Mockito.any(Inscription.class))).then(AdditionalAnswers.returnsFirstArg());
 
             Inscription result = objectToTest.create(inscriptionCreateDto);

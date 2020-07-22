@@ -132,7 +132,7 @@ class MissionServiceImplTest {
         }
 
         @Test
-        void create_returnedAbilityShouldContainLinkedEntities() {
+        void create_returnedMissionShouldContainLinkedEntities() {
             Mockito.when(missionRepository.save(Mockito.any(Mission.class))).then(AdditionalAnswers.returnsFirstArg());
 
             Mission result = objectToTest.create(missionPostRequestDto);

@@ -132,7 +132,7 @@ class EventServiceImplTest {
         }
 
         @Test
-        void create_returnedAbilityShouldContainLinkedEntities() {
+        void create_returnedEventShouldContainLinkedEntities() {
             Mockito.when(eventRepository.save(Mockito.any(Event.class))).then(AdditionalAnswers.returnsFirstArg());
 
             Event result = objectToTest.create(eventPostRequestDto);

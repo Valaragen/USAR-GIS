@@ -132,7 +132,7 @@ class NotificationMessageServiceImplTest {
         }
 
         @Test
-        void create_returnedAbilityShouldContainLinkedEntities() {
+        void create_returnedNotificationMessageShouldContainLinkedEntities() {
             Mockito.when(notificationMessageRepository.save(Mockito.any(NotificationMessage.class))).then(AdditionalAnswers.returnsFirstArg());
 
             NotificationMessage result = objectToTest.create(notificationMessageCreateDto);
