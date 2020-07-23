@@ -10,6 +10,7 @@ import com.usargis.usargisapi.web.exception.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -30,6 +31,7 @@ public class InscriptionController implements ApiRestController {
         this.modelMapperService = modelMapperService;
     }
 
+    @PreAuthorize("hasRole('" + Constant.LEADER_ROLE + "')")
     @GetMapping(Constant.INSCRIPTIONS_PATH)
     public ResponseEntity<List<InscriptionDto.InscriptionResponse>> findAllInscriptions() {
         List<Inscription> inscriptions = inscriptionService.findAll();
@@ -39,6 +41,7 @@ public class InscriptionController implements ApiRestController {
         return new ResponseEntity<>(inscriptions.stream().map(this::convertToResponseDto).collect(Collectors.toList()), HttpStatus.OK);
     }
 
+    @PreAuthorize("hasRole('" + Constant.LEADER_ROLE + "')")
     @GetMapping(Constant.INSCRIPTIONS_PATH + Constant.SLASH_ID_PATH)
     public ResponseEntity<InscriptionDto.InscriptionResponse> getInscriptionById(@PathVariable Long id) {
         Optional<Inscription> inscriptionOptional = inscriptionService.findById(id);
@@ -46,18 +49,21 @@ public class InscriptionController implements ApiRestController {
         return new ResponseEntity<>(convertToResponseDto(inscription), HttpStatus.OK);
     }
 
+    @PreAuthorize("hasRole('" + Constant.LEADER_ROLE + "')")
     @PostMapping(Constant.INSCRIPTIONS_PATH)
     public ResponseEntity<InscriptionDto.InscriptionResponse> createNewInscription(@RequestBody @Valid InscriptionDto.InscriptionPostRequest inscriptionCreateDto) {
         Inscription inscription = inscriptionService.create(inscriptionCreateDto);
         return new ResponseEntity<>(convertToResponseDto(inscription), HttpStatus.CREATED);
     }
 
+    @PreAuthorize("hasRole('" + Constant.LEADER_ROLE + "')")
     @PutMapping(Constant.INSCRIPTIONS_PATH + Constant.SLASH_ID_PATH)
     public ResponseEntity<InscriptionDto.InscriptionResponse> updateInscription(@PathVariable Long id, @RequestBody @Valid InscriptionDto.InscriptionPostRequest updateDto) {
         Inscription inscription = inscriptionService.update(id, updateDto);
         return new ResponseEntity<>(convertToResponseDto(inscription), HttpStatus.OK);
     }
 
+    @PreAuthorize("hasRole('" + Constant.LEADER_ROLE + "')")
     @DeleteMapping(Constant.INSCRIPTIONS_PATH + Constant.SLASH_ID_PATH)
     public ResponseEntity deleteInscription(@PathVariable Long id) {
         inscriptionService.delete(inscriptionService.findById(id).orElseThrow(() -> new NotFoundException(MessageFormat.format(ErrorConstant.NO_INSCRIPTION_FOUND_FOR_ID, id))));

@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 public class SecurityServiceImpl implements SecurityService {
     @Override
     public boolean isSameUsernameThanAuthenticatedUser(String username) {
+        if (username == null) return false;
         username = username.toLowerCase();
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 

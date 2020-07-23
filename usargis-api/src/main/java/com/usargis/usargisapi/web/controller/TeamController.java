@@ -10,6 +10,7 @@ import com.usargis.usargisapi.web.exception.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -58,6 +59,7 @@ public class TeamController implements ApiRestController {
         return new ResponseEntity<>(convertToResponseDto(team), HttpStatus.OK);
     }
 
+    @PreAuthorize("hasRole('" + Constant.LEADER_ROLE + "')")
     @DeleteMapping(Constant.TEAMS_PATH + Constant.SLASH_ID_PATH)
     public ResponseEntity deleteTeam(@PathVariable Long id) {
         teamService.delete(teamService.findById(id).orElseThrow(() -> new NotFoundException(MessageFormat.format(ErrorConstant.NO_TEAM_FOUND_FOR_ID, id))));

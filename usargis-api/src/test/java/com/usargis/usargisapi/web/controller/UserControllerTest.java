@@ -3,6 +3,7 @@ package com.usargis.usargisapi.web.controller;
 import com.usargis.usargisapi.core.dto.UserInfoDto;
 import com.usargis.usargisapi.core.model.UserInfo;
 import com.usargis.usargisapi.service.contract.ModelMapperService;
+import com.usargis.usargisapi.service.contract.SecurityService;
 import com.usargis.usargisapi.service.contract.UserInfoService;
 import com.usargis.usargisapi.util.ErrorConstant;
 import com.usargis.usargisapi.util.objectMother.dto.UserInfoDtoMother;
@@ -74,45 +75,45 @@ class UserControllerTest {
     }
 
     @Nested
-    class getUserInfoByIdTest {
-        private final String userInfoIdToFind = "id";
+    class getUserInfoByUsernameTest {
+        private final String userInfoUsernameToFind = "username";
         private final UserInfo userInfoFound = new UserInfo();
         private final UserInfoDto.UserInfoResponse userInfoResponseDto = new UserInfoDto.UserInfoResponse();
 
         @Test
-        void getUserInfoById_shouldCallServiceLayer() {
-            Mockito.when(userInfoService.findById(userInfoIdToFind)).thenReturn(Optional.of(userInfoFound));
+        void getUserInfoByUsername_shouldCallServiceLayer() {
+            Mockito.when(userInfoService.findByUsername(userInfoUsernameToFind)).thenReturn(Optional.of(userInfoFound));
 
-            objectToTest.getUserInfoById(userInfoIdToFind);
+            objectToTest.getUserInfoByUsername(userInfoUsernameToFind);
 
-            Mockito.verify(userInfoService).findById(userInfoIdToFind);
+            Mockito.verify(userInfoService).findByUsername(userInfoUsernameToFind);
         }
 
         @Test
-        void getUserInfoById_noUserInfoFound_throwNotFoundException() {
-            Mockito.when(userInfoService.findById(userInfoIdToFind)).thenReturn(Optional.empty());
+        void getUserInfoByUsername_noUserInfoFound_throwNotFoundException() {
+            Mockito.when(userInfoService.findByUsername(userInfoUsernameToFind)).thenReturn(Optional.empty());
 
-            Assertions.assertThatThrownBy(() -> objectToTest.getUserInfoById(userInfoIdToFind))
+            Assertions.assertThatThrownBy(() -> objectToTest.getUserInfoByUsername(userInfoUsernameToFind))
                     .isInstanceOf(NotFoundException.class)
-                    .hasMessage(MessageFormat.format(ErrorConstant.NO_USER_FOUND_FOR_USERNAME, userInfoIdToFind));
+                    .hasMessage(MessageFormat.format(ErrorConstant.NO_USER_FOUND_FOR_USERNAME, userInfoUsernameToFind));
         }
 
         @Test
-        void getUserInfoById_shouldConvertUserInfoToResponseDto() {
-            Mockito.when(userInfoService.findById(userInfoIdToFind)).thenReturn(Optional.of(userInfoFound));
+        void getUserInfoByUsername_shouldConvertUserInfoToResponseDto() {
+            Mockito.when(userInfoService.findByUsername(userInfoUsernameToFind)).thenReturn(Optional.of(userInfoFound));
             Mockito.when(modelMapperService.map(userInfoFound, UserInfoDto.UserInfoResponse.class)).thenReturn(userInfoResponseDto);
 
-            objectToTest.getUserInfoById(userInfoIdToFind);
+            objectToTest.getUserInfoByUsername(userInfoUsernameToFind);
 
             Mockito.verify(modelMapperService).map(userInfoFound, UserInfoDto.UserInfoResponse.class);
         }
 
         @Test
-        void getUserInfoById_userInfoFound_returnStatusOkAndUserInfoResponseDto() {
-            Mockito.when(userInfoService.findById(userInfoIdToFind)).thenReturn(Optional.of(userInfoFound));
+        void getUserInfoByUsername_userInfoFound_returnStatusOkAndUserInfoResponseDto() {
+            Mockito.when(userInfoService.findByUsername(userInfoUsernameToFind)).thenReturn(Optional.of(userInfoFound));
             Mockito.when(modelMapperService.map(userInfoFound, UserInfoDto.UserInfoResponse.class)).thenReturn(userInfoResponseDto);
 
-            ResponseEntity<UserInfoDto.UserInfoResponse> result = objectToTest.getUserInfoById(userInfoIdToFind);
+            ResponseEntity<UserInfoDto.UserInfoResponse> result = objectToTest.getUserInfoByUsername(userInfoUsernameToFind);
 
             Assertions.assertThat(result.getStatusCode())
                     .isEqualTo(HttpStatus.OK);

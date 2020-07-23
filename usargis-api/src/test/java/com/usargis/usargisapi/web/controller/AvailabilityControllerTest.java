@@ -5,6 +5,7 @@ import com.usargis.usargisapi.core.model.Availability;
 import com.usargis.usargisapi.core.search.AvailabilitySearch;
 import com.usargis.usargisapi.service.contract.AvailabilityService;
 import com.usargis.usargisapi.service.contract.ModelMapperService;
+import com.usargis.usargisapi.service.contract.SecurityService;
 import com.usargis.usargisapi.util.ErrorConstant;
 import com.usargis.usargisapi.util.objectMother.dto.AvailabilityDtoMother;
 import com.usargis.usargisapi.web.exception.NotFoundException;
@@ -25,10 +26,11 @@ class AvailabilityControllerTest {
 
     private AvailabilityService availabilityService = Mockito.mock(AvailabilityService.class);
     private ModelMapperService modelMapperService = Mockito.mock(ModelMapperService.class);
+    private SecurityService securityService = Mockito.mock(SecurityService.class);
 
     @BeforeEach
     void setup() {
-        objectToTest = new AvailabilityController(availabilityService, modelMapperService);
+        objectToTest = new AvailabilityController(availabilityService, modelMapperService, securityService);
     }
 
     @Nested

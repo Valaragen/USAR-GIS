@@ -10,6 +10,7 @@ import com.usargis.usargisapi.web.exception.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -30,6 +31,7 @@ public class MissionController implements ApiRestController {
         this.modelMapperService = modelMapperService;
     }
 
+    @PreAuthorize("hasRole('" + Constant.MEMBER_ROLE + "')")
     @GetMapping(Constant.MISSIONS_PATH)
     public ResponseEntity<List<MissionDto.MissionResponse>> findAllMissions() {
         List<Mission> missions = missionService.findAll();
@@ -39,6 +41,7 @@ public class MissionController implements ApiRestController {
         return new ResponseEntity<>(missions.stream().map(this::convertToResponseDto).collect(Collectors.toList()), HttpStatus.OK);
     }
 
+    @PreAuthorize("hasRole('" + Constant.MEMBER_ROLE + "')")
     @GetMapping(Constant.MISSIONS_PATH + Constant.SLASH_ID_PATH)
     public ResponseEntity<MissionDto.MissionResponse> getMissionById(@PathVariable Long id) {
         Optional<Mission> missionOptional = missionService.findById(id);
@@ -46,18 +49,21 @@ public class MissionController implements ApiRestController {
         return new ResponseEntity<>(convertToResponseDto(mission), HttpStatus.OK);
     }
 
+    @PreAuthorize("hasRole('" + Constant.LEADER_ROLE + "')")
     @PostMapping(Constant.MISSIONS_PATH)
     public ResponseEntity<MissionDto.MissionResponse> createNewMission(@RequestBody @Valid MissionDto.MissionPostRequest missionCreateDto) {
         Mission mission = missionService.create(missionCreateDto);
         return new ResponseEntity<>(convertToResponseDto(mission), HttpStatus.CREATED);
     }
 
+    @PreAuthorize("hasRole('" + Constant.LEADER_ROLE + "')")
     @PutMapping(Constant.MISSIONS_PATH + Constant.SLASH_ID_PATH)
     public ResponseEntity<MissionDto.MissionResponse> updateMission(@PathVariable Long id, @RequestBody @Valid MissionDto.MissionPostRequest updateDto) {
         Mission mission = missionService.update(id, updateDto);
         return new ResponseEntity<>(convertToResponseDto(mission), HttpStatus.OK);
     }
 
+    @PreAuthorize("hasRole('" + Constant.LEADER_ROLE + "')")
     @DeleteMapping(Constant.MISSIONS_PATH + Constant.SLASH_ID_PATH)
     public ResponseEntity deleteMission(@PathVariable Long id) {
         missionService.delete(missionService.findById(id).orElseThrow(() -> new NotFoundException(MessageFormat.format(ErrorConstant.NO_MISSION_FOUND_FOR_ID, id))));

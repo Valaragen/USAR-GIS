@@ -11,6 +11,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -41,10 +42,11 @@ public class UserController implements ApiRestController {
         return new ResponseEntity<>(userInfos.stream().map(this::convertToResponseDto).collect(Collectors.toList()), HttpStatus.OK);
     }
 
-    @GetMapping(Constant.USERS_PATH + Constant.SLASH_ID_PATH)
-    public ResponseEntity<UserInfoDto.UserInfoResponse> getUserInfoById(@PathVariable String id) {
-        Optional<UserInfo> userInfoOptional = userInfoService.findById(id);
-        UserInfo userInfo = userInfoOptional.orElseThrow(() -> new NotFoundException(MessageFormat.format(ErrorConstant.NO_USER_FOUND_FOR_USERNAME, id)));
+    @PreAuthorize("hasRole('" + Constant.LEADER_ROLE + "') or @securityServiceImpl.isSameUsernameThanAuthenticatedUser(#username)")
+    @GetMapping(Constant.USERS_PATH + Constant.SLASH_USERNAME_PATH)
+    public ResponseEntity<UserInfoDto.UserInfoResponse> getUserInfoByUsername(@PathVariable String username) {
+        Optional<UserInfo> userInfoOptional = userInfoService.findByUsername(username);
+        UserInfo userInfo = userInfoOptional.orElseThrow(() -> new NotFoundException(MessageFormat.format(ErrorConstant.NO_USER_FOUND_FOR_USERNAME, username)));
         return new ResponseEntity<>(convertToResponseDto(userInfo), HttpStatus.OK);
     }
 

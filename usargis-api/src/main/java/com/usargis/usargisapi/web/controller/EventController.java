@@ -10,6 +10,7 @@ import com.usargis.usargisapi.web.exception.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -30,6 +31,7 @@ public class EventController implements ApiRestController {
         this.modelMapperService = modelMapperService;
     }
 
+    @PreAuthorize("hasRole('" + Constant.MEMBER_ROLE + "')")
     @GetMapping(Constant.EVENTS_PATH)
     public ResponseEntity<List<EventDto.EventResponse>> findAllEvents() {
         List<Event> events = eventService.findAll();
@@ -39,6 +41,7 @@ public class EventController implements ApiRestController {
         return new ResponseEntity<>(events.stream().map(this::convertToResponseDto).collect(Collectors.toList()), HttpStatus.OK);
     }
 
+    @PreAuthorize("hasRole('" + Constant.MEMBER_ROLE + "')")
     @GetMapping(Constant.EVENTS_PATH + Constant.SLASH_ID_PATH)
     public ResponseEntity<EventDto.EventResponse> getEventById(@PathVariable Long id) {
         Optional<Event> eventOptional = eventService.findById(id);
@@ -46,18 +49,21 @@ public class EventController implements ApiRestController {
         return new ResponseEntity<>(convertToResponseDto(event), HttpStatus.OK);
     }
 
+    @PreAuthorize("hasRole('" + Constant.LEADER_ROLE + "')")
     @PostMapping(Constant.EVENTS_PATH)
     public ResponseEntity<EventDto.EventResponse> createNewEvent(@RequestBody @Valid EventDto.EventPostRequest eventCreateDto) {
         Event event = eventService.create(eventCreateDto);
         return new ResponseEntity<>(convertToResponseDto(event), HttpStatus.CREATED);
     }
 
+    @PreAuthorize("hasRole('" + Constant.LEADER_ROLE + "')")
     @PutMapping(Constant.EVENTS_PATH + Constant.SLASH_ID_PATH)
     public ResponseEntity<EventDto.EventResponse> updateEvent(@PathVariable Long id, @RequestBody @Valid EventDto.EventPostRequest updateDto) {
         Event event = eventService.update(id, updateDto);
         return new ResponseEntity<>(convertToResponseDto(event), HttpStatus.OK);
     }
 
+    @PreAuthorize("hasRole('" + Constant.LEADER_ROLE + "')")
     @DeleteMapping(Constant.EVENTS_PATH + Constant.SLASH_ID_PATH)
     public ResponseEntity deleteEvent(@PathVariable Long id) {
         eventService.delete(eventService.findById(id).orElseThrow(() -> new NotFoundException(MessageFormat.format(ErrorConstant.NO_EVENT_FOUND_FOR_ID, id))));

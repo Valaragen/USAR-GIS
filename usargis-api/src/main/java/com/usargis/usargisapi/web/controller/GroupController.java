@@ -10,6 +10,7 @@ import com.usargis.usargisapi.web.exception.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -30,6 +31,7 @@ public class GroupController implements ApiRestController {
         this.modelMapperService = modelMapperService;
     }
 
+    @PreAuthorize("hasRole('" + Constant.LEADER_ROLE + "')")
     @GetMapping(Constant.GROUPS_PATH)
     public ResponseEntity<List<GroupDto.GroupResponse>> findAllGroups() {
         List<Group> groups = groupService.findAll();
@@ -39,6 +41,7 @@ public class GroupController implements ApiRestController {
         return new ResponseEntity<>(groups.stream().map(this::convertToResponseDto).collect(Collectors.toList()), HttpStatus.OK);
     }
 
+    @PreAuthorize("hasRole('" + Constant.LEADER_ROLE + "')")
     @GetMapping(Constant.GROUPS_PATH + Constant.SLASH_ID_PATH)
     public ResponseEntity<GroupDto.GroupResponse> getGroupById(@PathVariable Long id) {
         Optional<Group> groupOptional = groupService.findById(id);
@@ -46,18 +49,21 @@ public class GroupController implements ApiRestController {
         return new ResponseEntity<>(convertToResponseDto(group), HttpStatus.OK);
     }
 
+    @PreAuthorize("hasRole('" + Constant.LEADER_ROLE + "')")
     @PostMapping(Constant.GROUPS_PATH)
     public ResponseEntity<GroupDto.GroupResponse> createNewGroup(@RequestBody @Valid GroupDto.GroupPostRequest groupCreateDto) {
         Group group = groupService.create(groupCreateDto);
         return new ResponseEntity<>(convertToResponseDto(group), HttpStatus.CREATED);
     }
 
+    @PreAuthorize("hasRole('" + Constant.LEADER_ROLE + "')")
     @PutMapping(Constant.GROUPS_PATH + Constant.SLASH_ID_PATH)
     public ResponseEntity<GroupDto.GroupResponse> updateGroup(@PathVariable Long id, @RequestBody @Valid GroupDto.GroupPostRequest updateDto) {
         Group group = groupService.update(id, updateDto);
         return new ResponseEntity<>(convertToResponseDto(group), HttpStatus.OK);
     }
 
+    @PreAuthorize("hasRole('" + Constant.LEADER_ROLE + "')")
     @DeleteMapping(Constant.GROUPS_PATH + Constant.SLASH_ID_PATH)
     public ResponseEntity deleteGroup(@PathVariable Long id) {
         groupService.delete(groupService.findById(id).orElseThrow(() -> new NotFoundException(MessageFormat.format(ErrorConstant.NO_GROUP_FOUND_FOR_ID, id))));

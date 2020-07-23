@@ -10,6 +10,7 @@ import com.usargis.usargisapi.web.exception.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -30,6 +31,7 @@ public class NotificationController implements ApiRestController {
         this.modelMapperService = modelMapperService;
     }
 
+    @PreAuthorize("hasRole('" + Constant.LEADER_ROLE + "')")
     @GetMapping(Constant.NOTIFICATIONS_PATH)
     public ResponseEntity<List<NotificationDto.NotificationResponse>> findAllNotifications() {
         List<Notification> notifications = notificationService.findAll();
@@ -39,6 +41,7 @@ public class NotificationController implements ApiRestController {
         return new ResponseEntity<>(notifications.stream().map(this::convertToResponseDto).collect(Collectors.toList()), HttpStatus.OK);
     }
 
+    @PreAuthorize("hasRole('" + Constant.LEADER_ROLE + "')")
     @GetMapping(Constant.NOTIFICATIONS_PATH + Constant.SLASH_ID_PATH)
     public ResponseEntity<NotificationDto.NotificationResponse> getNotificationById(@PathVariable Long id) {
         Optional<Notification> notificationOptional = notificationService.findById(id);
@@ -46,18 +49,21 @@ public class NotificationController implements ApiRestController {
         return new ResponseEntity<>(convertToResponseDto(notification), HttpStatus.OK);
     }
 
+    @PreAuthorize("hasRole('" + Constant.LEADER_ROLE + "')")
     @PostMapping(Constant.NOTIFICATIONS_PATH)
     public ResponseEntity<NotificationDto.NotificationResponse> createNewNotification(@RequestBody @Valid NotificationDto.NotificationPostRequest notificationCreateDto) {
         Notification notification = notificationService.create(notificationCreateDto);
         return new ResponseEntity<>(convertToResponseDto(notification), HttpStatus.CREATED);
     }
 
+    @PreAuthorize("hasRole('" + Constant.LEADER_ROLE + "')")
     @PutMapping(Constant.NOTIFICATIONS_PATH + Constant.SLASH_ID_PATH)
     public ResponseEntity<NotificationDto.NotificationResponse> updateNotification(@PathVariable Long id, @RequestBody @Valid NotificationDto.NotificationPostRequest updateDto) {
         Notification notification = notificationService.update(id, updateDto);
         return new ResponseEntity<>(convertToResponseDto(notification), HttpStatus.OK);
     }
 
+    @PreAuthorize("hasRole('" + Constant.LEADER_ROLE + "')")
     @DeleteMapping(Constant.NOTIFICATIONS_PATH + Constant.SLASH_ID_PATH)
     public ResponseEntity deleteNotification(@PathVariable Long id) {
         notificationService.delete(notificationService.findById(id).orElseThrow(() -> new NotFoundException(MessageFormat.format(ErrorConstant.NO_NOTIFICATION_FOUND_FOR_ID, id))));

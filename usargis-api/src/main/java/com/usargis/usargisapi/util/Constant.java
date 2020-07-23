@@ -11,6 +11,7 @@ public abstract class Constant {
     public static final String SLASH_ID_PATH = "/{id}";
     public static final String SLASH_STRING_PATH = "/{string}";
     public static final String SLASH_NAME_PATH = "/{name}";
+    public static final String SLASH_USERNAME_PATH = "/{username}";
     public static final String V1_PATH = "/v1";
     public static final String API_PATH = "/api";
     public static final String USARGIS_PATH = "/usar-gis";

@@ -15,6 +15,7 @@ public abstract class ErrorConstant {
     public static final String NO_TEAM_FOUND_FOR_ID = "Team not found for this id : {0}";
     public static final String NO_USER_FOUND = "No user found";
     public static final String NO_USER_FOUND_FOR_USERNAME = "User not found for this username : {0}";
+    public static final String NO_USER_FOUND_FOR_ID = "User not found for this id : {0}";
     public static final String NO_INSCRIPTION_FOUND = "No inscription found";
     public static final String NO_INSCRIPTION_FOUND_FOR_ID = "Inscription not found for this id : {0}";
     public static final String NO_NOTIFICATION_MESSAGE_FOUND = "No notification messages found";

@@ -10,6 +10,7 @@ import com.usargis.usargisapi.web.exception.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -30,6 +31,7 @@ public class TeamMemberController implements ApiRestController {
         this.modelMapperService = modelMapperService;
     }
 
+    @PreAuthorize("hasRole('" + Constant.LEADER_ROLE + "')")
     @GetMapping(Constant.TEAM_MEMBERS_PATH)
     public ResponseEntity<List<TeamMemberDto.TeamMemberResponse>> findAllTeamMembers() {
         List<TeamMember> teamMembers = teamMemberService.findAll();
@@ -39,6 +41,7 @@ public class TeamMemberController implements ApiRestController {
         return new ResponseEntity<>(teamMembers.stream().map(this::convertToResponseDto).collect(Collectors.toList()), HttpStatus.OK);
     }
 
+    @PreAuthorize("hasRole('" + Constant.LEADER_ROLE + "')")
     @GetMapping(Constant.TEAM_MEMBERS_PATH + Constant.SLASH_ID_PATH)
     public ResponseEntity<TeamMemberDto.TeamMemberResponse> getTeamMemberById(@PathVariable Long id) {
         Optional<TeamMember> teamMemberOptional = teamMemberService.findById(id);
@@ -46,18 +49,21 @@ public class TeamMemberController implements ApiRestController {
         return new ResponseEntity<>(convertToResponseDto(teamMember), HttpStatus.OK);
     }
 
+    @PreAuthorize("hasRole('" + Constant.LEADER_ROLE + "')")
     @PostMapping(Constant.TEAM_MEMBERS_PATH)
     public ResponseEntity<TeamMemberDto.TeamMemberResponse> createNewTeamMember(@RequestBody @Valid TeamMemberDto.TeamMemberPostRequest teamMemberCreateDto) {
         TeamMember teamMember = teamMemberService.create(teamMemberCreateDto);
         return new ResponseEntity<>(convertToResponseDto(teamMember), HttpStatus.CREATED);
     }
 
+    @PreAuthorize("hasRole('" + Constant.LEADER_ROLE + "')")
     @PutMapping(Constant.TEAM_MEMBERS_PATH + Constant.SLASH_ID_PATH)
     public ResponseEntity<TeamMemberDto.TeamMemberResponse> updateTeamMember(@PathVariable Long id, @RequestBody @Valid TeamMemberDto.TeamMemberPostRequest updateDto) {
         TeamMember teamMember = teamMemberService.update(id, updateDto);
         return new ResponseEntity<>(convertToResponseDto(teamMember), HttpStatus.OK);
     }
 
+    @PreAuthorize("hasRole('" + Constant.LEADER_ROLE + "')")
     @DeleteMapping(Constant.TEAM_MEMBERS_PATH + Constant.SLASH_ID_PATH)
     public ResponseEntity deleteTeamMember(@PathVariable Long id) {
         teamMemberService.delete(teamMemberService.findById(id).orElseThrow(() -> new NotFoundException(MessageFormat.format(ErrorConstant.NO_TEAM_MEMBER_FOUND_FOR_ID, id))));
