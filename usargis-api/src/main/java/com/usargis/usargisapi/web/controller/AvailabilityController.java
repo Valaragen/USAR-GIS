@@ -13,6 +13,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.text.MessageFormat;
 import java.util.List;
 import java.util.Optional;
@@ -31,7 +32,7 @@ public class AvailabilityController implements ApiRestController {
     }
 
     @GetMapping(Constant.AVAILABILITIES_PATH)
-    public ResponseEntity<List<AvailabilityDto.Response>> searchForAvailabilities(AvailabilitySearch availabilitySearch) {
+    public ResponseEntity<List<AvailabilityDto.Response>> searchForAvailabilities(@Valid AvailabilitySearch availabilitySearch) {
         List<Availability> availabilities = availabilityService.searchAll(availabilitySearch);
         if (availabilities.isEmpty()) {
             throw new NotFoundException(ErrorConstant.NO_AVAILABILITY_FOUND);
@@ -47,13 +48,13 @@ public class AvailabilityController implements ApiRestController {
     }
 
     @PostMapping(Constant.AVAILABILITIES_PATH)
-    public ResponseEntity<AvailabilityDto.Response> createNewAvailability(@RequestBody AvailabilityDto.Create availabilityCreateDto) {
+    public ResponseEntity<AvailabilityDto.Response> createNewAvailability(@RequestBody @Valid AvailabilityDto.Create availabilityCreateDto) {
         Availability availability = availabilityService.create(availabilityCreateDto);
         return new ResponseEntity<>(convertToResponseDto(availability), HttpStatus.CREATED);
     }
 
     @PutMapping(Constant.AVAILABILITIES_PATH + Constant.SLASH_ID_PATH)
-    public ResponseEntity<AvailabilityDto.Response> updateAvailability(@PathVariable Long id, @RequestBody AvailabilityDto.Update updateDto) {
+    public ResponseEntity<AvailabilityDto.Response> updateAvailability(@PathVariable Long id, @RequestBody @Valid AvailabilityDto.Update updateDto) {
         Availability availability = availabilityService.update(id, updateDto);
         return new ResponseEntity<>(convertToResponseDto(availability), HttpStatus.OK);
     }

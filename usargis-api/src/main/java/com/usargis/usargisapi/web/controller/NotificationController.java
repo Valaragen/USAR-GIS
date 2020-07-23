@@ -12,6 +12,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.text.MessageFormat;
 import java.util.List;
 import java.util.Optional;
@@ -46,13 +47,13 @@ public class NotificationController implements ApiRestController {
     }
 
     @PostMapping(Constant.NOTIFICATIONS_PATH)
-    public ResponseEntity<NotificationDto.Response> createNewNotification(@RequestBody NotificationDto.PostRequest notificationCreateDto) {
+    public ResponseEntity<NotificationDto.Response> createNewNotification(@RequestBody @Valid NotificationDto.PostRequest notificationCreateDto) {
         Notification notification = notificationService.create(notificationCreateDto);
         return new ResponseEntity<>(convertToResponseDto(notification), HttpStatus.CREATED);
     }
 
     @PutMapping(Constant.NOTIFICATIONS_PATH + Constant.SLASH_ID_PATH)
-    public ResponseEntity<NotificationDto.Response> updateNotification(@PathVariable Long id, @RequestBody NotificationDto.PostRequest updateDto) {
+    public ResponseEntity<NotificationDto.Response> updateNotification(@PathVariable Long id, @RequestBody @Valid NotificationDto.PostRequest updateDto) {
         Notification notification = notificationService.update(id, updateDto);
         return new ResponseEntity<>(convertToResponseDto(notification), HttpStatus.OK);
     }

@@ -12,6 +12,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.text.MessageFormat;
 import java.util.List;
 import java.util.Optional;
@@ -46,13 +47,13 @@ public class EventController implements ApiRestController {
     }
 
     @PostMapping(Constant.EVENTS_PATH)
-    public ResponseEntity<EventDto.Response> createNewEvent(@RequestBody EventDto.PostRequest eventCreateDto) {
+    public ResponseEntity<EventDto.Response> createNewEvent(@RequestBody @Valid EventDto.PostRequest eventCreateDto) {
         Event event = eventService.create(eventCreateDto);
         return new ResponseEntity<>(convertToResponseDto(event), HttpStatus.CREATED);
     }
 
     @PutMapping(Constant.EVENTS_PATH + Constant.SLASH_ID_PATH)
-    public ResponseEntity<EventDto.Response> updateEvent(@PathVariable Long id, @RequestBody EventDto.PostRequest updateDto) {
+    public ResponseEntity<EventDto.Response> updateEvent(@PathVariable Long id, @RequestBody @Valid EventDto.PostRequest updateDto) {
         Event event = eventService.update(id, updateDto);
         return new ResponseEntity<>(convertToResponseDto(event), HttpStatus.OK);
     }

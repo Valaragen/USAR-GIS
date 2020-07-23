@@ -12,6 +12,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.text.MessageFormat;
 import java.util.List;
 import java.util.Optional;
@@ -46,13 +47,13 @@ public class InscriptionController implements ApiRestController {
     }
 
     @PostMapping(Constant.INSCRIPTIONS_PATH)
-    public ResponseEntity<InscriptionDto.Response> createNewInscription(@RequestBody InscriptionDto.PostRequest inscriptionCreateDto) {
+    public ResponseEntity<InscriptionDto.Response> createNewInscription(@RequestBody @Valid InscriptionDto.PostRequest inscriptionCreateDto) {
         Inscription inscription = inscriptionService.create(inscriptionCreateDto);
         return new ResponseEntity<>(convertToResponseDto(inscription), HttpStatus.CREATED);
     }
 
     @PutMapping(Constant.INSCRIPTIONS_PATH + Constant.SLASH_ID_PATH)
-    public ResponseEntity<InscriptionDto.Response> updateInscription(@PathVariable Long id, @RequestBody InscriptionDto.PostRequest updateDto) {
+    public ResponseEntity<InscriptionDto.Response> updateInscription(@PathVariable Long id, @RequestBody @Valid InscriptionDto.PostRequest updateDto) {
         Inscription inscription = inscriptionService.update(id, updateDto);
         return new ResponseEntity<>(convertToResponseDto(inscription), HttpStatus.OK);
     }

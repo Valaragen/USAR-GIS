@@ -12,6 +12,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.text.MessageFormat;
 import java.util.List;
 import java.util.Optional;
@@ -46,13 +47,13 @@ public class GroupController implements ApiRestController {
     }
 
     @PostMapping(Constant.GROUPS_PATH)
-    public ResponseEntity<GroupDto.Response> createNewGroup(@RequestBody GroupDto.PostRequest groupCreateDto) {
+    public ResponseEntity<GroupDto.Response> createNewGroup(@RequestBody @Valid GroupDto.PostRequest groupCreateDto) {
         Group group = groupService.create(groupCreateDto);
         return new ResponseEntity<>(convertToResponseDto(group), HttpStatus.CREATED);
     }
 
     @PutMapping(Constant.GROUPS_PATH + Constant.SLASH_ID_PATH)
-    public ResponseEntity<GroupDto.Response> updateGroup(@PathVariable Long id, @RequestBody GroupDto.PostRequest updateDto) {
+    public ResponseEntity<GroupDto.Response> updateGroup(@PathVariable Long id, @RequestBody @Valid GroupDto.PostRequest updateDto) {
         Group group = groupService.update(id, updateDto);
         return new ResponseEntity<>(convertToResponseDto(group), HttpStatus.OK);
     }

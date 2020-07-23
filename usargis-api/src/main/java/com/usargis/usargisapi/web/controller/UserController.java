@@ -13,6 +13,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.text.MessageFormat;
 import java.util.List;
 import java.util.Optional;
@@ -48,13 +49,13 @@ public class UserController implements ApiRestController {
     }
 
     @PostMapping(Constant.USERS_PATH)
-    public ResponseEntity<UserInfoDto.Response> createNewUserInfo(@RequestBody UserInfoDto.PostRequest userInfoCreateDto) {
+    public ResponseEntity<UserInfoDto.Response> createNewUserInfo(@RequestBody @Valid UserInfoDto.PostRequest userInfoCreateDto) {
         UserInfo userInfo = userInfoService.create(userInfoCreateDto);
         return new ResponseEntity<>(convertToResponseDto(userInfo), HttpStatus.CREATED);
     }
 
     @PutMapping(Constant.USERS_PATH + Constant.SLASH_ID_PATH)
-    public ResponseEntity<UserInfoDto.Response> updateUserInfo(@PathVariable String id, @RequestBody UserInfoDto.PostRequest updateDto) {
+    public ResponseEntity<UserInfoDto.Response> updateUserInfo(@PathVariable String id, @RequestBody @Valid UserInfoDto.PostRequest updateDto) {
         UserInfo userInfo = userInfoService.update(id, updateDto);
         return new ResponseEntity<>(convertToResponseDto(userInfo), HttpStatus.OK);
     }

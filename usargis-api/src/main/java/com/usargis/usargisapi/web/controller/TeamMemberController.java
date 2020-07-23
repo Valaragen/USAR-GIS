@@ -12,6 +12,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.text.MessageFormat;
 import java.util.List;
 import java.util.Optional;
@@ -46,13 +47,13 @@ public class TeamMemberController implements ApiRestController {
     }
 
     @PostMapping(Constant.TEAM_MEMBERS_PATH)
-    public ResponseEntity<TeamMemberDto.Response> createNewTeamMember(@RequestBody TeamMemberDto.PostRequest teamMemberCreateDto) {
+    public ResponseEntity<TeamMemberDto.Response> createNewTeamMember(@RequestBody @Valid TeamMemberDto.PostRequest teamMemberCreateDto) {
         TeamMember teamMember = teamMemberService.create(teamMemberCreateDto);
         return new ResponseEntity<>(convertToResponseDto(teamMember), HttpStatus.CREATED);
     }
 
     @PutMapping(Constant.TEAM_MEMBERS_PATH + Constant.SLASH_ID_PATH)
-    public ResponseEntity<TeamMemberDto.Response> updateTeamMember(@PathVariable Long id, @RequestBody TeamMemberDto.PostRequest updateDto) {
+    public ResponseEntity<TeamMemberDto.Response> updateTeamMember(@PathVariable Long id, @RequestBody @Valid TeamMemberDto.PostRequest updateDto) {
         TeamMember teamMember = teamMemberService.update(id, updateDto);
         return new ResponseEntity<>(convertToResponseDto(teamMember), HttpStatus.OK);
     }
