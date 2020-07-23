@@ -128,13 +128,6 @@ class NotificationServiceImplTest {
         }
 
         @Test
-        void create_dtoMissionIdIsNull_shouldSkipDbSearch() {
-            objectToTest.create(nullIdsNotificationPostRequestDto);
-
-            Mockito.verify(missionService, Mockito.never()).findById(notificationPostRequestDto.getMissionId());
-        }
-
-        @Test
         void create_dtoEventIdIsNotNullAndNotFound_throwNotFoundException() {
             Mockito.when(eventService.findById(notificationPostRequestDto.getEventId())).thenReturn(Optional.empty());
 
@@ -142,13 +135,6 @@ class NotificationServiceImplTest {
                 objectToTest.create(notificationPostRequestDto);
             }).isInstanceOf(NotFoundException.class)
                     .hasMessage(MessageFormat.format(ErrorConstant.NO_EVENT_FOUND_FOR_ID, notificationPostRequestDto.getEventId()));
-        }
-
-        @Test
-        void create_dtoEventIdIsNull_shouldSkipDbSearch() {
-            objectToTest.create(nullIdsNotificationPostRequestDto);
-
-            Mockito.verify(eventService, Mockito.never()).findById(notificationPostRequestDto.getEventId());
         }
 
         @Test

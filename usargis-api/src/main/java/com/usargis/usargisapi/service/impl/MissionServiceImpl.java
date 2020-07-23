@@ -57,16 +57,16 @@ public class MissionServiceImpl implements MissionService {
 
     @Override
     public Mission create(MissionDto.PostRequest createDto) {
-        Mission missionToSave = new Mission();
+        Mission missionToCreate = new Mission();
         String usernameFromToken = securityService.getUsernameFromToken();
-        missionToSave.setAuthor(
+        missionToCreate.setAuthor(
                 userInfoService.findByUsername(usernameFromToken)
                         .orElseThrow(() -> new NotFoundException(
                                 MessageFormat.format(ErrorConstant.NO_USER_FOUND_FOR_USERNAME, usernameFromToken)
                         ))
         );
-        modelMapperService.map(createDto, missionToSave);
-        return save(missionToSave);
+        modelMapperService.map(createDto, missionToCreate);
+        return save(missionToCreate);
     }
 
     @Override

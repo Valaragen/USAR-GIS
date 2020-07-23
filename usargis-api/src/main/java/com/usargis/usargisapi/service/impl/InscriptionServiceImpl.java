@@ -56,21 +56,21 @@ public class InscriptionServiceImpl implements InscriptionService {
 
     @Override
     public Inscription create(InscriptionDto.PostRequest createDto) {
-        Inscription inscriptionToSave = new Inscription();
-        inscriptionToSave.setUserInfo(
+        Inscription inscriptionToCreate = new Inscription();
+        inscriptionToCreate.setUserInfo(
                 userInfoService.findByUsername(createDto.getUserInfoUsername())
                         .orElseThrow(() -> new NotFoundException(
                                 MessageFormat.format(ErrorConstant.NO_USER_FOUND_FOR_USERNAME, createDto.getUserInfoUsername())
                         ))
         );
-        inscriptionToSave.setEvent(
+        inscriptionToCreate.setEvent(
                 eventService.findById(createDto.getEventId())
                         .orElseThrow(() -> new NotFoundException(
                                 MessageFormat.format(ErrorConstant.NO_EVENT_FOUND_FOR_ID, createDto.getEventId())
                         ))
         );
-        modelMapperService.map(createDto, inscriptionToSave);
-        return save(inscriptionToSave);
+        modelMapperService.map(createDto, inscriptionToCreate);
+        return save(inscriptionToCreate);
     }
 
     @Override

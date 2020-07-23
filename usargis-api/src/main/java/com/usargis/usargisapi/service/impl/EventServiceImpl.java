@@ -55,16 +55,16 @@ public class EventServiceImpl implements EventService {
 
     @Override
     public Event create(EventDto.PostRequest createDto) {
-        Event eventToSave = new Event();
+        Event eventToCreate = new Event();
         String usernameFromToken = securityService.getUsernameFromToken();
-        eventToSave.setAuthor(
+        eventToCreate.setAuthor(
                 userInfoService.findByUsername(usernameFromToken)
                         .orElseThrow(() -> new NotFoundException(
                                 MessageFormat.format(ErrorConstant.NO_USER_FOUND_FOR_USERNAME, usernameFromToken)
                         ))
         );
-        modelMapperService.map(createDto, eventToSave);
-        return save(eventToSave);
+        modelMapperService.map(createDto, eventToCreate);
+        return save(eventToCreate);
     }
 
     @Override

@@ -53,15 +53,15 @@ public class NotificationMessageServiceImpl implements NotificationMessageServic
 
     @Override
     public NotificationMessage create(NotificationMessageDto.PostRequest createDto) {
-        NotificationMessage notificationMessageToSave = new NotificationMessage();
-        notificationMessageToSave.setNotification(
+        NotificationMessage notificationMessageToCreate = new NotificationMessage();
+        notificationMessageToCreate.setNotification(
                 notificationService.findById(createDto.getNotificationId())
                         .orElseThrow(() -> new NotFoundException(
                                 MessageFormat.format(ErrorConstant.NO_NOTIFICATION_FOUND_FOR_ID, createDto.getNotificationId())
                         ))
         );
-        modelMapperService.map(createDto, notificationMessageToSave);
-        return save(notificationMessageToSave);
+        modelMapperService.map(createDto, notificationMessageToCreate);
+        return save(notificationMessageToCreate);
     }
 
     @Override

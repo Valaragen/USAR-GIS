@@ -4,9 +4,12 @@ import com.usargis.usargisapi.core.dto.NotificationDto;
 import com.usargis.usargisapi.core.model.Notification;
 import com.usargis.usargisapi.repository.NotificationRepository;
 import com.usargis.usargisapi.service.contract.*;
+import com.usargis.usargisapi.util.ErrorConstant;
+import com.usargis.usargisapi.web.exception.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.text.MessageFormat;
 import java.util.List;
 import java.util.Optional;
 
@@ -54,11 +57,41 @@ public class NotificationServiceImpl implements NotificationService {
 
     @Override
     public Notification create(NotificationDto.PostRequest createDto) {
-        return null;
+        Notification notificationToCreate = new Notification();
+        String usernameFromToken = securityService.getUsernameFromToken();
+        notificationToCreate.setAuthor(
+                userInfoService.findByUsername(usernameFromToken)
+                        .orElseThrow(() -> new NotFoundException(
+                                MessageFormat.format(ErrorConstant.NO_USER_FOUND_FOR_USERNAME, usernameFromToken)
+                        ))
+        );
+        if (createDto.getMissionId() != null) {
+            notificationToCreate.setMission(
+                    missionService.findById(createDto.getMissionId())
+                            .orElseThrow(() -> new NotFoundException(
+                                    MessageFormat.format(ErrorConstant.NO_MISSION_FOUND_FOR_ID, createDto.getMissionId())
+                            ))
+            );
+        }
+        if (createDto.getEventId() != null) {
+            notificationToCreate.setEvent(
+                    eventService.findById(createDto.getEventId())
+                            .orElseThrow(() -> new NotFoundException(
+                                    MessageFormat.format(ErrorConstant.NO_EVENT_FOUND_FOR_ID, createDto.getEventId())
+                            ))
+            );
+        }
+        modelMapperService.map(createDto, notificationToCreate);
+        return save(notificationToCreate);
     }
 
     @Override
     public Notification update(Long id, NotificationDto.PostRequest updateDto) {
-        return null;
+        Notification notificationToUpdate = findById(id).orElseThrow(() -> new NotFoundException(
+                        MessageFormat.format(ErrorConstant.NO_NOTIFICATION_FOUND_FOR_ID, id)
+                )
+        );
+        modelMapperService.map(updateDto, notificationToUpdate);
+        return save(notificationToUpdate);
     }
 }

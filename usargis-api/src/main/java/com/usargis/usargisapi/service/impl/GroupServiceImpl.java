@@ -48,9 +48,9 @@ public class GroupServiceImpl implements GroupService {
 
     @Override
     public Group create(GroupDto.PostRequest createDto) {
-        Group groupToSave = new Group();
-        modelMapperService.map(createDto, groupToSave);
-        return save(groupToSave);
+        Group groupToCreate = new Group();
+        modelMapperService.map(createDto, groupToCreate);
+        return save(groupToCreate);
     }
 
     @Override

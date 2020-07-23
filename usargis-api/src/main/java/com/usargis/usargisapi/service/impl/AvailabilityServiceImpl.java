@@ -62,21 +62,21 @@ public class AvailabilityServiceImpl implements AvailabilityService {
 
     @Override
     public Availability create(AvailabilityDto.Create createDto) {
-        Availability availabilityToSave = new Availability();
-        availabilityToSave.setUserInfo(
+        Availability availabilityToCreate = new Availability();
+        availabilityToCreate.setUserInfo(
                 userInfoService.findByUsername(createDto.getUserInfoUsername())
                         .orElseThrow(() -> new NotFoundException(
                                 MessageFormat.format(ErrorConstant.NO_USER_FOUND_FOR_USERNAME, createDto.getUserInfoUsername())
                         ))
         );
-        availabilityToSave.setMission(
+        availabilityToCreate.setMission(
                 missionService.findById(createDto.getMissionId())
                         .orElseThrow(() -> new NotFoundException(
                                 MessageFormat.format(ErrorConstant.NO_MISSION_FOUND_FOR_ID, createDto.getMissionId())
                         ))
         );
-        modelMapperService.map(createDto, availabilityToSave);
-        return save(availabilityToSave);
+        modelMapperService.map(createDto, availabilityToCreate);
+        return save(availabilityToCreate);
     }
 
     @Override
