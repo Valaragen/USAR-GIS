@@ -4,11 +4,9 @@ import com.usargis.usargisapi.service.contract.SecurityService;
 import com.usargis.usargisapi.util.ErrorConstant;
 import com.usargis.usargisapi.web.exception.AccessForbiddenException;
 import org.keycloak.KeycloakPrincipal;
-import org.keycloak.exceptions.TokenNotActiveException;
 import org.keycloak.representations.AccessToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.HttpClientErrorException;
 
 @Service
 public class SecurityServiceImpl implements SecurityService {

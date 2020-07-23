@@ -1,8 +1,10 @@
 package com.usargis.usargisapi.service.impl;
 
 import com.usargis.usargisapi.core.dto.NotificationDto;
-import com.usargis.usargisapi.core.model.*;
+import com.usargis.usargisapi.core.model.Event;
+import com.usargis.usargisapi.core.model.Mission;
 import com.usargis.usargisapi.core.model.Notification;
+import com.usargis.usargisapi.core.model.UserInfo;
 import com.usargis.usargisapi.repository.NotificationRepository;
 import com.usargis.usargisapi.service.contract.*;
 import com.usargis.usargisapi.util.ErrorConstant;

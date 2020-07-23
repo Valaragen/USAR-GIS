@@ -2,21 +2,17 @@ package com.usargis.usargisapi.service.impl;
 
 import com.usargis.usargisapi.core.dto.GroupDto;
 import com.usargis.usargisapi.core.model.Group;
-import com.usargis.usargisapi.core.model.Group;
-import com.usargis.usargisapi.core.model.UserInfo;
 import com.usargis.usargisapi.repository.GroupRepository;
 import com.usargis.usargisapi.service.contract.GroupService;
 import com.usargis.usargisapi.service.contract.ModelMapperService;
 import com.usargis.usargisapi.util.ErrorConstant;
 import com.usargis.usargisapi.util.objectMother.dto.GroupDtoMother;
 import com.usargis.usargisapi.util.objectMother.model.GroupMother;
-import com.usargis.usargisapi.util.objectMother.model.UserInfoMother;
 import com.usargis.usargisapi.web.exception.NotFoundException;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
-import org.mockito.AdditionalAnswers;
 import org.mockito.Mockito;
 
 import java.text.MessageFormat;

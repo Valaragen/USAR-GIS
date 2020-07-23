@@ -1,7 +1,6 @@
 package com.usargis.usargisapi.service.impl;
 
 import com.usargis.usargisapi.core.dto.InscriptionDto;
-import com.usargis.usargisapi.core.model.Event;
 import com.usargis.usargisapi.core.model.Inscription;
 import com.usargis.usargisapi.repository.InscriptionRepository;
 import com.usargis.usargisapi.service.contract.EventService;

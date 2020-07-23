@@ -2,7 +2,6 @@ package com.usargis.usargisapi.service.impl;
 
 import com.usargis.usargisapi.core.dto.NotificationMessageDto;
 import com.usargis.usargisapi.core.model.NotificationMessage;
-import com.usargis.usargisapi.core.model.NotificationMessage;
 import com.usargis.usargisapi.repository.NotificationMessageRepository;
 import com.usargis.usargisapi.service.contract.ModelMapperService;
 import com.usargis.usargisapi.service.contract.NotificationMessageService;
