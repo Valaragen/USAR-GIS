@@ -17,6 +17,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+@RestController
 public class TeamController implements ApiRestController {
 
     private TeamService teamService;

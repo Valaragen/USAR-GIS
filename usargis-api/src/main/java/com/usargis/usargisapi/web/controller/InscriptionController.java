@@ -17,6 +17,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+@RestController
 public class InscriptionController implements ApiRestController {
 
     private InscriptionService inscriptionService;
