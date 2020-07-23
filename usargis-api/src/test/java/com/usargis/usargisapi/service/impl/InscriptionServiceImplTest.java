@@ -91,7 +91,7 @@ class InscriptionServiceImplTest {
 
     @Nested
     class createTest {
-        private InscriptionDto.PostRequest inscriptionCreateDto = InscriptionDtoMother.postRequestSample().build();
+        private InscriptionDto.InscriptionPostRequest inscriptionCreateDto = InscriptionDtoMother.postRequestSample().build();
         private UserInfo userToLink = UserInfoMother.sample().build();
         private Event eventToLink = EventMother.sampleFinished().build();
         private Inscription savedInscription = InscriptionMother.sampleValidated().build();
@@ -159,7 +159,7 @@ class InscriptionServiceImplTest {
     class updateTest {
         private Long givenId = 1L;
         private Inscription inscriptionToUpdate = InscriptionMother.sampleValidated().build();
-        private InscriptionDto.PostRequest inscriptionUpdateDto = InscriptionDtoMother.postRequestSample().build();
+        private InscriptionDto.InscriptionPostRequest inscriptionUpdateDto = InscriptionDtoMother.postRequestSample().build();
         private Inscription savedInscription = InscriptionMother.sampleValidated().build();
 
         @BeforeEach

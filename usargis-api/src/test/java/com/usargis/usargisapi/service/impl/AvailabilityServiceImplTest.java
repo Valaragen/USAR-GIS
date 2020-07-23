@@ -105,7 +105,7 @@ class AvailabilityServiceImplTest {
 
     @Nested
     class createTest {
-        private AvailabilityDto.Create availabilityCreateDto = AvailabilityDtoMother.createSample().build();
+        private AvailabilityDto.AvailabilityCreate availabilityCreateDto = AvailabilityDtoMother.createSample().build();
         private UserInfo userToLink = UserInfoMother.sample().build();
         private Mission missionToLink = MissionMother.sampleFinished().build();
         private Availability savedAvailability = AvailabilityMother.sample().build();
@@ -173,7 +173,7 @@ class AvailabilityServiceImplTest {
     class updateTest {
         private Long givenId = 1L;
         private Availability availabilityToUpdate = AvailabilityMother.sample().build();
-        private AvailabilityDto.Update availabilityUpdateDto = AvailabilityDtoMother.updateSample().build();
+        private AvailabilityDto.AvailabilityUpdate availabilityUpdateDto = AvailabilityDtoMother.updateSample().build();
         private Availability savedAvailability = AvailabilityMother.sample().build();
 
         @BeforeEach

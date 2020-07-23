@@ -22,7 +22,7 @@ public interface AvailabilityDto {
 
     @Builder
     @Value
-    class Create implements UserInfoUsername, MissionId, AvailabilityDto {
+    class AvailabilityCreate implements UserInfoUsername, MissionId, AvailabilityDto {
         //Fields inheriting from validation
         String userInfoUsername;
         Long missionId;
@@ -34,14 +34,14 @@ public interface AvailabilityDto {
 
     @Builder
     @Value
-    class Update implements AvailabilityDto {
+    class AvailabilityUpdate implements AvailabilityDto {
         //Fields specific to this DTO
         LocalDateTime startDate;
         LocalDateTime endDate;
     }
 
     @Data
-    class Response implements AvailabilityDto, UserInfoUsername, MissionId {
+    class AvailabilityResponse implements AvailabilityDto, UserInfoUsername, MissionId {
         //Fields inheriting from validation
         String userInfoUsername;
         Long missionId;

@@ -8,14 +8,14 @@ public interface TeamMemberDto {
 
     @Builder
     @Value
-    class PostRequest implements TeamMemberDto {
+    class TeamMemberPostRequest implements TeamMemberDto {
         //Fields specific to this DTO
         private Long teamId;
         private String userInfoUsername;
     }
 
     @Data
-    class Response implements TeamMemberDto {
+    class TeamMemberResponse implements TeamMemberDto {
         //Fields specific to this DTO
         private Long id;
         private Long teamId;

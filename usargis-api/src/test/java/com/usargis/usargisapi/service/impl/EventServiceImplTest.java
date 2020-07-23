@@ -88,7 +88,7 @@ class EventServiceImplTest {
 
     @Nested
     class createTest {
-        private EventDto.PostRequest eventPostRequestDto = EventDtoMother.postRequestSample().build();
+        private EventDto.EventPostRequest eventPostRequestDto = EventDtoMother.postRequestSample().build();
         private UserInfo authorToLink = UserInfoMother.sampleAuthor().build();
         private String userNameFromToken = authorToLink.getUsername();
         private Event savedEvent = EventMother.sampleFinished().build();
@@ -145,7 +145,7 @@ class EventServiceImplTest {
     class updateTest {
         private Long givenId = 1L;
         private Event eventToUpdate = EventMother.sampleFinished().build();
-        private EventDto.PostRequest eventUpdateDto = EventDtoMother.postRequestSample().build();
+        private EventDto.EventPostRequest eventUpdateDto = EventDtoMother.postRequestSample().build();
         private Event savedEvent = EventMother.sampleFinished().build();
 
         @BeforeEach

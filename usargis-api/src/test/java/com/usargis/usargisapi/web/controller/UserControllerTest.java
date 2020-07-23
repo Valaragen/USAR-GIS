@@ -54,7 +54,7 @@ class UserControllerTest {
         @Test
         void findAllUserInfos_shouldConvertUserInfosToListOfResponseDto() {
             Mockito.when(userInfoService.findAll()).thenReturn(userInfosFound);
-            Mockito.when(modelMapperService.map(Mockito.any(UserInfo.class), Mockito.any())).thenReturn(new UserInfoDto.Response());
+            Mockito.when(modelMapperService.map(Mockito.any(UserInfo.class), Mockito.any())).thenReturn(new UserInfoDto.UserInfoResponse());
 
             objectToTest.findAllUserInfos();
 
@@ -64,9 +64,9 @@ class UserControllerTest {
         @Test
         void findAllUserInfos_userInfoFound_returnStatusOkWithListOfUserInfosResponseDto() {
             Mockito.when(userInfoService.findAll()).thenReturn(userInfosFound);
-            Mockito.when(modelMapperService.map(Mockito.any(UserInfo.class), Mockito.any())).thenReturn(new UserInfoDto.Response());
+            Mockito.when(modelMapperService.map(Mockito.any(UserInfo.class), Mockito.any())).thenReturn(new UserInfoDto.UserInfoResponse());
 
-            ResponseEntity<List<UserInfoDto.Response>> result = objectToTest.findAllUserInfos();
+            ResponseEntity<List<UserInfoDto.UserInfoResponse>> result = objectToTest.findAllUserInfos();
 
             Assertions.assertThat(result.getStatusCode()).isEqualTo(HttpStatus.OK);
             Assertions.assertThat(Objects.requireNonNull(result.getBody()).size()).isEqualTo(userInfosFound.size());
@@ -77,7 +77,7 @@ class UserControllerTest {
     class getUserInfoByIdTest {
         private final String userInfoIdToFind = "id";
         private final UserInfo userInfoFound = new UserInfo();
-        private final UserInfoDto.Response userInfoResponseDto = new UserInfoDto.Response();
+        private final UserInfoDto.UserInfoResponse userInfoResponseDto = new UserInfoDto.UserInfoResponse();
 
         @Test
         void getUserInfoById_shouldCallServiceLayer() {
@@ -100,33 +100,33 @@ class UserControllerTest {
         @Test
         void getUserInfoById_shouldConvertUserInfoToResponseDto() {
             Mockito.when(userInfoService.findById(userInfoIdToFind)).thenReturn(Optional.of(userInfoFound));
-            Mockito.when(modelMapperService.map(userInfoFound, UserInfoDto.Response.class)).thenReturn(userInfoResponseDto);
+            Mockito.when(modelMapperService.map(userInfoFound, UserInfoDto.UserInfoResponse.class)).thenReturn(userInfoResponseDto);
 
             objectToTest.getUserInfoById(userInfoIdToFind);
 
-            Mockito.verify(modelMapperService).map(userInfoFound, UserInfoDto.Response.class);
+            Mockito.verify(modelMapperService).map(userInfoFound, UserInfoDto.UserInfoResponse.class);
         }
 
         @Test
         void getUserInfoById_userInfoFound_returnStatusOkAndUserInfoResponseDto() {
             Mockito.when(userInfoService.findById(userInfoIdToFind)).thenReturn(Optional.of(userInfoFound));
-            Mockito.when(modelMapperService.map(userInfoFound, UserInfoDto.Response.class)).thenReturn(userInfoResponseDto);
+            Mockito.when(modelMapperService.map(userInfoFound, UserInfoDto.UserInfoResponse.class)).thenReturn(userInfoResponseDto);
 
-            ResponseEntity<UserInfoDto.Response> result = objectToTest.getUserInfoById(userInfoIdToFind);
+            ResponseEntity<UserInfoDto.UserInfoResponse> result = objectToTest.getUserInfoById(userInfoIdToFind);
 
             Assertions.assertThat(result.getStatusCode())
                     .isEqualTo(HttpStatus.OK);
             Assertions.assertThat(result.getBody())
                     .isEqualTo(userInfoResponseDto);
-            Assertions.assertThat(result.getBody()).isInstanceOf(UserInfoDto.Response.class);
+            Assertions.assertThat(result.getBody()).isInstanceOf(UserInfoDto.UserInfoResponse.class);
         }
     }
 
     @Nested
     class createNewUserInfoTest {
-        private final UserInfoDto.PostRequest userInfoToSave = UserInfoDtoMother.postRequestSample().build();
+        private final UserInfoDto.UserInfoPostRequest userInfoToSave = UserInfoDtoMother.postRequestSample().build();
         private final UserInfo newUserInfo = new UserInfo();
-        private final UserInfoDto.Response userInfoResponseDto = new UserInfoDto.Response();
+        private final UserInfoDto.UserInfoResponse userInfoResponseDto = new UserInfoDto.UserInfoResponse();
 
         @Test
         void createNewUserInfo_shouldCallServiceLayer() {
@@ -140,34 +140,34 @@ class UserControllerTest {
         @Test
         void createNewUserInfo_shouldConvertUserInfoToResponseDto() {
             Mockito.when(userInfoService.create(userInfoToSave)).thenReturn(newUserInfo);
-            Mockito.when(modelMapperService.map(newUserInfo, UserInfoDto.Response.class)).thenReturn(userInfoResponseDto);
+            Mockito.when(modelMapperService.map(newUserInfo, UserInfoDto.UserInfoResponse.class)).thenReturn(userInfoResponseDto);
 
             objectToTest.createNewUserInfo(userInfoToSave);
 
-            Mockito.verify(modelMapperService).map(newUserInfo, UserInfoDto.Response.class);
+            Mockito.verify(modelMapperService).map(newUserInfo, UserInfoDto.UserInfoResponse.class);
         }
 
         @Test
         void createNewUserInfo_userInfoCreated_returnStatusCreatedAndUserInfoResponseDto() {
             Mockito.when(userInfoService.create(userInfoToSave)).thenReturn(newUserInfo);
-            Mockito.when(modelMapperService.map(newUserInfo, UserInfoDto.Response.class)).thenReturn(userInfoResponseDto);
+            Mockito.when(modelMapperService.map(newUserInfo, UserInfoDto.UserInfoResponse.class)).thenReturn(userInfoResponseDto);
 
-            ResponseEntity<UserInfoDto.Response> result = objectToTest.createNewUserInfo(userInfoToSave);
+            ResponseEntity<UserInfoDto.UserInfoResponse> result = objectToTest.createNewUserInfo(userInfoToSave);
 
             Assertions.assertThat(result.getStatusCode())
                     .isEqualTo(HttpStatus.CREATED);
             Assertions.assertThat(result.getBody())
                     .isEqualTo(userInfoResponseDto);
-            Assertions.assertThat(result.getBody()).isInstanceOf(UserInfoDto.Response.class);
+            Assertions.assertThat(result.getBody()).isInstanceOf(UserInfoDto.UserInfoResponse.class);
         }
     }
 
     @Nested
     class updateUserInfoTest {
         private final String userInfoId = "id";
-        private final UserInfoDto.PostRequest userInfoToUpdate = UserInfoDtoMother.postRequestSample().build();
+        private final UserInfoDto.UserInfoPostRequest userInfoToUpdate = UserInfoDtoMother.postRequestSample().build();
         private final UserInfo updateUserInfo = new UserInfo();
-        private final UserInfoDto.Response userInfoResponseDto = new UserInfoDto.Response();
+        private final UserInfoDto.UserInfoResponse userInfoResponseDto = new UserInfoDto.UserInfoResponse();
 
         @Test
         void updateUserInfoTest_shouldCallServiceLayer() {
@@ -182,29 +182,29 @@ class UserControllerTest {
         void updateUserInfoTest_shouldConvertUserInfoToResponseDto() {
             Mockito.when(userInfoService.update(userInfoId, userInfoToUpdate))
                     .thenReturn(updateUserInfo);
-            Mockito.when(modelMapperService.map(updateUserInfo, UserInfoDto.Response.class))
+            Mockito.when(modelMapperService.map(updateUserInfo, UserInfoDto.UserInfoResponse.class))
                     .thenReturn(userInfoResponseDto);
 
             objectToTest.updateUserInfo(userInfoId, userInfoToUpdate);
 
-            Mockito.verify(modelMapperService).map(updateUserInfo, UserInfoDto.Response.class);
+            Mockito.verify(modelMapperService).map(updateUserInfo, UserInfoDto.UserInfoResponse.class);
         }
 
         @Test
         void updateUserInfoTest_userInfoCreated_returnStatusOkAndUserInfoResponseDto() {
             Mockito.when(userInfoService.update(userInfoId, userInfoToUpdate))
                     .thenReturn(updateUserInfo);
-            Mockito.when(modelMapperService.map(updateUserInfo, UserInfoDto.Response.class))
+            Mockito.when(modelMapperService.map(updateUserInfo, UserInfoDto.UserInfoResponse.class))
                     .thenReturn(userInfoResponseDto);
 
-            ResponseEntity<UserInfoDto.Response> result =
+            ResponseEntity<UserInfoDto.UserInfoResponse> result =
                     objectToTest.updateUserInfo(userInfoId, userInfoToUpdate);
 
             Assertions.assertThat(result.getStatusCode())
                     .isEqualTo(HttpStatus.OK);
             Assertions.assertThat(result.getBody())
                     .isEqualTo(userInfoResponseDto);
-            Assertions.assertThat(result.getBody()).isInstanceOf(UserInfoDto.Response.class);
+            Assertions.assertThat(result.getBody()).isInstanceOf(UserInfoDto.UserInfoResponse.class);
         }
     }
 

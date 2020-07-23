@@ -54,7 +54,7 @@ public class EventServiceImpl implements EventService {
     }
 
     @Override
-    public Event create(EventDto.PostRequest createDto) {
+    public Event create(EventDto.EventPostRequest createDto) {
         Event eventToCreate = new Event();
         String usernameFromToken = securityService.getUsernameFromToken();
         eventToCreate.setAuthor(
@@ -68,7 +68,7 @@ public class EventServiceImpl implements EventService {
     }
 
     @Override
-    public Event update(Long id, EventDto.PostRequest updateDto) {
+    public Event update(Long id, EventDto.EventPostRequest updateDto) {
         Event eventToUpdate = findById(id).orElseThrow(() -> new NotFoundException(
                         MessageFormat.format(ErrorConstant.NO_EVENT_FOUND_FOR_ID, id)
                 )

@@ -28,7 +28,7 @@ public interface MissionDto {
 
     @Builder
     @Value
-    class PostRequest implements MissionDto, Name, Description, Address {
+    class MissionPostRequest implements MissionDto, Name, Description, Address {
         //Fields inheriting from validation
         private String name;
         private String description;
@@ -44,7 +44,7 @@ public interface MissionDto {
     }
 
     @Data
-    class Response implements MissionDto, Name, Description, Address {
+    class MissionResponse implements MissionDto, Name, Description, Address {
         //Fields inheriting from validation
         private String name;
         private String description;

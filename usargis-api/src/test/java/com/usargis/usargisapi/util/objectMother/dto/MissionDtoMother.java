@@ -4,8 +4,8 @@ import com.usargis.usargisapi.core.dto.MissionDto;
 import com.usargis.usargisapi.util.TestConstant;
 
 public class MissionDtoMother {
-    public static MissionDto.PostRequest.PostRequestBuilder postRequestSample() {
-        return MissionDto.PostRequest.builder()
+    public static MissionDto.MissionPostRequest.MissionPostRequestBuilder postRequestSample() {
+        return MissionDto.MissionPostRequest.builder()
                 .name("sampleFinishedMission name")
                 .description("sampleFinishedMission desc")
                 .address("sampleFinishedMission address")

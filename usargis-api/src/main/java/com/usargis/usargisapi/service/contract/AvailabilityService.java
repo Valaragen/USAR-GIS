@@ -10,7 +10,7 @@ import java.util.List;
 public interface AvailabilityService extends CRUDService<Availability, Long> {
     List<Availability> searchAll(AvailabilitySearch availabilitySearch);
 
-    Availability create(AvailabilityDto.Create createDto);
+    Availability create(AvailabilityDto.AvailabilityCreate createDto);
 
-    Availability update(Long id, AvailabilityDto.Update updateDto);
+    Availability update(Long id, AvailabilityDto.AvailabilityUpdate updateDto);
 }

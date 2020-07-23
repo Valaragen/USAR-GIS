@@ -19,7 +19,7 @@ class InscriptionDtoTest {
     class InscriptionPostRequestDto {
         @Test
         void inscriptionPostRequestDto_mapDtoToEntity_shouldMapCorrectly() {
-            InscriptionDto.PostRequest inscriptionPostRequestDto = InscriptionDtoMother.postRequestSample().build();
+            InscriptionDto.InscriptionPostRequest inscriptionPostRequestDto = InscriptionDtoMother.postRequestSample().build();
 
             Inscription inscription = modelMapperService.map(inscriptionPostRequestDto, Inscription.class);
 
@@ -39,7 +39,7 @@ class InscriptionDtoTest {
             inscription.getUserInfo().setId("test");
             inscription.getEvent().setId(2L);
 
-            InscriptionDto.Response inscriptionResponseDto = modelMapperService.map(inscription, InscriptionDto.Response.class);
+            InscriptionDto.InscriptionResponse inscriptionResponseDto = modelMapperService.map(inscription, InscriptionDto.InscriptionResponse.class);
 
             Assertions.assertThat(inscriptionResponseDto.getId()).isEqualTo(inscription.getId());
             Assertions.assertThat(inscriptionResponseDto.getEventId()).isEqualTo(inscription.getEvent().getId());

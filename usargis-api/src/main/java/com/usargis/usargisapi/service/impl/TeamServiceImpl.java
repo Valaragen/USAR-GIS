@@ -51,7 +51,7 @@ public class TeamServiceImpl implements TeamService {
     }
 
     @Override
-    public Team create(TeamDto.PostRequest createDto) {
+    public Team create(TeamDto.TeamPostRequest createDto) {
         Team teamToCreate = new Team();
         teamToCreate.setMission(
                 missionService.findById(createDto.getMissionId())
@@ -64,7 +64,7 @@ public class TeamServiceImpl implements TeamService {
     }
 
     @Override
-    public Team update(Long id, TeamDto.PostRequest updateDto) {
+    public Team update(Long id, TeamDto.TeamPostRequest updateDto) {
         Team teamToUpdate = findById(id).orElseThrow(() -> new NotFoundException(
                         MessageFormat.format(ErrorConstant.NO_TEAM_FOUND_FOR_ID, id)
                 )

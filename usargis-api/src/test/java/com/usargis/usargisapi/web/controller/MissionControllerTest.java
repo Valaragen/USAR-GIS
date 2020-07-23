@@ -54,7 +54,7 @@ class MissionControllerTest {
         @Test
         void findAllMissions_shouldConvertMissionsToListOfResponseDto() {
             Mockito.when(missionService.findAll()).thenReturn(missionsFound);
-            Mockito.when(modelMapperService.map(Mockito.any(Mission.class), Mockito.any())).thenReturn(new MissionDto.Response());
+            Mockito.when(modelMapperService.map(Mockito.any(Mission.class), Mockito.any())).thenReturn(new MissionDto.MissionResponse());
 
             objectToTest.findAllMissions();
 
@@ -64,9 +64,9 @@ class MissionControllerTest {
         @Test
         void findAllMissions_missionFound_returnStatusOkWithListOfMissionsResponseDto() {
             Mockito.when(missionService.findAll()).thenReturn(missionsFound);
-            Mockito.when(modelMapperService.map(Mockito.any(Mission.class), Mockito.any())).thenReturn(new MissionDto.Response());
+            Mockito.when(modelMapperService.map(Mockito.any(Mission.class), Mockito.any())).thenReturn(new MissionDto.MissionResponse());
 
-            ResponseEntity<List<MissionDto.Response>> result = objectToTest.findAllMissions();
+            ResponseEntity<List<MissionDto.MissionResponse>> result = objectToTest.findAllMissions();
 
             Assertions.assertThat(result.getStatusCode()).isEqualTo(HttpStatus.OK);
             Assertions.assertThat(Objects.requireNonNull(result.getBody()).size()).isEqualTo(missionsFound.size());
@@ -77,7 +77,7 @@ class MissionControllerTest {
     class getMissionByIdTest {
         private final Long missionIdToFind = 1L;
         private final Mission missionFound = new Mission();
-        private final MissionDto.Response missionResponseDto = new MissionDto.Response();
+        private final MissionDto.MissionResponse missionResponseDto = new MissionDto.MissionResponse();
 
         @Test
         void getMissionById_shouldCallServiceLayer() {
@@ -100,33 +100,33 @@ class MissionControllerTest {
         @Test
         void getMissionById_shouldConvertMissionToResponseDto() {
             Mockito.when(missionService.findById(missionIdToFind)).thenReturn(Optional.of(missionFound));
-            Mockito.when(modelMapperService.map(missionFound, MissionDto.Response.class)).thenReturn(missionResponseDto);
+            Mockito.when(modelMapperService.map(missionFound, MissionDto.MissionResponse.class)).thenReturn(missionResponseDto);
 
             objectToTest.getMissionById(missionIdToFind);
 
-            Mockito.verify(modelMapperService).map(missionFound, MissionDto.Response.class);
+            Mockito.verify(modelMapperService).map(missionFound, MissionDto.MissionResponse.class);
         }
 
         @Test
         void getMissionById_missionFound_returnStatusOkAndMissionResponseDto() {
             Mockito.when(missionService.findById(missionIdToFind)).thenReturn(Optional.of(missionFound));
-            Mockito.when(modelMapperService.map(missionFound, MissionDto.Response.class)).thenReturn(missionResponseDto);
+            Mockito.when(modelMapperService.map(missionFound, MissionDto.MissionResponse.class)).thenReturn(missionResponseDto);
 
-            ResponseEntity<MissionDto.Response> result = objectToTest.getMissionById(missionIdToFind);
+            ResponseEntity<MissionDto.MissionResponse> result = objectToTest.getMissionById(missionIdToFind);
 
             Assertions.assertThat(result.getStatusCode())
                     .isEqualTo(HttpStatus.OK);
             Assertions.assertThat(result.getBody())
                     .isEqualTo(missionResponseDto);
-            Assertions.assertThat(result.getBody()).isInstanceOf(MissionDto.Response.class);
+            Assertions.assertThat(result.getBody()).isInstanceOf(MissionDto.MissionResponse.class);
         }
     }
 
     @Nested
     class createNewMissionTest {
-        private final MissionDto.PostRequest missionToSave = MissionDtoMother.postRequestSample().build();
+        private final MissionDto.MissionPostRequest missionToSave = MissionDtoMother.postRequestSample().build();
         private final Mission newMission = new Mission();
-        private final MissionDto.Response missionResponseDto = new MissionDto.Response();
+        private final MissionDto.MissionResponse missionResponseDto = new MissionDto.MissionResponse();
 
         @Test
         void createNewMission_shouldCallServiceLayer() {
@@ -140,34 +140,34 @@ class MissionControllerTest {
         @Test
         void createNewMission_shouldConvertMissionToResponseDto() {
             Mockito.when(missionService.create(missionToSave)).thenReturn(newMission);
-            Mockito.when(modelMapperService.map(newMission, MissionDto.Response.class)).thenReturn(missionResponseDto);
+            Mockito.when(modelMapperService.map(newMission, MissionDto.MissionResponse.class)).thenReturn(missionResponseDto);
 
             objectToTest.createNewMission(missionToSave);
 
-            Mockito.verify(modelMapperService).map(newMission, MissionDto.Response.class);
+            Mockito.verify(modelMapperService).map(newMission, MissionDto.MissionResponse.class);
         }
 
         @Test
         void createNewMission_missionCreated_returnStatusCreatedAndMissionResponseDto() {
             Mockito.when(missionService.create(missionToSave)).thenReturn(newMission);
-            Mockito.when(modelMapperService.map(newMission, MissionDto.Response.class)).thenReturn(missionResponseDto);
+            Mockito.when(modelMapperService.map(newMission, MissionDto.MissionResponse.class)).thenReturn(missionResponseDto);
 
-            ResponseEntity<MissionDto.Response> result = objectToTest.createNewMission(missionToSave);
+            ResponseEntity<MissionDto.MissionResponse> result = objectToTest.createNewMission(missionToSave);
 
             Assertions.assertThat(result.getStatusCode())
                     .isEqualTo(HttpStatus.CREATED);
             Assertions.assertThat(result.getBody())
                     .isEqualTo(missionResponseDto);
-            Assertions.assertThat(result.getBody()).isInstanceOf(MissionDto.Response.class);
+            Assertions.assertThat(result.getBody()).isInstanceOf(MissionDto.MissionResponse.class);
         }
     }
 
     @Nested
     class updateMissionTest {
         private final Long missionId = 1L;
-        private final MissionDto.PostRequest missionToUpdate = MissionDtoMother.postRequestSample().build();
+        private final MissionDto.MissionPostRequest missionToUpdate = MissionDtoMother.postRequestSample().build();
         private final Mission updateMission = new Mission();
-        private final MissionDto.Response missionResponseDto = new MissionDto.Response();
+        private final MissionDto.MissionResponse missionResponseDto = new MissionDto.MissionResponse();
 
         @Test
         void updateMissionTest_shouldCallServiceLayer() {
@@ -182,29 +182,29 @@ class MissionControllerTest {
         void updateMissionTest_shouldConvertMissionToResponseDto() {
             Mockito.when(missionService.update(missionId, missionToUpdate))
                     .thenReturn(updateMission);
-            Mockito.when(modelMapperService.map(updateMission, MissionDto.Response.class))
+            Mockito.when(modelMapperService.map(updateMission, MissionDto.MissionResponse.class))
                     .thenReturn(missionResponseDto);
 
             objectToTest.updateMission(missionId, missionToUpdate);
 
-            Mockito.verify(modelMapperService).map(updateMission, MissionDto.Response.class);
+            Mockito.verify(modelMapperService).map(updateMission, MissionDto.MissionResponse.class);
         }
 
         @Test
         void updateMissionTest_missionCreated_returnStatusOkAndMissionResponseDto() {
             Mockito.when(missionService.update(missionId, missionToUpdate))
                     .thenReturn(updateMission);
-            Mockito.when(modelMapperService.map(updateMission, MissionDto.Response.class))
+            Mockito.when(modelMapperService.map(updateMission, MissionDto.MissionResponse.class))
                     .thenReturn(missionResponseDto);
 
-            ResponseEntity<MissionDto.Response> result =
+            ResponseEntity<MissionDto.MissionResponse> result =
                     objectToTest.updateMission(missionId, missionToUpdate);
 
             Assertions.assertThat(result.getStatusCode())
                     .isEqualTo(HttpStatus.OK);
             Assertions.assertThat(result.getBody())
                     .isEqualTo(missionResponseDto);
-            Assertions.assertThat(result.getBody()).isInstanceOf(MissionDto.Response.class);
+            Assertions.assertThat(result.getBody()).isInstanceOf(MissionDto.MissionResponse.class);
         }
     }
 

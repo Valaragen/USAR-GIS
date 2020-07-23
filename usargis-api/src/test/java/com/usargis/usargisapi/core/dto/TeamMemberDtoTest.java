@@ -19,7 +19,7 @@ class TeamMemberDtoTest {
     class TeamMemberPostRequestDto {
         @Test
         void teamMemberPostRequestDto_mapDtoToEntity_shouldMapCorrectly() {
-            TeamMemberDto.PostRequest teamMemberPostRequestDto = TeamMemberDtoMother.postRequestSample().build();
+            TeamMemberDto.TeamMemberPostRequest teamMemberPostRequestDto = TeamMemberDtoMother.postRequestSample().build();
 
             TeamMember teamMember = modelMapperService.map(teamMemberPostRequestDto, TeamMember.class);
 
@@ -38,7 +38,7 @@ class TeamMemberDtoTest {
             teamMember.getTeam().setId(2L);
             teamMember.getUserInfo().setId("test");
 
-            TeamMemberDto.Response teamMemberResponseDto = modelMapperService.map(teamMember, TeamMemberDto.Response.class);
+            TeamMemberDto.TeamMemberResponse teamMemberResponseDto = modelMapperService.map(teamMember, TeamMemberDto.TeamMemberResponse.class);
 
             Assertions.assertThat(teamMemberResponseDto.getId()).isEqualTo(teamMember.getId());
             Assertions.assertThat(teamMemberResponseDto.getTeamId()).isEqualTo(teamMember.getTeam().getId());

@@ -31,7 +31,7 @@ public class NotificationController implements ApiRestController {
     }
 
     @GetMapping(Constant.NOTIFICATIONS_PATH)
-    public ResponseEntity<List<NotificationDto.Response>> findAllNotifications() {
+    public ResponseEntity<List<NotificationDto.NotificationResponse>> findAllNotifications() {
         List<Notification> notifications = notificationService.findAll();
         if (notifications.isEmpty()) {
             throw new NotFoundException(ErrorConstant.NO_NOTIFICATION_FOUND);
@@ -40,20 +40,20 @@ public class NotificationController implements ApiRestController {
     }
 
     @GetMapping(Constant.NOTIFICATIONS_PATH + Constant.SLASH_ID_PATH)
-    public ResponseEntity<NotificationDto.Response> getNotificationById(@PathVariable Long id) {
+    public ResponseEntity<NotificationDto.NotificationResponse> getNotificationById(@PathVariable Long id) {
         Optional<Notification> notificationOptional = notificationService.findById(id);
         Notification notification = notificationOptional.orElseThrow(() -> new NotFoundException(MessageFormat.format(ErrorConstant.NO_NOTIFICATION_FOUND_FOR_ID, id)));
         return new ResponseEntity<>(convertToResponseDto(notification), HttpStatus.OK);
     }
 
     @PostMapping(Constant.NOTIFICATIONS_PATH)
-    public ResponseEntity<NotificationDto.Response> createNewNotification(@RequestBody @Valid NotificationDto.PostRequest notificationCreateDto) {
+    public ResponseEntity<NotificationDto.NotificationResponse> createNewNotification(@RequestBody @Valid NotificationDto.NotificationPostRequest notificationCreateDto) {
         Notification notification = notificationService.create(notificationCreateDto);
         return new ResponseEntity<>(convertToResponseDto(notification), HttpStatus.CREATED);
     }
 
     @PutMapping(Constant.NOTIFICATIONS_PATH + Constant.SLASH_ID_PATH)
-    public ResponseEntity<NotificationDto.Response> updateNotification(@PathVariable Long id, @RequestBody @Valid NotificationDto.PostRequest updateDto) {
+    public ResponseEntity<NotificationDto.NotificationResponse> updateNotification(@PathVariable Long id, @RequestBody @Valid NotificationDto.NotificationPostRequest updateDto) {
         Notification notification = notificationService.update(id, updateDto);
         return new ResponseEntity<>(convertToResponseDto(notification), HttpStatus.OK);
     }
@@ -64,7 +64,7 @@ public class NotificationController implements ApiRestController {
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
-    private NotificationDto.Response convertToResponseDto(Notification notification) {
-        return modelMapperService.map(notification, NotificationDto.Response.class);
+    private NotificationDto.NotificationResponse convertToResponseDto(Notification notification) {
+        return modelMapperService.map(notification, NotificationDto.NotificationResponse.class);
     }
 }

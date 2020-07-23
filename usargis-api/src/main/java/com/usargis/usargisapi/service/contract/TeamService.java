@@ -5,7 +5,7 @@ import com.usargis.usargisapi.core.model.Team;
 import com.usargis.usargisapi.service.contract.common.CRUDService;
 
 public interface TeamService extends CRUDService<Team, Long> {
-    Team create(TeamDto.PostRequest createDto);
+    Team create(TeamDto.TeamPostRequest createDto);
 
-    Team update(Long id, TeamDto.PostRequest updateDto);
+    Team update(Long id, TeamDto.TeamPostRequest updateDto);
 }

@@ -90,7 +90,7 @@ class TeamMemberServiceImplTest {
 
     @Nested
     class createTest {
-        private TeamMemberDto.PostRequest teamMemberPostRequestDto = TeamMemberDtoMother.postRequestSample().build();
+        private TeamMemberDto.TeamMemberPostRequest teamMemberPostRequestDto = TeamMemberDtoMother.postRequestSample().build();
         private UserInfo userInfoToLink = UserInfoMother.sampleAuthor().build();
         private Team teamToLink = TeamMother.sample().build();
         private TeamMember savedTeamMember = TeamMemberMother.sample().build();
@@ -158,7 +158,7 @@ class TeamMemberServiceImplTest {
     class updateTest {
         private Long givenId = 1L;
         private TeamMember teamMemberToUpdate = TeamMemberMother.sample().build();
-        private TeamMemberDto.PostRequest teamMemberUpdateDto = TeamMemberDtoMother.postRequestSample().build();
+        private TeamMemberDto.TeamMemberPostRequest teamMemberUpdateDto = TeamMemberDtoMother.postRequestSample().build();
         private TeamMember savedTeamMember = TeamMemberMother.sample().build();
 
         @BeforeEach

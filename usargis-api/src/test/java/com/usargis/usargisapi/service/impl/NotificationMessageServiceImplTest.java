@@ -86,7 +86,7 @@ class NotificationMessageServiceImplTest {
 
     @Nested
     class createTest {
-        private NotificationMessageDto.PostRequest notificationMessageCreateDto = NotificationMessageDtoMother.postRequestSample().build();
+        private NotificationMessageDto.NotificationMessagePostRequest notificationMessageCreateDto = NotificationMessageDtoMother.postRequestSample().build();
         private Notification notificationToLink = NotificationMother.sampleSent().build();
         private NotificationMessage savedNotificationMessage = NotificationMessageMother.sample().build();
 
@@ -141,7 +141,7 @@ class NotificationMessageServiceImplTest {
     class updateTest {
         private Long givenId = 1L;
         private NotificationMessage notificationMessageToUpdate = NotificationMessageMother.sample().build();
-        private NotificationMessageDto.PostRequest notificationMessageUpdateDto = NotificationMessageDtoMother.postRequestSample().build();
+        private NotificationMessageDto.NotificationMessagePostRequest notificationMessageUpdateDto = NotificationMessageDtoMother.postRequestSample().build();
         private NotificationMessage savedNotificationMessage = NotificationMessageMother.sample().build();
 
         @BeforeEach

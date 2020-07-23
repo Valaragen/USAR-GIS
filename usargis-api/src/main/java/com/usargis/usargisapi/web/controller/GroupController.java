@@ -31,7 +31,7 @@ public class GroupController implements ApiRestController {
     }
 
     @GetMapping(Constant.GROUPS_PATH)
-    public ResponseEntity<List<GroupDto.Response>> findAllGroups() {
+    public ResponseEntity<List<GroupDto.GroupResponse>> findAllGroups() {
         List<Group> groups = groupService.findAll();
         if (groups.isEmpty()) {
             throw new NotFoundException(ErrorConstant.NO_GROUP_FOUND);
@@ -40,20 +40,20 @@ public class GroupController implements ApiRestController {
     }
 
     @GetMapping(Constant.GROUPS_PATH + Constant.SLASH_ID_PATH)
-    public ResponseEntity<GroupDto.Response> getGroupById(@PathVariable Long id) {
+    public ResponseEntity<GroupDto.GroupResponse> getGroupById(@PathVariable Long id) {
         Optional<Group> groupOptional = groupService.findById(id);
         Group group = groupOptional.orElseThrow(() -> new NotFoundException(MessageFormat.format(ErrorConstant.NO_GROUP_FOUND_FOR_ID, id)));
         return new ResponseEntity<>(convertToResponseDto(group), HttpStatus.OK);
     }
 
     @PostMapping(Constant.GROUPS_PATH)
-    public ResponseEntity<GroupDto.Response> createNewGroup(@RequestBody @Valid GroupDto.PostRequest groupCreateDto) {
+    public ResponseEntity<GroupDto.GroupResponse> createNewGroup(@RequestBody @Valid GroupDto.GroupPostRequest groupCreateDto) {
         Group group = groupService.create(groupCreateDto);
         return new ResponseEntity<>(convertToResponseDto(group), HttpStatus.CREATED);
     }
 
     @PutMapping(Constant.GROUPS_PATH + Constant.SLASH_ID_PATH)
-    public ResponseEntity<GroupDto.Response> updateGroup(@PathVariable Long id, @RequestBody @Valid GroupDto.PostRequest updateDto) {
+    public ResponseEntity<GroupDto.GroupResponse> updateGroup(@PathVariable Long id, @RequestBody @Valid GroupDto.GroupPostRequest updateDto) {
         Group group = groupService.update(id, updateDto);
         return new ResponseEntity<>(convertToResponseDto(group), HttpStatus.OK);
     }
@@ -64,7 +64,7 @@ public class GroupController implements ApiRestController {
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
-    private GroupDto.Response convertToResponseDto(Group group) {
-        return modelMapperService.map(group, GroupDto.Response.class);
+    private GroupDto.GroupResponse convertToResponseDto(Group group) {
+        return modelMapperService.map(group, GroupDto.GroupResponse.class);
     }
 }

@@ -9,7 +9,7 @@ import java.util.Optional;
 public interface UserInfoService extends CRUDService<UserInfo, String> {
     Optional<UserInfo> findByUsername(String username);
 
-    UserInfo create(UserInfoDto.PostRequest createDto);
+    UserInfo create(UserInfoDto.UserInfoPostRequest createDto);
 
-    UserInfo update(String id, UserInfoDto.PostRequest updateDto);
+    UserInfo update(String id, UserInfoDto.UserInfoPostRequest updateDto);
 }

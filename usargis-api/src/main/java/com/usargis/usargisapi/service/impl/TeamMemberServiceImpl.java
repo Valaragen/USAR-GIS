@@ -54,7 +54,7 @@ public class TeamMemberServiceImpl implements TeamMemberService {
     }
 
     @Override
-    public TeamMember create(TeamMemberDto.PostRequest createDto) {
+    public TeamMember create(TeamMemberDto.TeamMemberPostRequest createDto) {
         TeamMember teamMemberToCreate = new TeamMember();
         teamMemberToCreate.setUserInfo(
                 userInfoService.findByUsername(createDto.getUserInfoUsername())
@@ -73,7 +73,7 @@ public class TeamMemberServiceImpl implements TeamMemberService {
     }
 
     @Override
-    public TeamMember update(Long id, TeamMemberDto.PostRequest updateDto) {
+    public TeamMember update(Long id, TeamMemberDto.TeamMemberPostRequest updateDto) {
         TeamMember teamMemberToUpdate = findById(id).orElseThrow(() -> new NotFoundException(
                         MessageFormat.format(ErrorConstant.NO_TEAM_MEMBER_FOUND_FOR_ID, id)
                 )

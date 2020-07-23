@@ -61,7 +61,7 @@ public class AvailabilityServiceImpl implements AvailabilityService {
     }
 
     @Override
-    public Availability create(AvailabilityDto.Create createDto) {
+    public Availability create(AvailabilityDto.AvailabilityCreate createDto) {
         Availability availabilityToCreate = new Availability();
         availabilityToCreate.setUserInfo(
                 userInfoService.findByUsername(createDto.getUserInfoUsername())
@@ -80,7 +80,7 @@ public class AvailabilityServiceImpl implements AvailabilityService {
     }
 
     @Override
-    public Availability update(Long id, AvailabilityDto.Update updateDto) {
+    public Availability update(Long id, AvailabilityDto.AvailabilityUpdate updateDto) {
         Availability availabilityToUpdate = findById(id).orElseThrow(() -> new NotFoundException(
                 MessageFormat.format(ErrorConstant.NO_AVAILABILITY_FOUND_FOR_ID, id)
         ));

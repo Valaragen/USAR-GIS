@@ -81,7 +81,7 @@ class GroupServiceImplTest {
 
     @Nested
     class createTest {
-        private GroupDto.PostRequest groupPostRequestDto = GroupDtoMother.postRequestSample().build();
+        private GroupDto.GroupPostRequest groupPostRequestDto = GroupDtoMother.postRequestSample().build();
         private Group savedGroup = GroupMother.sample().build();
 
         @BeforeEach
@@ -115,7 +115,7 @@ class GroupServiceImplTest {
     class updateTest {
         private Long givenId = 1L;
         private Group groupToUpdate = GroupMother.sample().build();
-        private GroupDto.PostRequest groupUpdateDto = GroupDtoMother.postRequestSample().build();
+        private GroupDto.GroupPostRequest groupUpdateDto = GroupDtoMother.postRequestSample().build();
         private Group savedGroup = GroupMother.sample().build();
 
         @BeforeEach

@@ -11,14 +11,14 @@ public interface InscriptionDto {
 
     @Builder
     @Value
-    class PostRequest implements InscriptionDto {
+    class InscriptionPostRequest implements InscriptionDto {
         //Fields specific to this DTO
         private Long eventId;
         private String userInfoUsername;
     }
 
     @Data
-    class Response implements InscriptionDto {
+    class InscriptionResponse implements InscriptionDto {
         //Fields specific to this DTO
         private Long id;
         private Long eventId;

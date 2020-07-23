@@ -19,7 +19,7 @@ class UserInfoDtoTest {
     class UserInfoPostRequestDto {
         @Test
         void userInfoPostRequestDto_mapDtoToEntity_shouldMapCorrectly() {
-            UserInfoDto.PostRequest userInfoPostRequestDto = UserInfoDtoMother.postRequestSample().build();
+            UserInfoDto.UserInfoPostRequest userInfoPostRequestDto = UserInfoDtoMother.postRequestSample().build();
 
             UserInfo userInfo = modelMapperService.map(userInfoPostRequestDto, UserInfo.class);
 
@@ -42,7 +42,7 @@ class UserInfoDtoTest {
             UserInfo userInfo = UserInfoMother.sample().build();
             userInfo.setId("test");
 
-            UserInfoDto.Response userInfoResponseDto = modelMapperService.map(userInfo, UserInfoDto.Response.class);
+            UserInfoDto.UserInfoResponse userInfoResponseDto = modelMapperService.map(userInfo, UserInfoDto.UserInfoResponse.class);
 
             Assertions.assertThat(userInfo.getId()).isEqualTo(userInfoResponseDto.getId());
             Assertions.assertThat(userInfo.getUsername()).isEqualTo(userInfoResponseDto.getUsername());

@@ -55,7 +55,7 @@ class TeamMemberControllerTest {
         @Test
         void findAllTeamMembers_shouldConvertTeamMembersToListOfResponseDto() {
             Mockito.when(teamMemberService.findAll()).thenReturn(teamMembersFound);
-            Mockito.when(modelMapperService.map(Mockito.any(TeamMember.class), Mockito.any())).thenReturn(new TeamMemberDto.Response());
+            Mockito.when(modelMapperService.map(Mockito.any(TeamMember.class), Mockito.any())).thenReturn(new TeamMemberDto.TeamMemberResponse());
 
             objectToTest.findAllTeamMembers();
 
@@ -65,9 +65,9 @@ class TeamMemberControllerTest {
         @Test
         void findAllTeamMembers_teamMemberFound_returnStatusOkWithListOfTeamMembersResponseDto() {
             Mockito.when(teamMemberService.findAll()).thenReturn(teamMembersFound);
-            Mockito.when(modelMapperService.map(Mockito.any(TeamMember.class), Mockito.any())).thenReturn(new TeamMemberDto.Response());
+            Mockito.when(modelMapperService.map(Mockito.any(TeamMember.class), Mockito.any())).thenReturn(new TeamMemberDto.TeamMemberResponse());
 
-            ResponseEntity<List<TeamMemberDto.Response>> result = objectToTest.findAllTeamMembers();
+            ResponseEntity<List<TeamMemberDto.TeamMemberResponse>> result = objectToTest.findAllTeamMembers();
 
             Assertions.assertThat(result.getStatusCode()).isEqualTo(HttpStatus.OK);
             Assertions.assertThat(Objects.requireNonNull(result.getBody()).size()).isEqualTo(teamMembersFound.size());
@@ -78,7 +78,7 @@ class TeamMemberControllerTest {
     class getTeamMemberByIdTest {
         private final Long teamMemberIdToFind = 1L;
         private final TeamMember teamMemberFound = new TeamMember();
-        private final TeamMemberDto.Response teamMemberResponseDto = new TeamMemberDto.Response();
+        private final TeamMemberDto.TeamMemberResponse teamMemberResponseDto = new TeamMemberDto.TeamMemberResponse();
 
         @Test
         void getTeamMemberById_shouldCallServiceLayer() {
@@ -101,33 +101,33 @@ class TeamMemberControllerTest {
         @Test
         void getTeamMemberById_shouldConvertTeamMemberToResponseDto() {
             Mockito.when(teamMemberService.findById(teamMemberIdToFind)).thenReturn(Optional.of(teamMemberFound));
-            Mockito.when(modelMapperService.map(teamMemberFound, TeamMemberDto.Response.class)).thenReturn(teamMemberResponseDto);
+            Mockito.when(modelMapperService.map(teamMemberFound, TeamMemberDto.TeamMemberResponse.class)).thenReturn(teamMemberResponseDto);
 
             objectToTest.getTeamMemberById(teamMemberIdToFind);
 
-            Mockito.verify(modelMapperService).map(teamMemberFound, TeamMemberDto.Response.class);
+            Mockito.verify(modelMapperService).map(teamMemberFound, TeamMemberDto.TeamMemberResponse.class);
         }
 
         @Test
         void getTeamMemberById_teamMemberFound_returnStatusOkAndTeamMemberResponseDto() {
             Mockito.when(teamMemberService.findById(teamMemberIdToFind)).thenReturn(Optional.of(teamMemberFound));
-            Mockito.when(modelMapperService.map(teamMemberFound, TeamMemberDto.Response.class)).thenReturn(teamMemberResponseDto);
+            Mockito.when(modelMapperService.map(teamMemberFound, TeamMemberDto.TeamMemberResponse.class)).thenReturn(teamMemberResponseDto);
 
-            ResponseEntity<TeamMemberDto.Response> result = objectToTest.getTeamMemberById(teamMemberIdToFind);
+            ResponseEntity<TeamMemberDto.TeamMemberResponse> result = objectToTest.getTeamMemberById(teamMemberIdToFind);
 
             Assertions.assertThat(result.getStatusCode())
                     .isEqualTo(HttpStatus.OK);
             Assertions.assertThat(result.getBody())
                     .isEqualTo(teamMemberResponseDto);
-            Assertions.assertThat(result.getBody()).isInstanceOf(TeamMemberDto.Response.class);
+            Assertions.assertThat(result.getBody()).isInstanceOf(TeamMemberDto.TeamMemberResponse.class);
         }
     }
 
     @Nested
     class createNewTeamMemberTest {
-        private final TeamMemberDto.PostRequest teamMemberToSave = TeamMemberDtoMother.postRequestSample().build();
+        private final TeamMemberDto.TeamMemberPostRequest teamMemberToSave = TeamMemberDtoMother.postRequestSample().build();
         private final TeamMember newTeamMember = new TeamMember();
-        private final TeamMemberDto.Response teamMemberResponseDto = new TeamMemberDto.Response();
+        private final TeamMemberDto.TeamMemberResponse teamMemberResponseDto = new TeamMemberDto.TeamMemberResponse();
 
         @Test
         void createNewTeamMember_shouldCallServiceLayer() {
@@ -141,34 +141,34 @@ class TeamMemberControllerTest {
         @Test
         void createNewTeamMember_shouldConvertTeamMemberToResponseDto() {
             Mockito.when(teamMemberService.create(teamMemberToSave)).thenReturn(newTeamMember);
-            Mockito.when(modelMapperService.map(newTeamMember, TeamMemberDto.Response.class)).thenReturn(teamMemberResponseDto);
+            Mockito.when(modelMapperService.map(newTeamMember, TeamMemberDto.TeamMemberResponse.class)).thenReturn(teamMemberResponseDto);
 
             objectToTest.createNewTeamMember(teamMemberToSave);
 
-            Mockito.verify(modelMapperService).map(newTeamMember, TeamMemberDto.Response.class);
+            Mockito.verify(modelMapperService).map(newTeamMember, TeamMemberDto.TeamMemberResponse.class);
         }
 
         @Test
         void createNewTeamMember_teamMemberCreated_returnStatusCreatedAndTeamMemberResponseDto() {
             Mockito.when(teamMemberService.create(teamMemberToSave)).thenReturn(newTeamMember);
-            Mockito.when(modelMapperService.map(newTeamMember, TeamMemberDto.Response.class)).thenReturn(teamMemberResponseDto);
+            Mockito.when(modelMapperService.map(newTeamMember, TeamMemberDto.TeamMemberResponse.class)).thenReturn(teamMemberResponseDto);
 
-            ResponseEntity<TeamMemberDto.Response> result = objectToTest.createNewTeamMember(teamMemberToSave);
+            ResponseEntity<TeamMemberDto.TeamMemberResponse> result = objectToTest.createNewTeamMember(teamMemberToSave);
 
             Assertions.assertThat(result.getStatusCode())
                     .isEqualTo(HttpStatus.CREATED);
             Assertions.assertThat(result.getBody())
                     .isEqualTo(teamMemberResponseDto);
-            Assertions.assertThat(result.getBody()).isInstanceOf(TeamMemberDto.Response.class);
+            Assertions.assertThat(result.getBody()).isInstanceOf(TeamMemberDto.TeamMemberResponse.class);
         }
     }
 
     @Nested
     class updateTeamMemberTest {
         private final Long teamMemberId = 1L;
-        private final TeamMemberDto.PostRequest teamMemberToUpdate = TeamMemberDtoMother.postRequestSample().build();
+        private final TeamMemberDto.TeamMemberPostRequest teamMemberToUpdate = TeamMemberDtoMother.postRequestSample().build();
         private final TeamMember updateTeamMember = new TeamMember();
-        private final TeamMemberDto.Response teamMemberResponseDto = new TeamMemberDto.Response();
+        private final TeamMemberDto.TeamMemberResponse teamMemberResponseDto = new TeamMemberDto.TeamMemberResponse();
 
         @Test
         void updateTeamMemberTest_shouldCallServiceLayer() {
@@ -183,29 +183,29 @@ class TeamMemberControllerTest {
         void updateTeamMemberTest_shouldConvertTeamMemberToResponseDto() {
             Mockito.when(teamMemberService.update(teamMemberId, teamMemberToUpdate))
                     .thenReturn(updateTeamMember);
-            Mockito.when(modelMapperService.map(updateTeamMember, TeamMemberDto.Response.class))
+            Mockito.when(modelMapperService.map(updateTeamMember, TeamMemberDto.TeamMemberResponse.class))
                     .thenReturn(teamMemberResponseDto);
 
             objectToTest.updateTeamMember(teamMemberId, teamMemberToUpdate);
 
-            Mockito.verify(modelMapperService).map(updateTeamMember, TeamMemberDto.Response.class);
+            Mockito.verify(modelMapperService).map(updateTeamMember, TeamMemberDto.TeamMemberResponse.class);
         }
 
         @Test
         void updateTeamMemberTest_teamMemberCreated_returnStatusOkAndTeamMemberResponseDto() {
             Mockito.when(teamMemberService.update(teamMemberId, teamMemberToUpdate))
                     .thenReturn(updateTeamMember);
-            Mockito.when(modelMapperService.map(updateTeamMember, TeamMemberDto.Response.class))
+            Mockito.when(modelMapperService.map(updateTeamMember, TeamMemberDto.TeamMemberResponse.class))
                     .thenReturn(teamMemberResponseDto);
 
-            ResponseEntity<TeamMemberDto.Response> result =
+            ResponseEntity<TeamMemberDto.TeamMemberResponse> result =
                     objectToTest.updateTeamMember(teamMemberId, teamMemberToUpdate);
 
             Assertions.assertThat(result.getStatusCode())
                     .isEqualTo(HttpStatus.OK);
             Assertions.assertThat(result.getBody())
                     .isEqualTo(teamMemberResponseDto);
-            Assertions.assertThat(result.getBody()).isInstanceOf(TeamMemberDto.Response.class);
+            Assertions.assertThat(result.getBody()).isInstanceOf(TeamMemberDto.TeamMemberResponse.class);
         }
     }
 

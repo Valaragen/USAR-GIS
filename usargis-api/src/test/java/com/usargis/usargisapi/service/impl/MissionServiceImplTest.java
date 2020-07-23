@@ -88,7 +88,7 @@ class MissionServiceImplTest {
 
     @Nested
     class createTest {
-        private MissionDto.PostRequest missionPostRequestDto = MissionDtoMother.postRequestSample().build();
+        private MissionDto.MissionPostRequest missionPostRequestDto = MissionDtoMother.postRequestSample().build();
         private UserInfo authorToLink = UserInfoMother.sampleAuthor().build();
         private String userNameFromToken = authorToLink.getUsername();
         private Mission savedMission = MissionMother.sampleFinished().build();
@@ -145,7 +145,7 @@ class MissionServiceImplTest {
     class updateTest {
         private Long givenId = 1L;
         private Mission missionToUpdate = MissionMother.sampleFinished().build();
-        private MissionDto.PostRequest missionUpdateDto = MissionDtoMother.postRequestSample().build();
+        private MissionDto.MissionPostRequest missionUpdateDto = MissionDtoMother.postRequestSample().build();
         private Mission savedMission = MissionMother.sampleFinished().build();
 
         @BeforeEach

@@ -19,7 +19,7 @@ class MissionDtoTest {
     class MissionPostRequestDto {
         @Test
         void missionPostRequestDto_mapDtoToEntity_shouldMapCorrectly() {
-            MissionDto.PostRequest missionPostRequestDto = MissionDtoMother.postRequestSample().build();
+            MissionDto.MissionPostRequest missionPostRequestDto = MissionDtoMother.postRequestSample().build();
 
             Mission mission = modelMapperService.map(missionPostRequestDto, Mission.class);
 
@@ -47,7 +47,7 @@ class MissionDtoTest {
             mission.setId(1L);
             mission.getAuthor().setId("test");
 
-            MissionDto.Response missionResponseDto = modelMapperService.map(mission, MissionDto.Response.class);
+            MissionDto.MissionResponse missionResponseDto = modelMapperService.map(mission, MissionDto.MissionResponse.class);
 
             Assertions.assertThat(missionResponseDto.getId()).isEqualTo(mission.getId());
             Assertions.assertThat(missionResponseDto.getName()).isEqualTo(mission.getName());

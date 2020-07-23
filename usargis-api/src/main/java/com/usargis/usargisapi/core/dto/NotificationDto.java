@@ -18,7 +18,7 @@ public interface NotificationDto {
 
     @Builder
     @Value
-    class PostRequest implements NotificationDto, SendingDate {
+    class NotificationPostRequest implements NotificationDto, SendingDate {
         //Fields inheriting from validation
         private LocalDateTime sendingDate;
         private Long missionId;
@@ -26,7 +26,7 @@ public interface NotificationDto {
     }
 
     @Data
-    class Response implements NotificationDto, SendingDate {
+    class NotificationResponse implements NotificationDto, SendingDate {
         //Fields inheriting from validation
         private LocalDateTime sendingDate;
 

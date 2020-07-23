@@ -19,7 +19,7 @@ class EventDtoTest {
     class EventPostRequestDto {
         @Test
         void eventPostRequestDto_mapDtoToEntity_shouldMapCorrectly() {
-            EventDto.PostRequest eventPostRequestDto = EventDtoMother.postRequestSample().build();
+            EventDto.EventPostRequest eventPostRequestDto = EventDtoMother.postRequestSample().build();
 
             Event event = modelMapperService.map(eventPostRequestDto, Event.class);
 
@@ -50,7 +50,7 @@ class EventDtoTest {
             event.setId(1L);
             event.getAuthor().setId("test");
 
-            EventDto.Response eventResponseDto = modelMapperService.map(event, EventDto.Response.class);
+            EventDto.EventResponse eventResponseDto = modelMapperService.map(event, EventDto.EventResponse.class);
 
             Assertions.assertThat(eventResponseDto.getId()).isEqualTo(event.getId());
             Assertions.assertThat(eventResponseDto.getName()).isEqualTo(event.getName());

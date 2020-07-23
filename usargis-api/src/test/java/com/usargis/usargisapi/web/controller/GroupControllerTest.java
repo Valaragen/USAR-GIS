@@ -54,7 +54,7 @@ class GroupControllerTest {
         @Test
         void findAllGroups_shouldConvertGroupsToListOfResponseDto() {
             Mockito.when(groupService.findAll()).thenReturn(groupsFound);
-            Mockito.when(modelMapperService.map(Mockito.any(Group.class), Mockito.any())).thenReturn(new GroupDto.Response());
+            Mockito.when(modelMapperService.map(Mockito.any(Group.class), Mockito.any())).thenReturn(new GroupDto.GroupResponse());
 
             objectToTest.findAllGroups();
 
@@ -64,9 +64,9 @@ class GroupControllerTest {
         @Test
         void findAllGroups_groupFound_returnStatusOkWithListOfGroupsResponseDto() {
             Mockito.when(groupService.findAll()).thenReturn(groupsFound);
-            Mockito.when(modelMapperService.map(Mockito.any(Group.class), Mockito.any())).thenReturn(new GroupDto.Response());
+            Mockito.when(modelMapperService.map(Mockito.any(Group.class), Mockito.any())).thenReturn(new GroupDto.GroupResponse());
 
-            ResponseEntity<List<GroupDto.Response>> result = objectToTest.findAllGroups();
+            ResponseEntity<List<GroupDto.GroupResponse>> result = objectToTest.findAllGroups();
 
             Assertions.assertThat(result.getStatusCode()).isEqualTo(HttpStatus.OK);
             Assertions.assertThat(Objects.requireNonNull(result.getBody()).size()).isEqualTo(groupsFound.size());
@@ -77,7 +77,7 @@ class GroupControllerTest {
     class getGroupByIdTest {
         private final Long groupIdToFind = 1L;
         private final Group groupFound = new Group();
-        private final GroupDto.Response groupResponseDto = new GroupDto.Response();
+        private final GroupDto.GroupResponse groupResponseDto = new GroupDto.GroupResponse();
 
         @Test
         void getGroupById_shouldCallServiceLayer() {
@@ -100,33 +100,33 @@ class GroupControllerTest {
         @Test
         void getGroupById_shouldConvertGroupToResponseDto() {
             Mockito.when(groupService.findById(groupIdToFind)).thenReturn(Optional.of(groupFound));
-            Mockito.when(modelMapperService.map(groupFound, GroupDto.Response.class)).thenReturn(groupResponseDto);
+            Mockito.when(modelMapperService.map(groupFound, GroupDto.GroupResponse.class)).thenReturn(groupResponseDto);
 
             objectToTest.getGroupById(groupIdToFind);
 
-            Mockito.verify(modelMapperService).map(groupFound, GroupDto.Response.class);
+            Mockito.verify(modelMapperService).map(groupFound, GroupDto.GroupResponse.class);
         }
 
         @Test
         void getGroupById_groupFound_returnStatusOkAndGroupResponseDto() {
             Mockito.when(groupService.findById(groupIdToFind)).thenReturn(Optional.of(groupFound));
-            Mockito.when(modelMapperService.map(groupFound, GroupDto.Response.class)).thenReturn(groupResponseDto);
+            Mockito.when(modelMapperService.map(groupFound, GroupDto.GroupResponse.class)).thenReturn(groupResponseDto);
 
-            ResponseEntity<GroupDto.Response> result = objectToTest.getGroupById(groupIdToFind);
+            ResponseEntity<GroupDto.GroupResponse> result = objectToTest.getGroupById(groupIdToFind);
 
             Assertions.assertThat(result.getStatusCode())
                     .isEqualTo(HttpStatus.OK);
             Assertions.assertThat(result.getBody())
                     .isEqualTo(groupResponseDto);
-            Assertions.assertThat(result.getBody()).isInstanceOf(GroupDto.Response.class);
+            Assertions.assertThat(result.getBody()).isInstanceOf(GroupDto.GroupResponse.class);
         }
     }
 
     @Nested
     class createNewGroupTest {
-        private final GroupDto.PostRequest groupToSave = GroupDtoMother.postRequestSample().build();
+        private final GroupDto.GroupPostRequest groupToSave = GroupDtoMother.postRequestSample().build();
         private final Group newGroup = new Group();
-        private final GroupDto.Response groupResponseDto = new GroupDto.Response();
+        private final GroupDto.GroupResponse groupResponseDto = new GroupDto.GroupResponse();
 
         @Test
         void createNewGroup_shouldCallServiceLayer() {
@@ -140,34 +140,34 @@ class GroupControllerTest {
         @Test
         void createNewGroup_shouldConvertGroupToResponseDto() {
             Mockito.when(groupService.create(groupToSave)).thenReturn(newGroup);
-            Mockito.when(modelMapperService.map(newGroup, GroupDto.Response.class)).thenReturn(groupResponseDto);
+            Mockito.when(modelMapperService.map(newGroup, GroupDto.GroupResponse.class)).thenReturn(groupResponseDto);
 
             objectToTest.createNewGroup(groupToSave);
 
-            Mockito.verify(modelMapperService).map(newGroup, GroupDto.Response.class);
+            Mockito.verify(modelMapperService).map(newGroup, GroupDto.GroupResponse.class);
         }
 
         @Test
         void createNewGroup_groupCreated_returnStatusCreatedAndGroupResponseDto() {
             Mockito.when(groupService.create(groupToSave)).thenReturn(newGroup);
-            Mockito.when(modelMapperService.map(newGroup, GroupDto.Response.class)).thenReturn(groupResponseDto);
+            Mockito.when(modelMapperService.map(newGroup, GroupDto.GroupResponse.class)).thenReturn(groupResponseDto);
 
-            ResponseEntity<GroupDto.Response> result = objectToTest.createNewGroup(groupToSave);
+            ResponseEntity<GroupDto.GroupResponse> result = objectToTest.createNewGroup(groupToSave);
 
             Assertions.assertThat(result.getStatusCode())
                     .isEqualTo(HttpStatus.CREATED);
             Assertions.assertThat(result.getBody())
                     .isEqualTo(groupResponseDto);
-            Assertions.assertThat(result.getBody()).isInstanceOf(GroupDto.Response.class);
+            Assertions.assertThat(result.getBody()).isInstanceOf(GroupDto.GroupResponse.class);
         }
     }
 
     @Nested
     class updateGroupTest {
         private final Long groupId = 1L;
-        private final GroupDto.PostRequest groupToUpdate = GroupDtoMother.postRequestSample().build();
+        private final GroupDto.GroupPostRequest groupToUpdate = GroupDtoMother.postRequestSample().build();
         private final Group updateGroup = new Group();
-        private final GroupDto.Response groupResponseDto = new GroupDto.Response();
+        private final GroupDto.GroupResponse groupResponseDto = new GroupDto.GroupResponse();
 
         @Test
         void updateGroupTest_shouldCallServiceLayer() {
@@ -182,29 +182,29 @@ class GroupControllerTest {
         void updateGroupTest_shouldConvertGroupToResponseDto() {
             Mockito.when(groupService.update(groupId, groupToUpdate))
                     .thenReturn(updateGroup);
-            Mockito.when(modelMapperService.map(updateGroup, GroupDto.Response.class))
+            Mockito.when(modelMapperService.map(updateGroup, GroupDto.GroupResponse.class))
                     .thenReturn(groupResponseDto);
 
             objectToTest.updateGroup(groupId, groupToUpdate);
 
-            Mockito.verify(modelMapperService).map(updateGroup, GroupDto.Response.class);
+            Mockito.verify(modelMapperService).map(updateGroup, GroupDto.GroupResponse.class);
         }
 
         @Test
         void updateGroupTest_groupCreated_returnStatusOkAndGroupResponseDto() {
             Mockito.when(groupService.update(groupId, groupToUpdate))
                     .thenReturn(updateGroup);
-            Mockito.when(modelMapperService.map(updateGroup, GroupDto.Response.class))
+            Mockito.when(modelMapperService.map(updateGroup, GroupDto.GroupResponse.class))
                     .thenReturn(groupResponseDto);
 
-            ResponseEntity<GroupDto.Response> result =
+            ResponseEntity<GroupDto.GroupResponse> result =
                     objectToTest.updateGroup(groupId, groupToUpdate);
 
             Assertions.assertThat(result.getStatusCode())
                     .isEqualTo(HttpStatus.OK);
             Assertions.assertThat(result.getBody())
                     .isEqualTo(groupResponseDto);
-            Assertions.assertThat(result.getBody()).isInstanceOf(GroupDto.Response.class);
+            Assertions.assertThat(result.getBody()).isInstanceOf(GroupDto.GroupResponse.class);
         }
     }
 

@@ -8,7 +8,7 @@ public interface UserInfoDto {
 
     @Builder
     @Value
-    class PostRequest implements UserInfoDto {
+    class UserInfoPostRequest implements UserInfoDto {
         private String username;
         private String email;
         private boolean emailVerified;
@@ -21,7 +21,7 @@ public interface UserInfoDto {
     }
 
     @Data
-    class Response implements UserInfoDto {
+    class UserInfoResponse implements UserInfoDto {
         private String id;
         private String username;
         private String email;

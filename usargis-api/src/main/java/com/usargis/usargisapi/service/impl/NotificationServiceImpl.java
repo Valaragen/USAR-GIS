@@ -56,7 +56,7 @@ public class NotificationServiceImpl implements NotificationService {
     }
 
     @Override
-    public Notification create(NotificationDto.PostRequest createDto) {
+    public Notification create(NotificationDto.NotificationPostRequest createDto) {
         Notification notificationToCreate = new Notification();
         String usernameFromToken = securityService.getUsernameFromToken();
         notificationToCreate.setAuthor(
@@ -86,7 +86,7 @@ public class NotificationServiceImpl implements NotificationService {
     }
 
     @Override
-    public Notification update(Long id, NotificationDto.PostRequest updateDto) {
+    public Notification update(Long id, NotificationDto.NotificationPostRequest updateDto) {
         Notification notificationToUpdate = findById(id).orElseThrow(() -> new NotFoundException(
                         MessageFormat.format(ErrorConstant.NO_NOTIFICATION_FOUND_FOR_ID, id)
                 )

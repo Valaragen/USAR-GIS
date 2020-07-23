@@ -33,7 +33,7 @@ public class UserController implements ApiRestController {
     }
 
     @GetMapping(Constant.USERS_PATH)
-    public ResponseEntity<List<UserInfoDto.Response>> findAllUserInfos() {
+    public ResponseEntity<List<UserInfoDto.UserInfoResponse>> findAllUserInfos() {
         List<UserInfo> userInfos = userInfoService.findAll();
         if (userInfos.isEmpty()) {
             throw new NotFoundException(ErrorConstant.NO_USER_FOUND);
@@ -42,20 +42,20 @@ public class UserController implements ApiRestController {
     }
 
     @GetMapping(Constant.USERS_PATH + Constant.SLASH_ID_PATH)
-    public ResponseEntity<UserInfoDto.Response> getUserInfoById(@PathVariable String id) {
+    public ResponseEntity<UserInfoDto.UserInfoResponse> getUserInfoById(@PathVariable String id) {
         Optional<UserInfo> userInfoOptional = userInfoService.findById(id);
         UserInfo userInfo = userInfoOptional.orElseThrow(() -> new NotFoundException(MessageFormat.format(ErrorConstant.NO_USER_FOUND_FOR_USERNAME, id)));
         return new ResponseEntity<>(convertToResponseDto(userInfo), HttpStatus.OK);
     }
 
     @PostMapping(Constant.USERS_PATH)
-    public ResponseEntity<UserInfoDto.Response> createNewUserInfo(@RequestBody @Valid UserInfoDto.PostRequest userInfoCreateDto) {
+    public ResponseEntity<UserInfoDto.UserInfoResponse> createNewUserInfo(@RequestBody @Valid UserInfoDto.UserInfoPostRequest userInfoCreateDto) {
         UserInfo userInfo = userInfoService.create(userInfoCreateDto);
         return new ResponseEntity<>(convertToResponseDto(userInfo), HttpStatus.CREATED);
     }
 
     @PutMapping(Constant.USERS_PATH + Constant.SLASH_ID_PATH)
-    public ResponseEntity<UserInfoDto.Response> updateUserInfo(@PathVariable String id, @RequestBody @Valid UserInfoDto.PostRequest updateDto) {
+    public ResponseEntity<UserInfoDto.UserInfoResponse> updateUserInfo(@PathVariable String id, @RequestBody @Valid UserInfoDto.UserInfoPostRequest updateDto) {
         UserInfo userInfo = userInfoService.update(id, updateDto);
         return new ResponseEntity<>(convertToResponseDto(userInfo), HttpStatus.OK);
     }
@@ -66,8 +66,8 @@ public class UserController implements ApiRestController {
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
-    private UserInfoDto.Response convertToResponseDto(UserInfo userInfo) {
-        return modelMapperService.map(userInfo, UserInfoDto.Response.class);
+    private UserInfoDto.UserInfoResponse convertToResponseDto(UserInfo userInfo) {
+        return modelMapperService.map(userInfo, UserInfoDto.UserInfoResponse.class);
     }
 
 }

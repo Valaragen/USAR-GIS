@@ -31,7 +31,7 @@ public class TeamMemberController implements ApiRestController {
     }
 
     @GetMapping(Constant.TEAM_MEMBERS_PATH)
-    public ResponseEntity<List<TeamMemberDto.Response>> findAllTeamMembers() {
+    public ResponseEntity<List<TeamMemberDto.TeamMemberResponse>> findAllTeamMembers() {
         List<TeamMember> teamMembers = teamMemberService.findAll();
         if (teamMembers.isEmpty()) {
             throw new NotFoundException(ErrorConstant.NO_TEAM_MEMBER_FOUND);
@@ -40,20 +40,20 @@ public class TeamMemberController implements ApiRestController {
     }
 
     @GetMapping(Constant.TEAM_MEMBERS_PATH + Constant.SLASH_ID_PATH)
-    public ResponseEntity<TeamMemberDto.Response> getTeamMemberById(@PathVariable Long id) {
+    public ResponseEntity<TeamMemberDto.TeamMemberResponse> getTeamMemberById(@PathVariable Long id) {
         Optional<TeamMember> teamMemberOptional = teamMemberService.findById(id);
         TeamMember teamMember = teamMemberOptional.orElseThrow(() -> new NotFoundException(MessageFormat.format(ErrorConstant.NO_TEAM_MEMBER_FOUND_FOR_ID, id)));
         return new ResponseEntity<>(convertToResponseDto(teamMember), HttpStatus.OK);
     }
 
     @PostMapping(Constant.TEAM_MEMBERS_PATH)
-    public ResponseEntity<TeamMemberDto.Response> createNewTeamMember(@RequestBody @Valid TeamMemberDto.PostRequest teamMemberCreateDto) {
+    public ResponseEntity<TeamMemberDto.TeamMemberResponse> createNewTeamMember(@RequestBody @Valid TeamMemberDto.TeamMemberPostRequest teamMemberCreateDto) {
         TeamMember teamMember = teamMemberService.create(teamMemberCreateDto);
         return new ResponseEntity<>(convertToResponseDto(teamMember), HttpStatus.CREATED);
     }
 
     @PutMapping(Constant.TEAM_MEMBERS_PATH + Constant.SLASH_ID_PATH)
-    public ResponseEntity<TeamMemberDto.Response> updateTeamMember(@PathVariable Long id, @RequestBody @Valid TeamMemberDto.PostRequest updateDto) {
+    public ResponseEntity<TeamMemberDto.TeamMemberResponse> updateTeamMember(@PathVariable Long id, @RequestBody @Valid TeamMemberDto.TeamMemberPostRequest updateDto) {
         TeamMember teamMember = teamMemberService.update(id, updateDto);
         return new ResponseEntity<>(convertToResponseDto(teamMember), HttpStatus.OK);
     }
@@ -64,8 +64,8 @@ public class TeamMemberController implements ApiRestController {
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
-    private TeamMemberDto.Response convertToResponseDto(TeamMember teamMember) {
-        return modelMapperService.map(teamMember, TeamMemberDto.Response.class);
+    private TeamMemberDto.TeamMemberResponse convertToResponseDto(TeamMember teamMember) {
+        return modelMapperService.map(teamMember, TeamMemberDto.TeamMemberResponse.class);
     }
 
 }

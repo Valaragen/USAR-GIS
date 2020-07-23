@@ -46,12 +46,12 @@ public class UserInfoServiceImpl implements UserInfoService {
     }
 
     @Override
-    public UserInfo create(UserInfoDto.PostRequest createDto) {
+    public UserInfo create(UserInfoDto.UserInfoPostRequest createDto) {
         return null;
     }
 
     @Override
-    public UserInfo update(String id, UserInfoDto.PostRequest updateDto) {
+    public UserInfo update(String id, UserInfoDto.UserInfoPostRequest updateDto) {
         return null;
     }
 

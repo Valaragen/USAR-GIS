@@ -55,7 +55,7 @@ class NotificationMessageControllerTest {
         @Test
         void findAllNotificationMessages_shouldConvertNotificationMessagesToListOfResponseDto() {
             Mockito.when(notificationMessageService.findAll()).thenReturn(notificationMessagesFound);
-            Mockito.when(modelMapperService.map(Mockito.any(NotificationMessage.class), Mockito.any())).thenReturn(new NotificationMessageDto.Response());
+            Mockito.when(modelMapperService.map(Mockito.any(NotificationMessage.class), Mockito.any())).thenReturn(new NotificationMessageDto.NotificationMessageResponse());
 
             objectToTest.findAllNotificationMessages();
 
@@ -65,9 +65,9 @@ class NotificationMessageControllerTest {
         @Test
         void findAllNotificationMessages_notificationMessageFound_returnStatusOkWithListOfNotificationMessagesResponseDto() {
             Mockito.when(notificationMessageService.findAll()).thenReturn(notificationMessagesFound);
-            Mockito.when(modelMapperService.map(Mockito.any(NotificationMessage.class), Mockito.any())).thenReturn(new NotificationMessageDto.Response());
+            Mockito.when(modelMapperService.map(Mockito.any(NotificationMessage.class), Mockito.any())).thenReturn(new NotificationMessageDto.NotificationMessageResponse());
 
-            ResponseEntity<List<NotificationMessageDto.Response>> result = objectToTest.findAllNotificationMessages();
+            ResponseEntity<List<NotificationMessageDto.NotificationMessageResponse>> result = objectToTest.findAllNotificationMessages();
 
             Assertions.assertThat(result.getStatusCode()).isEqualTo(HttpStatus.OK);
             Assertions.assertThat(Objects.requireNonNull(result.getBody()).size()).isEqualTo(notificationMessagesFound.size());
@@ -78,7 +78,7 @@ class NotificationMessageControllerTest {
     class getNotificationMessageByIdTest {
         private final Long notificationMessageIdToFind = 1L;
         private final NotificationMessage notificationMessageFound = new NotificationMessage();
-        private final NotificationMessageDto.Response notificationMessageResponseDto = new NotificationMessageDto.Response();
+        private final NotificationMessageDto.NotificationMessageResponse notificationMessageResponseDto = new NotificationMessageDto.NotificationMessageResponse();
 
         @Test
         void getNotificationMessageById_shouldCallServiceLayer() {
@@ -101,33 +101,33 @@ class NotificationMessageControllerTest {
         @Test
         void getNotificationMessageById_shouldConvertNotificationMessageToResponseDto() {
             Mockito.when(notificationMessageService.findById(notificationMessageIdToFind)).thenReturn(Optional.of(notificationMessageFound));
-            Mockito.when(modelMapperService.map(notificationMessageFound, NotificationMessageDto.Response.class)).thenReturn(notificationMessageResponseDto);
+            Mockito.when(modelMapperService.map(notificationMessageFound, NotificationMessageDto.NotificationMessageResponse.class)).thenReturn(notificationMessageResponseDto);
 
             objectToTest.getNotificationMessageById(notificationMessageIdToFind);
 
-            Mockito.verify(modelMapperService).map(notificationMessageFound, NotificationMessageDto.Response.class);
+            Mockito.verify(modelMapperService).map(notificationMessageFound, NotificationMessageDto.NotificationMessageResponse.class);
         }
 
         @Test
         void getNotificationMessageById_notificationMessageFound_returnStatusOkAndNotificationMessageResponseDto() {
             Mockito.when(notificationMessageService.findById(notificationMessageIdToFind)).thenReturn(Optional.of(notificationMessageFound));
-            Mockito.when(modelMapperService.map(notificationMessageFound, NotificationMessageDto.Response.class)).thenReturn(notificationMessageResponseDto);
+            Mockito.when(modelMapperService.map(notificationMessageFound, NotificationMessageDto.NotificationMessageResponse.class)).thenReturn(notificationMessageResponseDto);
 
-            ResponseEntity<NotificationMessageDto.Response> result = objectToTest.getNotificationMessageById(notificationMessageIdToFind);
+            ResponseEntity<NotificationMessageDto.NotificationMessageResponse> result = objectToTest.getNotificationMessageById(notificationMessageIdToFind);
 
             Assertions.assertThat(result.getStatusCode())
                     .isEqualTo(HttpStatus.OK);
             Assertions.assertThat(result.getBody())
                     .isEqualTo(notificationMessageResponseDto);
-            Assertions.assertThat(result.getBody()).isInstanceOf(NotificationMessageDto.Response.class);
+            Assertions.assertThat(result.getBody()).isInstanceOf(NotificationMessageDto.NotificationMessageResponse.class);
         }
     }
 
     @Nested
     class createNewNotificationMessageTest {
-        private final NotificationMessageDto.PostRequest notificationMessageToSave = NotificationMessageDtoMother.postRequestSample().build();
+        private final NotificationMessageDto.NotificationMessagePostRequest notificationMessageToSave = NotificationMessageDtoMother.postRequestSample().build();
         private final NotificationMessage newNotificationMessage = new NotificationMessage();
-        private final NotificationMessageDto.Response notificationMessageResponseDto = new NotificationMessageDto.Response();
+        private final NotificationMessageDto.NotificationMessageResponse notificationMessageResponseDto = new NotificationMessageDto.NotificationMessageResponse();
 
         @Test
         void createNewNotificationMessage_shouldCallServiceLayer() {
@@ -141,36 +141,36 @@ class NotificationMessageControllerTest {
         @Test
         void createNewNotificationMessage_shouldConvertNotificationMessageToResponseDto() {
             Mockito.when(notificationMessageService.create(notificationMessageToSave)).thenReturn(newNotificationMessage);
-            Mockito.when(modelMapperService.map(newNotificationMessage, NotificationMessageDto.Response.class))
+            Mockito.when(modelMapperService.map(newNotificationMessage, NotificationMessageDto.NotificationMessageResponse.class))
                     .thenReturn(notificationMessageResponseDto);
 
             objectToTest.createNewNotificationMessage(notificationMessageToSave);
 
-            Mockito.verify(modelMapperService).map(newNotificationMessage, NotificationMessageDto.Response.class);
+            Mockito.verify(modelMapperService).map(newNotificationMessage, NotificationMessageDto.NotificationMessageResponse.class);
         }
 
         @Test
         void createNewNotificationMessage_notificationMessageCreated_returnStatusCreatedAndNotificationMessageResponseDto() {
             Mockito.when(notificationMessageService.create(notificationMessageToSave)).thenReturn(newNotificationMessage);
-            Mockito.when(modelMapperService.map(newNotificationMessage, NotificationMessageDto.Response.class))
+            Mockito.when(modelMapperService.map(newNotificationMessage, NotificationMessageDto.NotificationMessageResponse.class))
                     .thenReturn(notificationMessageResponseDto);
 
-            ResponseEntity<NotificationMessageDto.Response> result = objectToTest.createNewNotificationMessage(notificationMessageToSave);
+            ResponseEntity<NotificationMessageDto.NotificationMessageResponse> result = objectToTest.createNewNotificationMessage(notificationMessageToSave);
 
             Assertions.assertThat(result.getStatusCode())
                     .isEqualTo(HttpStatus.CREATED);
             Assertions.assertThat(result.getBody())
                     .isEqualTo(notificationMessageResponseDto);
-            Assertions.assertThat(result.getBody()).isInstanceOf(NotificationMessageDto.Response.class);
+            Assertions.assertThat(result.getBody()).isInstanceOf(NotificationMessageDto.NotificationMessageResponse.class);
         }
     }
 
     @Nested
     class updateNotificationMessageTest {
         private final Long notificationMessageId = 1L;
-        private final NotificationMessageDto.PostRequest notificationMessageToUpdate = NotificationMessageDtoMother.postRequestSample().build();
+        private final NotificationMessageDto.NotificationMessagePostRequest notificationMessageToUpdate = NotificationMessageDtoMother.postRequestSample().build();
         private final NotificationMessage updateNotificationMessage = new NotificationMessage();
-        private final NotificationMessageDto.Response notificationMessageResponseDto = new NotificationMessageDto.Response();
+        private final NotificationMessageDto.NotificationMessageResponse notificationMessageResponseDto = new NotificationMessageDto.NotificationMessageResponse();
 
         @Test
         void updateNotificationMessageTest_shouldCallServiceLayer() {
@@ -186,29 +186,29 @@ class NotificationMessageControllerTest {
         void updateNotificationMessageTest_shouldConvertNotificationMessageToResponseDto() {
             Mockito.when(notificationMessageService.update(notificationMessageId, notificationMessageToUpdate))
                     .thenReturn(updateNotificationMessage);
-            Mockito.when(modelMapperService.map(updateNotificationMessage, NotificationMessageDto.Response.class))
+            Mockito.when(modelMapperService.map(updateNotificationMessage, NotificationMessageDto.NotificationMessageResponse.class))
                     .thenReturn(notificationMessageResponseDto);
 
             objectToTest.updateNotificationMessage(notificationMessageId, notificationMessageToUpdate);
 
-            Mockito.verify(modelMapperService).map(updateNotificationMessage, NotificationMessageDto.Response.class);
+            Mockito.verify(modelMapperService).map(updateNotificationMessage, NotificationMessageDto.NotificationMessageResponse.class);
         }
 
         @Test
         void updateNotificationMessageTest_notificationMessageCreated_returnStatusOkAndNotificationMessageResponseDto() {
             Mockito.when(notificationMessageService.update(notificationMessageId, notificationMessageToUpdate))
                     .thenReturn(updateNotificationMessage);
-            Mockito.when(modelMapperService.map(updateNotificationMessage, NotificationMessageDto.Response.class))
+            Mockito.when(modelMapperService.map(updateNotificationMessage, NotificationMessageDto.NotificationMessageResponse.class))
                     .thenReturn(notificationMessageResponseDto);
 
-            ResponseEntity<NotificationMessageDto.Response> result =
+            ResponseEntity<NotificationMessageDto.NotificationMessageResponse> result =
                     objectToTest.updateNotificationMessage(notificationMessageId, notificationMessageToUpdate);
 
             Assertions.assertThat(result.getStatusCode())
                     .isEqualTo(HttpStatus.OK);
             Assertions.assertThat(result.getBody())
                     .isEqualTo(notificationMessageResponseDto);
-            Assertions.assertThat(result.getBody()).isInstanceOf(NotificationMessageDto.Response.class);
+            Assertions.assertThat(result.getBody()).isInstanceOf(NotificationMessageDto.NotificationMessageResponse.class);
         }
     }
 

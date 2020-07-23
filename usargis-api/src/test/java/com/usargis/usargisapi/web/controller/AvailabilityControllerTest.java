@@ -57,7 +57,7 @@ class AvailabilityControllerTest {
         @Test
         void searchAllAvailabilities_shouldConvertAvailabilitiesToListOfResponseDto() {
             Mockito.when(availabilityService.searchAll(searchParameters)).thenReturn(availabilitiesFound);
-            Mockito.when(modelMapperService.map(Mockito.any(Availability.class), Mockito.any())).thenReturn(new AvailabilityDto.Response());
+            Mockito.when(modelMapperService.map(Mockito.any(Availability.class), Mockito.any())).thenReturn(new AvailabilityDto.AvailabilityResponse());
 
             objectToTest.searchForAvailabilities(searchParameters);
 
@@ -67,9 +67,9 @@ class AvailabilityControllerTest {
         @Test
         void searchAllAvailabilities_availabilityFound_returnStatusOkWithListOfAvailabilitiesResponseDto() {
             Mockito.when(availabilityService.searchAll(searchParameters)).thenReturn(availabilitiesFound);
-            Mockito.when(modelMapperService.map(Mockito.any(Availability.class), Mockito.any())).thenReturn(new AvailabilityDto.Response());
+            Mockito.when(modelMapperService.map(Mockito.any(Availability.class), Mockito.any())).thenReturn(new AvailabilityDto.AvailabilityResponse());
 
-            ResponseEntity<List<AvailabilityDto.Response>> result = objectToTest.searchForAvailabilities(searchParameters);
+            ResponseEntity<List<AvailabilityDto.AvailabilityResponse>> result = objectToTest.searchForAvailabilities(searchParameters);
 
             Assertions.assertThat(result.getStatusCode()).isEqualTo(HttpStatus.OK);
             Assertions.assertThat(Objects.requireNonNull(result.getBody()).size()).isEqualTo(availabilitiesFound.size());
@@ -80,7 +80,7 @@ class AvailabilityControllerTest {
     class getAvailabilityByIdTest {
         private final Long availabilityIdToFind = 1L;
         private final Availability availabilityFound = new Availability();
-        private final AvailabilityDto.Response availabilityResponseDto = new AvailabilityDto.Response();
+        private final AvailabilityDto.AvailabilityResponse availabilityResponseDto = new AvailabilityDto.AvailabilityResponse();
 
         @Test
         void getAvailabilityById_shouldCallServiceLayer() {
@@ -103,33 +103,33 @@ class AvailabilityControllerTest {
         @Test
         void getAvailabilityById_shouldConvertAvailabilityToResponseDto() {
             Mockito.when(availabilityService.findById(availabilityIdToFind)).thenReturn(Optional.of(availabilityFound));
-            Mockito.when(modelMapperService.map(availabilityFound, AvailabilityDto.Response.class)).thenReturn(availabilityResponseDto);
+            Mockito.when(modelMapperService.map(availabilityFound, AvailabilityDto.AvailabilityResponse.class)).thenReturn(availabilityResponseDto);
 
             objectToTest.getAvailabilityById(availabilityIdToFind);
 
-            Mockito.verify(modelMapperService).map(availabilityFound, AvailabilityDto.Response.class);
+            Mockito.verify(modelMapperService).map(availabilityFound, AvailabilityDto.AvailabilityResponse.class);
         }
 
         @Test
         void getAvailabilityById_availabilityFound_returnStatusOkAndAvailabilityResponseDto() {
             Mockito.when(availabilityService.findById(availabilityIdToFind)).thenReturn(Optional.of(availabilityFound));
-            Mockito.when(modelMapperService.map(availabilityFound, AvailabilityDto.Response.class)).thenReturn(availabilityResponseDto);
+            Mockito.when(modelMapperService.map(availabilityFound, AvailabilityDto.AvailabilityResponse.class)).thenReturn(availabilityResponseDto);
 
-            ResponseEntity<AvailabilityDto.Response> result = objectToTest.getAvailabilityById(availabilityIdToFind);
+            ResponseEntity<AvailabilityDto.AvailabilityResponse> result = objectToTest.getAvailabilityById(availabilityIdToFind);
 
             Assertions.assertThat(result.getStatusCode())
                     .isEqualTo(HttpStatus.OK);
             Assertions.assertThat(result.getBody())
                     .isEqualTo(availabilityResponseDto);
-            Assertions.assertThat(result.getBody()).isInstanceOf(AvailabilityDto.Response.class);
+            Assertions.assertThat(result.getBody()).isInstanceOf(AvailabilityDto.AvailabilityResponse.class);
         }
     }
 
     @Nested
     class createNewAvailabilityTest {
-        private final AvailabilityDto.Create availabilityToSave = AvailabilityDtoMother.createSample().build();
+        private final AvailabilityDto.AvailabilityCreate availabilityToSave = AvailabilityDtoMother.createSample().build();
         private final Availability newAvailability = new Availability();
-        private final AvailabilityDto.Response availabilityResponseDto = new AvailabilityDto.Response();
+        private final AvailabilityDto.AvailabilityResponse availabilityResponseDto = new AvailabilityDto.AvailabilityResponse();
 
         @Test
         void createNewAvailability_shouldCallServiceLayer() {
@@ -143,34 +143,34 @@ class AvailabilityControllerTest {
         @Test
         void createNewAvailability_shouldConvertAvailabilityToResponseDto() {
             Mockito.when(availabilityService.create(availabilityToSave)).thenReturn(newAvailability);
-            Mockito.when(modelMapperService.map(newAvailability, AvailabilityDto.Response.class)).thenReturn(availabilityResponseDto);
+            Mockito.when(modelMapperService.map(newAvailability, AvailabilityDto.AvailabilityResponse.class)).thenReturn(availabilityResponseDto);
 
             objectToTest.createNewAvailability(availabilityToSave);
 
-            Mockito.verify(modelMapperService).map(newAvailability, AvailabilityDto.Response.class);
+            Mockito.verify(modelMapperService).map(newAvailability, AvailabilityDto.AvailabilityResponse.class);
         }
 
         @Test
         void createNewAvailability_availabilityCreated_returnStatusCreatedAndAvailabilityResponseDto() {
             Mockito.when(availabilityService.create(availabilityToSave)).thenReturn(newAvailability);
-            Mockito.when(modelMapperService.map(newAvailability, AvailabilityDto.Response.class)).thenReturn(availabilityResponseDto);
+            Mockito.when(modelMapperService.map(newAvailability, AvailabilityDto.AvailabilityResponse.class)).thenReturn(availabilityResponseDto);
 
-            ResponseEntity<AvailabilityDto.Response> result = objectToTest.createNewAvailability(availabilityToSave);
+            ResponseEntity<AvailabilityDto.AvailabilityResponse> result = objectToTest.createNewAvailability(availabilityToSave);
 
             Assertions.assertThat(result.getStatusCode())
                     .isEqualTo(HttpStatus.CREATED);
             Assertions.assertThat(result.getBody())
                     .isEqualTo(availabilityResponseDto);
-            Assertions.assertThat(result.getBody()).isInstanceOf(AvailabilityDto.Response.class);
+            Assertions.assertThat(result.getBody()).isInstanceOf(AvailabilityDto.AvailabilityResponse.class);
         }
     }
 
     @Nested
     class updateAvailabilityTest {
         private final Long availabilityId = 1L;
-        private final AvailabilityDto.Update availabilityToUpdate = AvailabilityDtoMother.updateSample().build();
+        private final AvailabilityDto.AvailabilityUpdate availabilityToUpdate = AvailabilityDtoMother.updateSample().build();
         private final Availability updateAvailability = new Availability();
-        private final AvailabilityDto.Response availabilityResponseDto = new AvailabilityDto.Response();
+        private final AvailabilityDto.AvailabilityResponse availabilityResponseDto = new AvailabilityDto.AvailabilityResponse();
 
         @Test
         void updateAvailabilityTest_shouldCallServiceLayer() {
@@ -185,29 +185,29 @@ class AvailabilityControllerTest {
         void updateAvailabilityTest_shouldConvertAvailabilityToResponseDto() {
             Mockito.when(availabilityService.update(availabilityId, availabilityToUpdate))
                     .thenReturn(updateAvailability);
-            Mockito.when(modelMapperService.map(updateAvailability, AvailabilityDto.Response.class))
+            Mockito.when(modelMapperService.map(updateAvailability, AvailabilityDto.AvailabilityResponse.class))
                     .thenReturn(availabilityResponseDto);
 
             objectToTest.updateAvailability(availabilityId, availabilityToUpdate);
 
-            Mockito.verify(modelMapperService).map(updateAvailability, AvailabilityDto.Response.class);
+            Mockito.verify(modelMapperService).map(updateAvailability, AvailabilityDto.AvailabilityResponse.class);
         }
 
         @Test
         void updateAvailabilityTest_availabilityCreated_returnStatusOkAndAvailabilityResponseDto() {
             Mockito.when(availabilityService.update(availabilityId, availabilityToUpdate))
                     .thenReturn(updateAvailability);
-            Mockito.when(modelMapperService.map(updateAvailability, AvailabilityDto.Response.class))
+            Mockito.when(modelMapperService.map(updateAvailability, AvailabilityDto.AvailabilityResponse.class))
                     .thenReturn(availabilityResponseDto);
 
-            ResponseEntity<AvailabilityDto.Response> result =
+            ResponseEntity<AvailabilityDto.AvailabilityResponse> result =
                     objectToTest.updateAvailability(availabilityId, availabilityToUpdate);
 
             Assertions.assertThat(result.getStatusCode())
                     .isEqualTo(HttpStatus.OK);
             Assertions.assertThat(result.getBody())
                     .isEqualTo(availabilityResponseDto);
-            Assertions.assertThat(result.getBody()).isInstanceOf(AvailabilityDto.Response.class);
+            Assertions.assertThat(result.getBody()).isInstanceOf(AvailabilityDto.AvailabilityResponse.class);
         }
     }
 

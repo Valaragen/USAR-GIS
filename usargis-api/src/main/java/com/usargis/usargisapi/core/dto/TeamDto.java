@@ -22,14 +22,14 @@ public interface TeamDto {
 
     @Builder
     @Value
-    class PostRequest implements TeamDto, Name, MissionId {
+    class TeamPostRequest implements TeamDto, Name, MissionId {
         //Fields inheriting from validation
         private String name;
         private Long missionId;
     }
 
     @Data
-    class Response implements TeamDto, Name, MissionId {
+    class TeamResponse implements TeamDto, Name, MissionId {
         //Fields inheriting from validation
         private String name;
         private Long missionId;

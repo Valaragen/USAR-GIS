@@ -31,7 +31,7 @@ public class MissionController implements ApiRestController {
     }
 
     @GetMapping(Constant.MISSIONS_PATH)
-    public ResponseEntity<List<MissionDto.Response>> findAllMissions() {
+    public ResponseEntity<List<MissionDto.MissionResponse>> findAllMissions() {
         List<Mission> missions = missionService.findAll();
         if (missions.isEmpty()) {
             throw new NotFoundException(ErrorConstant.NO_MISSION_FOUND);
@@ -40,20 +40,20 @@ public class MissionController implements ApiRestController {
     }
 
     @GetMapping(Constant.MISSIONS_PATH + Constant.SLASH_ID_PATH)
-    public ResponseEntity<MissionDto.Response> getMissionById(@PathVariable Long id) {
+    public ResponseEntity<MissionDto.MissionResponse> getMissionById(@PathVariable Long id) {
         Optional<Mission> missionOptional = missionService.findById(id);
         Mission mission = missionOptional.orElseThrow(() -> new NotFoundException(MessageFormat.format(ErrorConstant.NO_MISSION_FOUND_FOR_ID, id)));
         return new ResponseEntity<>(convertToResponseDto(mission), HttpStatus.OK);
     }
 
     @PostMapping(Constant.MISSIONS_PATH)
-    public ResponseEntity<MissionDto.Response> createNewMission(@RequestBody @Valid MissionDto.PostRequest missionCreateDto) {
+    public ResponseEntity<MissionDto.MissionResponse> createNewMission(@RequestBody @Valid MissionDto.MissionPostRequest missionCreateDto) {
         Mission mission = missionService.create(missionCreateDto);
         return new ResponseEntity<>(convertToResponseDto(mission), HttpStatus.CREATED);
     }
 
     @PutMapping(Constant.MISSIONS_PATH + Constant.SLASH_ID_PATH)
-    public ResponseEntity<MissionDto.Response> updateMission(@PathVariable Long id, @RequestBody @Valid MissionDto.PostRequest updateDto) {
+    public ResponseEntity<MissionDto.MissionResponse> updateMission(@PathVariable Long id, @RequestBody @Valid MissionDto.MissionPostRequest updateDto) {
         Mission mission = missionService.update(id, updateDto);
         return new ResponseEntity<>(convertToResponseDto(mission), HttpStatus.OK);
     }
@@ -64,7 +64,7 @@ public class MissionController implements ApiRestController {
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
-    private MissionDto.Response convertToResponseDto(Mission mission) {
-        return modelMapperService.map(mission, MissionDto.Response.class);
+    private MissionDto.MissionResponse convertToResponseDto(Mission mission) {
+        return modelMapperService.map(mission, MissionDto.MissionResponse.class);
     }
 }

@@ -54,7 +54,7 @@ public class MissionServiceImpl implements MissionService {
     }
 
     @Override
-    public Mission create(MissionDto.PostRequest createDto) {
+    public Mission create(MissionDto.MissionPostRequest createDto) {
         Mission missionToCreate = new Mission();
         String usernameFromToken = securityService.getUsernameFromToken();
         missionToCreate.setAuthor(
@@ -68,7 +68,7 @@ public class MissionServiceImpl implements MissionService {
     }
 
     @Override
-    public Mission update(Long id, MissionDto.PostRequest updateDto) {
+    public Mission update(Long id, MissionDto.MissionPostRequest updateDto) {
         Mission missionToUpdate = findById(id).orElseThrow(() -> new NotFoundException(
                         MessageFormat.format(ErrorConstant.NO_MISSION_FOUND_FOR_ID, id)
                 )

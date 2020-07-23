@@ -31,7 +31,7 @@ public class InscriptionController implements ApiRestController {
     }
 
     @GetMapping(Constant.INSCRIPTIONS_PATH)
-    public ResponseEntity<List<InscriptionDto.Response>> findAllInscriptions() {
+    public ResponseEntity<List<InscriptionDto.InscriptionResponse>> findAllInscriptions() {
         List<Inscription> inscriptions = inscriptionService.findAll();
         if (inscriptions.isEmpty()) {
             throw new NotFoundException(ErrorConstant.NO_INSCRIPTION_FOUND);
@@ -40,20 +40,20 @@ public class InscriptionController implements ApiRestController {
     }
 
     @GetMapping(Constant.INSCRIPTIONS_PATH + Constant.SLASH_ID_PATH)
-    public ResponseEntity<InscriptionDto.Response> getInscriptionById(@PathVariable Long id) {
+    public ResponseEntity<InscriptionDto.InscriptionResponse> getInscriptionById(@PathVariable Long id) {
         Optional<Inscription> inscriptionOptional = inscriptionService.findById(id);
         Inscription inscription = inscriptionOptional.orElseThrow(() -> new NotFoundException(MessageFormat.format(ErrorConstant.NO_INSCRIPTION_FOUND_FOR_ID, id)));
         return new ResponseEntity<>(convertToResponseDto(inscription), HttpStatus.OK);
     }
 
     @PostMapping(Constant.INSCRIPTIONS_PATH)
-    public ResponseEntity<InscriptionDto.Response> createNewInscription(@RequestBody @Valid InscriptionDto.PostRequest inscriptionCreateDto) {
+    public ResponseEntity<InscriptionDto.InscriptionResponse> createNewInscription(@RequestBody @Valid InscriptionDto.InscriptionPostRequest inscriptionCreateDto) {
         Inscription inscription = inscriptionService.create(inscriptionCreateDto);
         return new ResponseEntity<>(convertToResponseDto(inscription), HttpStatus.CREATED);
     }
 
     @PutMapping(Constant.INSCRIPTIONS_PATH + Constant.SLASH_ID_PATH)
-    public ResponseEntity<InscriptionDto.Response> updateInscription(@PathVariable Long id, @RequestBody @Valid InscriptionDto.PostRequest updateDto) {
+    public ResponseEntity<InscriptionDto.InscriptionResponse> updateInscription(@PathVariable Long id, @RequestBody @Valid InscriptionDto.InscriptionPostRequest updateDto) {
         Inscription inscription = inscriptionService.update(id, updateDto);
         return new ResponseEntity<>(convertToResponseDto(inscription), HttpStatus.OK);
     }
@@ -64,8 +64,8 @@ public class InscriptionController implements ApiRestController {
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
-    private InscriptionDto.Response convertToResponseDto(Inscription inscription) {
-        return modelMapperService.map(inscription, InscriptionDto.Response.class);
+    private InscriptionDto.InscriptionResponse convertToResponseDto(Inscription inscription) {
+        return modelMapperService.map(inscription, InscriptionDto.InscriptionResponse.class);
     }
 
 }

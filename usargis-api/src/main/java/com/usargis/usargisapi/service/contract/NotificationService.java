@@ -5,7 +5,7 @@ import com.usargis.usargisapi.core.model.Notification;
 import com.usargis.usargisapi.service.contract.common.CRUDService;
 
 public interface NotificationService extends CRUDService<Notification, Long> {
-    Notification create(NotificationDto.PostRequest createDto);
+    Notification create(NotificationDto.NotificationPostRequest createDto);
 
-    Notification update(Long id, NotificationDto.PostRequest updateDto);
+    Notification update(Long id, NotificationDto.NotificationPostRequest updateDto);
 }

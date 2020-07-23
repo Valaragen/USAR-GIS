@@ -31,7 +31,7 @@ public class EventController implements ApiRestController {
     }
 
     @GetMapping(Constant.EVENTS_PATH)
-    public ResponseEntity<List<EventDto.Response>> findAllEvents() {
+    public ResponseEntity<List<EventDto.EventResponse>> findAllEvents() {
         List<Event> events = eventService.findAll();
         if (events.isEmpty()) {
             throw new NotFoundException(ErrorConstant.NO_EVENT_FOUND);
@@ -40,20 +40,20 @@ public class EventController implements ApiRestController {
     }
 
     @GetMapping(Constant.EVENTS_PATH + Constant.SLASH_ID_PATH)
-    public ResponseEntity<EventDto.Response> getEventById(@PathVariable Long id) {
+    public ResponseEntity<EventDto.EventResponse> getEventById(@PathVariable Long id) {
         Optional<Event> eventOptional = eventService.findById(id);
         Event event = eventOptional.orElseThrow(() -> new NotFoundException(MessageFormat.format(ErrorConstant.NO_EVENT_FOUND_FOR_ID, id)));
         return new ResponseEntity<>(convertToResponseDto(event), HttpStatus.OK);
     }
 
     @PostMapping(Constant.EVENTS_PATH)
-    public ResponseEntity<EventDto.Response> createNewEvent(@RequestBody @Valid EventDto.PostRequest eventCreateDto) {
+    public ResponseEntity<EventDto.EventResponse> createNewEvent(@RequestBody @Valid EventDto.EventPostRequest eventCreateDto) {
         Event event = eventService.create(eventCreateDto);
         return new ResponseEntity<>(convertToResponseDto(event), HttpStatus.CREATED);
     }
 
     @PutMapping(Constant.EVENTS_PATH + Constant.SLASH_ID_PATH)
-    public ResponseEntity<EventDto.Response> updateEvent(@PathVariable Long id, @RequestBody @Valid EventDto.PostRequest updateDto) {
+    public ResponseEntity<EventDto.EventResponse> updateEvent(@PathVariable Long id, @RequestBody @Valid EventDto.EventPostRequest updateDto) {
         Event event = eventService.update(id, updateDto);
         return new ResponseEntity<>(convertToResponseDto(event), HttpStatus.OK);
     }
@@ -64,8 +64,8 @@ public class EventController implements ApiRestController {
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
-    private EventDto.Response convertToResponseDto(Event event) {
-        return modelMapperService.map(event, EventDto.Response.class);
+    private EventDto.EventResponse convertToResponseDto(Event event) {
+        return modelMapperService.map(event, EventDto.EventResponse.class);
     }
 
 }

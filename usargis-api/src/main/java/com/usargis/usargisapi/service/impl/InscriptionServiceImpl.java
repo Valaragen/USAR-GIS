@@ -54,7 +54,7 @@ public class InscriptionServiceImpl implements InscriptionService {
     }
 
     @Override
-    public Inscription create(InscriptionDto.PostRequest createDto) {
+    public Inscription create(InscriptionDto.InscriptionPostRequest createDto) {
         Inscription inscriptionToCreate = new Inscription();
         inscriptionToCreate.setUserInfo(
                 userInfoService.findByUsername(createDto.getUserInfoUsername())
@@ -73,7 +73,7 @@ public class InscriptionServiceImpl implements InscriptionService {
     }
 
     @Override
-    public Inscription update(Long id, InscriptionDto.PostRequest updateDto) {
+    public Inscription update(Long id, InscriptionDto.InscriptionPostRequest updateDto) {
         Inscription inscriptionToUpdate = findById(id).orElseThrow(() -> new NotFoundException(
                 MessageFormat.format(ErrorConstant.NO_INSCRIPTION_FOUND_FOR_ID, id)
         ));

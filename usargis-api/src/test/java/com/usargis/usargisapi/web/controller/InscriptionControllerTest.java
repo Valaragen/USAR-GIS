@@ -55,7 +55,7 @@ class InscriptionControllerTest {
         @Test
         void findAllInscriptions_shouldConvertInscriptionsToListOfResponseDto() {
             Mockito.when(inscriptionService.findAll()).thenReturn(inscriptionsFound);
-            Mockito.when(modelMapperService.map(Mockito.any(Inscription.class), Mockito.any())).thenReturn(new InscriptionDto.Response());
+            Mockito.when(modelMapperService.map(Mockito.any(Inscription.class), Mockito.any())).thenReturn(new InscriptionDto.InscriptionResponse());
 
             objectToTest.findAllInscriptions();
 
@@ -65,9 +65,9 @@ class InscriptionControllerTest {
         @Test
         void findAllInscriptions_inscriptionFound_returnStatusOkWithListOfInscriptionsResponseDto() {
             Mockito.when(inscriptionService.findAll()).thenReturn(inscriptionsFound);
-            Mockito.when(modelMapperService.map(Mockito.any(Inscription.class), Mockito.any())).thenReturn(new InscriptionDto.Response());
+            Mockito.when(modelMapperService.map(Mockito.any(Inscription.class), Mockito.any())).thenReturn(new InscriptionDto.InscriptionResponse());
 
-            ResponseEntity<List<InscriptionDto.Response>> result = objectToTest.findAllInscriptions();
+            ResponseEntity<List<InscriptionDto.InscriptionResponse>> result = objectToTest.findAllInscriptions();
 
             Assertions.assertThat(result.getStatusCode()).isEqualTo(HttpStatus.OK);
             Assertions.assertThat(Objects.requireNonNull(result.getBody()).size()).isEqualTo(inscriptionsFound.size());
@@ -78,7 +78,7 @@ class InscriptionControllerTest {
     class getInscriptionByIdTest {
         private final Long inscriptionIdToFind = 1L;
         private final Inscription inscriptionFound = new Inscription();
-        private final InscriptionDto.Response inscriptionResponseDto = new InscriptionDto.Response();
+        private final InscriptionDto.InscriptionResponse inscriptionResponseDto = new InscriptionDto.InscriptionResponse();
 
         @Test
         void getInscriptionById_shouldCallServiceLayer() {
@@ -101,33 +101,33 @@ class InscriptionControllerTest {
         @Test
         void getInscriptionById_shouldConvertInscriptionToResponseDto() {
             Mockito.when(inscriptionService.findById(inscriptionIdToFind)).thenReturn(Optional.of(inscriptionFound));
-            Mockito.when(modelMapperService.map(inscriptionFound, InscriptionDto.Response.class)).thenReturn(inscriptionResponseDto);
+            Mockito.when(modelMapperService.map(inscriptionFound, InscriptionDto.InscriptionResponse.class)).thenReturn(inscriptionResponseDto);
 
             objectToTest.getInscriptionById(inscriptionIdToFind);
 
-            Mockito.verify(modelMapperService).map(inscriptionFound, InscriptionDto.Response.class);
+            Mockito.verify(modelMapperService).map(inscriptionFound, InscriptionDto.InscriptionResponse.class);
         }
 
         @Test
         void getInscriptionById_inscriptionFound_returnStatusOkAndInscriptionResponseDto() {
             Mockito.when(inscriptionService.findById(inscriptionIdToFind)).thenReturn(Optional.of(inscriptionFound));
-            Mockito.when(modelMapperService.map(inscriptionFound, InscriptionDto.Response.class)).thenReturn(inscriptionResponseDto);
+            Mockito.when(modelMapperService.map(inscriptionFound, InscriptionDto.InscriptionResponse.class)).thenReturn(inscriptionResponseDto);
 
-            ResponseEntity<InscriptionDto.Response> result = objectToTest.getInscriptionById(inscriptionIdToFind);
+            ResponseEntity<InscriptionDto.InscriptionResponse> result = objectToTest.getInscriptionById(inscriptionIdToFind);
 
             Assertions.assertThat(result.getStatusCode())
                     .isEqualTo(HttpStatus.OK);
             Assertions.assertThat(result.getBody())
                     .isEqualTo(inscriptionResponseDto);
-            Assertions.assertThat(result.getBody()).isInstanceOf(InscriptionDto.Response.class);
+            Assertions.assertThat(result.getBody()).isInstanceOf(InscriptionDto.InscriptionResponse.class);
         }
     }
 
     @Nested
     class createNewInscriptionTest {
-        private final InscriptionDto.PostRequest inscriptionToSave = InscriptionDtoMother.postRequestSample().build();
+        private final InscriptionDto.InscriptionPostRequest inscriptionToSave = InscriptionDtoMother.postRequestSample().build();
         private final Inscription newInscription = new Inscription();
-        private final InscriptionDto.Response inscriptionResponseDto = new InscriptionDto.Response();
+        private final InscriptionDto.InscriptionResponse inscriptionResponseDto = new InscriptionDto.InscriptionResponse();
 
         @Test
         void createNewInscription_shouldCallServiceLayer() {
@@ -141,34 +141,34 @@ class InscriptionControllerTest {
         @Test
         void createNewInscription_shouldConvertInscriptionToResponseDto() {
             Mockito.when(inscriptionService.create(inscriptionToSave)).thenReturn(newInscription);
-            Mockito.when(modelMapperService.map(newInscription, InscriptionDto.Response.class)).thenReturn(inscriptionResponseDto);
+            Mockito.when(modelMapperService.map(newInscription, InscriptionDto.InscriptionResponse.class)).thenReturn(inscriptionResponseDto);
 
             objectToTest.createNewInscription(inscriptionToSave);
 
-            Mockito.verify(modelMapperService).map(newInscription, InscriptionDto.Response.class);
+            Mockito.verify(modelMapperService).map(newInscription, InscriptionDto.InscriptionResponse.class);
         }
 
         @Test
         void createNewInscription_inscriptionCreated_returnStatusCreatedAndInscriptionResponseDto() {
             Mockito.when(inscriptionService.create(inscriptionToSave)).thenReturn(newInscription);
-            Mockito.when(modelMapperService.map(newInscription, InscriptionDto.Response.class)).thenReturn(inscriptionResponseDto);
+            Mockito.when(modelMapperService.map(newInscription, InscriptionDto.InscriptionResponse.class)).thenReturn(inscriptionResponseDto);
 
-            ResponseEntity<InscriptionDto.Response> result = objectToTest.createNewInscription(inscriptionToSave);
+            ResponseEntity<InscriptionDto.InscriptionResponse> result = objectToTest.createNewInscription(inscriptionToSave);
 
             Assertions.assertThat(result.getStatusCode())
                     .isEqualTo(HttpStatus.CREATED);
             Assertions.assertThat(result.getBody())
                     .isEqualTo(inscriptionResponseDto);
-            Assertions.assertThat(result.getBody()).isInstanceOf(InscriptionDto.Response.class);
+            Assertions.assertThat(result.getBody()).isInstanceOf(InscriptionDto.InscriptionResponse.class);
         }
     }
 
     @Nested
     class updateInscriptionTest {
         private final Long inscriptionId = 1L;
-        private final InscriptionDto.PostRequest inscriptionToUpdate = InscriptionDtoMother.postRequestSample().build();
+        private final InscriptionDto.InscriptionPostRequest inscriptionToUpdate = InscriptionDtoMother.postRequestSample().build();
         private final Inscription updateInscription = new Inscription();
-        private final InscriptionDto.Response inscriptionResponseDto = new InscriptionDto.Response();
+        private final InscriptionDto.InscriptionResponse inscriptionResponseDto = new InscriptionDto.InscriptionResponse();
 
         @Test
         void updateInscriptionTest_shouldCallServiceLayer() {
@@ -183,29 +183,29 @@ class InscriptionControllerTest {
         void updateInscriptionTest_shouldConvertInscriptionToResponseDto() {
             Mockito.when(inscriptionService.update(inscriptionId, inscriptionToUpdate))
                     .thenReturn(updateInscription);
-            Mockito.when(modelMapperService.map(updateInscription, InscriptionDto.Response.class))
+            Mockito.when(modelMapperService.map(updateInscription, InscriptionDto.InscriptionResponse.class))
                     .thenReturn(inscriptionResponseDto);
 
             objectToTest.updateInscription(inscriptionId, inscriptionToUpdate);
 
-            Mockito.verify(modelMapperService).map(updateInscription, InscriptionDto.Response.class);
+            Mockito.verify(modelMapperService).map(updateInscription, InscriptionDto.InscriptionResponse.class);
         }
 
         @Test
         void updateInscriptionTest_inscriptionCreated_returnStatusOkAndInscriptionResponseDto() {
             Mockito.when(inscriptionService.update(inscriptionId, inscriptionToUpdate))
                     .thenReturn(updateInscription);
-            Mockito.when(modelMapperService.map(updateInscription, InscriptionDto.Response.class))
+            Mockito.when(modelMapperService.map(updateInscription, InscriptionDto.InscriptionResponse.class))
                     .thenReturn(inscriptionResponseDto);
 
-            ResponseEntity<InscriptionDto.Response> result =
+            ResponseEntity<InscriptionDto.InscriptionResponse> result =
                     objectToTest.updateInscription(inscriptionId, inscriptionToUpdate);
 
             Assertions.assertThat(result.getStatusCode())
                     .isEqualTo(HttpStatus.OK);
             Assertions.assertThat(result.getBody())
                     .isEqualTo(inscriptionResponseDto);
-            Assertions.assertThat(result.getBody()).isInstanceOf(InscriptionDto.Response.class);
+            Assertions.assertThat(result.getBody()).isInstanceOf(InscriptionDto.InscriptionResponse.class);
         }
     }
 

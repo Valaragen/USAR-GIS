@@ -47,14 +47,14 @@ public class GroupServiceImpl implements GroupService {
     }
 
     @Override
-    public Group create(GroupDto.PostRequest createDto) {
+    public Group create(GroupDto.GroupPostRequest createDto) {
         Group groupToCreate = new Group();
         modelMapperService.map(createDto, groupToCreate);
         return save(groupToCreate);
     }
 
     @Override
-    public Group update(Long id, GroupDto.PostRequest updateDto) {
+    public Group update(Long id, GroupDto.GroupPostRequest updateDto) {
         Group groupToUpdate = findById(id).orElseThrow(() -> new NotFoundException(
                         MessageFormat.format(ErrorConstant.NO_GROUP_FOUND_FOR_ID, id)
                 )

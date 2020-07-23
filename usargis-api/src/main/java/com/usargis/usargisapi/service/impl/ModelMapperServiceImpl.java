@@ -22,7 +22,7 @@ public class ModelMapperServiceImpl implements ModelMapperService {
     //Mapping rules
     private void configureModelMapper() {
         //Availability Create DTO to entity
-        PropertyMap<AvailabilityDto.Create, Availability> availabilityCreateToEntityPropertyMap = new PropertyMap<AvailabilityDto.Create, Availability>() {
+        PropertyMap<AvailabilityDto.AvailabilityCreate, Availability> availabilityCreateToEntityPropertyMap = new PropertyMap<AvailabilityDto.AvailabilityCreate, Availability>() {
             protected void configure() {
                 skip().setId(null);
                 skip().setMission(null);
@@ -32,8 +32,8 @@ public class ModelMapperServiceImpl implements ModelMapperService {
         modelMapper.addMappings(availabilityCreateToEntityPropertyMap);
 
         //Team PostRequest DTO to entity
-        PropertyMap<TeamDto.PostRequest, Team> teamPostRequestToEntityPropertyMap =
-                new PropertyMap<TeamDto.PostRequest, Team>() {
+        PropertyMap<TeamDto.TeamPostRequest, Team> teamPostRequestToEntityPropertyMap =
+                new PropertyMap<TeamDto.TeamPostRequest, Team>() {
                     protected void configure() {
                         skip().setId(null);
                         skip().setMission(null);
@@ -42,8 +42,8 @@ public class ModelMapperServiceImpl implements ModelMapperService {
         modelMapper.addMappings(teamPostRequestToEntityPropertyMap);
 
         //Inscription PostRequest DTO to entity
-        PropertyMap<InscriptionDto.PostRequest, Inscription> inscriptionPostRequestToEntityPropertyMap =
-                new PropertyMap<InscriptionDto.PostRequest, Inscription>() {
+        PropertyMap<InscriptionDto.InscriptionPostRequest, Inscription> inscriptionPostRequestToEntityPropertyMap =
+                new PropertyMap<InscriptionDto.InscriptionPostRequest, Inscription>() {
                     protected void configure() {
                         skip().setId(null);
                         skip().setEvent(null);
@@ -53,8 +53,8 @@ public class ModelMapperServiceImpl implements ModelMapperService {
         modelMapper.addMappings(inscriptionPostRequestToEntityPropertyMap);
 
         //TeamMember PostRequest DTO to entity
-        PropertyMap<TeamMemberDto.PostRequest, TeamMember> teamMemberPostRequestToEntityPropertyMap =
-                new PropertyMap<TeamMemberDto.PostRequest, TeamMember>() {
+        PropertyMap<TeamMemberDto.TeamMemberPostRequest, TeamMember> teamMemberPostRequestToEntityPropertyMap =
+                new PropertyMap<TeamMemberDto.TeamMemberPostRequest, TeamMember>() {
                     protected void configure() {
                         skip().setId(null);
                         skip().setTeam(null);
@@ -64,8 +64,8 @@ public class ModelMapperServiceImpl implements ModelMapperService {
         modelMapper.addMappings(teamMemberPostRequestToEntityPropertyMap);
 
         //NotificationMessage PostRequest DTO to entity
-        PropertyMap<NotificationMessageDto.PostRequest, NotificationMessage> notificationMessagePostRequestToEntityPropertyMap =
-                new PropertyMap<NotificationMessageDto.PostRequest, NotificationMessage>() {
+        PropertyMap<NotificationMessageDto.NotificationMessagePostRequest, NotificationMessage> notificationMessagePostRequestToEntityPropertyMap =
+                new PropertyMap<NotificationMessageDto.NotificationMessagePostRequest, NotificationMessage>() {
                     protected void configure() {
                         skip().setId(null);
                         skip().setNotification(null);
@@ -74,8 +74,8 @@ public class ModelMapperServiceImpl implements ModelMapperService {
         modelMapper.addMappings(notificationMessagePostRequestToEntityPropertyMap);
 
         //Notification PostRequest DTO to entity
-        PropertyMap<NotificationDto.PostRequest, Notification> notificationPostRequestToEntityPropertyMap =
-                new PropertyMap<NotificationDto.PostRequest, Notification>() {
+        PropertyMap<NotificationDto.NotificationPostRequest, Notification> notificationPostRequestToEntityPropertyMap =
+                new PropertyMap<NotificationDto.NotificationPostRequest, Notification>() {
                     protected void configure() {
                         skip().setId(null);
                         skip().setMission(null);

@@ -51,7 +51,7 @@ public class NotificationMessageServiceImpl implements NotificationMessageServic
     }
 
     @Override
-    public NotificationMessage create(NotificationMessageDto.PostRequest createDto) {
+    public NotificationMessage create(NotificationMessageDto.NotificationMessagePostRequest createDto) {
         NotificationMessage notificationMessageToCreate = new NotificationMessage();
         notificationMessageToCreate.setNotification(
                 notificationService.findById(createDto.getNotificationId())
@@ -64,7 +64,7 @@ public class NotificationMessageServiceImpl implements NotificationMessageServic
     }
 
     @Override
-    public NotificationMessage update(Long id, NotificationMessageDto.PostRequest updateDto) {
+    public NotificationMessage update(Long id, NotificationMessageDto.NotificationMessagePostRequest updateDto) {
         NotificationMessage notificationMessageToUpdate = findById(id).orElseThrow(() -> new NotFoundException(
                 MessageFormat.format(ErrorConstant.NO_NOTIFICATION_MESSAGE_FOUND_FOR_ID, id)
         ));

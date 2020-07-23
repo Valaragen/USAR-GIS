@@ -32,7 +32,7 @@ public class AvailabilityController implements ApiRestController {
     }
 
     @GetMapping(Constant.AVAILABILITIES_PATH)
-    public ResponseEntity<List<AvailabilityDto.Response>> searchForAvailabilities(@Valid AvailabilitySearch availabilitySearch) {
+    public ResponseEntity<List<AvailabilityDto.AvailabilityResponse>> searchForAvailabilities(@Valid AvailabilitySearch availabilitySearch) {
         List<Availability> availabilities = availabilityService.searchAll(availabilitySearch);
         if (availabilities.isEmpty()) {
             throw new NotFoundException(ErrorConstant.NO_AVAILABILITY_FOUND);
@@ -41,20 +41,20 @@ public class AvailabilityController implements ApiRestController {
     }
 
     @GetMapping(Constant.AVAILABILITIES_PATH + Constant.SLASH_ID_PATH)
-    public ResponseEntity<AvailabilityDto.Response> getAvailabilityById(@PathVariable Long id) {
+    public ResponseEntity<AvailabilityDto.AvailabilityResponse> getAvailabilityById(@PathVariable Long id) {
         Optional<Availability> availabilityOptional = availabilityService.findById(id);
         Availability availability = availabilityOptional.orElseThrow(() -> new NotFoundException(MessageFormat.format(ErrorConstant.NO_AVAILABILITY_FOUND_FOR_ID, id)));
         return new ResponseEntity<>(convertToResponseDto(availability), HttpStatus.OK);
     }
 
     @PostMapping(Constant.AVAILABILITIES_PATH)
-    public ResponseEntity<AvailabilityDto.Response> createNewAvailability(@RequestBody @Valid AvailabilityDto.Create availabilityCreateDto) {
+    public ResponseEntity<AvailabilityDto.AvailabilityResponse> createNewAvailability(@RequestBody @Valid AvailabilityDto.AvailabilityCreate availabilityCreateDto) {
         Availability availability = availabilityService.create(availabilityCreateDto);
         return new ResponseEntity<>(convertToResponseDto(availability), HttpStatus.CREATED);
     }
 
     @PutMapping(Constant.AVAILABILITIES_PATH + Constant.SLASH_ID_PATH)
-    public ResponseEntity<AvailabilityDto.Response> updateAvailability(@PathVariable Long id, @RequestBody @Valid AvailabilityDto.Update updateDto) {
+    public ResponseEntity<AvailabilityDto.AvailabilityResponse> updateAvailability(@PathVariable Long id, @RequestBody @Valid AvailabilityDto.AvailabilityUpdate updateDto) {
         Availability availability = availabilityService.update(id, updateDto);
         return new ResponseEntity<>(convertToResponseDto(availability), HttpStatus.OK);
     }
@@ -65,8 +65,8 @@ public class AvailabilityController implements ApiRestController {
         return new ResponseEntity(HttpStatus.NO_CONTENT);
     }
 
-    private AvailabilityDto.Response convertToResponseDto(Availability availability) {
-        return modelMapperService.map(availability, AvailabilityDto.Response.class);
+    private AvailabilityDto.AvailabilityResponse convertToResponseDto(Availability availability) {
+        return modelMapperService.map(availability, AvailabilityDto.AvailabilityResponse.class);
     }
 
 }

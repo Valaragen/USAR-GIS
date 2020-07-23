@@ -8,8 +8,8 @@ import java.util.Collections;
 import java.util.HashSet;
 
 public class NotificationMessageDtoMother {
-    public static NotificationMessageDto.PostRequest.PostRequestBuilder postRequestSample() {
-        return NotificationMessageDto.PostRequest.builder()
+    public static NotificationMessageDto.NotificationMessagePostRequest.NotificationMessagePostRequestBuilder postRequestSample() {
+        return NotificationMessageDto.NotificationMessagePostRequest.builder()
                 .notificationId(1L)
                 .contentType(NotificationMessageContentType.TEXT)
                 .content("sample content")

@@ -92,8 +92,8 @@ class NotificationServiceImplTest {
 
     @Nested
     class createTest {
-        private NotificationDto.PostRequest notificationPostRequestDto = NotificationDtoMother.postRequestSample().build();
-        private NotificationDto.PostRequest nullIdsNotificationPostRequestDto = NotificationDto.PostRequest.builder().build();
+        private NotificationDto.NotificationPostRequest notificationPostRequestDto = NotificationDtoMother.postRequestSample().build();
+        private NotificationDto.NotificationPostRequest nullIdsNotificationPostRequestDto = NotificationDto.NotificationPostRequest.builder().build();
         private UserInfo authorToLink = UserInfoMother.sampleAuthor().build();
         private Event eventToLink = EventMother.sampleFinished().build();
         private Mission missionToLink = MissionMother.sampleFinished().build();
@@ -187,7 +187,7 @@ class NotificationServiceImplTest {
     class updateTest {
         private Long givenId = 1L;
         private Notification notificationToUpdate = NotificationMother.sampleSent().build();
-        private NotificationDto.PostRequest notificationUpdateDto = NotificationDtoMother.postRequestSample().build();
+        private NotificationDto.NotificationPostRequest notificationUpdateDto = NotificationDtoMother.postRequestSample().build();
         private Notification savedNotification = NotificationMother.sampleSent().build();
 
         @BeforeEach

@@ -19,7 +19,7 @@ class AvailabilityDtoTest {
     class AvailabilityCreateDto {
         @Test
         void availabilityCreateDto_mapDtoToEntity_shouldMapCorrectly() {
-            AvailabilityDto.Create availabilityCreateDto = AvailabilityDtoMother.createSample().build();
+            AvailabilityDto.AvailabilityCreate availabilityCreateDto = AvailabilityDtoMother.createSample().build();
 
             Availability availability = modelMapperService.map(availabilityCreateDto, Availability.class);
 
@@ -35,7 +35,7 @@ class AvailabilityDtoTest {
             Long availabilityId = 5L;
             Availability availability = AvailabilityMother.sample().build();
             availability.setId(availabilityId);
-            AvailabilityDto.Create availabilityCreateDto = AvailabilityDtoMother.createSample().build();
+            AvailabilityDto.AvailabilityCreate availabilityCreateDto = AvailabilityDtoMother.createSample().build();
 
             modelMapperService.map(availabilityCreateDto, availability);
 
@@ -51,7 +51,7 @@ class AvailabilityDtoTest {
     class AvailabilityUpdateDto {
         @Test
         void availabilityUpdateDto_mapDtoToEntity_shouldMapCorrectly() {
-            AvailabilityDto.Update availabilityUpdateDto = AvailabilityDtoMother.updateSample().build();
+            AvailabilityDto.AvailabilityUpdate availabilityUpdateDto = AvailabilityDtoMother.updateSample().build();
 
             Availability availability = modelMapperService.map(availabilityUpdateDto, Availability.class);
 
@@ -71,7 +71,7 @@ class AvailabilityDtoTest {
             availability.setId(1L);
             availability.getMission().setId(4L);
 
-            AvailabilityDto.Response availabilityResponseDto = modelMapperService.map(availability, AvailabilityDto.Response.class);
+            AvailabilityDto.AvailabilityResponse availabilityResponseDto = modelMapperService.map(availability, AvailabilityDto.AvailabilityResponse.class);
 
             Assertions.assertThat(availabilityResponseDto.getEndDate()).isEqualTo(availability.getEndDate());
             Assertions.assertThat(availabilityResponseDto.getStartDate()).isEqualTo(availability.getStartDate());

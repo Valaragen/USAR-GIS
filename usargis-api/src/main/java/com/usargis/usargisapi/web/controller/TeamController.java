@@ -31,7 +31,7 @@ public class TeamController implements ApiRestController {
     }
 
     @GetMapping(Constant.TEAMS_PATH)
-    public ResponseEntity<List<TeamDto.Response>> findAllTeams() {
+    public ResponseEntity<List<TeamDto.TeamResponse>> findAllTeams() {
         List<Team> teams = teamService.findAll();
         if (teams.isEmpty()) {
             throw new NotFoundException(ErrorConstant.NO_TEAM_FOUND);
@@ -40,20 +40,20 @@ public class TeamController implements ApiRestController {
     }
 
     @GetMapping(Constant.TEAMS_PATH + Constant.SLASH_ID_PATH)
-    public ResponseEntity<TeamDto.Response> getTeamById(@PathVariable Long id) {
+    public ResponseEntity<TeamDto.TeamResponse> getTeamById(@PathVariable Long id) {
         Optional<Team> teamOptional = teamService.findById(id);
         Team team = teamOptional.orElseThrow(() -> new NotFoundException(MessageFormat.format(ErrorConstant.NO_TEAM_FOUND_FOR_ID, id)));
         return new ResponseEntity<>(convertToResponseDto(team), HttpStatus.OK);
     }
 
     @PostMapping(Constant.TEAMS_PATH)
-    public ResponseEntity<TeamDto.Response> createNewTeam(@RequestBody @Valid TeamDto.PostRequest teamCreateDto) {
+    public ResponseEntity<TeamDto.TeamResponse> createNewTeam(@RequestBody @Valid TeamDto.TeamPostRequest teamCreateDto) {
         Team team = teamService.create(teamCreateDto);
         return new ResponseEntity<>(convertToResponseDto(team), HttpStatus.CREATED);
     }
 
     @PutMapping(Constant.TEAMS_PATH + Constant.SLASH_ID_PATH)
-    public ResponseEntity<TeamDto.Response> updateTeam(@PathVariable Long id, @RequestBody @Valid TeamDto.PostRequest updateDto) {
+    public ResponseEntity<TeamDto.TeamResponse> updateTeam(@PathVariable Long id, @RequestBody @Valid TeamDto.TeamPostRequest updateDto) {
         Team team = teamService.update(id, updateDto);
         return new ResponseEntity<>(convertToResponseDto(team), HttpStatus.OK);
     }
@@ -64,7 +64,7 @@ public class TeamController implements ApiRestController {
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
-    private TeamDto.Response convertToResponseDto(Team team) {
-        return modelMapperService.map(team, TeamDto.Response.class);
+    private TeamDto.TeamResponse convertToResponseDto(Team team) {
+        return modelMapperService.map(team, TeamDto.TeamResponse.class);
     }
 }
