@@ -30,7 +30,6 @@ public class Team extends ModelEntityWithLongId {
     private Mission mission;
 
     @Builder.Default
-    @JsonIgnoreProperties({"team"})
     @OneToMany(mappedBy = "team", orphanRemoval = true)
     @ToString.Exclude
     @EqualsAndHashCode.Exclude

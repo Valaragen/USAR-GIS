@@ -40,7 +40,6 @@ public class Notification extends ModelEntityWithLongId {
     private Event event;
 
     @Builder.Default
-    @JsonIgnoreProperties({"notification"})
     @OneToMany(mappedBy = "notification", orphanRemoval = true)
     @ToString.Exclude
     @EqualsAndHashCode.Exclude
