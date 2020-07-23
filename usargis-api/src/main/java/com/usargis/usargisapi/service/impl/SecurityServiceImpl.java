@@ -1,6 +1,8 @@
 package com.usargis.usargisapi.service.impl;
 
 import com.usargis.usargisapi.service.contract.SecurityService;
+import com.usargis.usargisapi.util.ErrorConstant;
+import com.usargis.usargisapi.web.exception.AccessForbiddenException;
 import org.keycloak.KeycloakPrincipal;
 import org.keycloak.representations.AccessToken;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -16,8 +18,20 @@ public class SecurityServiceImpl implements SecurityService {
         if (principal instanceof KeycloakPrincipal) {
             AccessToken accessToken = ((KeycloakPrincipal) principal).getKeycloakSecurityContext().getToken();
             return accessToken.getPreferredUsername().toLowerCase().equals(username);
+        } else {
+            throw new AccessForbiddenException(ErrorConstant.ERROR_READ_TOKEN_EXCEPTION);
         }
+    }
 
-        return false;
+    @Override
+    public String getUsernameFromToken() {
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+
+        if (principal instanceof KeycloakPrincipal) {
+            AccessToken accessToken = ((KeycloakPrincipal) principal).getKeycloakSecurityContext().getToken();
+            return accessToken.getPreferredUsername().toLowerCase();
+        } else {
+            throw new AccessForbiddenException(ErrorConstant.ERROR_READ_TOKEN_EXCEPTION);
+        }
     }
 }

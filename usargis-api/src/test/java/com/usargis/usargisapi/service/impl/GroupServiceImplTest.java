@@ -1,13 +1,21 @@
 package com.usargis.usargisapi.service.impl;
 
+import com.usargis.usargisapi.core.dto.GroupDto;
 import com.usargis.usargisapi.core.model.Group;
 import com.usargis.usargisapi.repository.GroupRepository;
 import com.usargis.usargisapi.service.contract.GroupService;
+import com.usargis.usargisapi.service.contract.ModelMapperService;
+import com.usargis.usargisapi.util.ErrorConstant;
+import com.usargis.usargisapi.util.objectMother.dto.GroupDtoMother;
+import com.usargis.usargisapi.util.objectMother.model.GroupMother;
+import com.usargis.usargisapi.web.exception.NotFoundException;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
+import java.text.MessageFormat;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
@@ -17,10 +25,11 @@ class GroupServiceImplTest {
     private GroupService objectToTest;
 
     private GroupRepository groupRepository = Mockito.mock(GroupRepository.class);
+    private ModelMapperService modelMapperService = Mockito.mock(ModelMapperService.class);
 
     @BeforeEach
     void setup() {
-        objectToTest = new GroupServiceImpl(groupRepository);
+        objectToTest = new GroupServiceImpl(groupRepository, modelMapperService);
     }
 
 
@@ -68,6 +77,83 @@ class GroupServiceImplTest {
         objectToTest.delete(groupToDelete);
 
         Mockito.verify(groupRepository).delete(groupToDelete);
+    }
+
+    @Nested
+    class createTest {
+        private GroupDto.PostRequest groupPostRequestDto = GroupDtoMother.postRequestSample().build();
+        private Group savedGroup = GroupMother.sample().build();
+
+        @BeforeEach
+        void setup() {
+            Mockito.when(groupRepository.save(Mockito.any(Group.class))).thenReturn(savedGroup);
+        }
+
+        @Test
+        void create_shouldMapDtoInGroup() {
+            objectToTest.create(groupPostRequestDto);
+
+            Mockito.verify(modelMapperService).map(Mockito.any(GroupDto.class), Mockito.any(Group.class));
+        }
+
+        @Test
+        void create_shouldSaveNewEntity() {
+            objectToTest.create(groupPostRequestDto);
+
+            Mockito.verify(groupRepository).save(Mockito.any(Group.class));
+        }
+
+        @Test
+        void create_shouldReturnSavedGroup() {
+            Group result = objectToTest.create(groupPostRequestDto);
+
+            Assertions.assertThat(result).isEqualTo(savedGroup);
+        }
+    }
+
+    @Nested
+    class updateTest {
+        private Long givenId = 1L;
+        private Group groupToUpdate = GroupMother.sample().build();
+        private GroupDto.PostRequest groupUpdateDto = GroupDtoMother.postRequestSample().build();
+        private Group savedGroup = GroupMother.sample().build();
+
+        @BeforeEach
+        void setup() {
+            Mockito.when(groupRepository.findById(givenId)).thenReturn(Optional.ofNullable(groupToUpdate));
+            Mockito.when(groupRepository.save(Mockito.any(Group.class))).thenReturn(savedGroup);
+        }
+
+        @Test
+        void update_noGroupForGivenId_throwNotFoundException() {
+            Mockito.when(groupRepository.findById(givenId)).thenReturn(Optional.empty());
+
+            Assertions.assertThatThrownBy(() -> {
+                objectToTest.update(givenId, groupUpdateDto);
+            }).isInstanceOf(NotFoundException.class)
+                    .hasMessage(MessageFormat.format(ErrorConstant.NO_GROUP_FOUND_FOR_ID, givenId));
+        }
+
+        @Test
+        void update_shouldMapDtoInGroup() {
+            objectToTest.update(givenId, groupUpdateDto);
+
+            Mockito.verify(modelMapperService).map(Mockito.any(GroupDto.class), Mockito.any(Group.class));
+        }
+
+        @Test
+        void update_shouldSaveNewEntity() {
+            objectToTest.update(givenId, groupUpdateDto);
+
+            Mockito.verify(groupRepository).save(Mockito.any(Group.class));
+        }
+
+        @Test
+        void update_shouldReturnSavedGroup() {
+            Group result = objectToTest.update(givenId, groupUpdateDto);
+
+            Assertions.assertThat(result).isEqualTo(savedGroup);
+        }
     }
 
 }

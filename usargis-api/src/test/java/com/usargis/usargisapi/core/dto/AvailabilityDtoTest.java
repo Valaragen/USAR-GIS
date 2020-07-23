@@ -37,7 +37,7 @@ class AvailabilityDtoTest {
             availability.setId(availabilityId);
             AvailabilityDto.Create availabilityCreateDto = AvailabilityDtoMother.createSample().build();
 
-            modelMapperService.merge(availabilityCreateDto, availability);
+            modelMapperService.map(availabilityCreateDto, availability);
 
             Assertions.assertThat(availability.getId()).isEqualTo(availabilityId);
             Assertions.assertThat(availability.getMission()).isNotNull();

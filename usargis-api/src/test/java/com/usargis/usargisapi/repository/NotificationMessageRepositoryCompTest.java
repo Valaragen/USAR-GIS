@@ -1,7 +1,6 @@
 package com.usargis.usargisapi.repository;
 
 import com.usargis.usargisapi.core.model.*;
-import com.usargis.usargisapi.core.model.embeddable.NotificationMessageId;
 import com.usargis.usargisapi.util.objectMother.model.NotificationMessageMother;
 import com.usargis.usargisapi.util.objectMother.model.NotificationMother;
 import com.usargis.usargisapi.util.objectMother.model.UserInfoMother;
@@ -33,9 +32,11 @@ class NotificationMessageRepositoryCompTest {
 
     private UserInfo sampleNotificationMessageAuthor = UserInfoMother.sampleAuthor().build();
     private Notification sampleNotification = NotificationMother.sampleSent().author(sampleNotificationMessageAuthor)
-            .build();
+            .event(null).mission(null).build();
     private NotificationMessage sampleNotificationMessage = NotificationMessageMother.sample()
-            .id(new NotificationMessageId(sampleNotification, NotificationMessageContentType.TEXT)).build();
+            .notification(sampleNotification)
+            .contentType(NotificationMessageContentType.TEXT)
+            .build();
 
     @BeforeEach
     void setup() {
@@ -64,7 +65,8 @@ class NotificationMessageRepositoryCompTest {
     @Test
     void save_shouldAddNotificationMessageInDb() {
         NotificationMessage notificationMessageToSave = NotificationMessageMother.sample()
-                .id(new NotificationMessageId(sampleNotification, NotificationMessageContentType.HTML))
+                .notification(sampleNotification)
+                .contentType(NotificationMessageContentType.HTML)
                 .build();
 
         objectToTest.save(notificationMessageToSave);
@@ -75,7 +77,8 @@ class NotificationMessageRepositoryCompTest {
     @Test
     void save_shouldAddCreateNotificationMessageSendingModeInDb() {
         NotificationMessage notificationMessageToSave = NotificationMessageMother.sample()
-                .id(new NotificationMessageId(sampleNotification, NotificationMessageContentType.HTML))
+                .notification(sampleNotification)
+                .contentType(NotificationMessageContentType.HTML)
                 .sendingModes(new HashSet<>(Collections.singletonList(NotificationMessageSendingMode.MAIL)))
                 .build();
 

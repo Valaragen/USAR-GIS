@@ -8,26 +8,23 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 
-public abstract class AvailabilityDto {
-    private AvailabilityDto() {
-    }
-
+public interface AvailabilityDto {
     //Interfaces to inherit hibernate validation
-    private interface UserInfoId {
+    interface UserInfoUsername {
         @NotBlank
-        String getUserInfoId();
+        String getUserInfoUsername();
     }
 
-    private interface MissionId {
+    interface MissionId {
         @NotNull
         Long getMissionId();
     }
 
     @Builder
     @Value
-    public static class Create implements UserInfoId, MissionId {
+    class Create implements UserInfoUsername, MissionId, AvailabilityDto {
         //Fields inheriting from validation
-        String userInfoId;
+        String userInfoUsername;
         Long missionId;
 
         //Fields specific to this DTO
@@ -37,16 +34,16 @@ public abstract class AvailabilityDto {
 
     @Builder
     @Value
-    public static class Update {
+    class Update implements AvailabilityDto {
         //Fields specific to this DTO
         LocalDateTime startDate;
         LocalDateTime endDate;
     }
 
     @Data
-    public static class Response implements UserInfoId, MissionId {
+    class Response implements AvailabilityDto, UserInfoUsername, MissionId {
         //Fields inheriting from validation
-        String userInfoId;
+        String userInfoUsername;
         Long missionId;
 
         //Fields specific to this DTO
@@ -54,5 +51,4 @@ public abstract class AvailabilityDto {
         LocalDateTime startDate;
         LocalDateTime endDate;
     }
-
 }

@@ -12,6 +12,8 @@ public abstract class Constant {
     public static final String SLASH_STRING_PATH = "/{string}";
     public static final String SLASH_NAME_PATH = "/{name}";
     public static final String V1_PATH = "/v1";
+    public static final String API_PATH = "/api";
+    public static final String USARGIS_PATH = "/usar-gis";
     public static final String AVAILABILITIES_PATH = "/availabilities";
     public static final String EVENTS_PATH = "/events";
     public static final String GROUPS_PATH = "/groups";
@@ -21,7 +23,7 @@ public abstract class Constant {
     public static final String NOTIFICATION_MESSAGES_PATH = "/notification-messages";
     public static final String TEAMS_PATH = "/teams";
     public static final String TEAM_MEMBERS_PATH = "/team-members";
-    public static final String USERS = "/users";
+    public static final String USERS_PATH = "/users";
     //### STATUS ###
     public static final String STATUS_PENDING_CODE = "PE";
     public static final String STATUS_PENDING = "pending";
@@ -55,6 +57,7 @@ public abstract class Constant {
     public static final String NMCT_HTML = "HTML";
     public static final String NMCT_TEXT_CODE = "T";
     public static final String NMCT_TEXT = "TEXT";
+
     private Constant() {
     }
 

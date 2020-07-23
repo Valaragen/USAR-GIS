@@ -29,7 +29,8 @@ class NotificationRepositoryCompTest {
     private NotificationRepository objectToTest;
 
     private UserInfo sampleNotificationAuthor = UserInfoMother.sampleAuthor().build();
-    private Notification sampleNotification = NotificationMother.sampleSent().author(sampleNotificationAuthor).build();
+    private Notification sampleNotification = NotificationMother.sampleSent().author(sampleNotificationAuthor)
+            .mission(null).event(null).build();
 
     @BeforeEach
     void setup() {

@@ -5,31 +5,27 @@ import lombok.Data;
 import lombok.Value;
 import org.hibernate.validator.constraints.Length;
 
-public abstract class GroupDto {
-    private GroupDto() {
-    }
+public interface GroupDto {
 
     //Interfaces to inherit hibernate validation
-    private interface Name {
+    interface Name {
         @Length(min = 1, max = 50)
         String getName();
     }
 
     @Builder
     @Value
-    public static class PostRequest implements Name {
+    class PostRequest implements GroupDto, Name {
         //Fields inheriting from validation
         private String name;
     }
 
     @Data
-    public static class Response implements Name {
+    class Response implements GroupDto, Name {
         //Fields inheriting from validation
         private String name;
 
         //Fields specific to this DTO
         private Long id;
     }
-
-
 }

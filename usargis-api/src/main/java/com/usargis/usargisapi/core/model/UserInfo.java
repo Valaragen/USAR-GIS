@@ -39,8 +39,8 @@ public class UserInfo extends ModelEntity {
     private String formattedAddress;
 
     @Builder.Default
-    @JsonIgnoreProperties({"id.userInfo"})
-    @OneToMany(mappedBy = "id.userInfo", orphanRemoval = true)
+    @JsonIgnoreProperties({"userInfo"})
+    @OneToMany(mappedBy = "userInfo", orphanRemoval = true)
     @ToString.Exclude
     @EqualsAndHashCode.Exclude
     private List<TeamMember> inTeams = new ArrayList<>();

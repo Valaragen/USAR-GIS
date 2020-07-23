@@ -33,9 +33,15 @@ public class Notification extends ModelEntityWithLongId {
     @ManyToOne(optional = false)
     private UserInfo author;
 
+    @ManyToOne
+    private Mission mission;
+
+    @ManyToOne
+    private Event event;
+
     @Builder.Default
-    @JsonIgnoreProperties({"id.notification"})
-    @OneToMany(mappedBy = "id.notification", orphanRemoval = true)
+    @JsonIgnoreProperties({"notification"})
+    @OneToMany(mappedBy = "notification", orphanRemoval = true)
     @ToString.Exclude
     @EqualsAndHashCode.Exclude
     private List<NotificationMessage> notificationMessages = new ArrayList<>();
