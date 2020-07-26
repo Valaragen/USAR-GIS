@@ -54,14 +54,14 @@ public class AvailabilityController implements ApiRestController {
         return new ResponseEntity<>(convertToResponseDto(availability), HttpStatus.OK);
     }
 
-    @PreAuthorize("hasRole('" + Constant.LEADER_ROLE + "') or @securityServiceImpl.isSameUsernameThanAuthenticatedUser(#availabilityCreateDto.userInfoUsername)")
+    @PreAuthorize("hasRole('" + Constant.ADMIN_ROLE + "') or @securityServiceImpl.isSameUsernameThanAuthenticatedUser(#availabilityCreateDto.userInfoUsername)")
     @PostMapping(Constant.AVAILABILITIES_PATH)
     public ResponseEntity<AvailabilityDto.AvailabilityResponse> createNewAvailability(@RequestBody @Valid AvailabilityDto.AvailabilityCreate availabilityCreateDto) {
         Availability availability = availabilityService.create(availabilityCreateDto);
         return new ResponseEntity<>(convertToResponseDto(availability), HttpStatus.CREATED);
     }
 
-    @PreAuthorize("hasRole('" + Constant.LEADER_ROLE + "') or @availabilityController.isAvailabilityOwner(#id)")
+    @PreAuthorize("hasRole('" + Constant.ADMIN_ROLE + "') or @availabilityController.isAvailabilityOwner(#id)")
     @PutMapping(Constant.AVAILABILITIES_PATH + Constant.SLASH_ID_PATH)
     public ResponseEntity<AvailabilityDto.AvailabilityResponse> updateAvailability(@PathVariable Long id, @RequestBody @Valid AvailabilityDto.AvailabilityUpdate updateDto) {
         Availability availability = availabilityService.update(id, updateDto);

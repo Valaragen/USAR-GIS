@@ -2,6 +2,8 @@ package com.usargis.usargisapi.service.impl;
 
 import com.usargis.usargisapi.core.dto.AvailabilityDto;
 import com.usargis.usargisapi.core.model.Availability;
+import com.usargis.usargisapi.core.model.Mission;
+import com.usargis.usargisapi.core.model.MissionStatus;
 import com.usargis.usargisapi.core.search.AvailabilitySearch;
 import com.usargis.usargisapi.repository.AvailabilityRepository;
 import com.usargis.usargisapi.service.contract.AvailabilityService;
@@ -10,6 +12,7 @@ import com.usargis.usargisapi.service.contract.ModelMapperService;
 import com.usargis.usargisapi.service.contract.UserInfoService;
 import com.usargis.usargisapi.util.ErrorConstant;
 import com.usargis.usargisapi.web.exception.NotFoundException;
+import com.usargis.usargisapi.web.exception.ProhibitedActionException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -47,6 +50,7 @@ public class AvailabilityServiceImpl implements AvailabilityService {
 
     @Override
     public Availability save(Availability availability) {
+        checkValid(availability);
         return availabilityRepository.save(availability);
     }
 
@@ -86,5 +90,16 @@ public class AvailabilityServiceImpl implements AvailabilityService {
         ));
         modelMapperService.map(updateDto, availabilityToUpdate);
         return save(availabilityToUpdate);
+    }
+
+    private void checkValid(Availability availability) {
+        MissionStatus linkedMissionStatus = availability.getMission().getStatus();
+        if ((linkedMissionStatus.equals(MissionStatus.ONFOCUS) || linkedMissionStatus.equals(MissionStatus.ONGOING) ||
+                linkedMissionStatus.equals(MissionStatus.FINISHED) || linkedMissionStatus.equals(MissionStatus.CANCELLED))) {
+            throw new ProhibitedActionException(
+                    MessageFormat.format(ErrorConstant.AVAILABILITY_CANT_BE_CREATED_OR_UPDATED_WHEN_LINKED_MISSION_STATUS_IS,
+                            linkedMissionStatus.getName())
+            );
+        }
     }
 }

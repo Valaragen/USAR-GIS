@@ -8,6 +8,7 @@ import org.keycloak.representations.AccessToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
+//TODO reformat this class
 @Service
 public class SecurityServiceImpl implements SecurityService {
     @Override
@@ -31,6 +32,17 @@ public class SecurityServiceImpl implements SecurityService {
         if (principal instanceof KeycloakPrincipal) {
             AccessToken accessToken = ((KeycloakPrincipal) principal).getKeycloakSecurityContext().getToken();
             return accessToken.getPreferredUsername().toLowerCase();
+        } else {
+            throw new AccessForbiddenException(ErrorConstant.ERROR_READ_TOKEN_EXCEPTION);
+        }
+    }
+
+    @Override
+    public AccessToken getKeycloakAccessToken() {
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+
+        if (principal instanceof KeycloakPrincipal) {
+            return ((KeycloakPrincipal) principal).getKeycloakSecurityContext().getToken();
         } else {
             throw new AccessForbiddenException(ErrorConstant.ERROR_READ_TOKEN_EXCEPTION);
         }

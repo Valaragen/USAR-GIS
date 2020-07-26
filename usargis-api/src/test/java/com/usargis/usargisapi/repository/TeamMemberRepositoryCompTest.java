@@ -23,7 +23,7 @@ import java.util.Optional;
 
 @ActiveProfiles("test")
 @DataJpaTest
-@TestPropertySource(properties = {"spring.jpa.hibernate.ddl-auto=create-drop"})
+@TestPropertySource(properties = {"spring.jpa.hibernate.ddl-auto=validate"})
 class TeamMemberRepositoryCompTest {
 
     @PersistenceContext

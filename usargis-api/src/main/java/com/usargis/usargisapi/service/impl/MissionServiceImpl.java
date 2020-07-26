@@ -1,7 +1,9 @@
 package com.usargis.usargisapi.service.impl;
 
 import com.usargis.usargisapi.core.dto.MissionDto;
+import com.usargis.usargisapi.core.model.Availability;
 import com.usargis.usargisapi.core.model.Mission;
+import com.usargis.usargisapi.core.model.MissionStatus;
 import com.usargis.usargisapi.repository.MissionRepository;
 import com.usargis.usargisapi.service.contract.MissionService;
 import com.usargis.usargisapi.service.contract.ModelMapperService;
@@ -9,6 +11,7 @@ import com.usargis.usargisapi.service.contract.SecurityService;
 import com.usargis.usargisapi.service.contract.UserInfoService;
 import com.usargis.usargisapi.util.ErrorConstant;
 import com.usargis.usargisapi.web.exception.NotFoundException;
+import com.usargis.usargisapi.web.exception.ProhibitedActionException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -45,6 +48,7 @@ public class MissionServiceImpl implements MissionService {
 
     @Override
     public Mission save(Mission mission) {
+        checkValid(mission);
         return missionRepository.save(mission);
     }
 
@@ -75,5 +79,19 @@ public class MissionServiceImpl implements MissionService {
         );
         modelMapperService.map(updateDto, missionToUpdate);
         return save(missionToUpdate);
+    }
+
+    private void checkValid(Mission mission) {
+        if ((mission.getStatus().equals(MissionStatus.ONGOING) || mission.getStatus().equals(MissionStatus.FINISHED))) {
+            if (mission.getStartDate() == null) {
+                throw new ProhibitedActionException(
+                        MessageFormat.format(ErrorConstant.START_DATE_MUST_BE_DEFINED_WHEN_STATUS_IS, mission.getStatus())
+                );
+            } else if (mission.getEndDate() == null) {
+                throw new ProhibitedActionException(
+                        MessageFormat.format(ErrorConstant.END_DATE_MUST_BE_DEFINED_WHEN_STATUS_IS, mission.getStatus())
+                );
+            }
+        }
     }
 }

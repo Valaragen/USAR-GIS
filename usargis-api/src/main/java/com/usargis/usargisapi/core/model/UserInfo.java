@@ -55,7 +55,7 @@ public class UserInfo extends ModelEntity {
     }
 
     public void setEmail(String email) {
-        this.email = email.toLowerCase();
+        if (email != null) this.email = email.toLowerCase();
     }
 
 }

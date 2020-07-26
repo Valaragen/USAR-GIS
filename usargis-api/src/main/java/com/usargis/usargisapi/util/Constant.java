@@ -32,8 +32,10 @@ public abstract class Constant {
     public static final String STATUS_PLANNED = "planned";
     public static final String STATUS_ONFOCUS_CODE = "OF";
     public static final String STATUS_ONFOCUS = "onfocus";
+    public static final String STATUS_PRE_ALERT_CODE = "PE";
+    public static final String STATUS_PRE_ALERT = "pre-alert";
     public static final String STATUS_TEAMENGAGEMENT_CODE = "TE";
-    public static final String STATUS_TEAMENGAGEMENT = "teamEngagement";
+    public static final String STATUS_TEAMENGAGEMENT = "team-engagement";
     public static final String STATUS_ONGOING_CODE = "OG";
     public static final String STATUS_ONGOING = "ongoing";
     public static final String STATUS_FINISHED_CODE = "FI";
@@ -43,7 +45,7 @@ public abstract class Constant {
     public static final String STATUS_CANCELLED_CODE = "CA";
     public static final String STATUS_CANCELLED = "cancelled";
     public static final String STATUS_WAITING_FOR_VALIDATION_CODE = "WFV";
-    public static final String STATUS_WAITING_FOR_VALIDATION = "waitingForValidation";
+    public static final String STATUS_WAITING_FOR_VALIDATION = "waiting-for-validation";
     public static final String STATUS_VALIDATED_CODE = "VA";
     public static final String STATUS_VALIDATED = "validated";
     //### NOTIFICATION MESSAGE SENDING MODE ###

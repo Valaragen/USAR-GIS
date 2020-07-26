@@ -38,6 +38,7 @@ public interface MissionDto {
         private LocalDateTime startDate;
         private LocalDateTime endDate;
         private LocalDateTime plannedStartDate;
+        private MissionStatus missionStatus;
         private Integer expectedDurationInDays;
         private Double latitude;
         private Double longitude;

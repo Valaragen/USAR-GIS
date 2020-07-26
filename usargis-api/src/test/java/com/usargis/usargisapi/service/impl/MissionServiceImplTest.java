@@ -2,6 +2,7 @@ package com.usargis.usargisapi.service.impl;
 
 import com.usargis.usargisapi.core.dto.MissionDto;
 import com.usargis.usargisapi.core.model.Mission;
+import com.usargis.usargisapi.core.model.MissionStatus;
 import com.usargis.usargisapi.core.model.UserInfo;
 import com.usargis.usargisapi.repository.MissionRepository;
 import com.usargis.usargisapi.service.contract.MissionService;
@@ -13,10 +14,13 @@ import com.usargis.usargisapi.util.objectMother.dto.MissionDtoMother;
 import com.usargis.usargisapi.util.objectMother.model.MissionMother;
 import com.usargis.usargisapi.util.objectMother.model.UserInfoMother;
 import com.usargis.usargisapi.web.exception.NotFoundException;
+import com.usargis.usargisapi.web.exception.ProhibitedActionException;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.EnumSource;
 import org.mockito.AdditionalAnswers;
 import org.mockito.Mockito;
 
@@ -65,15 +69,53 @@ class MissionServiceImplTest {
         Mockito.verify(missionRepository).findById(missionIdToFind);
     }
 
-    @Test
-    void save_shouldCallRepositoryAndReturnMission() {
-        Mission missionToSave = new Mission();
-        Mockito.when(missionRepository.save(missionToSave)).thenReturn(missionToSave);
+    @Nested
+    class saveTest {
+        Mission missionToSave = MissionMother.sampleFinished().build();
 
-        Mission result = objectToTest.save(missionToSave);
+        @BeforeEach
+        void setup() {
+            Mockito.when(missionRepository.save(missionToSave)).thenReturn(missionToSave);
+        }
 
-        Assertions.assertThat(result).isEqualTo(missionToSave);
-        Mockito.verify(missionRepository).save(missionToSave);
+        @Test
+        void save_shouldCallRepositoryAndReturnMission() {
+            Mission result = objectToTest.save(missionToSave);
+
+            Assertions.assertThat(result).isEqualTo(missionToSave);
+            Mockito.verify(missionRepository).save(missionToSave);
+        }
+
+        @ParameterizedTest
+        @EnumSource(value = MissionStatus.class, names = {"ONGOING", "FINISHED"})
+        void save_whenMissionStatusOnCertainStatesAndStartDateIsNull_throwException(MissionStatus missionStatus) {
+            missionToSave.setStatus(missionStatus);
+            missionToSave.setStartDate(null);
+
+            Assertions.assertThatThrownBy(() -> {
+                objectToTest.save(missionToSave);
+            }).isInstanceOf(ProhibitedActionException.class)
+                    .hasMessage(MessageFormat.format(ErrorConstant.START_DATE_MUST_BE_DEFINED_WHEN_STATUS_IS, missionStatus.getName()));
+        }
+
+        @ParameterizedTest
+        @EnumSource(value = MissionStatus.class, names = {"ONGOING", "FINISHED"})
+        void save_whenMissionStatusOnCertainStatesAndEndDateIsNull_throwException(MissionStatus missionStatus) {
+            missionToSave.setStatus(missionStatus);
+            missionToSave.setEndDate(null);
+
+            Assertions.assertThatThrownBy(() -> {
+                objectToTest.save(missionToSave);
+            }).isInstanceOf(ProhibitedActionException.class)
+                    .hasMessage(MessageFormat.format(ErrorConstant.END_DATE_MUST_BE_DEFINED_WHEN_STATUS_IS, missionStatus.getName()));
+        }
+
+        @Test
+        void test() {
+            missionToSave.setName("a");
+
+            objectToTest.save(missionToSave);
+        }
     }
 
     @Test

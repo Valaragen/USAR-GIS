@@ -3,6 +3,7 @@ package com.usargis.usargisapi.service.impl;
 import com.usargis.usargisapi.core.dto.AvailabilityDto;
 import com.usargis.usargisapi.core.model.Availability;
 import com.usargis.usargisapi.core.model.Mission;
+import com.usargis.usargisapi.core.model.MissionStatus;
 import com.usargis.usargisapi.core.model.UserInfo;
 import com.usargis.usargisapi.core.search.AvailabilitySearch;
 import com.usargis.usargisapi.repository.AvailabilityRepository;
@@ -16,10 +17,13 @@ import com.usargis.usargisapi.util.objectMother.model.AvailabilityMother;
 import com.usargis.usargisapi.util.objectMother.model.MissionMother;
 import com.usargis.usargisapi.util.objectMother.model.UserInfoMother;
 import com.usargis.usargisapi.web.exception.NotFoundException;
+import com.usargis.usargisapi.web.exception.ProhibitedActionException;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.EnumSource;
 import org.mockito.AdditionalAnswers;
 import org.mockito.Mockito;
 
@@ -69,15 +73,33 @@ class AvailabilityServiceImplTest {
         Mockito.verify(availabilityRepository).findById(availabilityIdToFind);
     }
 
-    @Test
-    void save_shouldCallRepositoryAndReturnAvailability() {
-        Availability availabilityToSave = new Availability();
-        Mockito.when(availabilityRepository.save(availabilityToSave)).thenReturn(availabilityToSave);
+    @Nested
+    class saveTest {
+        private Availability availabilityToSave = AvailabilityMother.sample().build();
 
-        Availability result = objectToTest.save(availabilityToSave);
+        @BeforeEach
+        void setup() {
+            Mockito.when(availabilityRepository.save(availabilityToSave)).thenReturn(availabilityToSave);
+        }
 
-        Assertions.assertThat(result).isEqualTo(availabilityToSave);
-        Mockito.verify(availabilityRepository).save(availabilityToSave);
+        @Test
+        void save_shouldCallRepositoryAndReturnAvailability() {
+            Availability result = objectToTest.save(availabilityToSave);
+
+            Assertions.assertThat(result).isEqualTo(availabilityToSave);
+            Mockito.verify(availabilityRepository).save(availabilityToSave);
+        }
+
+        @ParameterizedTest
+        @EnumSource(value = MissionStatus.class, names = {"ONFOCUS", "ONGOING", "FINISHED", "CANCELLED"})
+        void save_whenMissionStatusOnCertainStatesAndEndDateIsNull_throwException(MissionStatus missionStatus) {
+            availabilityToSave.getMission().setStatus(missionStatus);
+
+            Assertions.assertThatThrownBy(() -> {
+                objectToTest.save(availabilityToSave);
+            }).isInstanceOf(ProhibitedActionException.class)
+                    .hasMessage(MessageFormat.format(ErrorConstant.AVAILABILITY_CANT_BE_CREATED_OR_UPDATED_WHEN_LINKED_MISSION_STATUS_IS, missionStatus.getName()));
+        }
     }
 
     @Test
@@ -107,7 +129,7 @@ class AvailabilityServiceImplTest {
     class createTest {
         private AvailabilityDto.AvailabilityCreate availabilityCreateDto = AvailabilityDtoMother.createSample().build();
         private UserInfo userToLink = UserInfoMother.sample().build();
-        private Mission missionToLink = MissionMother.sampleFinished().build();
+        private Mission missionToLink = MissionMother.sampleTeamEngagement().build();
         private Availability savedAvailability = AvailabilityMother.sample().build();
 
         @BeforeEach
