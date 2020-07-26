@@ -1,0 +1,283 @@
+<?xml version="1.1" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:pro="http://www.liquibase.org/xml/ns/pro" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd http://www.liquibase.org/xml/ns/pro http://www.liquibase.org/xml/ns/pro/liquibase-pro-3.8.xsd http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
+    <changeSet author="Rudy (generated)" id="1595784059297-1">
+        <createTable tableName="user_in_group">
+            <column name="user_info_id" type="BIGINT">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="user_in_group_pkey"/>
+            </column>
+            <column name="group_id" type="VARCHAR(255)">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="user_in_group_pkey"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="Rudy (generated)" id="1595784059297-2">
+        <createTable tableName="notification_message">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="notification_message_pkey"/>
+            </column>
+            <column name="version" type="BIGINT"/>
+            <column name="content" type="VARCHAR(10000)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="content_type" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="subject" type="VARCHAR(100)"/>
+            <column name="notification_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="Rudy (generated)" id="1595784059297-3">
+        <createTable tableName="user_info">
+            <column name="id" type="VARCHAR(255)">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="user_info_pkey"/>
+            </column>
+            <column name="version" type="BIGINT"/>
+            <column name="email" type="VARCHAR(255)"/>
+            <column name="email_verified" type="BOOLEAN">
+                <constraints nullable="false"/>
+            </column>
+            <column name="first_name" type="VARCHAR(255)"/>
+            <column name="formatted_address" type="VARCHAR(255)"/>
+            <column name="last_name" type="VARCHAR(255)"/>
+            <column name="phone" type="VARCHAR(255)"/>
+            <column name="phone_verified" type="BOOLEAN">
+                <constraints nullable="false"/>
+            </column>
+            <column name="username" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="Rudy (generated)" id="1595784059297-4">
+        <createTable tableName="_group">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="_group_pkey"/>
+            </column>
+            <column name="version" type="BIGINT"/>
+            <column name="name" type="VARCHAR(50)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="Rudy (generated)" id="1595784059297-5">
+        <createTable tableName="team">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="team_pkey"/>
+            </column>
+            <column name="version" type="BIGINT"/>
+            <column name="name" type="VARCHAR(50)"/>
+            <column name="mission_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="Rudy (generated)" id="1595784059297-6">
+        <createTable tableName="team_member">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="team_member_pkey"/>
+            </column>
+            <column name="version" type="BIGINT"/>
+            <column name="is_confirmed_by_user" type="BOOLEAN">
+                <constraints nullable="false"/>
+            </column>
+            <column name="team_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="user_info_id" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="Rudy (generated)" id="1595784059297-7">
+        <createTable tableName="event">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="event_pkey"/>
+            </column>
+            <column name="version" type="BIGINT"/>
+            <column name="address" type="VARCHAR(200)"/>
+            <column name="creation_date" type="TIMESTAMP WITHOUT TIME ZONE"/>
+            <column name="description" type="VARCHAR(5000)"/>
+            <column name="end_date" type="TIMESTAMP WITHOUT TIME ZONE"/>
+            <column name="inscription_start_date" type="TIMESTAMP WITHOUT TIME ZONE"/>
+            <column name="inscriptions_end_date" type="TIMESTAMP WITHOUT TIME ZONE"/>
+            <column name="is_inscription_required" type="BOOLEAN">
+                <constraints nullable="false"/>
+            </column>
+            <column name="is_inscription_validation_required" type="BOOLEAN">
+                <constraints nullable="false"/>
+            </column>
+            <column name="last_edition_date" type="TIMESTAMP WITHOUT TIME ZONE"/>
+            <column name="latitude" type="FLOAT8"/>
+            <column name="longitude" type="FLOAT8"/>
+            <column name="max_inscriptions_number" type="INTEGER"/>
+            <column name="name" type="VARCHAR(100)"/>
+            <column name="start_date" type="TIMESTAMP WITHOUT TIME ZONE"/>
+            <column name="status" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="author_id" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="Rudy (generated)" id="1595784059297-8">
+        <createTable tableName="mission">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="mission_pkey"/>
+            </column>
+            <column name="version" type="BIGINT"/>
+            <column name="address" type="VARCHAR(200)"/>
+            <column name="creation_date" type="TIMESTAMP WITHOUT TIME ZONE"/>
+            <column name="description" type="VARCHAR(5000)"/>
+            <column name="end_date" type="TIMESTAMP WITHOUT TIME ZONE"/>
+            <column name="expected_duration_in_days" type="INTEGER"/>
+            <column name="last_edition_date" type="TIMESTAMP WITHOUT TIME ZONE"/>
+            <column name="latitude" type="FLOAT8"/>
+            <column name="longitude" type="FLOAT8"/>
+            <column name="name" type="VARCHAR(100)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="planned_start_date" type="TIMESTAMP WITHOUT TIME ZONE"/>
+            <column name="start_date" type="TIMESTAMP WITHOUT TIME ZONE"/>
+            <column name="status" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="author_id" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="Rudy (generated)" id="1595784059297-9">
+        <createTable tableName="notification">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="notification_pkey"/>
+            </column>
+            <column name="version" type="BIGINT"/>
+            <column name="sending_date" type="TIMESTAMP WITHOUT TIME ZONE">
+                <constraints nullable="false"/>
+            </column>
+            <column name="status" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="author_id" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="event_id" type="BIGINT"/>
+            <column name="mission_id" type="BIGINT"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="Rudy (generated)" id="1595784059297-10">
+        <createTable tableName="notification_message_sending_modes">
+            <column name="notification_message_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="notification_message_sending_mode" type="VARCHAR(255)"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="Rudy (generated)" id="1595784059297-11">
+        <createTable tableName="availability">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="availability_pkey"/>
+            </column>
+            <column name="version" type="BIGINT"/>
+            <column name="end_date" type="TIMESTAMP WITHOUT TIME ZONE">
+                <constraints nullable="false"/>
+            </column>
+            <column name="start_date" type="TIMESTAMP WITHOUT TIME ZONE">
+                <constraints nullable="false"/>
+            </column>
+            <column name="mission_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="user_info_id" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="Rudy (generated)" id="1595784059297-12">
+        <createTable tableName="inscription">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="inscription_pkey"/>
+            </column>
+            <column name="version" type="BIGINT"/>
+            <column name="inscription_date" type="TIMESTAMP WITHOUT TIME ZONE"/>
+            <column name="inscription_status" type="INTEGER">
+                <constraints nullable="false"/>
+            </column>
+            <column name="event_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="user_info_id" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="Rudy (generated)" id="1595784059297-13">
+        <addUniqueConstraint columnNames="notification_id, content_type" constraintName="ukcoe7y1uat9b5sdvxklk48qy5v" tableName="notification_message"/>
+    </changeSet>
+    <changeSet author="Rudy (generated)" id="1595784059297-14">
+        <addUniqueConstraint columnNames="username" constraintName="uk_f2ksd6h8hsjtd57ipfq9myr64" tableName="user_info"/>
+    </changeSet>
+    <changeSet author="Rudy (generated)" id="1595784059297-15">
+        <addUniqueConstraint columnNames="email" constraintName="uk_gnu0k8vv6ptioedbxbfsnan9g" tableName="user_info"/>
+    </changeSet>
+    <changeSet author="Rudy (generated)" id="1595784059297-16">
+        <addForeignKeyConstraint baseColumnNames="user_info_id" baseTableName="user_in_group" constraintName="fkncfbpdqycmq1j6hytaqkmtcee" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="_group" validate="true"/>
+    </changeSet>
+    <changeSet author="Rudy (generated)" id="1595784059297-17">
+        <addUniqueConstraint columnNames="name" constraintName="uk_c3bxquhjwf63j16a8o4o75skb" tableName="_group"/>
+    </changeSet>
+    <changeSet author="Rudy (generated)" id="1595784059297-18">
+        <addForeignKeyConstraint baseColumnNames="user_info_id" baseTableName="team_member" constraintName="fk7y0n3y5ctd9f71j623nto27il" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="user_info" validate="true"/>
+    </changeSet>
+    <changeSet author="Rudy (generated)" id="1595784059297-19">
+        <addForeignKeyConstraint baseColumnNames="team_id" baseTableName="team_member" constraintName="fk9ubp79ei4tv4crd0r9n7u5i6e" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="team" validate="true"/>
+    </changeSet>
+    <changeSet author="Rudy (generated)" id="1595784059297-20">
+        <addUniqueConstraint columnNames="team_id, user_info_id" constraintName="uk9lmdsf08g388hujrr4inr2fnb" tableName="team_member"/>
+    </changeSet>
+    <changeSet author="Rudy (generated)" id="1595784059297-21">
+        <addForeignKeyConstraint baseColumnNames="event_id" baseTableName="inscription" constraintName="fk1eyojpr2hwc7bdxt23752w8wo" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="event" validate="true"/>
+    </changeSet>
+    <changeSet author="Rudy (generated)" id="1595784059297-22">
+        <addForeignKeyConstraint baseColumnNames="author_id" baseTableName="event" constraintName="fk7yc3o82ylkqbd2ul10yq09akm" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="user_info" validate="true"/>
+    </changeSet>
+    <changeSet author="Rudy (generated)" id="1595784059297-23">
+        <addForeignKeyConstraint baseColumnNames="event_id" baseTableName="notification" constraintName="fksht3fif7btn0phoy13gvsae3m" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="event" validate="true"/>
+    </changeSet>
+    <changeSet author="Rudy (generated)" id="1595784059297-24">
+        <addForeignKeyConstraint baseColumnNames="author_id" baseTableName="mission" constraintName="fkke6t4t7hnsyje4k4cly8353bs" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="user_info" validate="true"/>
+    </changeSet>
+    <changeSet author="Rudy (generated)" id="1595784059297-25">
+        <addForeignKeyConstraint baseColumnNames="author_id" baseTableName="notification" constraintName="fkkyyq3kfxfkp3k89adlsm9tktb" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="user_info" validate="true"/>
+    </changeSet>
+    <changeSet author="Rudy (generated)" id="1595784059297-26">
+        <addForeignKeyConstraint baseColumnNames="mission_id" baseTableName="notification" constraintName="fkpmlp6s1c1f8mnt8irb2uo5ohu" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="mission" validate="true"/>
+    </changeSet>
+    <changeSet author="Rudy (generated)" id="1595784059297-27">
+        <addForeignKeyConstraint baseColumnNames="notification_message_id" baseTableName="notification_message_sending_modes" constraintName="fk9u8p9c8x7tudbic0ttc1y9ts1" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="notification_message" validate="true"/>
+    </changeSet>
+    <changeSet author="Rudy (generated)" id="1595784059297-28">
+        <addForeignKeyConstraint baseColumnNames="user_info_id" baseTableName="availability" constraintName="fk7j0rvt519ebhrm1wfv0kob9pm" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="user_info" validate="true"/>
+    </changeSet>
+    <changeSet author="Rudy (generated)" id="1595784059297-29">
+        <addForeignKeyConstraint baseColumnNames="mission_id" baseTableName="availability" constraintName="fkif9c6nrir46uj56ohhlxtt194" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="mission" validate="true"/>
+    </changeSet>
+    <changeSet author="Rudy (generated)" id="1595784059297-30">
+        <addForeignKeyConstraint baseColumnNames="user_info_id" baseTableName="inscription" constraintName="fk915e0x6hg562qr3n21nu82q2s" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="user_info" validate="true"/>
+    </changeSet>
+    <changeSet author="Rudy (generated)" id="1595784059297-31">
+        <addUniqueConstraint columnNames="user_info_id, event_id" constraintName="uk5h6b68qlh56fpdejp0c8ldrvn" tableName="inscription"/>
+    </changeSet>
+    <changeSet author="Rudy (generated)" id="1595784059297-32">
+        <addForeignKeyConstraint baseColumnNames="group_id" baseTableName="user_in_group" constraintName="fk1jfc8irs280cx5pyhy73af12p" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="user_info" validate="true"/>
+    </changeSet>
+    <changeSet author="Rudy (generated)" id="1595784059297-33">
+        <addForeignKeyConstraint baseColumnNames="notification_id" baseTableName="notification_message" constraintName="fkkj2b7yqd7rmgfcvrnbf11f27f" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="notification" validate="true"/>
+    </changeSet>
+    <changeSet author="Rudy (generated)" id="1595784059297-34">
+        <addForeignKeyConstraint baseColumnNames="mission_id" baseTableName="team" constraintName="fkjcw9h0gwj7faow2pdeq8h0p1s" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="mission" validate="true"/>
+    </changeSet>
+</databaseChangeLog>
