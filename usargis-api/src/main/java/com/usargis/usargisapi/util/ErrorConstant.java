@@ -24,6 +24,10 @@ public abstract class ErrorConstant {
     public static final String NO_TEAM_MEMBER_FOUND_FOR_ID = "Team member not found for this id : {0}";
 
     public static final String ERROR_READ_TOKEN_EXCEPTION = "Cannot read token";
+    public static final String START_DATE_MUST_BE_DEFINED_WHEN_STATUS_IS = "Start date must be defined when status is {0}";
+    public static final String END_DATE_MUST_BE_DEFINED_WHEN_STATUS_IS = "End date must be defined when status is {0}";
+
+    public static final String AVAILABILITY_CANT_BE_CREATED_OR_UPDATED_WHEN_LINKED_MISSION_STATUS_IS = "Availability can\'t be created or updated when linked mission status is {0}";
 
     private ErrorConstant() {
     }
