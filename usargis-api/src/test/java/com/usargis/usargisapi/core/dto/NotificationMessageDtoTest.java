@@ -20,12 +20,12 @@ class NotificationMessageDtoTest {
     class NotificationMessagePostRequestDto {
         @Test
         void notificationMessagePostRequestDto_mapDtoToEntity_shouldMapCorrectly() {
-            NotificationMessageDto.PostRequest notificationMessagePostRequestDto = NotificationMessageDtoMother.postRequestSample().build();
+            NotificationMessageDto.NotificationMessagePostRequest notificationMessagePostRequestDto = NotificationMessageDtoMother.postRequestSample().build();
 
             NotificationMessage notificationMessage = modelMapperService.map(notificationMessagePostRequestDto, NotificationMessage.class);
 
-            Assertions.assertThat(notificationMessage.getId()).isNotNull();
-            Assertions.assertThat(notificationMessage.getId().getContentType()).isEqualTo(notificationMessagePostRequestDto.getContentType());
+            Assertions.assertThat(notificationMessage.getId()).isNull();
+            Assertions.assertThat(notificationMessage.getContentType()).isEqualTo(notificationMessagePostRequestDto.getContentType());
             Assertions.assertThat(notificationMessage.getSendingModes()).isEqualTo(notificationMessagePostRequestDto.getSendingModes());
             Assertions.assertThat(notificationMessage.getSubject()).isEqualTo(notificationMessagePostRequestDto.getSubject());
             Assertions.assertThat(notificationMessage.getContent()).isEqualTo(notificationMessagePostRequestDto.getContent());
@@ -37,13 +37,13 @@ class NotificationMessageDtoTest {
         @Test
         void notificationMessageResponseDto_mapEntityToDto_shouldMapCorrectly() {
             NotificationMessage notificationMessage = NotificationMessageMother.sample().build();
-            notificationMessage.getId().getNotification().setId(1L);
-            notificationMessage.getId().setContentType(NotificationMessageContentType.TEXT);
+            notificationMessage.getNotification().setId(1L);
+            notificationMessage.setContentType(NotificationMessageContentType.TEXT);
 
-            NotificationMessageDto.Response notificationMessageResponseDto = modelMapperService.map(notificationMessage, NotificationMessageDto.Response.class);
+            NotificationMessageDto.NotificationMessageResponse notificationMessageResponseDto = modelMapperService.map(notificationMessage, NotificationMessageDto.NotificationMessageResponse.class);
 
-            Assertions.assertThat(notificationMessageResponseDto.getNotificationId()).isEqualTo(notificationMessage.getId().getNotification().getId());
-            Assertions.assertThat(notificationMessageResponseDto.getContentType()).isEqualTo(notificationMessage.getId().getContentType());
+            Assertions.assertThat(notificationMessageResponseDto.getNotificationId()).isEqualTo(notificationMessage.getNotification().getId());
+            Assertions.assertThat(notificationMessageResponseDto.getContentType()).isEqualTo(notificationMessage.getContentType());
             Assertions.assertThat(notificationMessageResponseDto.getSendingModes()).isEqualTo(notificationMessage.getSendingModes());
             Assertions.assertThat(notificationMessageResponseDto.getContent()).isEqualTo(notificationMessage.getContent());
             Assertions.assertThat(notificationMessageResponseDto.getSubject()).isEqualTo(notificationMessage.getSubject());

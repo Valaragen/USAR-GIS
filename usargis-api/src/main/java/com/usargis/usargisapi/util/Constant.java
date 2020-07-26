@@ -11,7 +11,10 @@ public abstract class Constant {
     public static final String SLASH_ID_PATH = "/{id}";
     public static final String SLASH_STRING_PATH = "/{string}";
     public static final String SLASH_NAME_PATH = "/{name}";
+    public static final String SLASH_USERNAME_PATH = "/{username}";
     public static final String V1_PATH = "/v1";
+    public static final String API_PATH = "/api";
+    public static final String USARGIS_PATH = "/usar-gis";
     public static final String AVAILABILITIES_PATH = "/availabilities";
     public static final String EVENTS_PATH = "/events";
     public static final String GROUPS_PATH = "/groups";
@@ -21,7 +24,7 @@ public abstract class Constant {
     public static final String NOTIFICATION_MESSAGES_PATH = "/notification-messages";
     public static final String TEAMS_PATH = "/teams";
     public static final String TEAM_MEMBERS_PATH = "/team-members";
-    public static final String USERS = "/users";
+    public static final String USERS_PATH = "/users";
     //### STATUS ###
     public static final String STATUS_PENDING_CODE = "PE";
     public static final String STATUS_PENDING = "pending";
@@ -29,8 +32,10 @@ public abstract class Constant {
     public static final String STATUS_PLANNED = "planned";
     public static final String STATUS_ONFOCUS_CODE = "OF";
     public static final String STATUS_ONFOCUS = "onfocus";
+    public static final String STATUS_PRE_ALERT_CODE = "PE";
+    public static final String STATUS_PRE_ALERT = "pre-alert";
     public static final String STATUS_TEAMENGAGEMENT_CODE = "TE";
-    public static final String STATUS_TEAMENGAGEMENT = "teamEngagement";
+    public static final String STATUS_TEAMENGAGEMENT = "team-engagement";
     public static final String STATUS_ONGOING_CODE = "OG";
     public static final String STATUS_ONGOING = "ongoing";
     public static final String STATUS_FINISHED_CODE = "FI";
@@ -40,7 +45,7 @@ public abstract class Constant {
     public static final String STATUS_CANCELLED_CODE = "CA";
     public static final String STATUS_CANCELLED = "cancelled";
     public static final String STATUS_WAITING_FOR_VALIDATION_CODE = "WFV";
-    public static final String STATUS_WAITING_FOR_VALIDATION = "waitingForValidation";
+    public static final String STATUS_WAITING_FOR_VALIDATION = "waiting-for-validation";
     public static final String STATUS_VALIDATED_CODE = "VA";
     public static final String STATUS_VALIDATED = "validated";
     //### NOTIFICATION MESSAGE SENDING MODE ###
@@ -55,6 +60,7 @@ public abstract class Constant {
     public static final String NMCT_HTML = "HTML";
     public static final String NMCT_TEXT_CODE = "T";
     public static final String NMCT_TEXT = "TEXT";
+
     private Constant() {
     }
 

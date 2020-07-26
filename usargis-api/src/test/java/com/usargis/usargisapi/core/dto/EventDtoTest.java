@@ -19,7 +19,7 @@ class EventDtoTest {
     class EventPostRequestDto {
         @Test
         void eventPostRequestDto_mapDtoToEntity_shouldMapCorrectly() {
-            EventDto.PostRequest eventPostRequestDto = EventDtoMother.postRequestSample().build();
+            EventDto.EventPostRequest eventPostRequestDto = EventDtoMother.postRequestSample().build();
 
             Event event = modelMapperService.map(eventPostRequestDto, Event.class);
 
@@ -50,7 +50,7 @@ class EventDtoTest {
             event.setId(1L);
             event.getAuthor().setId("test");
 
-            EventDto.Response eventResponseDto = modelMapperService.map(event, EventDto.Response.class);
+            EventDto.EventResponse eventResponseDto = modelMapperService.map(event, EventDto.EventResponse.class);
 
             Assertions.assertThat(eventResponseDto.getId()).isEqualTo(event.getId());
             Assertions.assertThat(eventResponseDto.getName()).isEqualTo(event.getName());
@@ -65,7 +65,7 @@ class EventDtoTest {
             Assertions.assertThat(eventResponseDto.getInscriptionsEndDate()).isEqualTo(event.getInscriptionsEndDate());
             Assertions.assertThat(eventResponseDto.getLatitude()).isEqualTo(event.getLatitude());
             Assertions.assertThat(eventResponseDto.getLongitude()).isEqualTo(event.getLongitude());
-            Assertions.assertThat(eventResponseDto.getAuthorId()).isEqualTo(event.getAuthor().getId());
+            Assertions.assertThat(eventResponseDto.getAuthorUsername()).isEqualTo(event.getAuthor().getUsername());
             Assertions.assertThat(eventResponseDto.getStatus()).isEqualTo(event.getStatus());
             Assertions.assertThat(eventResponseDto.getCreationDate()).isEqualTo(event.getCreationDate());
             Assertions.assertThat(eventResponseDto.getLastEditionDate()).isEqualTo(event.getLastEditionDate());

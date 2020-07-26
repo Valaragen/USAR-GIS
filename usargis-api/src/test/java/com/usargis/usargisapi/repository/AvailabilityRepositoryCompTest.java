@@ -10,10 +10,12 @@ import com.usargis.usargisapi.util.objectMother.model.UserInfoMother;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.TestPropertySource;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -22,7 +24,7 @@ import java.util.Optional;
 
 @ActiveProfiles("test")
 @DataJpaTest
-@TestPropertySource(properties = {"spring.jpa.hibernate.ddl-auto=create-drop"})
+@TestPropertySource(properties = {"spring.jpa.hibernate.ddl-auto=validate"})
 class AvailabilityRepositoryCompTest {
 
     @PersistenceContext
@@ -84,9 +86,9 @@ class AvailabilityRepositoryCompTest {
     }
 
     @Test
-    void searchAll_userUuidGiven_shouldFindByUuid() {
+    void searchAll_userUsernameGiven_shouldFindByUuid() {
         AvailabilitySearch availabilitySearch = new AvailabilitySearch();
-        availabilitySearch.setUserId(sampleUser.getId());
+        availabilitySearch.setUserUsername(sampleUser.getUsername());
 
         List<Availability> result = objectToTest.searchAll(availabilitySearch);
 
@@ -109,7 +111,7 @@ class AvailabilityRepositoryCompTest {
     void searchAll_givenAvailabilitySearch_shouldFindAllGivenParameters() {
         AvailabilitySearch availabilitySearch = new AvailabilitySearch();
         availabilitySearch.setMissionId(sampleFinishedMission.getId());
-        availabilitySearch.setUserId(sampleUser.getId());
+        availabilitySearch.setUserUsername(sampleUser.getUsername());
 
         List<Availability> result = objectToTest.searchAll(availabilitySearch);
 

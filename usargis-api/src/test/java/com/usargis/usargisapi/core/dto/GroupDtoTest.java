@@ -19,7 +19,7 @@ class GroupDtoTest {
     class GroupPostRequestDto {
         @Test
         void groupPostRequestDto_mapDtoToEntity_shouldMapCorrectly() {
-            GroupDto.PostRequest groupPostRequestDto = GroupDtoMother.postRequestSample().build();
+            GroupDto.GroupPostRequest groupPostRequestDto = GroupDtoMother.postRequestSample().build();
 
             Group group = modelMapperService.map(groupPostRequestDto, Group.class);
 
@@ -36,7 +36,7 @@ class GroupDtoTest {
             Group group = GroupMother.sample().build();
             group.setId(1L);
 
-            GroupDto.Response groupResponseDto = modelMapperService.map(group, GroupDto.Response.class);
+            GroupDto.GroupResponse groupResponseDto = modelMapperService.map(group, GroupDto.GroupResponse.class);
 
             Assertions.assertThat(groupResponseDto.getId()).isEqualTo(group.getId());
             Assertions.assertThat(groupResponseDto.getName()).isEqualTo(group.getName());

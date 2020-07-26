@@ -1,6 +1,5 @@
 package com.usargis.usargisapi.core.model;
 
-import com.usargis.usargisapi.core.model.embeddable.NotificationMessageId;
 import com.usargis.usargisapi.util.objectMother.model.NotificationMessageMother;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -27,7 +26,7 @@ class NotificationMessageTest {
     @Test
     void equals_differentNotificationMessages_shouldReturnFalse() {
         NotificationMessage notificationMessageToCompare = NotificationMessageMother.sample().build();
-        notificationMessageToCompare.setId(new NotificationMessageId());
+        notificationMessageToCompare.setId(1L);
 
         boolean result = objectToTest.equals(notificationMessageToCompare);
 

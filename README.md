@@ -1,3 +1,6 @@
+[![Build Status](https://travis-ci.com/Valaragen/USAR-GIS.svg?branch=master)](https://travis-ci.com/Valaragen/USAR-GIS)
+[![Coverage](https://sonarcloud.io/api/project_badges/measure?project=Valaragen_USAR-GIS&metric=coverage)](https://sonarcloud.io/dashboard?id=Valaragen_USAR-GIS)
+[![Maintainability Rating](https://sonarcloud.io/api/project_badges/measure?project=Valaragen_USAR-GIS&metric=sqale_rating)](https://sonarcloud.io/dashboard?id=Valaragen_USAR-GIS)
 # USAR-GIS
 ## Description
 ### À propos

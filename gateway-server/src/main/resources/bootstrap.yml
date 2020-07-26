@@ -20,9 +20,8 @@ spring:
         - id: usargis-api
           uri: lb://USARGIS-API
           predicates:
-            - Path=/usargis-api/**
+            - Path=/usar-gis/api/**
           filters:
-            - RewritePath=/usargis-api(?<segment>/?.*), /$\{segment}
             - RemoveRequestHeader=Cookie
     loadbalancer:
       ribbon:

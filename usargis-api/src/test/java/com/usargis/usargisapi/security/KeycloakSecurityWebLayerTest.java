@@ -5,13 +5,17 @@ import com.usargis.usargisapi.security.testController.KeycloakSecurityTestContro
 import com.usargis.usargisapi.service.contract.SecurityService;
 import com.usargis.usargisapi.service.contract.UserInfoService;
 import com.usargis.usargisapi.util.keycloakAuthMock.WithMockKeycloakUser;
+import com.usargis.usargisapi.web.controller.interceptor.ApiInterceptor;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.annotation.Import;
+import org.springframework.stereotype.Component;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import static org.hamcrest.core.StringContains.containsString;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -21,7 +25,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @ActiveProfiles("test")
 @WebMvcTest(value = {KeycloakSecurityTestController.class, SecurityService.class})
-@Import(SpringKeycloakSecurityConfiguration.class)
+@Import({SpringKeycloakSecurityConfiguration.class})
 class KeycloakSecurityWebLayerTest {
     @Autowired
     private MockMvc mockMvc;
@@ -31,7 +35,6 @@ class KeycloakSecurityWebLayerTest {
 
     @Autowired
     private SecurityService securityService;
-
 
     @Test
     @WithMockKeycloakUser(roles = "LEADER")
@@ -54,40 +57,4 @@ class KeycloakSecurityWebLayerTest {
         this.mockMvc.perform(get("/keycloak-test/sameuser/user")).andDo(print())
                 .andExpect(status().isOk());
     }
-
 }
-
-
-//@Slf4j
-//@ActiveProfiles("test")
-//@WebMvcTest(KeycloakSecurityTestController.class)
-//@Import(SpringKeycloakSecurityConfiguration.class)
-//class KeycloakSecurityWebLayerTestApplicationContext {
-//
-//    @Test
-//    @WithMockKeycloakUser(roles = "LEADER")
-//    void applicationContextMockKeycloakUserTest() {
-//        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-//        Assertions.assertThat(authentication).isNotNull();
-//
-//        Collection<? extends GrantedAuthority> result = authentication.getAuthorities();
-//        Assertions.assertThat(result).isNotEmpty();
-//    }
-//
-//    @Test
-//    @WithMockUser(roles = "LEADER")
-//    void applicationContextMockUserTest() {
-//        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-//        Assertions.assertThat(authentication).isNotNull();
-//
-//        Collection<? extends GrantedAuthority> result = authentication.getAuthorities();
-//        Assertions.assertThat(result).isNotEmpty();
-//
-//    }
-//
-//    @Test
-//    void applicationContextTest() {
-//        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-//        Assertions.assertThat(authentication).isNull();
-//    }
-//}

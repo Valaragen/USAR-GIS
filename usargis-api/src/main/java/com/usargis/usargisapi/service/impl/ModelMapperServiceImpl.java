@@ -1,11 +1,7 @@
 package com.usargis.usargisapi.service.impl;
 
-import com.usargis.usargisapi.core.dto.AvailabilityDto;
-import com.usargis.usargisapi.core.dto.NotificationMessageDto;
-import com.usargis.usargisapi.core.dto.TeamDto;
-import com.usargis.usargisapi.core.model.Availability;
-import com.usargis.usargisapi.core.model.NotificationMessage;
-import com.usargis.usargisapi.core.model.Team;
+import com.usargis.usargisapi.core.dto.*;
+import com.usargis.usargisapi.core.model.*;
 import com.usargis.usargisapi.service.contract.ModelMapperService;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.PropertyMap;
@@ -25,8 +21,8 @@ public class ModelMapperServiceImpl implements ModelMapperService {
 
     //Mapping rules
     private void configureModelMapper() {
-        //Availability Create DTO To entity
-        PropertyMap<AvailabilityDto.Create, Availability> availabilityCreateToEntityPropertyMap = new PropertyMap<AvailabilityDto.Create, Availability>() {
+        //Availability Create DTO to entity
+        PropertyMap<AvailabilityDto.AvailabilityCreate, Availability> availabilityCreateToEntityPropertyMap = new PropertyMap<AvailabilityDto.AvailabilityCreate, Availability>() {
             protected void configure() {
                 skip().setId(null);
                 skip().setMission(null);
@@ -35,27 +31,9 @@ public class ModelMapperServiceImpl implements ModelMapperService {
         };
         modelMapper.addMappings(availabilityCreateToEntityPropertyMap);
 
-        //NotificationMessage PostRequest DTO to entity
-        PropertyMap<NotificationMessageDto.PostRequest, NotificationMessage> notificationMessagePostRequestToEntityPropertyMap =
-                new PropertyMap<NotificationMessageDto.PostRequest, NotificationMessage>() {
-                    protected void configure() {
-                        map().getId().setContentType(source.getContentType());
-                    }
-                };
-        modelMapper.addMappings(notificationMessagePostRequestToEntityPropertyMap);
-
-        //NotificationMessage entity to Response DTO
-        PropertyMap<NotificationMessage, NotificationMessageDto.Response> notificationMessageEntityToResponsePropertyMap =
-                new PropertyMap<NotificationMessage, NotificationMessageDto.Response>() {
-                    protected void configure() {
-                        map().setContentType(source.getId().getContentType());
-                    }
-                };
-        modelMapper.addMappings(notificationMessageEntityToResponsePropertyMap);
-
         //Team PostRequest DTO to entity
-        PropertyMap<TeamDto.PostRequest, Team> teamPostRequestToEntityPropertyMap =
-                new PropertyMap<TeamDto.PostRequest, Team>() {
+        PropertyMap<TeamDto.TeamPostRequest, Team> teamPostRequestToEntityPropertyMap =
+                new PropertyMap<TeamDto.TeamPostRequest, Team>() {
                     protected void configure() {
                         skip().setId(null);
                         skip().setMission(null);
@@ -63,7 +41,50 @@ public class ModelMapperServiceImpl implements ModelMapperService {
                 };
         modelMapper.addMappings(teamPostRequestToEntityPropertyMap);
 
+        //Inscription PostRequest DTO to entity
+        PropertyMap<InscriptionDto.InscriptionPostRequest, Inscription> inscriptionPostRequestToEntityPropertyMap =
+                new PropertyMap<InscriptionDto.InscriptionPostRequest, Inscription>() {
+                    protected void configure() {
+                        skip().setId(null);
+                        skip().setEvent(null);
+                        skip().setUserInfo(null);
+                    }
+                };
+        modelMapper.addMappings(inscriptionPostRequestToEntityPropertyMap);
 
+        //TeamMember PostRequest DTO to entity
+        PropertyMap<TeamMemberDto.TeamMemberPostRequest, TeamMember> teamMemberPostRequestToEntityPropertyMap =
+                new PropertyMap<TeamMemberDto.TeamMemberPostRequest, TeamMember>() {
+                    protected void configure() {
+                        skip().setId(null);
+                        skip().setTeam(null);
+                        skip().setUserInfo(null);
+                    }
+                };
+        modelMapper.addMappings(teamMemberPostRequestToEntityPropertyMap);
+
+        //NotificationMessage PostRequest DTO to entity
+        PropertyMap<NotificationMessageDto.NotificationMessagePostRequest, NotificationMessage> notificationMessagePostRequestToEntityPropertyMap =
+                new PropertyMap<NotificationMessageDto.NotificationMessagePostRequest, NotificationMessage>() {
+                    protected void configure() {
+                        skip().setId(null);
+                        skip().setNotification(null);
+                    }
+                };
+        modelMapper.addMappings(notificationMessagePostRequestToEntityPropertyMap);
+
+        //Notification PostRequest DTO to entity
+        PropertyMap<NotificationDto.NotificationPostRequest, Notification> notificationPostRequestToEntityPropertyMap =
+                new PropertyMap<NotificationDto.NotificationPostRequest, Notification>() {
+                    protected void configure() {
+                        skip().setId(null);
+                        skip().setMission(null);
+                        skip().setEvent(null);
+                    }
+                };
+        modelMapper.addMappings(notificationPostRequestToEntityPropertyMap);
+        modelMapper.getConfiguration()
+                .setSkipNullEnabled(true);
     }
 
     @Override
@@ -72,7 +93,7 @@ public class ModelMapperServiceImpl implements ModelMapperService {
     }
 
     @Override
-    public void merge(Object source, Object destination) {
-        modelMapper.map(source, destination);
+    public void map(Object source, Object destinationType) {
+        modelMapper.map(source, destinationType);
     }
 }

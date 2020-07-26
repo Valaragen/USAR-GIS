@@ -19,7 +19,7 @@ import java.util.Optional;
 
 @ActiveProfiles("test")
 @DataJpaTest
-@TestPropertySource(properties = {"spring.jpa.hibernate.ddl-auto=create-drop"})
+@TestPropertySource(properties = {"spring.jpa.hibernate.ddl-auto=validate"})
 class NotificationRepositoryCompTest {
 
     @PersistenceContext
@@ -29,7 +29,8 @@ class NotificationRepositoryCompTest {
     private NotificationRepository objectToTest;
 
     private UserInfo sampleNotificationAuthor = UserInfoMother.sampleAuthor().build();
-    private Notification sampleNotification = NotificationMother.sampleSent().author(sampleNotificationAuthor).build();
+    private Notification sampleNotification = NotificationMother.sampleSent().author(sampleNotificationAuthor)
+            .mission(null).event(null).build();
 
     @BeforeEach
     void setup() {

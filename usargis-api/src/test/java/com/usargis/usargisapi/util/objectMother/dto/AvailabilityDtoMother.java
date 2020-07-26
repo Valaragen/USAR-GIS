@@ -4,16 +4,16 @@ import com.usargis.usargisapi.core.dto.AvailabilityDto;
 import com.usargis.usargisapi.util.TestConstant;
 
 public class AvailabilityDtoMother {
-    public static AvailabilityDto.Create.CreateBuilder createSample() {
-        return AvailabilityDto.Create.builder()
-                .userInfoId("sample")
+    public static AvailabilityDto.AvailabilityCreate.AvailabilityCreateBuilder createSample() {
+        return AvailabilityDto.AvailabilityCreate.builder()
+                .userInfoUsername("sample")
                 .missionId(1L)
                 .startDate(TestConstant.SAMPLE_LOCAL_DATE_TIME)
                 .endDate(TestConstant.SAMPLE_LOCAL_DATE_TIME);
     }
 
-    public static AvailabilityDto.Update.UpdateBuilder updateSample() {
-        return AvailabilityDto.Update.builder()
+    public static AvailabilityDto.AvailabilityUpdate.AvailabilityUpdateBuilder updateSample() {
+        return AvailabilityDto.AvailabilityUpdate.builder()
                 .startDate(TestConstant.SAMPLE_LOCAL_DATE_TIME)
                 .endDate(TestConstant.SAMPLE_LOCAL_DATE_TIME);
     }

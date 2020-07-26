@@ -8,29 +8,27 @@ import org.hibernate.validator.constraints.Length;
 
 import java.time.LocalDateTime;
 
-public abstract class MissionDto {
-    private MissionDto() {
-    }
+public interface MissionDto {
 
     //Interfaces to inherit hibernate validation
-    private interface Name {
+    interface Name {
         @Length(min = 2, max = 100)
         String getName();
     }
 
-    private interface Description {
+    interface Description {
         @Length(max = 5000)
         String getDescription();
     }
 
-    private interface Address {
+    interface Address {
         @Length(max = 200)
         String getAddress();
     }
 
     @Builder
     @Value
-    public static class PostRequest implements Name, Description, Address {
+    class MissionPostRequest implements MissionDto, Name, Description, Address {
         //Fields inheriting from validation
         private String name;
         private String description;
@@ -40,13 +38,14 @@ public abstract class MissionDto {
         private LocalDateTime startDate;
         private LocalDateTime endDate;
         private LocalDateTime plannedStartDate;
+        private MissionStatus missionStatus;
         private Integer expectedDurationInDays;
         private Double latitude;
         private Double longitude;
     }
 
     @Data
-    public static class Response implements Name, Description, Address {
+    class MissionResponse implements MissionDto, Name, Description, Address {
         //Fields inheriting from validation
         private String name;
         private String description;
@@ -63,6 +62,6 @@ public abstract class MissionDto {
         private Double longitude;
         private LocalDateTime creationDate;
         private LocalDateTime lastEditionDate;
-        private String authorId;
+        private String authorUsername;
     }
 }

@@ -1,8 +1,11 @@
 package com.usargis.usargisapi.web.controller;
 
+import com.usargis.usargisapi.core.dto.EventDto;
 import com.usargis.usargisapi.core.model.Event;
 import com.usargis.usargisapi.service.contract.EventService;
+import com.usargis.usargisapi.service.contract.ModelMapperService;
 import com.usargis.usargisapi.util.ErrorConstant;
+import com.usargis.usargisapi.util.objectMother.dto.EventDtoMother;
 import com.usargis.usargisapi.web.exception.NotFoundException;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -13,27 +16,27 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
 import java.text.MessageFormat;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 class EventControllerTest {
 
     private EventController objectToTest;
 
     private EventService eventService = Mockito.mock(EventService.class);
+    private ModelMapperService modelMapperService = Mockito.mock(ModelMapperService.class);
 
     @BeforeEach
     void setup() {
-        objectToTest = new EventController(eventService);
+        objectToTest = new EventController(eventService, modelMapperService);
     }
 
     @Nested
     class findAllEventsTest {
+        private final List<Event> eventsFound = Arrays.asList(new Event(), new Event());
+
         @Test
         void findAllEvents_shouldCallServiceLayer() {
-            Mockito.when(eventService.findAll()).thenReturn(Collections.singletonList(new Event()));
+            Mockito.when(eventService.findAll()).thenReturn(eventsFound);
 
             objectToTest.findAllEvents();
 
@@ -42,24 +45,32 @@ class EventControllerTest {
 
         @Test
         void findAllEvents_noEventFound_throwNotFoundException() {
-            Mockito.when(eventService.findAll()).thenReturn(new ArrayList<>());
+            Mockito.when(eventService.findAll()).thenReturn(Collections.emptyList());
 
             Assertions.assertThatThrownBy(() -> objectToTest.findAllEvents())
                     .isInstanceOf(NotFoundException.class)
-                    .hasMessage(ErrorConstant.NO_EVENTS_FOUND);
+                    .hasMessage(ErrorConstant.NO_EVENT_FOUND);
         }
 
         @Test
-        void findAllEvents_eventFound_returnResponseEntityWithEventList() {
-            List<Event> returnedEventList = Collections.singletonList(new Event());
-            Mockito.when(eventService.findAll()).thenReturn(returnedEventList);
+        void findAllEvents_shouldConvertEventsToListOfResponseDto() {
+            Mockito.when(eventService.findAll()).thenReturn(eventsFound);
+            Mockito.when(modelMapperService.map(Mockito.any(Event.class), Mockito.any())).thenReturn(new EventDto.EventResponse());
 
-            ResponseEntity result = objectToTest.findAllEvents();
+            objectToTest.findAllEvents();
 
-            Assertions.assertThat(result.getStatusCode())
-                    .isEqualTo(HttpStatus.OK);
-            Assertions.assertThat(result.getBody())
-                    .isEqualTo(returnedEventList);
+            Mockito.verify(modelMapperService, Mockito.times(eventsFound.size())).map(Mockito.any(Event.class), Mockito.any());
+        }
+
+        @Test
+        void findAllEvents_eventFound_returnStatusOkWithListOfEventsResponseDto() {
+            Mockito.when(eventService.findAll()).thenReturn(eventsFound);
+            Mockito.when(modelMapperService.map(Mockito.any(Event.class), Mockito.any())).thenReturn(new EventDto.EventResponse());
+
+            ResponseEntity<List<EventDto.EventResponse>> result = objectToTest.findAllEvents();
+
+            Assertions.assertThat(result.getStatusCode()).isEqualTo(HttpStatus.OK);
+            Assertions.assertThat(Objects.requireNonNull(result.getBody()).size()).isEqualTo(eventsFound.size());
         }
     }
 
@@ -67,6 +78,7 @@ class EventControllerTest {
     class getEventByIdTest {
         private final Long eventIdToFind = 1L;
         private final Event eventFound = new Event();
+        private final EventDto.EventResponse eventResponseDto = new EventDto.EventResponse();
 
         @Test
         void getEventById_shouldCallServiceLayer() {
@@ -87,42 +99,113 @@ class EventControllerTest {
         }
 
         @Test
-        void getEventById_eventFound_returnResponseEntityWithEventAndStatusOk() {
+        void getEventById_shouldConvertEventToResponseDto() {
             Mockito.when(eventService.findById(eventIdToFind)).thenReturn(Optional.of(eventFound));
+            Mockito.when(modelMapperService.map(eventFound, EventDto.EventResponse.class)).thenReturn(eventResponseDto);
 
-            ResponseEntity result = objectToTest.getEventById(eventIdToFind);
+            objectToTest.getEventById(eventIdToFind);
+
+            Mockito.verify(modelMapperService).map(eventFound, EventDto.EventResponse.class);
+        }
+
+        @Test
+        void getEventById_eventFound_returnStatusOkAndEventResponseDto() {
+            Mockito.when(eventService.findById(eventIdToFind)).thenReturn(Optional.of(eventFound));
+            Mockito.when(modelMapperService.map(eventFound, EventDto.EventResponse.class)).thenReturn(eventResponseDto);
+
+            ResponseEntity<EventDto.EventResponse> result = objectToTest.getEventById(eventIdToFind);
 
             Assertions.assertThat(result.getStatusCode())
                     .isEqualTo(HttpStatus.OK);
             Assertions.assertThat(result.getBody())
-                    .isEqualTo(eventFound);
+                    .isEqualTo(eventResponseDto);
+            Assertions.assertThat(result.getBody()).isInstanceOf(EventDto.EventResponse.class);
         }
     }
 
     @Nested
     class createNewEventTest {
-        private final Event eventToSave = new Event();
-        private final Event savedEvent = new Event();
+        private final EventDto.EventPostRequest eventToSave = EventDtoMother.postRequestSample().build();
+        private final Event newEvent = new Event();
+        private final EventDto.EventResponse eventResponseDto = new EventDto.EventResponse();
 
         @Test
         void createNewEvent_shouldCallServiceLayer() {
-            Mockito.when(eventService.save(eventToSave)).thenReturn(savedEvent);
+            Mockito.when(eventService.create(eventToSave)).thenReturn(newEvent);
 
             objectToTest.createNewEvent(eventToSave);
 
-            Mockito.verify(eventService).save(eventToSave);
+            Mockito.verify(eventService).create(eventToSave);
         }
 
         @Test
-        void createNewEvent_eventCreated_returnResponseEntityWithEventAndStatusCreated() {
-            Mockito.when(eventService.save(eventToSave)).thenReturn(savedEvent);
+        void createNewEvent_shouldConvertEventToResponseDto() {
+            Mockito.when(eventService.create(eventToSave)).thenReturn(newEvent);
+            Mockito.when(modelMapperService.map(newEvent, EventDto.EventResponse.class)).thenReturn(eventResponseDto);
 
-            ResponseEntity result = objectToTest.createNewEvent(eventToSave);
+            objectToTest.createNewEvent(eventToSave);
+
+            Mockito.verify(modelMapperService).map(newEvent, EventDto.EventResponse.class);
+        }
+
+        @Test
+        void createNewEvent_eventCreated_returnStatusCreatedAndEventResponseDto() {
+            Mockito.when(eventService.create(eventToSave)).thenReturn(newEvent);
+            Mockito.when(modelMapperService.map(newEvent, EventDto.EventResponse.class)).thenReturn(eventResponseDto);
+
+            ResponseEntity<EventDto.EventResponse> result = objectToTest.createNewEvent(eventToSave);
 
             Assertions.assertThat(result.getStatusCode())
                     .isEqualTo(HttpStatus.CREATED);
             Assertions.assertThat(result.getBody())
-                    .isEqualTo(savedEvent);
+                    .isEqualTo(eventResponseDto);
+            Assertions.assertThat(result.getBody()).isInstanceOf(EventDto.EventResponse.class);
+        }
+    }
+
+    @Nested
+    class updateEventTest {
+        private final Long eventId = 1L;
+        private final EventDto.EventPostRequest eventToUpdate = EventDtoMother.postRequestSample().build();
+        private final Event updateEvent = new Event();
+        private final EventDto.EventResponse eventResponseDto = new EventDto.EventResponse();
+
+        @Test
+        void updateEventTest_shouldCallServiceLayer() {
+            Mockito.when(eventService.update(eventId, eventToUpdate)).thenReturn(updateEvent);
+
+            objectToTest.updateEvent(eventId, eventToUpdate);
+
+            Mockito.verify(eventService).update(eventId, eventToUpdate);
+        }
+
+        @Test
+        void updateEventTest_shouldConvertEventToResponseDto() {
+            Mockito.when(eventService.update(eventId, eventToUpdate))
+                    .thenReturn(updateEvent);
+            Mockito.when(modelMapperService.map(updateEvent, EventDto.EventResponse.class))
+                    .thenReturn(eventResponseDto);
+
+            objectToTest.updateEvent(eventId, eventToUpdate);
+
+            Mockito.verify(modelMapperService).map(updateEvent, EventDto.EventResponse.class);
+        }
+
+        @Test
+        void updateEventTest_eventCreated_returnStatusOkAndEventResponseDto() {
+            Mockito.when(eventService.update(eventId, eventToUpdate))
+                    .thenReturn(updateEvent);
+            Mockito.when(modelMapperService.map(updateEvent, EventDto.EventResponse.class))
+                    .thenReturn(eventResponseDto);
+
+            ResponseEntity<EventDto.EventResponse> result =
+                    objectToTest.updateEvent(eventId, eventToUpdate);
+
+            Assertions.assertThat(result.getStatusCode())
+                    .isEqualTo(HttpStatus.OK);
+            Assertions.assertThat(result.getBody())
+                    .isEqualTo(eventResponseDto);
+            Assertions.assertThat(result.getBody()).isInstanceOf(EventDto.EventResponse.class);
         }
     }
 
@@ -152,8 +235,7 @@ class EventControllerTest {
             Assertions.assertThat(result.getStatusCode())
                     .isEqualTo(HttpStatus.NO_CONTENT);
             Assertions.assertThat(result.getBody())
-                    .isEqualTo(null);
+                    .isNull();
         }
     }
-
 }

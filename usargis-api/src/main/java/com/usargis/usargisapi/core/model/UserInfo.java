@@ -39,8 +39,7 @@ public class UserInfo extends ModelEntity {
     private String formattedAddress;
 
     @Builder.Default
-    @JsonIgnoreProperties({"id.userInfo"})
-    @OneToMany(mappedBy = "id.userInfo", orphanRemoval = true)
+    @OneToMany(mappedBy = "userInfo", orphanRemoval = true)
     @ToString.Exclude
     @EqualsAndHashCode.Exclude
     private List<TeamMember> inTeams = new ArrayList<>();
@@ -56,7 +55,7 @@ public class UserInfo extends ModelEntity {
     }
 
     public void setEmail(String email) {
-        this.email = email.toLowerCase();
+        if (email != null) this.email = email.toLowerCase();
     }
 
 }

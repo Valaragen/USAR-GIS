@@ -1,14 +1,28 @@
 package com.usargis.usargisapi.service.impl;
 
+import com.usargis.usargisapi.core.dto.InscriptionDto;
+import com.usargis.usargisapi.core.model.Event;
 import com.usargis.usargisapi.core.model.Inscription;
-import com.usargis.usargisapi.core.model.embeddable.InscriptionId;
+import com.usargis.usargisapi.core.model.UserInfo;
 import com.usargis.usargisapi.repository.InscriptionRepository;
+import com.usargis.usargisapi.service.contract.EventService;
 import com.usargis.usargisapi.service.contract.InscriptionService;
+import com.usargis.usargisapi.service.contract.ModelMapperService;
+import com.usargis.usargisapi.service.contract.UserInfoService;
+import com.usargis.usargisapi.util.ErrorConstant;
+import com.usargis.usargisapi.util.objectMother.dto.InscriptionDtoMother;
+import com.usargis.usargisapi.util.objectMother.model.EventMother;
+import com.usargis.usargisapi.util.objectMother.model.InscriptionMother;
+import com.usargis.usargisapi.util.objectMother.model.UserInfoMother;
+import com.usargis.usargisapi.web.exception.NotFoundException;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
+import org.mockito.AdditionalAnswers;
 import org.mockito.Mockito;
 
+import java.text.MessageFormat;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
@@ -18,10 +32,14 @@ class InscriptionServiceImplTest {
     private InscriptionService objectToTest;
 
     private InscriptionRepository inscriptionRepository = Mockito.mock(InscriptionRepository.class);
+    private UserInfoService userInfoService = Mockito.mock(UserInfoService.class);
+    private EventService eventService = Mockito.mock(EventService.class);
+    private ModelMapperService modelMapperService = Mockito.mock(ModelMapperService.class);
 
     @BeforeEach
     void setup() {
-        objectToTest = new InscriptionServiceImpl(inscriptionRepository);
+        objectToTest = new InscriptionServiceImpl(inscriptionRepository, userInfoService,
+                eventService, modelMapperService);
     }
 
 
@@ -41,7 +59,7 @@ class InscriptionServiceImplTest {
     void findById_shouldCallRepositoryAndReturnOptional() {
         Inscription inscriptionFound = new Inscription();
         Optional<Inscription> expectedResult = Optional.of(inscriptionFound);
-        InscriptionId inscriptionIdToFind = new InscriptionId();
+        Long inscriptionIdToFind = 1L;
         Mockito.when(inscriptionRepository.findById(inscriptionIdToFind)).thenReturn(expectedResult);
 
         Optional<Inscription> result = objectToTest.findById(inscriptionIdToFind);
@@ -71,4 +89,114 @@ class InscriptionServiceImplTest {
         Mockito.verify(inscriptionRepository).delete(inscriptionToDelete);
     }
 
+    @Nested
+    class createTest {
+        private InscriptionDto.InscriptionPostRequest inscriptionCreateDto = InscriptionDtoMother.postRequestSample().build();
+        private UserInfo userToLink = UserInfoMother.sample().build();
+        private Event eventToLink = EventMother.sampleFinished().build();
+        private Inscription savedInscription = InscriptionMother.sampleValidated().build();
+
+        @BeforeEach
+        void setup() {
+            Mockito.when(userInfoService.findByUsername(inscriptionCreateDto.getUserInfoUsername())).thenReturn(Optional.of(userToLink));
+            Mockito.when(eventService.findById(inscriptionCreateDto.getEventId())).thenReturn(Optional.of(eventToLink));
+            Mockito.when(inscriptionRepository.save(Mockito.any(Inscription.class))).thenReturn(savedInscription);
+        }
+
+        @Test
+        void create_noUserForGivenUsername_throwNotFoundException() {
+            Mockito.when(userInfoService.findByUsername(inscriptionCreateDto.getUserInfoUsername())).thenReturn(Optional.empty());
+
+            Assertions.assertThatThrownBy(() -> {
+                objectToTest.create(inscriptionCreateDto);
+            }).isInstanceOf(NotFoundException.class)
+                    .hasMessage(MessageFormat.format(ErrorConstant.NO_USER_FOUND_FOR_USERNAME, inscriptionCreateDto.getUserInfoUsername()));
+        }
+
+        @Test
+        void create_noEventForGivenId_throwNotFoundException() {
+            Mockito.when(eventService.findById(inscriptionCreateDto.getEventId())).thenReturn(Optional.empty());
+
+            Assertions.assertThatThrownBy(() -> {
+                objectToTest.create(inscriptionCreateDto);
+            }).isInstanceOf(NotFoundException.class)
+                    .hasMessage(MessageFormat.format(ErrorConstant.NO_EVENT_FOUND_FOR_ID, inscriptionCreateDto.getEventId()));
+        }
+
+        @Test
+        void create_shouldMapDtoInInscription() {
+            objectToTest.create(inscriptionCreateDto);
+
+            Mockito.verify(modelMapperService).map(Mockito.any(InscriptionDto.class), Mockito.any(Inscription.class));
+        }
+
+        @Test
+        void create_shouldSaveNewEntity() {
+            objectToTest.create(inscriptionCreateDto);
+
+            Mockito.verify(inscriptionRepository).save(Mockito.any(Inscription.class));
+        }
+
+        @Test
+        void create_shouldReturnSavedInscription() {
+            Inscription result = objectToTest.create(inscriptionCreateDto);
+
+            Assertions.assertThat(result).isEqualTo(savedInscription);
+        }
+
+        @Test
+        void create_returnedInscriptionShouldContainLinkedEntities() {
+            Mockito.when(inscriptionRepository.save(Mockito.any(Inscription.class))).then(AdditionalAnswers.returnsFirstArg());
+
+            Inscription result = objectToTest.create(inscriptionCreateDto);
+
+            Assertions.assertThat(result.getUserInfo()).isEqualTo(userToLink);
+            Assertions.assertThat(result.getEvent()).isEqualTo(eventToLink);
+        }
+    }
+
+    @Nested
+    class updateTest {
+        private Long givenId = 1L;
+        private Inscription inscriptionToUpdate = InscriptionMother.sampleValidated().build();
+        private InscriptionDto.InscriptionPostRequest inscriptionUpdateDto = InscriptionDtoMother.postRequestSample().build();
+        private Inscription savedInscription = InscriptionMother.sampleValidated().build();
+
+        @BeforeEach
+        void setup() {
+            Mockito.when(inscriptionRepository.findById(givenId)).thenReturn(Optional.ofNullable(inscriptionToUpdate));
+            Mockito.when(inscriptionRepository.save(Mockito.any(Inscription.class))).thenReturn(savedInscription);
+        }
+
+        @Test
+        void update_noInscriptionForGivenId_throwNotFoundException() {
+            Mockito.when(inscriptionRepository.findById(givenId)).thenReturn(Optional.empty());
+
+            Assertions.assertThatThrownBy(() -> {
+                objectToTest.update(givenId, inscriptionUpdateDto);
+            }).isInstanceOf(NotFoundException.class)
+                    .hasMessage(MessageFormat.format(ErrorConstant.NO_INSCRIPTION_FOUND_FOR_ID, givenId));
+        }
+
+        @Test
+        void update_shouldMapDtoInInscription() {
+            objectToTest.update(givenId, inscriptionUpdateDto);
+
+            Mockito.verify(modelMapperService).map(Mockito.any(InscriptionDto.class), Mockito.any(Inscription.class));
+        }
+
+        @Test
+        void update_shouldSaveNewEntity() {
+            objectToTest.update(givenId, inscriptionUpdateDto);
+
+            Mockito.verify(inscriptionRepository).save(Mockito.any(Inscription.class));
+        }
+
+        @Test
+        void update_shouldReturnSavedInscription() {
+            Inscription result = objectToTest.update(givenId, inscriptionUpdateDto);
+
+            Assertions.assertThat(result).isEqualTo(savedInscription);
+        }
+    }
 }

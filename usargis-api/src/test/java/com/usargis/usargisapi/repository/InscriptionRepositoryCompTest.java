@@ -3,7 +3,6 @@ package com.usargis.usargisapi.repository;
 import com.usargis.usargisapi.core.model.Event;
 import com.usargis.usargisapi.core.model.Inscription;
 import com.usargis.usargisapi.core.model.UserInfo;
-import com.usargis.usargisapi.core.model.embeddable.InscriptionId;
 import com.usargis.usargisapi.util.objectMother.model.EventMother;
 import com.usargis.usargisapi.util.objectMother.model.InscriptionMother;
 import com.usargis.usargisapi.util.objectMother.model.UserInfoMother;
@@ -22,7 +21,7 @@ import java.util.Optional;
 
 @ActiveProfiles("test")
 @DataJpaTest
-@TestPropertySource(properties = {"spring.jpa.hibernate.ddl-auto=create-drop"})
+@TestPropertySource(properties = {"spring.jpa.hibernate.ddl-auto=validate"})
 class InscriptionRepositoryCompTest {
 
     @PersistenceContext
@@ -35,7 +34,7 @@ class InscriptionRepositoryCompTest {
     private UserInfo sampleEventAuthor = UserInfoMother.sampleAuthor().build();
     private Event sampleFinishedEvent = EventMother.sampleFinished().author(sampleEventAuthor).build();
     private Inscription sampleValidatedInscription = InscriptionMother.sampleValidated()
-            .id(new InscriptionId(sampleUser, sampleFinishedEvent)).build();
+            .userInfo(sampleUser).event(sampleFinishedEvent).build();
 
     @BeforeEach
     void setup() {
@@ -65,8 +64,8 @@ class InscriptionRepositoryCompTest {
     @Test
     void save_shouldAddInscriptionInDb() {
         Inscription inscriptionToSave = InscriptionMother.sampleValidated()
-                .id(new InscriptionId(sampleEventAuthor, sampleFinishedEvent))
-                .build();
+                .event(sampleFinishedEvent)
+                .userInfo(sampleEventAuthor).build();
 
         objectToTest.save(inscriptionToSave);
 

@@ -8,40 +8,40 @@ import org.hibernate.validator.constraints.Length;
 
 import java.util.Set;
 
-public abstract class NotificationMessageDto {
-    private NotificationMessageDto() {
-    }
+public interface NotificationMessageDto {
 
     //Interfaces to inherit hibernate validation
-    private interface Content {
+    interface Content {
         @Length(min = 10, max = 10000)
         String getContent();
     }
 
-    private interface Subject {
+    interface Subject {
         @Length(max = 100)
         String getSubject();
     }
 
     @Builder
     @Data
-    public static class PostRequest implements Content, Subject {
+    class NotificationMessagePostRequest implements NotificationMessageDto, Content, Subject {
         //Fields inheriting from validation
         private String content;
         private String subject;
-        private NotificationMessageContentType contentType;
 
         //Fields specific to this DTO
+        private Long notificationId;
+        private NotificationMessageContentType contentType;
         private Set<NotificationMessageSendingMode> sendingModes;
     }
 
     @Data
-    public static class Response implements Content, Subject {
+    class NotificationMessageResponse implements NotificationMessageDto, Content, Subject {
         //Fields inheriting from validation
         private String content;
         private String subject;
 
         //Fields specific to this DTO
+        private Long id;
         private Long notificationId;
         private NotificationMessageContentType contentType;
         private Set<NotificationMessageSendingMode> sendingModes;

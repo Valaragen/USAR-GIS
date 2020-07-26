@@ -19,7 +19,7 @@ class MissionDtoTest {
     class MissionPostRequestDto {
         @Test
         void missionPostRequestDto_mapDtoToEntity_shouldMapCorrectly() {
-            MissionDto.PostRequest missionPostRequestDto = MissionDtoMother.postRequestSample().build();
+            MissionDto.MissionPostRequest missionPostRequestDto = MissionDtoMother.postRequestSample().build();
 
             Mission mission = modelMapperService.map(missionPostRequestDto, Mission.class);
 
@@ -47,7 +47,7 @@ class MissionDtoTest {
             mission.setId(1L);
             mission.getAuthor().setId("test");
 
-            MissionDto.Response missionResponseDto = modelMapperService.map(mission, MissionDto.Response.class);
+            MissionDto.MissionResponse missionResponseDto = modelMapperService.map(mission, MissionDto.MissionResponse.class);
 
             Assertions.assertThat(missionResponseDto.getId()).isEqualTo(mission.getId());
             Assertions.assertThat(missionResponseDto.getName()).isEqualTo(mission.getName());
@@ -62,7 +62,7 @@ class MissionDtoTest {
             Assertions.assertThat(missionResponseDto.getLongitude()).isEqualTo(mission.getLongitude());
             Assertions.assertThat(missionResponseDto.getCreationDate()).isEqualTo(mission.getCreationDate());
             Assertions.assertThat(missionResponseDto.getLastEditionDate()).isEqualTo(mission.getLastEditionDate());
-            Assertions.assertThat(missionResponseDto.getAuthorId()).isEqualTo(mission.getAuthor().getId());
+            Assertions.assertThat(missionResponseDto.getAuthorUsername()).isEqualTo(mission.getAuthor().getUsername());
         }
     }
 }

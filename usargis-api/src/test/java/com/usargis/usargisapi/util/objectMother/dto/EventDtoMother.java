@@ -4,8 +4,8 @@ import com.usargis.usargisapi.core.dto.EventDto;
 import com.usargis.usargisapi.util.TestConstant;
 
 public class EventDtoMother {
-    public static EventDto.PostRequest.PostRequestBuilder postRequestSample() {
-        return EventDto.PostRequest.builder()
+    public static EventDto.EventPostRequest.EventPostRequestBuilder postRequestSample() {
+        return EventDto.EventPostRequest.builder()
                 .name("sampleFinishedEvent name")
                 .description("sampleFinishedEvent desc")
                 .address("sampleFinishedEvent address")

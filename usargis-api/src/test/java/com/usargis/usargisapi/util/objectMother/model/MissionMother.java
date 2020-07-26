@@ -20,4 +20,20 @@ public class MissionMother {
                 .status(MissionStatus.FINISHED)
                 .plannedStartDate(TestConstant.SAMPLE_LOCAL_DATE_TIME);
     }
+
+    public static Mission.MissionBuilder sampleTeamEngagement() {
+        return Mission.builder()
+                .name("sampleTeamEngagement name")
+                .description("sampleTeamEngagement desc")
+                .address("sampleTeamEngagement address")
+                .creationDate(TestConstant.SAMPLE_LOCAL_DATE_TIME)
+                .author(UserInfoMother.sampleAuthor().build())
+                .startDate(TestConstant.SAMPLE_LOCAL_DATE_TIME)
+                .endDate(TestConstant.SAMPLE_LOCAL_DATE_TIME)
+                .expectedDurationInDays(30)
+                .latitude(1.2555515)
+                .longitude(1.2554844)
+                .status(MissionStatus.TEAM_ENGAGEMENT)
+                .plannedStartDate(TestConstant.SAMPLE_LOCAL_DATE_TIME);
+    }
 }

@@ -1,13 +1,27 @@
 package com.usargis.usargisapi.service.impl;
 
+import com.usargis.usargisapi.core.dto.NotificationDto;
+import com.usargis.usargisapi.core.model.Event;
+import com.usargis.usargisapi.core.model.Mission;
 import com.usargis.usargisapi.core.model.Notification;
+import com.usargis.usargisapi.core.model.UserInfo;
 import com.usargis.usargisapi.repository.NotificationRepository;
-import com.usargis.usargisapi.service.contract.NotificationService;
+import com.usargis.usargisapi.service.contract.*;
+import com.usargis.usargisapi.util.ErrorConstant;
+import com.usargis.usargisapi.util.objectMother.dto.NotificationDtoMother;
+import com.usargis.usargisapi.util.objectMother.model.EventMother;
+import com.usargis.usargisapi.util.objectMother.model.MissionMother;
+import com.usargis.usargisapi.util.objectMother.model.NotificationMother;
+import com.usargis.usargisapi.util.objectMother.model.UserInfoMother;
+import com.usargis.usargisapi.web.exception.NotFoundException;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
+import org.mockito.AdditionalAnswers;
 import org.mockito.Mockito;
 
+import java.text.MessageFormat;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
@@ -17,10 +31,16 @@ class NotificationServiceImplTest {
     private NotificationService objectToTest;
 
     private NotificationRepository notificationRepository = Mockito.mock(NotificationRepository.class);
+    private UserInfoService userInfoService = Mockito.mock(UserInfoService.class);
+    private EventService eventService = Mockito.mock(EventService.class);
+    private MissionService missionService = Mockito.mock(MissionService.class);
+    private SecurityService securityService = Mockito.mock(SecurityService.class);
+    private ModelMapperService modelMapperService = Mockito.mock(ModelMapperService.class);
 
     @BeforeEach
     void setup() {
-        objectToTest = new NotificationServiceImpl(notificationRepository);
+        objectToTest = new NotificationServiceImpl(notificationRepository, userInfoService,
+                eventService, missionService, securityService, modelMapperService);
     }
 
 
@@ -70,4 +90,141 @@ class NotificationServiceImplTest {
         Mockito.verify(notificationRepository).delete(notificationToDelete);
     }
 
+    @Nested
+    class createTest {
+        private NotificationDto.NotificationPostRequest notificationPostRequestDto = NotificationDtoMother.postRequestSample().build();
+        private NotificationDto.NotificationPostRequest nullIdsNotificationPostRequestDto = NotificationDto.NotificationPostRequest.builder().build();
+        private UserInfo authorToLink = UserInfoMother.sampleAuthor().build();
+        private Event eventToLink = EventMother.sampleFinished().build();
+        private Mission missionToLink = MissionMother.sampleFinished().build();
+        private String userNameFromToken = authorToLink.getUsername();
+        private Notification savedNotification = NotificationMother.sampleSent().build();
+
+        @BeforeEach
+        void setup() {
+            Mockito.when(securityService.getUsernameFromToken()).thenReturn(userNameFromToken);
+            Mockito.when(userInfoService.findByUsername(userNameFromToken)).thenReturn(Optional.of(authorToLink));
+            Mockito.when(missionService.findById(notificationPostRequestDto.getMissionId())).thenReturn(Optional.of(missionToLink));
+            Mockito.when(eventService.findById(notificationPostRequestDto.getEventId())).thenReturn(Optional.of(eventToLink));
+            Mockito.when(notificationRepository.save(Mockito.any(Notification.class))).thenReturn(savedNotification);
+        }
+
+        @Test
+        void create_noUserForGivenUsername_throwNotFoundException() {
+            Mockito.when(userInfoService.findByUsername(userNameFromToken)).thenReturn(Optional.empty());
+
+            Assertions.assertThatThrownBy(() -> {
+                objectToTest.create(notificationPostRequestDto);
+            }).isInstanceOf(NotFoundException.class)
+                    .hasMessage(MessageFormat.format(ErrorConstant.NO_USER_FOUND_FOR_USERNAME, userNameFromToken));
+        }
+
+        @Test
+        void create_dtoMissionIdIsNotNullAndNotFound_throwNotFoundException() {
+            Mockito.when(missionService.findById(notificationPostRequestDto.getMissionId())).thenReturn(Optional.empty());
+
+            Assertions.assertThatThrownBy(() -> {
+                objectToTest.create(notificationPostRequestDto);
+            }).isInstanceOf(NotFoundException.class)
+                    .hasMessage(MessageFormat.format(ErrorConstant.NO_MISSION_FOUND_FOR_ID, notificationPostRequestDto.getMissionId()));
+        }
+
+        @Test
+        void create_dtoEventIdIsNotNullAndNotFound_throwNotFoundException() {
+            Mockito.when(eventService.findById(notificationPostRequestDto.getEventId())).thenReturn(Optional.empty());
+
+            Assertions.assertThatThrownBy(() -> {
+                objectToTest.create(notificationPostRequestDto);
+            }).isInstanceOf(NotFoundException.class)
+                    .hasMessage(MessageFormat.format(ErrorConstant.NO_EVENT_FOUND_FOR_ID, notificationPostRequestDto.getEventId()));
+        }
+
+        @Test
+        void create_shouldMapDtoInNotification() {
+            objectToTest.create(notificationPostRequestDto);
+
+            Mockito.verify(modelMapperService).map(Mockito.any(NotificationDto.class), Mockito.any(Notification.class));
+        }
+
+        @Test
+        void create_shouldSaveNewEntity() {
+            objectToTest.create(notificationPostRequestDto);
+
+            Mockito.verify(notificationRepository).save(Mockito.any(Notification.class));
+        }
+
+        @Test
+        void create_shouldReturnSavedNotification() {
+            Notification result = objectToTest.create(notificationPostRequestDto);
+
+            Assertions.assertThat(result).isEqualTo(savedNotification);
+        }
+
+        @Test
+        void create_notNullIdsInDto_returnNotificationWithLinkedEntities() {
+            Mockito.when(notificationRepository.save(Mockito.any(Notification.class))).then(AdditionalAnswers.returnsFirstArg());
+
+            Notification result = objectToTest.create(notificationPostRequestDto);
+
+            Assertions.assertThat(result.getMission()).isEqualTo(missionToLink);
+            Assertions.assertThat(result.getEvent()).isEqualTo(eventToLink);
+            Assertions.assertThat(result.getAuthor()).isEqualTo(authorToLink);
+        }
+
+        @Test
+        void create_nullIdsInDto_returnNotificationWithoutLinkOnNullIdEntities() {
+            Mockito.when(notificationRepository.save(Mockito.any(Notification.class))).then(AdditionalAnswers.returnsFirstArg());
+
+            Notification result = objectToTest.create(nullIdsNotificationPostRequestDto);
+
+            Assertions.assertThat(result.getMission()).isNull();
+            Assertions.assertThat(result.getEvent()).isNull();
+            Assertions.assertThat(result.getAuthor()).isEqualTo(authorToLink);
+        }
+    }
+
+    @Nested
+    class updateTest {
+        private Long givenId = 1L;
+        private Notification notificationToUpdate = NotificationMother.sampleSent().build();
+        private NotificationDto.NotificationPostRequest notificationUpdateDto = NotificationDtoMother.postRequestSample().build();
+        private Notification savedNotification = NotificationMother.sampleSent().build();
+
+        @BeforeEach
+        void setup() {
+            Mockito.when(notificationRepository.findById(givenId)).thenReturn(Optional.ofNullable(notificationToUpdate));
+            Mockito.when(notificationRepository.save(Mockito.any(Notification.class))).thenReturn(savedNotification);
+        }
+
+        @Test
+        void update_noNotificationForGivenId_throwNotFoundException() {
+            Mockito.when(notificationRepository.findById(givenId)).thenReturn(Optional.empty());
+
+            Assertions.assertThatThrownBy(() -> {
+                objectToTest.update(givenId, notificationUpdateDto);
+            }).isInstanceOf(NotFoundException.class)
+                    .hasMessage(MessageFormat.format(ErrorConstant.NO_NOTIFICATION_FOUND_FOR_ID, givenId));
+        }
+
+        @Test
+        void update_shouldMapDtoInNotification() {
+            objectToTest.update(givenId, notificationUpdateDto);
+
+            Mockito.verify(modelMapperService).map(Mockito.any(NotificationDto.class), Mockito.any(Notification.class));
+        }
+
+        @Test
+        void update_shouldSaveNewEntity() {
+            objectToTest.update(givenId, notificationUpdateDto);
+
+            Mockito.verify(notificationRepository).save(Mockito.any(Notification.class));
+        }
+
+        @Test
+        void update_shouldReturnSavedNotification() {
+            Notification result = objectToTest.update(givenId, notificationUpdateDto);
+
+            Assertions.assertThat(result).isEqualTo(savedNotification);
+        }
+    }
 }

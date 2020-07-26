@@ -19,11 +19,13 @@ class NotificationDtoTest {
     class NotificationPostRequestDto {
         @Test
         void notificationPostRequestDto_mapDtoToEntity_shouldMapCorrectly() {
-            NotificationDto.PostRequest notificationPostRequestDto = NotificationDtoMother.postRequestSample().build();
+            NotificationDto.NotificationPostRequest notificationPostRequestDto = NotificationDtoMother.postRequestSample().build();
 
             Notification notification = modelMapperService.map(notificationPostRequestDto, Notification.class);
 
             Assertions.assertThat(notification.getId()).isNull();
+            Assertions.assertThat(notification.getMission()).isNull();
+            Assertions.assertThat(notification.getEvent()).isNull();
             Assertions.assertThat(notification.getNotificationMessages()).isEmpty();
             Assertions.assertThat(notification.getSendingDate()).isEqualTo(notificationPostRequestDto.getSendingDate());
         }
@@ -37,12 +39,12 @@ class NotificationDtoTest {
             notification.setId(1L);
             notification.getAuthor().setId("test");
 
-            NotificationDto.Response notificationResponseDto = modelMapperService.map(notification, NotificationDto.Response.class);
+            NotificationDto.NotificationResponse notificationResponseDto = modelMapperService.map(notification, NotificationDto.NotificationResponse.class);
 
             Assertions.assertThat(notificationResponseDto.getId()).isEqualTo(notification.getId());
             Assertions.assertThat(notificationResponseDto.getStatus()).isEqualTo(notification.getStatus());
             Assertions.assertThat(notificationResponseDto.getSendingDate()).isEqualTo(notification.getSendingDate());
-            Assertions.assertThat(notificationResponseDto.getAuthorId()).isEqualTo(notification.getAuthor().getId());
+            Assertions.assertThat(notificationResponseDto.getAuthorUsername()).isEqualTo(notification.getAuthor().getUsername());
         }
     }
 }

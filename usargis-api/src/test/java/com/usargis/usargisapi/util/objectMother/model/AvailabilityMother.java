@@ -6,7 +6,7 @@ import com.usargis.usargisapi.util.TestConstant;
 public class AvailabilityMother {
     public static Availability.AvailabilityBuilder sample() {
         return Availability.builder()
-                .mission(MissionMother.sampleFinished().build())
+                .mission(MissionMother.sampleTeamEngagement().build())
                 .userInfo(UserInfoMother.sample().build())
                 .startDate(TestConstant.SAMPLE_LOCAL_DATE_TIME)
                 .endDate(TestConstant.SAMPLE_LOCAL_DATE_TIME);

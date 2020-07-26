@@ -8,29 +8,27 @@ import org.hibernate.validator.constraints.Length;
 
 import java.time.LocalDateTime;
 
-public abstract class EventDto {
-    private EventDto() {
-    }
+public interface EventDto {
 
     //Interfaces to inherit hibernate validation
-    private interface Name {
+    interface Name {
         @Length(min = 2, max = 100)
         String getName();
     }
 
-    private interface Description {
+    interface Description {
         @Length(max = 5000)
         String getDescription();
     }
 
-    private interface Address {
+    interface Address {
         @Length(max = 200)
         String getAddress();
     }
 
     @Builder
     @Value
-    public static class PostRequest implements Name, Description, Address {
+    class EventPostRequest implements EventDto, Name, Description, Address {
         //Fields inheriting from validation
         private String name;
         private String description;
@@ -49,7 +47,7 @@ public abstract class EventDto {
     }
 
     @Data
-    public static class Response implements Name, Description, Address {
+    class EventResponse implements EventDto, Name, Description, Address {
         //Fields inheriting from validation
         private String name;
         private String description;
@@ -72,7 +70,6 @@ public abstract class EventDto {
         private LocalDateTime creationDate;
         private LocalDateTime lastEditionDate;
 
-        private String authorId;
+        private String authorUsername;
     }
-
 }
