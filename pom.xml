@@ -174,7 +174,7 @@
                 <plugin>
                     <groupId>org.liquibase</groupId>
                     <artifactId>liquibase-maven-plugin</artifactId>
-                    <version>3.8.6</version>
+                    <version>4.0.0</version>
                     <dependencies>
                         <dependency>
                             <groupId>org.hibernate</groupId>
