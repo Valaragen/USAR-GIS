@@ -2,6 +2,7 @@ package com.usargis.usargisapi.web.exception.handler;
 
 import com.usargis.usargisapi.util.ErrorConstant;
 import com.usargis.usargisapi.web.exception.NotFoundException;
+import com.usargis.usargisapi.web.exception.ProhibitedActionException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
@@ -108,13 +109,21 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
     /**
      * Handles NotFoundException. Created to encapsulate errors with more detail than javax.persistence.EntityNotFoundException.
      *
-     * @param ex the EntityNotFoundException
+     * @param ex the NotFoundException
      * @return the ApiError object
      */
     @ExceptionHandler(NotFoundException.class)
-    protected ResponseEntity<Object> handleEntityNotFound(
+    protected ResponseEntity<Object> handleNotFoundException(
             NotFoundException ex) {
         ApiError apiError = new ApiError(HttpStatus.NOT_FOUND);
+        apiError.setMessage(ex.getMessage());
+        return buildResponseEntity(apiError);
+    }
+
+    @ExceptionHandler(ProhibitedActionException.class)
+    protected ResponseEntity<Object> handleProhibitedActionException(
+            ProhibitedActionException ex) {
+        ApiError apiError = new ApiError(HttpStatus.BAD_REQUEST);
         apiError.setMessage(ex.getMessage());
         return buildResponseEntity(apiError);
     }
