@@ -6,7 +6,9 @@ import lombok.Data;
 import lombok.Value;
 import org.hibernate.validator.constraints.Length;
 
+import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
+import java.util.Optional;
 
 public interface MissionDto {
 
@@ -26,9 +28,14 @@ public interface MissionDto {
         String getAddress();
     }
 
+    interface Status {
+        @NotNull
+        Optional<MissionStatus> getStatus();
+    }
+
     @Builder
     @Value
-    class MissionPostRequest implements MissionDto, Name, Description, Address {
+    class MissionPostRequest implements MissionDto, Name, Description, Address, Status {
         //Fields inheriting from validation
         private String name;
         private String description;
@@ -38,7 +45,7 @@ public interface MissionDto {
         private LocalDateTime startDate;
         private LocalDateTime endDate;
         private LocalDateTime plannedStartDate;
-        private MissionStatus missionStatus;
+        private MissionStatus status;
         private Integer expectedDurationInDays;
         private Double latitude;
         private Double longitude;

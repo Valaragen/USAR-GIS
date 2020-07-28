@@ -83,6 +83,7 @@ public class ModelMapperServiceImpl implements ModelMapperService {
                     }
                 };
         modelMapper.addMappings(notificationPostRequestToEntityPropertyMap);
+        modelMapper.getConfiguration().setSkipNullEnabled(true);
     }
 
     @Override
