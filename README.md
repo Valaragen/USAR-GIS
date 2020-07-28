@@ -30,7 +30,7 @@ Le projet est **sécurisé** par des appels vers [**keycloak**](https://www.keyc
   **Site web**, il ne permet pour l'instant que de se connecter et notamment de s'inscrire pour utiliser l'API.  
   **Port** : 8080  
 #### Keycloak
-Non integré sur ce repository git, keycloak est necessaire au fonctionnement des microservices de la bibliothèque. [Télécharger keycloak 10.0.2](https://www.keycloak.org/archive/downloads-10.0.2.html)  
+Non integré sur ce repository git, keycloak est necessaire au fonctionnement des microservices du projet. [Télécharger keycloak 10.0.2](https://www.keycloak.org/archive/downloads-10.0.2.html)  
 **Version** : 10.0.2  
 **Base de données** : Postgresql  
 **Nom de la base de données** : USARGIS_KEYCLOAK_DB  
