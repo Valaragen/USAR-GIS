@@ -30,7 +30,7 @@ public interface MissionDto {
 
     interface Status {
         @NotNull
-        Optional<MissionStatus> getStatus();
+        MissionStatus getStatus();
     }
 
     @Builder
