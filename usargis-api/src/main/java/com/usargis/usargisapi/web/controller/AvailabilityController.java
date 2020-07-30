@@ -61,14 +61,14 @@ public class AvailabilityController implements ApiRestController {
         return new ResponseEntity<>(convertToResponseDto(availability), HttpStatus.CREATED);
     }
 
-    @PreAuthorize("hasRole('" + Constant.ADMIN_ROLE + "') or @availabilityController.isAvailabilityOwner(#id)")
+    @PreAuthorize("hasRole('" + Constant.ADMIN_ROLE + "') or @availabilityServiceImpl.isAvailabilityOwner(#id)")
     @PutMapping(Constant.AVAILABILITIES_PATH + Constant.SLASH_ID_PATH)
     public ResponseEntity<AvailabilityDto.AvailabilityResponse> updateAvailability(@PathVariable Long id, @RequestBody @Valid AvailabilityDto.AvailabilityUpdate updateDto) {
         Availability availability = availabilityService.update(id, updateDto);
         return new ResponseEntity<>(convertToResponseDto(availability), HttpStatus.OK);
     }
 
-    @PreAuthorize("hasRole('" + Constant.LEADER_ROLE + "') or @availabilityController.isAvailabilityOwner(#id)")
+    @PreAuthorize("hasRole('" + Constant.LEADER_ROLE + "') or @availabilityServiceImpl.isAvailabilityOwner(#id)")
     @DeleteMapping(Constant.AVAILABILITIES_PATH + Constant.SLASH_ID_PATH)
     public ResponseEntity deleteAvailability(@PathVariable Long id) {
         availabilityService.delete(availabilityService.findById(id).orElseThrow(() -> new NotFoundException(MessageFormat.format(ErrorConstant.NO_AVAILABILITY_FOUND_FOR_ID, id))));
@@ -77,10 +77,5 @@ public class AvailabilityController implements ApiRestController {
 
     private AvailabilityDto.AvailabilityResponse convertToResponseDto(Availability availability) {
         return modelMapperService.map(availability, AvailabilityDto.AvailabilityResponse.class);
-    }
-
-    public boolean isAvailabilityOwner(Long id) {
-        Optional<Availability> availability = availabilityService.findById(id);
-        return availability.filter(value -> securityService.isSameUsernameThanAuthenticatedUser(value.getUserInfo().getUsername())).isPresent();
     }
 }

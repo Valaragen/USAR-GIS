@@ -13,4 +13,6 @@ public interface AvailabilityService extends CRUDService<Availability, Long> {
     Availability create(AvailabilityDto.AvailabilityCreate createDto);
 
     Availability update(Long id, AvailabilityDto.AvailabilityUpdate updateDto);
+
+    boolean isAvailabilityOwner(Long id);
 }
