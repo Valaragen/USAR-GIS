@@ -26,14 +26,11 @@ public class AvailabilityController implements ApiRestController {
 
     private AvailabilityService availabilityService;
     private ModelMapperService modelMapperService;
-    private SecurityService securityService;
 
     @Autowired
-    public AvailabilityController(AvailabilityService availabilityService, ModelMapperService modelMapperService,
-                                  SecurityService securityService) {
+    public AvailabilityController(AvailabilityService availabilityService, ModelMapperService modelMapperService) {
         this.availabilityService = availabilityService;
         this.modelMapperService = modelMapperService;
-        this.securityService = securityService;
     }
 
     @PreAuthorize("hasRole('" + Constant.LEADER_ROLE + "') or @securityServiceImpl.isSameUsernameThanAuthenticatedUser(#availabilitySearch.userUsername)")
@@ -46,7 +43,7 @@ public class AvailabilityController implements ApiRestController {
         return new ResponseEntity<>(availabilities.stream().map(this::convertToResponseDto).collect(Collectors.toList()), HttpStatus.OK);
     }
 
-    @PreAuthorize("hasRole('" + Constant.LEADER_ROLE + "') or @availabilityController.isAvailabilityOwner(#id)")
+    @PreAuthorize("hasRole('" + Constant.LEADER_ROLE + "') or @availabilityServiceImpl.isAvailabilityOwner(#id)")
     @GetMapping(Constant.AVAILABILITIES_PATH + Constant.SLASH_ID_PATH)
     public ResponseEntity<AvailabilityDto.AvailabilityResponse> getAvailabilityById(@PathVariable Long id) {
         Optional<Availability> availabilityOptional = availabilityService.findById(id);

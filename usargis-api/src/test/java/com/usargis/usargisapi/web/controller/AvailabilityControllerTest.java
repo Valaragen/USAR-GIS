@@ -26,11 +26,10 @@ class AvailabilityControllerTest {
 
     private AvailabilityService availabilityService = Mockito.mock(AvailabilityService.class);
     private ModelMapperService modelMapperService = Mockito.mock(ModelMapperService.class);
-    private SecurityService securityService = Mockito.mock(SecurityService.class);
 
     @BeforeEach
     void setup() {
-        objectToTest = new AvailabilityController(availabilityService, modelMapperService, securityService);
+        objectToTest = new AvailabilityController(availabilityService, modelMapperService);
     }
 
     @Nested

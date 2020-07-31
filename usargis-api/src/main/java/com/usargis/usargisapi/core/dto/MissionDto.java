@@ -34,7 +34,7 @@ public interface MissionDto {
     }
 
     @Builder
-    @Value
+    @Data
     class MissionPostRequest implements MissionDto, Name, Description, Address, Status {
         //Fields inheriting from validation
         private String name;
