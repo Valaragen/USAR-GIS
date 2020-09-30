@@ -113,9 +113,8 @@ class NotificationServiceImplTest {
         void create_noUserForGivenUsername_throwNotFoundException() {
             Mockito.when(userInfoService.findByUsername(userNameFromToken)).thenReturn(Optional.empty());
 
-            Assertions.assertThatThrownBy(() -> {
-                objectToTest.create(notificationPostRequestDto);
-            }).isInstanceOf(NotFoundException.class)
+            Assertions.assertThatThrownBy(() -> objectToTest.create(notificationPostRequestDto))
+                    .isInstanceOf(NotFoundException.class)
                     .hasMessage(MessageFormat.format(ErrorConstant.NO_USER_FOUND_FOR_USERNAME, userNameFromToken));
         }
 
@@ -123,9 +122,8 @@ class NotificationServiceImplTest {
         void create_dtoMissionIdIsNotNullAndNotFound_throwNotFoundException() {
             Mockito.when(missionService.findById(notificationPostRequestDto.getMissionId())).thenReturn(Optional.empty());
 
-            Assertions.assertThatThrownBy(() -> {
-                objectToTest.create(notificationPostRequestDto);
-            }).isInstanceOf(NotFoundException.class)
+            Assertions.assertThatThrownBy(() -> objectToTest.create(notificationPostRequestDto))
+                    .isInstanceOf(NotFoundException.class)
                     .hasMessage(MessageFormat.format(ErrorConstant.NO_MISSION_FOUND_FOR_ID, notificationPostRequestDto.getMissionId()));
         }
 
@@ -133,9 +131,8 @@ class NotificationServiceImplTest {
         void create_dtoEventIdIsNotNullAndNotFound_throwNotFoundException() {
             Mockito.when(eventService.findById(notificationPostRequestDto.getEventId())).thenReturn(Optional.empty());
 
-            Assertions.assertThatThrownBy(() -> {
-                objectToTest.create(notificationPostRequestDto);
-            }).isInstanceOf(NotFoundException.class)
+            Assertions.assertThatThrownBy(() -> objectToTest.create(notificationPostRequestDto))
+                    .isInstanceOf(NotFoundException.class)
                     .hasMessage(MessageFormat.format(ErrorConstant.NO_EVENT_FOUND_FOR_ID, notificationPostRequestDto.getEventId()));
         }
 
@@ -200,9 +197,8 @@ class NotificationServiceImplTest {
         void update_noNotificationForGivenId_throwNotFoundException() {
             Mockito.when(notificationRepository.findById(givenId)).thenReturn(Optional.empty());
 
-            Assertions.assertThatThrownBy(() -> {
-                objectToTest.update(givenId, notificationUpdateDto);
-            }).isInstanceOf(NotFoundException.class)
+            Assertions.assertThatThrownBy(() -> objectToTest.update(givenId, notificationUpdateDto))
+                    .isInstanceOf(NotFoundException.class)
                     .hasMessage(MessageFormat.format(ErrorConstant.NO_NOTIFICATION_FOUND_FOR_ID, givenId));
         }
 

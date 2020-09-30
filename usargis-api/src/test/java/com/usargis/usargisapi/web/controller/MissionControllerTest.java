@@ -1,5 +1,6 @@
 package com.usargis.usargisapi.web.controller;
 
+import com.github.fge.jsonpatch.JsonPatch;
 import com.usargis.usargisapi.core.dto.MissionDto;
 import com.usargis.usargisapi.core.model.Mission;
 import com.usargis.usargisapi.service.contract.MissionService;
@@ -235,6 +236,40 @@ class MissionControllerTest {
                     .isEqualTo(HttpStatus.NO_CONTENT);
             Assertions.assertThat(result.getBody())
                     .isNull();
+        }
+    }
+
+    @Nested
+    class patchMissionTest {
+        private final Long missionId = 1L;
+        private final Mission patchedMission = new Mission();
+        private final MissionDto.MissionResponse missionResponseDto = new MissionDto.MissionResponse();
+        private final JsonPatch jsonPatch = new JsonPatch(new ArrayList<>());
+
+        @BeforeEach
+        void setup() {
+            Mockito.when(missionService.patch(missionId, jsonPatch)).thenReturn(patchedMission);
+        }
+
+        @Test
+        void patchMission_shouldCallServiceLayer() {
+            objectToTest.patchMission(missionId, jsonPatch);
+
+            Mockito.verify(missionService).patch(missionId, jsonPatch);
+        }
+
+        @Test
+        void patchMission_missionPatched_returnStatusOkAndMissionResponseDto() {
+            Mockito.when(modelMapperService.map(patchedMission, MissionDto.MissionResponse.class)).thenReturn(missionResponseDto);
+
+            ResponseEntity<MissionDto.MissionResponse> result =
+                    objectToTest.patchMission(missionId, jsonPatch);
+
+            Assertions.assertThat(result.getStatusCode())
+                    .isEqualTo(HttpStatus.OK);
+            Assertions.assertThat(result.getBody())
+                    .isEqualTo(missionResponseDto);
+            Assertions.assertThat(result.getBody()).isInstanceOf(MissionDto.MissionResponse.class);
         }
     }
 }

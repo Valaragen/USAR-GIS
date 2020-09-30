@@ -1,5 +1,8 @@
 package com.usargis.usargisapi.service.impl;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.github.fge.jsonpatch.JsonPatch;
+import com.github.fge.jsonpatch.JsonPatchException;
 import com.usargis.usargisapi.core.dto.MissionDto;
 import com.usargis.usargisapi.core.model.Mission;
 import com.usargis.usargisapi.core.model.MissionStatus;
@@ -25,6 +28,7 @@ import org.mockito.AdditionalAnswers;
 import org.mockito.Mockito;
 
 import java.text.MessageFormat;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
@@ -37,10 +41,11 @@ class MissionServiceImplTest {
     private UserInfoService userInfoService = Mockito.mock(UserInfoService.class);
     private ModelMapperService modelMapperService = Mockito.mock(ModelMapperService.class);
     private SecurityService securityService = Mockito.mock(SecurityService.class);
+    private ObjectMapper objectMapper = Mockito.mock(ObjectMapper.class);
 
     @BeforeEach
     void setup() {
-        objectToTest = new MissionServiceImpl(missionRepository, userInfoService, modelMapperService, securityService);
+        objectToTest = new MissionServiceImpl(missionRepository, userInfoService, modelMapperService, objectMapper, securityService);
     }
 
 
@@ -92,9 +97,8 @@ class MissionServiceImplTest {
             missionToSave.setStatus(missionStatus);
             missionToSave.setStartDate(null);
 
-            Assertions.assertThatThrownBy(() -> {
-                objectToTest.save(missionToSave);
-            }).isInstanceOf(ProhibitedActionException.class)
+            Assertions.assertThatThrownBy(() -> objectToTest.save(missionToSave))
+                    .isInstanceOf(ProhibitedActionException.class)
                     .hasMessage(MessageFormat.format(ErrorConstant.START_DATE_MUST_BE_DEFINED_WHEN_STATUS_IS, missionStatus.getName()));
         }
 
@@ -104,9 +108,8 @@ class MissionServiceImplTest {
             missionToSave.setStatus(missionStatus);
             missionToSave.setEndDate(null);
 
-            Assertions.assertThatThrownBy(() -> {
-                objectToTest.save(missionToSave);
-            }).isInstanceOf(ProhibitedActionException.class)
+            Assertions.assertThatThrownBy(() -> objectToTest.save(missionToSave))
+                    .isInstanceOf(ProhibitedActionException.class)
                     .hasMessage(MessageFormat.format(ErrorConstant.END_DATE_MUST_BE_DEFINED_WHEN_STATUS_IS, missionStatus.getName()));
         }
 
@@ -146,9 +149,8 @@ class MissionServiceImplTest {
         void create_noUserForGivenUsername_throwNotFoundException() {
             Mockito.when(userInfoService.findByUsername(userNameFromToken)).thenReturn(Optional.empty());
 
-            Assertions.assertThatThrownBy(() -> {
-                objectToTest.create(missionPostRequestDto);
-            }).isInstanceOf(NotFoundException.class)
+            Assertions.assertThatThrownBy(() -> objectToTest.create(missionPostRequestDto))
+                    .isInstanceOf(NotFoundException.class)
                     .hasMessage(MessageFormat.format(ErrorConstant.NO_USER_FOUND_FOR_USERNAME, userNameFromToken));
         }
 
@@ -200,9 +202,8 @@ class MissionServiceImplTest {
         void update_noMissionForGivenId_throwNotFoundException() {
             Mockito.when(missionRepository.findById(givenId)).thenReturn(Optional.empty());
 
-            Assertions.assertThatThrownBy(() -> {
-                objectToTest.update(givenId, missionUpdateDto);
-            }).isInstanceOf(NotFoundException.class)
+            Assertions.assertThatThrownBy(() -> objectToTest.update(givenId, missionUpdateDto))
+                    .isInstanceOf(NotFoundException.class)
                     .hasMessage(MessageFormat.format(ErrorConstant.NO_MISSION_FOUND_FOR_ID, givenId));
         }
 
@@ -225,6 +226,49 @@ class MissionServiceImplTest {
             Mission result = objectToTest.update(givenId, missionUpdateDto);
 
             Assertions.assertThat(result).isEqualTo(savedMission);
+        }
+    }
+
+    @Nested
+    class patchTest {
+        private Long givenId = 1L;
+        private Mission missionToPatch = MissionMother.sampleFinished().build();
+        private JsonPatch jsonPatch = new JsonPatch(new ArrayList<>());
+
+        @BeforeEach
+        void setup() {
+            Mockito.when(missionRepository.findById(givenId)).thenReturn(Optional.ofNullable(missionToPatch));
+            Mockito.when(missionRepository.save(Mockito.any(Mission.class))).then(AdditionalAnswers.returnsFirstArg());
+        }
+
+        @Test
+        void patch_noMissionForGivenId_throwNotFoundException() {
+            Mockito.when(missionRepository.findById(givenId)).thenReturn(Optional.empty());
+
+            Assertions.assertThatThrownBy(() -> objectToTest.patch(givenId, jsonPatch))
+                    .isInstanceOf(NotFoundException.class)
+                    .hasMessage(MessageFormat.format(ErrorConstant.NO_MISSION_FOUND_FOR_ID, givenId));
+        }
+
+        @Test
+        void patch_malformedJsonPatch_throwProhibitedActionException() {
+            Assertions.assertThatThrownBy(() -> objectToTest.patch(givenId, jsonPatch))
+                    .isInstanceOf(JsonPatchException.class)
+                    .hasMessage(ErrorConstant.MALFORMED_JSON_REQUEST);
+        }
+
+        @Test
+        void patch_shouldSaveNewEntity() {
+            objectToTest.patch(givenId, jsonPatch);
+
+            Mockito.verify(missionRepository).save(Mockito.any(Mission.class));
+        }
+
+        @Test
+        void patch_shouldReturnPatchedMission() {
+            Mission result = objectToTest.patch(givenId, jsonPatch);
+
+            Assertions.assertThat(result).isEqualTo(true);
         }
     }
 }

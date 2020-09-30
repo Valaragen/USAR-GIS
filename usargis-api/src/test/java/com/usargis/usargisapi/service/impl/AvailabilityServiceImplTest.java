@@ -28,7 +28,10 @@ import org.mockito.Mockito;
 import java.text.MessageFormat;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.Optional;
 
 class AvailabilityServiceImplTest {
 
@@ -97,9 +100,8 @@ class AvailabilityServiceImplTest {
         void save_whenMissionStatusOnCertainStatesAndEndDateIsNull_throwException(MissionStatus missionStatus) {
             availabilityToSave.getMission().setStatus(missionStatus);
 
-            Assertions.assertThatThrownBy(() -> {
-                objectToTest.save(availabilityToSave);
-            }).isInstanceOf(ProhibitedActionException.class)
+            Assertions.assertThatThrownBy(() -> objectToTest.save(availabilityToSave))
+                    .isInstanceOf(ProhibitedActionException.class)
                     .hasMessage(MessageFormat.format(ErrorConstant.AVAILABILITY_CANT_BE_CREATED_OR_UPDATED_WHEN_LINKED_MISSION_STATUS_IS, missionStatus.getName()));
         }
 
@@ -108,9 +110,8 @@ class AvailabilityServiceImplTest {
             availabilityToSave.setStartDate(LocalDateTime.now().plus(1, ChronoUnit.DAYS));
             availabilityToSave.setEndDate(LocalDateTime.now());
 
-            Assertions.assertThatThrownBy(() -> {
-                objectToTest.save(availabilityToSave);
-            }).isInstanceOf(ProhibitedActionException.class)
+            Assertions.assertThatThrownBy(() -> objectToTest.save(availabilityToSave))
+                    .isInstanceOf(ProhibitedActionException.class)
                     .hasMessage(ErrorConstant.AVAILABILITY_START_DATE_CANT_BE_AFTER_END_DATE);
         }
 
@@ -120,9 +121,8 @@ class AvailabilityServiceImplTest {
             availabilityToSave.setStartDate(sameDate);
             availabilityToSave.setEndDate(sameDate);
 
-            Assertions.assertThatThrownBy(() -> {
-                objectToTest.save(availabilityToSave);
-            }).isInstanceOf(ProhibitedActionException.class)
+            Assertions.assertThatThrownBy(() -> objectToTest.save(availabilityToSave))
+                    .isInstanceOf(ProhibitedActionException.class)
                     .hasMessage(ErrorConstant.AVAILABILITY_START_DATE_CANT_BE_EQUAL_TO_END_DATE);
         }
 
@@ -147,9 +147,8 @@ class AvailabilityServiceImplTest {
             availabilityToSave.setStartDate(startDate);
             availabilityToSave.setEndDate(endDate);
 
-            Assertions.assertThatThrownBy(() -> {
-                objectToTest.save(availabilityToSave);
-            }).isInstanceOf(ProhibitedActionException.class)
+            Assertions.assertThatThrownBy(() -> objectToTest.save(availabilityToSave))
+                    .isInstanceOf(ProhibitedActionException.class)
                     .hasMessage(MessageFormat.format(ErrorConstant.AVAILABILITY_ALREADY_COVERED_BY_THE_AVAILABILITY_OF_ID_WITH_START_DATE_AND_END_DATE,
                             availabilityAlreadySaved.getId(), availabilityAlreadySaved.getStartDate(), availabilityAlreadySaved.getEndDate()));
         }
@@ -214,9 +213,8 @@ class AvailabilityServiceImplTest {
         void create_noUserForGivenUsername_throwNotFoundException() {
             Mockito.when(userInfoService.findByUsername(availabilityCreateDto.getUserInfoUsername())).thenReturn(Optional.empty());
 
-            Assertions.assertThatThrownBy(() -> {
-                objectToTest.create(availabilityCreateDto);
-            }).isInstanceOf(NotFoundException.class)
+            Assertions.assertThatThrownBy(() -> objectToTest.create(availabilityCreateDto))
+                    .isInstanceOf(NotFoundException.class)
                     .hasMessage(MessageFormat.format(ErrorConstant.NO_USER_FOUND_FOR_USERNAME, availabilityCreateDto.getUserInfoUsername()));
         }
 
@@ -224,9 +222,8 @@ class AvailabilityServiceImplTest {
         void create_noMissionForGivenId_throwNotFoundException() {
             Mockito.when(missionService.findById(availabilityCreateDto.getMissionId())).thenReturn(Optional.empty());
 
-            Assertions.assertThatThrownBy(() -> {
-                objectToTest.create(availabilityCreateDto);
-            }).isInstanceOf(NotFoundException.class)
+            Assertions.assertThatThrownBy(() -> objectToTest.create(availabilityCreateDto))
+                    .isInstanceOf(NotFoundException.class)
                     .hasMessage(MessageFormat.format(ErrorConstant.NO_MISSION_FOUND_FOR_ID, availabilityCreateDto.getMissionId()));
         }
 
@@ -279,9 +276,8 @@ class AvailabilityServiceImplTest {
         void update_noAvailabilityForGivenId_throwNotFoundException() {
             Mockito.when(availabilityRepository.findById(givenId)).thenReturn(Optional.empty());
 
-            Assertions.assertThatThrownBy(() -> {
-                objectToTest.update(givenId, availabilityUpdateDto);
-            }).isInstanceOf(NotFoundException.class)
+            Assertions.assertThatThrownBy(() -> objectToTest.update(givenId, availabilityUpdateDto))
+                    .isInstanceOf(NotFoundException.class)
                     .hasMessage(MessageFormat.format(ErrorConstant.NO_AVAILABILITY_FOUND_FOR_ID, givenId));
         }
 

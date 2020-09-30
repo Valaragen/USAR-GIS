@@ -104,17 +104,9 @@ class EventServiceImplTest {
         void create_noUserForGivenUsername_throwNotFoundException() {
             Mockito.when(userInfoService.findByUsername(userNameFromToken)).thenReturn(Optional.empty());
 
-            Assertions.assertThatThrownBy(() -> {
-                objectToTest.create(eventPostRequestDto);
-            }).isInstanceOf(NotFoundException.class)
+            Assertions.assertThatThrownBy(() -> objectToTest.create(eventPostRequestDto))
+                    .isInstanceOf(NotFoundException.class)
                     .hasMessage(MessageFormat.format(ErrorConstant.NO_USER_FOUND_FOR_USERNAME, userNameFromToken));
-        }
-
-        @Test
-        void create_shouldMapDtoInEvent() {
-            objectToTest.create(eventPostRequestDto);
-
-            Mockito.verify(modelMapperService).map(Mockito.any(EventDto.class), Mockito.any(Event.class));
         }
 
         @Test
@@ -158,9 +150,8 @@ class EventServiceImplTest {
         void update_noEventForGivenId_throwNotFoundException() {
             Mockito.when(eventRepository.findById(givenId)).thenReturn(Optional.empty());
 
-            Assertions.assertThatThrownBy(() -> {
-                objectToTest.update(givenId, eventUpdateDto);
-            }).isInstanceOf(NotFoundException.class)
+            Assertions.assertThatThrownBy(() -> objectToTest.update(givenId, eventUpdateDto))
+                    .isInstanceOf(NotFoundException.class)
                     .hasMessage(MessageFormat.format(ErrorConstant.NO_EVENT_FOUND_FOR_ID, givenId));
         }
 

@@ -1,5 +1,12 @@
 package com.usargis.usargisapi.service.impl;
 
+import com.fasterxml.jackson.annotation.JsonAutoDetect;
+import com.fasterxml.jackson.databind.DeserializationFeature;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.MapperFeature;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.github.fge.jsonpatch.JsonPatch;
+import com.github.fge.jsonpatch.JsonPatchException;
 import com.usargis.usargisapi.core.dto.MissionDto;
 import com.usargis.usargisapi.core.model.Availability;
 import com.usargis.usargisapi.core.model.Mission;
@@ -17,6 +24,7 @@ import org.springframework.stereotype.Service;
 
 import java.text.MessageFormat;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @Service
@@ -26,13 +34,15 @@ public class MissionServiceImpl implements MissionService {
     private UserInfoService userInfoService;
     private ModelMapperService modelMapperService;
     private SecurityService securityService;
+    private ObjectMapper objectMapper;
 
     @Autowired
     public MissionServiceImpl(MissionRepository missionRepository, UserInfoService userInfoService,
-                              ModelMapperService modelMapperService, SecurityService securityService) {
+                              ModelMapperService modelMapperService, ObjectMapper objectMapper, SecurityService securityService) {
         this.missionRepository = missionRepository;
         this.userInfoService = userInfoService;
         this.modelMapperService = modelMapperService;
+        this.objectMapper = objectMapper;
         this.securityService = securityService;
     }
 
@@ -79,6 +89,28 @@ public class MissionServiceImpl implements MissionService {
         );
         modelMapperService.map(updateDto, missionToUpdate);
         return save(missionToUpdate);
+    }
+
+    @Override
+    public Mission patch(Long id, JsonPatch patchDocument) {
+        Mission missionToPatch = findById(id).orElseThrow(() -> new NotFoundException(
+                        MessageFormat.format(ErrorConstant.NO_MISSION_FOUND_FOR_ID, id)
+                )
+        );
+
+        MissionDto.MissionPostRequest missionPostRequest = MissionDto.MissionPostRequest.builder().build();
+        modelMapperService.map(missionToPatch, missionPostRequest);
+
+        JsonNode postRequestNode = objectMapper.valueToTree(missionPostRequest);
+        try {
+            postRequestNode = patchDocument.apply(postRequestNode);
+        } catch (JsonPatchException e) {
+            throw new ProhibitedActionException(ErrorConstant.MALFORMED_JSON_PATCH);
+        }
+
+        modelMapperService.map(objectMapper.convertValue(postRequestNode, MissionDto.MissionPostRequest.class), missionToPatch);
+
+        return save(missionToPatch);
     }
 
     private void checkValid(Mission mission) {
