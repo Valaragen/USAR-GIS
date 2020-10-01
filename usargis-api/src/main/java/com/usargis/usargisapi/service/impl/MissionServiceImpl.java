@@ -92,22 +92,15 @@ public class MissionServiceImpl implements MissionService {
     }
 
     @Override
-    public Mission patch(Long id, JsonPatch patchDocument) {
+    public Mission patch(Long id, JsonPatch patchDocument) throws JsonPatchException {
         Mission missionToPatch = findById(id).orElseThrow(() -> new NotFoundException(
                         MessageFormat.format(ErrorConstant.NO_MISSION_FOUND_FOR_ID, id)
                 )
         );
 
-        MissionDto.MissionPostRequest missionPostRequest = MissionDto.MissionPostRequest.builder().build();
-        modelMapperService.map(missionToPatch, missionPostRequest);
-
+        MissionDto.MissionPostRequest missionPostRequest = modelMapperService.map(missionToPatch, MissionDto.MissionPostRequest.class);
         JsonNode postRequestNode = objectMapper.valueToTree(missionPostRequest);
-        try {
-            postRequestNode = patchDocument.apply(postRequestNode);
-        } catch (JsonPatchException e) {
-            throw new ProhibitedActionException(ErrorConstant.MALFORMED_JSON_PATCH);
-        }
-
+        postRequestNode = patchDocument.apply(postRequestNode);
         modelMapperService.map(objectMapper.convertValue(postRequestNode, MissionDto.MissionPostRequest.class), missionToPatch);
 
         return save(missionToPatch);

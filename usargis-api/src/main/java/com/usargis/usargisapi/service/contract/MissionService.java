@@ -11,5 +11,5 @@ public interface MissionService extends CRUDService<Mission, Long> {
 
     Mission update(Long id, MissionDto.MissionPostRequest updateDto);
 
-    Mission patch(Long id, JsonPatch patchDocument);
+    Mission patch(Long id, JsonPatch patchDocument) throws JsonPatchException;
 }

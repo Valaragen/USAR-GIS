@@ -1,5 +1,6 @@
 package com.usargis.usargisapi.service.impl;
 
+import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.fge.jsonpatch.JsonPatch;
 import com.github.fge.jsonpatch.JsonPatchException;
@@ -25,6 +26,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.EnumSource;
 import org.mockito.AdditionalAnswers;
+import org.mockito.ArgumentCaptor;
 import org.mockito.Mockito;
 
 import java.text.MessageFormat;
@@ -36,6 +38,7 @@ import java.util.Optional;
 class MissionServiceImplTest {
 
     private MissionService objectToTest;
+    private ObjectMapper noMockObjectMapper = new ObjectMapper();
 
     private MissionRepository missionRepository = Mockito.mock(MissionRepository.class);
     private UserInfoService userInfoService = Mockito.mock(UserInfoService.class);
@@ -111,13 +114,6 @@ class MissionServiceImplTest {
             Assertions.assertThatThrownBy(() -> objectToTest.save(missionToSave))
                     .isInstanceOf(ProhibitedActionException.class)
                     .hasMessage(MessageFormat.format(ErrorConstant.END_DATE_MUST_BE_DEFINED_WHEN_STATUS_IS, missionStatus.getName()));
-        }
-
-        @Test
-        void test() {
-            missionToSave.setName("a");
-
-            objectToTest.save(missionToSave);
         }
     }
 
@@ -232,12 +228,16 @@ class MissionServiceImplTest {
     @Nested
     class patchTest {
         private Long givenId = 1L;
-        private Mission missionToPatch = MissionMother.sampleFinished().build();
+        private Mission missionToPatch = new Mission();
         private JsonPatch jsonPatch = new JsonPatch(new ArrayList<>());
+        private MissionDto.MissionPostRequest missionToPatchAsPostRequest = MissionDto.MissionPostRequest.builder().build();
+        private JsonNode missionToPatchAsPostRequestNode = noMockObjectMapper.createObjectNode();
 
         @BeforeEach
         void setup() {
             Mockito.when(missionRepository.findById(givenId)).thenReturn(Optional.ofNullable(missionToPatch));
+            Mockito.when(modelMapperService.map(missionToPatch, MissionDto.MissionPostRequest.class)).thenReturn(missionToPatchAsPostRequest);
+            Mockito.when(objectMapper.valueToTree(missionToPatchAsPostRequest)).thenReturn(missionToPatchAsPostRequestNode);
             Mockito.when(missionRepository.save(Mockito.any(Mission.class))).then(AdditionalAnswers.returnsFirstArg());
         }
 
@@ -251,24 +251,14 @@ class MissionServiceImplTest {
         }
 
         @Test
-        void patch_malformedJsonPatch_throwProhibitedActionException() {
-            Assertions.assertThatThrownBy(() -> objectToTest.patch(givenId, jsonPatch))
-                    .isInstanceOf(JsonPatchException.class)
-                    .hasMessage(ErrorConstant.MALFORMED_JSON_REQUEST);
-        }
+        void patch_shouldSaveAndReturnPatchedEntity() throws JsonPatchException {
+            final ArgumentCaptor<Mission> missionArgumentCaptor = ArgumentCaptor.forClass(Mission.class);
 
-        @Test
-        void patch_shouldSaveNewEntity() {
-            objectToTest.patch(givenId, jsonPatch);
-
-            Mockito.verify(missionRepository).save(Mockito.any(Mission.class));
-        }
-
-        @Test
-        void patch_shouldReturnPatchedMission() {
             Mission result = objectToTest.patch(givenId, jsonPatch);
 
-            Assertions.assertThat(result).isEqualTo(true);
+            Mockito.verify(missionRepository).save(missionArgumentCaptor.capture());
+            final Mission savedMission = missionArgumentCaptor.getValue();
+            Assertions.assertThat(result).isEqualTo(savedMission);
         }
     }
 }

@@ -1,6 +1,7 @@
 package com.usargis.usargisapi.web.controller;
 
 import com.github.fge.jsonpatch.JsonPatch;
+import com.github.fge.jsonpatch.JsonPatchException;
 import com.usargis.usargisapi.core.dto.MissionDto;
 import com.usargis.usargisapi.core.model.Mission;
 import com.usargis.usargisapi.service.contract.MissionService;
@@ -247,19 +248,19 @@ class MissionControllerTest {
         private final JsonPatch jsonPatch = new JsonPatch(new ArrayList<>());
 
         @BeforeEach
-        void setup() {
+        void setup() throws JsonPatchException {
             Mockito.when(missionService.patch(missionId, jsonPatch)).thenReturn(patchedMission);
         }
 
         @Test
-        void patchMission_shouldCallServiceLayer() {
+        void patchMission_shouldCallServiceLayer() throws JsonPatchException {
             objectToTest.patchMission(missionId, jsonPatch);
 
             Mockito.verify(missionService).patch(missionId, jsonPatch);
         }
 
         @Test
-        void patchMission_missionPatched_returnStatusOkAndMissionResponseDto() {
+        void patchMission_missionPatched_returnStatusOkAndMissionResponseDto() throws JsonPatchException {
             Mockito.when(modelMapperService.map(patchedMission, MissionDto.MissionResponse.class)).thenReturn(missionResponseDto);
 
             ResponseEntity<MissionDto.MissionResponse> result =
