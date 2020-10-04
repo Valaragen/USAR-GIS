@@ -2,6 +2,7 @@ package com.usargis.usargisapi.service.impl;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.github.fge.jsonpatch.JsonPatch;
 import com.github.fge.jsonpatch.JsonPatchException;
 import com.usargis.usargisapi.core.dto.MissionDto;
@@ -14,26 +15,31 @@ import com.usargis.usargisapi.service.contract.ModelMapperService;
 import com.usargis.usargisapi.service.contract.SecurityService;
 import com.usargis.usargisapi.service.contract.UserInfoService;
 import com.usargis.usargisapi.util.ErrorConstant;
+import com.usargis.usargisapi.util.converter.JsonPatchConverter;
 import com.usargis.usargisapi.util.objectMother.dto.MissionDtoMother;
 import com.usargis.usargisapi.util.objectMother.model.MissionMother;
 import com.usargis.usargisapi.util.objectMother.model.UserInfoMother;
 import com.usargis.usargisapi.web.exception.NotFoundException;
 import com.usargis.usargisapi.web.exception.ProhibitedActionException;
 import org.assertj.core.api.Assertions;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Nested;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.EnumSource;
+import org.junit.jupiter.params.converter.ConvertWith;
+import org.junit.jupiter.params.provider.*;
 import org.mockito.AdditionalAnswers;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Mockito;
+import org.modelmapper.ModelMapper;
 
 import java.text.MessageFormat;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Stream;
+
+import static org.junit.jupiter.api.TestInstance.Lifecycle.PER_CLASS;
 
 class MissionServiceImplTest {
 
@@ -259,6 +265,64 @@ class MissionServiceImplTest {
             Mockito.verify(missionRepository).save(missionArgumentCaptor.capture());
             final Mission savedMission = missionArgumentCaptor.getValue();
             Assertions.assertThat(result).isEqualTo(savedMission);
+        }
+    }
+
+    @Nested
+    @TestInstance(PER_CLASS)
+    class patchProcessTest {
+        private Long givenId = 1L;
+        private Mission missionToPatch = MissionMother.sampleTeamEngagement().build();
+        private ModelMapperService modelMapperService = new ModelMapperServiceImpl(new ModelMapper());
+
+        private MissionService objectToTest;
+
+        @BeforeAll
+        void setupAll() {
+            noMockObjectMapper.registerModule(new JavaTimeModule());
+            Mockito.when(missionRepository.save(Mockito.any(Mission.class))).then(AdditionalAnswers.returnsFirstArg());
+        }
+
+        @BeforeEach
+        void setup() {
+            missionToPatch = MissionMother.sampleTeamEngagement().build();
+            Mockito.when(missionRepository.findById(givenId)).thenReturn(Optional.ofNullable(missionToPatch));
+            objectToTest = new MissionServiceImpl(missionRepository, userInfoService, modelMapperService, noMockObjectMapper, securityService);
+        }
+
+        @ParameterizedTest
+        @MethodSource
+        void patch_whenCalledWithValidArguments_shouldPatchCorrectly(
+                @ConvertWith(JsonPatchConverter.class) JsonPatch jsonPatchRequest, Mission expected
+        ) throws JsonPatchException {
+            Mission result = objectToTest.patch(givenId, jsonPatchRequest);
+
+            Assertions.assertThat(result).isEqualTo(expected);
+        }
+
+        private Stream<Arguments> patch_whenCalledWithValidArguments_shouldPatchCorrectly() {
+            return Stream.of(
+                    Arguments.of("[{\"op\": \"replace\", \"path\": \"/name\", \"value\": \"changed\"}]",
+                            missionToPatch.toBuilder().name("changed").build()),
+                    Arguments.of("[{\"op\": \"replace\", \"path\": \"/startDate\", \"value\": \"2020-10-05T00:00:00.000\"}]",
+                            missionToPatch.toBuilder().startDate(LocalDateTime.of(2020, 10, 5, 0, 0)).build()),
+                    Arguments.of("[{\"op\": \"add\", \"path\": \"/latitude\", \"value\": \"2.255\"}]",
+                            missionToPatch.toBuilder().latitude(2.255).build()),
+                    Arguments.of("[{\"op\": \"remove\", \"path\": \"/longitude\"}]",
+                            missionToPatch.toBuilder().longitude(null).build())
+            );
+        }
+
+        @ParameterizedTest
+        @ValueSource(strings = {
+                "[{\"op\": \"add\", \"path\": \"/creationDate\", \"value\": \"2020-10-05T00:00:00.000\"}]",
+                "[{\"op\": \"add\", \"path\": \"/author\", \"value\": {\"name\": \"test\"}}]"
+        })
+        void patch_whenRequestContainPatchForFieldsThatAreNotInRequestDto_throwIllegalArgumentException(
+                @ConvertWith(JsonPatchConverter.class) JsonPatch jsonPatchRequest) {
+            Assertions.assertThatThrownBy(() -> {
+                objectToTest.patch(givenId, jsonPatchRequest);
+            }).isInstanceOf(IllegalArgumentException.class);
         }
     }
 }

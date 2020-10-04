@@ -10,6 +10,7 @@ import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.modelmapper.ModelMapper;
 
+//Todo replace mapper with abstraction
 class AvailabilityDtoTest {
 
     private ModelMapper modelMapper = new ModelMapper();

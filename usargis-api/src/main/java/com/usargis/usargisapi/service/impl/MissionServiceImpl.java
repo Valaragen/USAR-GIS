@@ -1,14 +1,10 @@
 package com.usargis.usargisapi.service.impl;
 
-import com.fasterxml.jackson.annotation.JsonAutoDetect;
-import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.MapperFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.fge.jsonpatch.JsonPatch;
 import com.github.fge.jsonpatch.JsonPatchException;
 import com.usargis.usargisapi.core.dto.MissionDto;
-import com.usargis.usargisapi.core.model.Availability;
 import com.usargis.usargisapi.core.model.Mission;
 import com.usargis.usargisapi.core.model.MissionStatus;
 import com.usargis.usargisapi.repository.MissionRepository;
@@ -24,7 +20,6 @@ import org.springframework.stereotype.Service;
 
 import java.text.MessageFormat;
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 
 @Service
@@ -98,7 +93,8 @@ public class MissionServiceImpl implements MissionService {
                 )
         );
 
-        MissionDto.MissionPostRequest missionPostRequest = modelMapperService.map(missionToPatch, MissionDto.MissionPostRequest.class);
+        MissionDto.MissionPostRequest missionPostRequest = MissionDto.MissionPostRequest.builder().build();
+        modelMapperService.map(missionToPatch, missionPostRequest);
         JsonNode postRequestNode = objectMapper.valueToTree(missionPostRequest);
         postRequestNode = patchDocument.apply(postRequestNode);
         modelMapperService.map(objectMapper.convertValue(postRequestNode, MissionDto.MissionPostRequest.class), missionToPatch);
