@@ -106,8 +106,9 @@ class TeamMemberServiceImplTest {
         void create_noUserForGivenUsername_throwNotFoundException() {
             Mockito.when(userInfoService.findByUsername(teamMemberPostRequestDto.getUserInfoUsername())).thenReturn(Optional.empty());
 
-            Assertions.assertThatThrownBy(() -> objectToTest.create(teamMemberPostRequestDto))
-                    .isInstanceOf(NotFoundException.class)
+            Assertions.assertThatThrownBy(() -> {
+                objectToTest.create(teamMemberPostRequestDto);
+            }).isInstanceOf(NotFoundException.class)
                     .hasMessage(MessageFormat.format(ErrorConstant.NO_USER_FOUND_FOR_USERNAME, teamMemberPostRequestDto.getUserInfoUsername()));
         }
 
@@ -115,8 +116,9 @@ class TeamMemberServiceImplTest {
         void create_noTeamForGivenTeamId_throwNotFoundException() {
             Mockito.when(teamService.findById(teamMemberPostRequestDto.getTeamId())).thenReturn(Optional.empty());
 
-            Assertions.assertThatThrownBy(() -> objectToTest.create(teamMemberPostRequestDto))
-                    .isInstanceOf(NotFoundException.class)
+            Assertions.assertThatThrownBy(() -> {
+                objectToTest.create(teamMemberPostRequestDto);
+            }).isInstanceOf(NotFoundException.class)
                     .hasMessage(MessageFormat.format(ErrorConstant.NO_TEAM_FOUND_FOR_ID, teamMemberPostRequestDto.getTeamId()));
         }
 
@@ -169,8 +171,9 @@ class TeamMemberServiceImplTest {
         void update_noTeamMemberForGivenId_throwNotFoundException() {
             Mockito.when(teamMemberRepository.findById(givenId)).thenReturn(Optional.empty());
 
-            Assertions.assertThatThrownBy(() -> objectToTest.update(givenId, teamMemberUpdateDto))
-                    .isInstanceOf(NotFoundException.class)
+            Assertions.assertThatThrownBy(() -> {
+                objectToTest.update(givenId, teamMemberUpdateDto);
+            }).isInstanceOf(NotFoundException.class)
                     .hasMessage(MessageFormat.format(ErrorConstant.NO_TEAM_MEMBER_FOUND_FOR_ID, givenId));
         }
 

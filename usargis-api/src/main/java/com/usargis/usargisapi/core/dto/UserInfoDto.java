@@ -7,7 +7,7 @@ import lombok.Value;
 public interface UserInfoDto {
 
     @Builder
-    @Data
+    @Value
     class UserInfoPostRequest implements UserInfoDto {
         private String username;
         private String email;

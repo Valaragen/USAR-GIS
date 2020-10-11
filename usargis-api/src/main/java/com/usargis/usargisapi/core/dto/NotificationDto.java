@@ -17,7 +17,7 @@ public interface NotificationDto {
     }
 
     @Builder
-    @Data
+    @Value
     class NotificationPostRequest implements NotificationDto, SendingDate {
         //Fields inheriting from validation
         private LocalDateTime sendingDate;

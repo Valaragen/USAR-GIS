@@ -9,7 +9,6 @@ import com.usargis.usargisapi.web.exception.AccessForbiddenException;
 import org.keycloak.KeycloakPrincipal;
 import org.keycloak.representations.AccessToken;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Profile;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
@@ -19,7 +18,6 @@ import javax.servlet.http.HttpServletResponse;
 import java.util.Optional;
 
 //TODO get rid of this and use event bus
-@Profile("!test")
 @Component
 public class ApiInterceptor implements HandlerInterceptor {
     @Autowired

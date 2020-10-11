@@ -21,7 +21,7 @@ public interface AvailabilityDto {
     }
 
     @Builder
-    @Data
+    @Value
     class AvailabilityCreate implements UserInfoUsername, MissionId, AvailabilityDto {
         //Fields inheriting from validation
         String userInfoUsername;
@@ -33,7 +33,7 @@ public interface AvailabilityDto {
     }
 
     @Builder
-    @Data
+    @Value
     class AvailabilityUpdate implements AvailabilityDto {
         //Fields specific to this DTO
         LocalDateTime startDate;

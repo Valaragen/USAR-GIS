@@ -27,7 +27,7 @@ public interface EventDto {
     }
 
     @Builder
-    @Data
+    @Value
     class EventPostRequest implements EventDto, Name, Description, Address {
         //Fields inheriting from validation
         private String name;
