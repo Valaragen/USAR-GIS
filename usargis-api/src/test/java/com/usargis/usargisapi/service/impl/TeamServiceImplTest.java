@@ -100,9 +100,8 @@ class TeamServiceImplTest {
         void create_noMissionForGivenMissionId_throwNotFoundException() {
             Mockito.when(missionService.findById(teamPostRequestDto.getMissionId())).thenReturn(Optional.empty());
 
-            Assertions.assertThatThrownBy(() -> {
-                objectToTest.create(teamPostRequestDto);
-            }).isInstanceOf(NotFoundException.class)
+            Assertions.assertThatThrownBy(() -> objectToTest.create(teamPostRequestDto))
+                    .isInstanceOf(NotFoundException.class)
                     .hasMessage(MessageFormat.format(ErrorConstant.NO_MISSION_FOUND_FOR_ID, teamPostRequestDto.getMissionId()));
         }
 
@@ -154,9 +153,8 @@ class TeamServiceImplTest {
         void update_noTeamForGivenId_throwNotFoundException() {
             Mockito.when(teamRepository.findById(givenId)).thenReturn(Optional.empty());
 
-            Assertions.assertThatThrownBy(() -> {
-                objectToTest.update(givenId, teamUpdateDto);
-            }).isInstanceOf(NotFoundException.class)
+            Assertions.assertThatThrownBy(() -> objectToTest.update(givenId, teamUpdateDto))
+                    .isInstanceOf(NotFoundException.class)
                     .hasMessage(MessageFormat.format(ErrorConstant.NO_TEAM_FOUND_FOR_ID, givenId));
         }
 

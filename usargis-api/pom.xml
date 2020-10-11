@@ -96,6 +96,12 @@
             <artifactId>lombok</artifactId>
             <optional>true</optional>
         </dependency>
+        <!-- JSON PATCH -->
+        <dependency>
+            <groupId>com.github.java-json-tools</groupId>
+            <artifactId>json-patch</artifactId>
+            <version>1.13</version>
+        </dependency>
         <!-- MODELMAPPER -->
         <dependency>
             <groupId>org.modelmapper</groupId>

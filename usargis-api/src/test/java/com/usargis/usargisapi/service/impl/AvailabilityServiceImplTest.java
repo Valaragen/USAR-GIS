@@ -1,5 +1,10 @@
 package com.usargis.usargisapi.service.impl;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+import com.github.fge.jsonpatch.JsonPatch;
+import com.github.fge.jsonpatch.JsonPatchException;
+import com.usargis.usargisapi.config.SpringConfig;
 import com.usargis.usargisapi.core.dto.AvailabilityDto;
 import com.usargis.usargisapi.core.model.Availability;
 import com.usargis.usargisapi.core.model.Mission;
@@ -9,6 +14,7 @@ import com.usargis.usargisapi.core.search.AvailabilitySearch;
 import com.usargis.usargisapi.repository.AvailabilityRepository;
 import com.usargis.usargisapi.service.contract.*;
 import com.usargis.usargisapi.util.ErrorConstant;
+import com.usargis.usargisapi.util.converter.JsonPatchConverter;
 import com.usargis.usargisapi.util.objectMother.dto.AvailabilityDtoMother;
 import com.usargis.usargisapi.util.objectMother.model.AvailabilityMother;
 import com.usargis.usargisapi.util.objectMother.model.MissionMother;
@@ -16,35 +22,44 @@ import com.usargis.usargisapi.util.objectMother.model.UserInfoMother;
 import com.usargis.usargisapi.web.exception.NotFoundException;
 import com.usargis.usargisapi.web.exception.ProhibitedActionException;
 import org.assertj.core.api.Assertions;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Nested;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.CsvSource;
-import org.junit.jupiter.params.provider.EnumSource;
+import org.junit.jupiter.params.converter.ConvertWith;
+import org.junit.jupiter.params.provider.*;
 import org.mockito.AdditionalAnswers;
+import org.mockito.ArgumentCaptor;
 import org.mockito.Mockito;
 
 import java.text.MessageFormat;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.Optional;
+import java.util.stream.Stream;
+
+import static org.junit.jupiter.api.TestInstance.Lifecycle.PER_CLASS;
 
 class AvailabilityServiceImplTest {
+    private SpringConfig springConfig = new SpringConfig();
 
     private AvailabilityService objectToTest;
+
+    private ObjectMapper noMockObjectMapper = springConfig.objectMapper();
 
     private AvailabilityRepository availabilityRepository = Mockito.mock(AvailabilityRepository.class);
     private UserInfoService userInfoService = Mockito.mock(UserInfoService.class);
     private MissionService missionService = Mockito.mock(MissionService.class);
     private SecurityService securityService = Mockito.mock(SecurityService.class);
+    private ObjectMapper objectMapper = Mockito.mock(ObjectMapper.class);
 
     private ModelMapperService modelMapperService = Mockito.mock(ModelMapperService.class);
 
     @BeforeEach
     void setup() {
         objectToTest = new AvailabilityServiceImpl(availabilityRepository, userInfoService, missionService,
-                securityService, modelMapperService);
+                securityService, modelMapperService, objectMapper);
     }
 
 
@@ -97,9 +112,8 @@ class AvailabilityServiceImplTest {
         void save_whenMissionStatusOnCertainStatesAndEndDateIsNull_throwException(MissionStatus missionStatus) {
             availabilityToSave.getMission().setStatus(missionStatus);
 
-            Assertions.assertThatThrownBy(() -> {
-                objectToTest.save(availabilityToSave);
-            }).isInstanceOf(ProhibitedActionException.class)
+            Assertions.assertThatThrownBy(() -> objectToTest.save(availabilityToSave))
+                    .isInstanceOf(ProhibitedActionException.class)
                     .hasMessage(MessageFormat.format(ErrorConstant.AVAILABILITY_CANT_BE_CREATED_OR_UPDATED_WHEN_LINKED_MISSION_STATUS_IS, missionStatus.getName()));
         }
 
@@ -108,9 +122,8 @@ class AvailabilityServiceImplTest {
             availabilityToSave.setStartDate(LocalDateTime.now().plus(1, ChronoUnit.DAYS));
             availabilityToSave.setEndDate(LocalDateTime.now());
 
-            Assertions.assertThatThrownBy(() -> {
-                objectToTest.save(availabilityToSave);
-            }).isInstanceOf(ProhibitedActionException.class)
+            Assertions.assertThatThrownBy(() -> objectToTest.save(availabilityToSave))
+                    .isInstanceOf(ProhibitedActionException.class)
                     .hasMessage(ErrorConstant.AVAILABILITY_START_DATE_CANT_BE_AFTER_END_DATE);
         }
 
@@ -120,9 +133,8 @@ class AvailabilityServiceImplTest {
             availabilityToSave.setStartDate(sameDate);
             availabilityToSave.setEndDate(sameDate);
 
-            Assertions.assertThatThrownBy(() -> {
-                objectToTest.save(availabilityToSave);
-            }).isInstanceOf(ProhibitedActionException.class)
+            Assertions.assertThatThrownBy(() -> objectToTest.save(availabilityToSave))
+                    .isInstanceOf(ProhibitedActionException.class)
                     .hasMessage(ErrorConstant.AVAILABILITY_START_DATE_CANT_BE_EQUAL_TO_END_DATE);
         }
 
@@ -140,16 +152,15 @@ class AvailabilityServiceImplTest {
             sampleAvailability.setId(10L);
             availabilitiesSavedBySameUserOnSameMission.add(sampleAvailability);
             Availability availabilityAlreadySaved = AvailabilityMother.sample()
-                    .startDate(LocalDateTime.of(2020,1,6,0,0,0))
-                    .endDate(LocalDateTime.of(2020,1,7,0,0,0)).build();
+                    .startDate(LocalDateTime.of(2020, 1, 6, 0, 0, 0))
+                    .endDate(LocalDateTime.of(2020, 1, 7, 0, 0, 0)).build();
             availabilityAlreadySaved.setId(2L);
             availabilitiesSavedBySameUserOnSameMission.add(availabilityAlreadySaved);
             availabilityToSave.setStartDate(startDate);
             availabilityToSave.setEndDate(endDate);
 
-            Assertions.assertThatThrownBy(() -> {
-                objectToTest.save(availabilityToSave);
-            }).isInstanceOf(ProhibitedActionException.class)
+            Assertions.assertThatThrownBy(() -> objectToTest.save(availabilityToSave))
+                    .isInstanceOf(ProhibitedActionException.class)
                     .hasMessage(MessageFormat.format(ErrorConstant.AVAILABILITY_ALREADY_COVERED_BY_THE_AVAILABILITY_OF_ID_WITH_START_DATE_AND_END_DATE,
                             availabilityAlreadySaved.getId(), availabilityAlreadySaved.getStartDate(), availabilityAlreadySaved.getEndDate()));
         }
@@ -161,8 +172,8 @@ class AvailabilityServiceImplTest {
             sampleAvailability.setId(10L);
             availabilitiesSavedBySameUserOnSameMission.add(sampleAvailability);
             Availability availabilityAlreadySaved = AvailabilityMother.sample()
-                    .startDate(LocalDateTime.of(2020,1,6,0,0,0))
-                    .endDate(LocalDateTime.of(2020,1,7,0,0,0)).build();
+                    .startDate(LocalDateTime.of(2020, 1, 6, 0, 0, 0))
+                    .endDate(LocalDateTime.of(2020, 1, 7, 0, 0, 0)).build();
             availabilityAlreadySaved.setId(availabilityToSaveId);
             availabilitiesSavedBySameUserOnSameMission.add(availabilityAlreadySaved);
             availabilityToSave.setId(availabilityToSaveId);
@@ -214,9 +225,8 @@ class AvailabilityServiceImplTest {
         void create_noUserForGivenUsername_throwNotFoundException() {
             Mockito.when(userInfoService.findByUsername(availabilityCreateDto.getUserInfoUsername())).thenReturn(Optional.empty());
 
-            Assertions.assertThatThrownBy(() -> {
-                objectToTest.create(availabilityCreateDto);
-            }).isInstanceOf(NotFoundException.class)
+            Assertions.assertThatThrownBy(() -> objectToTest.create(availabilityCreateDto))
+                    .isInstanceOf(NotFoundException.class)
                     .hasMessage(MessageFormat.format(ErrorConstant.NO_USER_FOUND_FOR_USERNAME, availabilityCreateDto.getUserInfoUsername()));
         }
 
@@ -224,9 +234,8 @@ class AvailabilityServiceImplTest {
         void create_noMissionForGivenId_throwNotFoundException() {
             Mockito.when(missionService.findById(availabilityCreateDto.getMissionId())).thenReturn(Optional.empty());
 
-            Assertions.assertThatThrownBy(() -> {
-                objectToTest.create(availabilityCreateDto);
-            }).isInstanceOf(NotFoundException.class)
+            Assertions.assertThatThrownBy(() -> objectToTest.create(availabilityCreateDto))
+                    .isInstanceOf(NotFoundException.class)
                     .hasMessage(MessageFormat.format(ErrorConstant.NO_MISSION_FOUND_FOR_ID, availabilityCreateDto.getMissionId()));
         }
 
@@ -279,9 +288,8 @@ class AvailabilityServiceImplTest {
         void update_noAvailabilityForGivenId_throwNotFoundException() {
             Mockito.when(availabilityRepository.findById(givenId)).thenReturn(Optional.empty());
 
-            Assertions.assertThatThrownBy(() -> {
-                objectToTest.update(givenId, availabilityUpdateDto);
-            }).isInstanceOf(NotFoundException.class)
+            Assertions.assertThatThrownBy(() -> objectToTest.update(givenId, availabilityUpdateDto))
+                    .isInstanceOf(NotFoundException.class)
                     .hasMessage(MessageFormat.format(ErrorConstant.NO_AVAILABILITY_FOUND_FOR_ID, givenId));
         }
 
@@ -304,6 +312,95 @@ class AvailabilityServiceImplTest {
             Availability result = objectToTest.update(givenId, availabilityUpdateDto);
 
             Assertions.assertThat(result).isEqualTo(savedAvailability);
+        }
+    }
+
+    @Nested
+    class patchTest {
+        private Long givenId = 1L;
+        private Availability availabilityToPatch = AvailabilityMother.sample().build();
+        private JsonPatch jsonPatch = new JsonPatch(new ArrayList<>());
+
+        @BeforeEach
+        void setup() {
+            Mockito.when(availabilityRepository.findById(givenId)).thenReturn(Optional.ofNullable(availabilityToPatch));
+            Mockito.when(objectMapper.valueToTree(Mockito.any(AvailabilityDto.AvailabilityUpdate.class))).thenReturn(noMockObjectMapper.createObjectNode());
+            Mockito.when(availabilityRepository.save(Mockito.any(Availability.class))).then(AdditionalAnswers.returnsFirstArg());
+        }
+
+        @Test
+        void patch_noAvailabilityForGivenId_throwNotFoundException() {
+            Mockito.when(availabilityRepository.findById(givenId)).thenReturn(Optional.empty());
+
+            Assertions.assertThatThrownBy(() -> objectToTest.patch(givenId, jsonPatch))
+                    .isInstanceOf(NotFoundException.class)
+                    .hasMessage(MessageFormat.format(ErrorConstant.NO_AVAILABILITY_FOUND_FOR_ID, givenId));
+        }
+
+        @Test
+        void patch_shouldSaveAndReturnPatchedEntity() throws JsonPatchException {
+            final ArgumentCaptor<Availability> availabilityArgumentCaptor = ArgumentCaptor.forClass(Availability.class);
+
+            Availability result = objectToTest.patch(givenId, jsonPatch);
+
+            Mockito.verify(availabilityRepository).save(availabilityArgumentCaptor.capture());
+            final Availability savedAvailability = availabilityArgumentCaptor.getValue();
+            Assertions.assertThat(result).isEqualTo(savedAvailability);
+        }
+    }
+
+    @Nested
+    @TestInstance(PER_CLASS)
+    class patchProcessTest {
+        private Long givenId = 1L;
+        private Availability availabilityToPatch = AvailabilityMother.sample().build();
+        private ModelMapperService modelMapperService = new ModelMapperServiceImpl(springConfig.modelMapper());
+
+        private AvailabilityService objectToTest;
+
+        @BeforeAll
+        void setupAll() {
+            noMockObjectMapper.registerModule(new JavaTimeModule());
+            Mockito.when(availabilityRepository.save(Mockito.any(Availability.class))).then(AdditionalAnswers.returnsFirstArg());
+        }
+
+        @BeforeEach
+        void setup() {
+            availabilityToPatch = AvailabilityMother.sample().build();
+            Mockito.when(availabilityRepository.findById(givenId)).thenReturn(Optional.ofNullable(availabilityToPatch));
+            objectToTest = new AvailabilityServiceImpl(availabilityRepository, userInfoService, missionService,
+                    securityService, modelMapperService, noMockObjectMapper);
+        }
+
+        @ParameterizedTest
+        @MethodSource
+        void patch_whenCalledWithValidArguments_shouldPatchCorrectly(
+                @ConvertWith(JsonPatchConverter.class) JsonPatch jsonPatchRequest, Availability expected
+        ) throws JsonPatchException {
+            Availability result = objectToTest.patch(givenId, jsonPatchRequest);
+
+            Assertions.assertThat(result).isEqualTo(expected);
+        }
+
+        private Stream<Arguments> patch_whenCalledWithValidArguments_shouldPatchCorrectly() {
+            return Stream.of(
+                    Arguments.of("[{\"op\": \"replace\", \"path\": \"/startDate\", \"value\": \"2010-10-05T00:00:00.000\"}]",
+                            availabilityToPatch.toBuilder().startDate(LocalDateTime.of(2010, 10, 5, 0, 0)).build()),
+                    Arguments.of("[{\"op\": \"replace\", \"path\": \"/endDate\", \"value\": \"2020-10-05T00:00:00.000\"}]",
+                            availabilityToPatch.toBuilder().endDate(LocalDateTime.of(2020, 10, 5, 0, 0)).build())
+            );
+        }
+
+        @ParameterizedTest
+        @ValueSource(strings = {
+                "[{\"op\": \"add\", \"path\": \"/creationDate\", \"value\": \"2020-10-05T00:00:00.000\"}]",
+                "[{\"op\": \"add\", \"path\": \"/mission\", \"value\": {\"name\": \"test\"}}]"
+        })
+        void patch_whenRequestContainPatchForFieldsThatAreNotInRequestDto_throwIllegalArgumentException(
+                @ConvertWith(JsonPatchConverter.class) JsonPatch jsonPatchRequest) {
+            Assertions.assertThatThrownBy(() -> {
+                objectToTest.patch(givenId, jsonPatchRequest);
+            }).isInstanceOf(IllegalArgumentException.class);
         }
     }
 

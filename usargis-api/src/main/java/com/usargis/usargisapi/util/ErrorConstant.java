@@ -33,6 +33,7 @@ public abstract class ErrorConstant {
     public static final String AVAILABILITY_START_DATE_CANT_BE_EQUAL_TO_END_DATE = "Availability start date can't be equal to end date";
     public static final String VALIDATION_ERROR = "Validation error";
     public static final String MALFORMED_JSON_REQUEST = "Malformed JSON request";
+    public static final String MALFORMED_JSON_PATCH = "Malformed JSON request";
 
     private ErrorConstant() {
     }

@@ -1,5 +1,7 @@
 package com.usargis.usargisapi.web.controller;
 
+import com.github.fge.jsonpatch.JsonPatch;
+import com.github.fge.jsonpatch.JsonPatchException;
 import com.usargis.usargisapi.core.dto.AvailabilityDto;
 import com.usargis.usargisapi.core.model.Availability;
 import com.usargis.usargisapi.core.search.AvailabilitySearch;
@@ -70,6 +72,13 @@ public class AvailabilityController implements ApiRestController {
     public ResponseEntity deleteAvailability(@PathVariable Long id) {
         availabilityService.delete(availabilityService.findById(id).orElseThrow(() -> new NotFoundException(MessageFormat.format(ErrorConstant.NO_AVAILABILITY_FOUND_FOR_ID, id))));
         return new ResponseEntity(HttpStatus.NO_CONTENT);
+    }
+
+    @PreAuthorize("hasRole('" + Constant.LEADER_ROLE + "')")
+    @PatchMapping(path = Constant.AVAILABILITIES_PATH + Constant.SLASH_ID_PATH, consumes = "application/json-patch+json")
+    public ResponseEntity<AvailabilityDto.AvailabilityResponse> patchAvailability(@PathVariable Long id, @RequestBody JsonPatch patchDocument) throws JsonPatchException {
+        Availability availability = availabilityService.patch(id, patchDocument);
+        return new ResponseEntity<>(convertToResponseDto(availability), HttpStatus.OK);
     }
 
     private AvailabilityDto.AvailabilityResponse convertToResponseDto(Availability availability) {
