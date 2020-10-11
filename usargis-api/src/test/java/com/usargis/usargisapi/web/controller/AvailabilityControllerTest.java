@@ -1,11 +1,12 @@
 package com.usargis.usargisapi.web.controller;
 
+import com.github.fge.jsonpatch.JsonPatch;
+import com.github.fge.jsonpatch.JsonPatchException;
 import com.usargis.usargisapi.core.dto.AvailabilityDto;
 import com.usargis.usargisapi.core.model.Availability;
 import com.usargis.usargisapi.core.search.AvailabilitySearch;
 import com.usargis.usargisapi.service.contract.AvailabilityService;
 import com.usargis.usargisapi.service.contract.ModelMapperService;
-import com.usargis.usargisapi.service.contract.SecurityService;
 import com.usargis.usargisapi.util.ErrorConstant;
 import com.usargis.usargisapi.util.objectMother.dto.AvailabilityDtoMother;
 import com.usargis.usargisapi.web.exception.NotFoundException;
@@ -26,11 +27,10 @@ class AvailabilityControllerTest {
 
     private AvailabilityService availabilityService = Mockito.mock(AvailabilityService.class);
     private ModelMapperService modelMapperService = Mockito.mock(ModelMapperService.class);
-    private SecurityService securityService = Mockito.mock(SecurityService.class);
 
     @BeforeEach
     void setup() {
-        objectToTest = new AvailabilityController(availabilityService, modelMapperService, securityService);
+        objectToTest = new AvailabilityController(availabilityService, modelMapperService);
     }
 
     @Nested
@@ -240,6 +240,40 @@ class AvailabilityControllerTest {
                     .isEqualTo(HttpStatus.NO_CONTENT);
             Assertions.assertThat(result.getBody())
                     .isNull();
+        }
+    }
+
+    @Nested
+    class patchAvailabilityTest {
+        private final Long availabilityId = 1L;
+        private final Availability patchedAvailability = new Availability();
+        private final AvailabilityDto.AvailabilityResponse availabilityResponseDto = new AvailabilityDto.AvailabilityResponse();
+        private final JsonPatch jsonPatch = new JsonPatch(new ArrayList<>());
+
+        @BeforeEach
+        void setup() throws JsonPatchException {
+            Mockito.when(availabilityService.patch(availabilityId, jsonPatch)).thenReturn(patchedAvailability);
+        }
+
+        @Test
+        void patchAvailability_shouldCallServiceLayer() throws JsonPatchException {
+            objectToTest.patchAvailability(availabilityId, jsonPatch);
+
+            Mockito.verify(availabilityService).patch(availabilityId, jsonPatch);
+        }
+
+        @Test
+        void patchAvailability_availabilityPatched_returnStatusOkAndAvailabilityResponseDto() throws JsonPatchException {
+            Mockito.when(modelMapperService.map(patchedAvailability, AvailabilityDto.AvailabilityResponse.class)).thenReturn(availabilityResponseDto);
+
+            ResponseEntity<AvailabilityDto.AvailabilityResponse> result =
+                    objectToTest.patchAvailability(availabilityId, jsonPatch);
+
+            Assertions.assertThat(result.getStatusCode())
+                    .isEqualTo(HttpStatus.OK);
+            Assertions.assertThat(result.getBody())
+                    .isEqualTo(availabilityResponseDto);
+            Assertions.assertThat(result.getBody()).isInstanceOf(AvailabilityDto.AvailabilityResponse.class);
         }
     }
 }

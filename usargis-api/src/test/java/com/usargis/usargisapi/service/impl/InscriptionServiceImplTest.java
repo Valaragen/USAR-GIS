@@ -107,9 +107,8 @@ class InscriptionServiceImplTest {
         void create_noUserForGivenUsername_throwNotFoundException() {
             Mockito.when(userInfoService.findByUsername(inscriptionCreateDto.getUserInfoUsername())).thenReturn(Optional.empty());
 
-            Assertions.assertThatThrownBy(() -> {
-                objectToTest.create(inscriptionCreateDto);
-            }).isInstanceOf(NotFoundException.class)
+            Assertions.assertThatThrownBy(() -> objectToTest.create(inscriptionCreateDto))
+                    .isInstanceOf(NotFoundException.class)
                     .hasMessage(MessageFormat.format(ErrorConstant.NO_USER_FOUND_FOR_USERNAME, inscriptionCreateDto.getUserInfoUsername()));
         }
 
@@ -117,9 +116,8 @@ class InscriptionServiceImplTest {
         void create_noEventForGivenId_throwNotFoundException() {
             Mockito.when(eventService.findById(inscriptionCreateDto.getEventId())).thenReturn(Optional.empty());
 
-            Assertions.assertThatThrownBy(() -> {
-                objectToTest.create(inscriptionCreateDto);
-            }).isInstanceOf(NotFoundException.class)
+            Assertions.assertThatThrownBy(() -> objectToTest.create(inscriptionCreateDto))
+                    .isInstanceOf(NotFoundException.class)
                     .hasMessage(MessageFormat.format(ErrorConstant.NO_EVENT_FOUND_FOR_ID, inscriptionCreateDto.getEventId()));
         }
 
@@ -172,9 +170,8 @@ class InscriptionServiceImplTest {
         void update_noInscriptionForGivenId_throwNotFoundException() {
             Mockito.when(inscriptionRepository.findById(givenId)).thenReturn(Optional.empty());
 
-            Assertions.assertThatThrownBy(() -> {
-                objectToTest.update(givenId, inscriptionUpdateDto);
-            }).isInstanceOf(NotFoundException.class)
+            Assertions.assertThatThrownBy(() -> objectToTest.update(givenId, inscriptionUpdateDto))
+                    .isInstanceOf(NotFoundException.class)
                     .hasMessage(MessageFormat.format(ErrorConstant.NO_INSCRIPTION_FOUND_FOR_ID, givenId));
         }
 

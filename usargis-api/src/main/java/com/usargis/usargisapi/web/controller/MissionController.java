@@ -1,5 +1,7 @@
 package com.usargis.usargisapi.web.controller;
 
+import com.github.fge.jsonpatch.JsonPatch;
+import com.github.fge.jsonpatch.JsonPatchException;
 import com.usargis.usargisapi.core.dto.MissionDto;
 import com.usargis.usargisapi.core.model.Mission;
 import com.usargis.usargisapi.service.contract.MissionService;
@@ -68,6 +70,13 @@ public class MissionController implements ApiRestController {
     public ResponseEntity deleteMission(@PathVariable Long id) {
         missionService.delete(missionService.findById(id).orElseThrow(() -> new NotFoundException(MessageFormat.format(ErrorConstant.NO_MISSION_FOUND_FOR_ID, id))));
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
+
+    @PreAuthorize("hasRole('" + Constant.LEADER_ROLE + "')")
+    @PatchMapping(path = Constant.MISSIONS_PATH + Constant.SLASH_ID_PATH, consumes = "application/json-patch+json")
+    public ResponseEntity<MissionDto.MissionResponse> patchMission(@PathVariable Long id, @RequestBody JsonPatch patchDocument) throws JsonPatchException {
+        Mission mission = missionService.patch(id, patchDocument);
+        return new ResponseEntity<>(convertToResponseDto(mission), HttpStatus.OK);
     }
 
     private MissionDto.MissionResponse convertToResponseDto(Mission mission) {
