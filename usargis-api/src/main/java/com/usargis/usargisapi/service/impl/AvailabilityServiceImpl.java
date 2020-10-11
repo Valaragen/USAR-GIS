@@ -1,15 +1,15 @@
 package com.usargis.usargisapi.service.impl;
 
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.github.fge.jsonpatch.JsonPatch;
-import com.github.fge.jsonpatch.JsonPatchException;
 import com.usargis.usargisapi.core.dto.AvailabilityDto;
 import com.usargis.usargisapi.core.model.Availability;
+import com.usargis.usargisapi.core.model.Mission;
 import com.usargis.usargisapi.core.model.MissionStatus;
 import com.usargis.usargisapi.core.search.AvailabilitySearch;
 import com.usargis.usargisapi.repository.AvailabilityRepository;
-import com.usargis.usargisapi.service.contract.*;
+import com.usargis.usargisapi.service.contract.AvailabilityService;
+import com.usargis.usargisapi.service.contract.MissionService;
+import com.usargis.usargisapi.service.contract.ModelMapperService;
+import com.usargis.usargisapi.service.contract.UserInfoService;
 import com.usargis.usargisapi.util.ErrorConstant;
 import com.usargis.usargisapi.web.exception.NotFoundException;
 import com.usargis.usargisapi.web.exception.ProhibitedActionException;
@@ -19,7 +19,6 @@ import org.springframework.stereotype.Service;
 import java.text.MessageFormat;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Service
 public class AvailabilityServiceImpl implements AvailabilityService {
@@ -27,21 +26,16 @@ public class AvailabilityServiceImpl implements AvailabilityService {
     private AvailabilityRepository availabilityRepository;
     private UserInfoService userInfoService;
     private MissionService missionService;
-    private SecurityService securityService;
 
     private ModelMapperService modelMapperService;
-    private ObjectMapper objectMapper;
 
     @Autowired
     public AvailabilityServiceImpl(AvailabilityRepository availabilityRepository, UserInfoService userInfoService,
-                                   MissionService missionService, SecurityService securityService,
-                                   ModelMapperService modelMapperService, ObjectMapper objectMapper) {
+                                   MissionService missionService, ModelMapperService modelMapperService) {
         this.availabilityRepository = availabilityRepository;
         this.userInfoService = userInfoService;
         this.missionService = missionService;
-        this.securityService = securityService;
         this.modelMapperService = modelMapperService;
-        this.objectMapper = objectMapper;
     }
 
     @Override
@@ -98,24 +92,8 @@ public class AvailabilityServiceImpl implements AvailabilityService {
         return save(availabilityToUpdate);
     }
 
-    @Override
-    public Availability patch(Long id, JsonPatch patchDocument) throws JsonPatchException {
-        Availability availabilityToPatch = findById(id).orElseThrow(() -> new NotFoundException(
-                        MessageFormat.format(ErrorConstant.NO_AVAILABILITY_FOUND_FOR_ID, id)
-                )
-        );
-
-        AvailabilityDto.AvailabilityUpdate updateDto = AvailabilityDto.AvailabilityUpdate.builder().build();
-        modelMapperService.map(availabilityToPatch, updateDto);
-        JsonNode postRequestNode = objectMapper.valueToTree(updateDto);
-        postRequestNode = patchDocument.apply(postRequestNode);
-        modelMapperService.map(objectMapper.convertValue(postRequestNode, AvailabilityDto.AvailabilityUpdate.class), availabilityToPatch);
-
-        return save(availabilityToPatch);
-    }
-
-    private void checkValid(Availability availabilityToSave) {
-        MissionStatus linkedMissionStatus = availabilityToSave.getMission().getStatus();
+    private void checkValid(Availability availability) {
+        MissionStatus linkedMissionStatus = availability.getMission().getStatus();
         if ((linkedMissionStatus.equals(MissionStatus.ONFOCUS) || linkedMissionStatus.equals(MissionStatus.ONGOING) ||
                 linkedMissionStatus.equals(MissionStatus.FINISHED) || linkedMissionStatus.equals(MissionStatus.CANCELLED))) {
             throw new ProhibitedActionException(
@@ -123,41 +101,5 @@ public class AvailabilityServiceImpl implements AvailabilityService {
                             linkedMissionStatus.getName())
             );
         }
-
-        if (availabilityToSave.getStartDate() != null && availabilityToSave.getEndDate() != null) {
-
-            //Start date can't be before end date
-            if (availabilityToSave.getStartDate().isAfter(availabilityToSave.getEndDate())) {
-                throw new ProhibitedActionException(ErrorConstant.AVAILABILITY_START_DATE_CANT_BE_AFTER_END_DATE);
-            } else if (availabilityToSave.getStartDate().equals(availabilityToSave.getEndDate())) {
-                throw new ProhibitedActionException(ErrorConstant.AVAILABILITY_START_DATE_CANT_BE_EQUAL_TO_END_DATE);
-            }
-
-            //Already covered by another availability
-            AvailabilitySearch availabilitySearch = new AvailabilitySearch();
-            availabilitySearch.setUserUsername(availabilityToSave.getUserInfo().getUsername());
-            availabilitySearch.setMissionId(availabilityToSave.getMission().getId());
-            List<Availability> currentAvailabilitiesOnMission = searchAll(availabilitySearch);
-            if (availabilityToSave.getId() != null) {
-                currentAvailabilitiesOnMission = currentAvailabilitiesOnMission.stream().filter((availability) -> !availability.getId().equals(availabilityToSave.getId())).collect(Collectors.toList());
-            }
-            currentAvailabilitiesOnMission.forEach((availability) -> {
-                if ((availabilityToSave.getStartDate().isAfter(availability.getStartDate()) && availabilityToSave.getStartDate().isBefore(availability.getEndDate()))
-                        || (availabilityToSave.getEndDate().isAfter(availability.getStartDate()) && availabilityToSave.getEndDate().isBefore(availability.getEndDate()))
-                        || (availabilityToSave.getStartDate().isBefore(availability.getStartDate()) && availabilityToSave.getEndDate().isAfter(availability.getEndDate()))
-                        || (availabilityToSave.getStartDate().equals(availability.getStartDate()) || availabilityToSave.getEndDate().isEqual(availability.getEndDate()))) {
-                    throw new ProhibitedActionException(
-                            MessageFormat.format(ErrorConstant.AVAILABILITY_ALREADY_COVERED_BY_THE_AVAILABILITY_OF_ID_WITH_START_DATE_AND_END_DATE,
-                                    availability.getId(), availability.getStartDate(), availability.getEndDate())
-                    );
-                }
-            });
-        }
-    }
-
-    @Override
-    public boolean isAvailabilityOwner(Long id) {
-        Optional<Availability> availability = findById(id);
-        return availability.filter(value -> securityService.isSameUsernameThanAuthenticatedUser(value.getUserInfo().getUsername())).isPresent();
     }
 }

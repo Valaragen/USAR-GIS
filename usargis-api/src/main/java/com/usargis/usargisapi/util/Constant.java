@@ -6,14 +6,15 @@ public abstract class Constant {
     public static final String LEADER_ROLE = "LEADER";
     public static final String ADMIN_ROLE = "ADMIN";
     //### PATH ###
-    public static final String API_PATH = "/usar-gis/api";
-    public static final String SLASH = "/";
-    public static final String REDIRECT = "redirect:";
+    public static final Object SLASH = "/";
+    public static final Object REDIRECT = "redirect:";
     public static final String SLASH_ID_PATH = "/{id}";
     public static final String SLASH_STRING_PATH = "/{string}";
     public static final String SLASH_NAME_PATH = "/{name}";
     public static final String SLASH_USERNAME_PATH = "/{username}";
     public static final String V1_PATH = "/v1";
+    public static final String API_PATH = "/api";
+    public static final String USARGIS_PATH = "/usar-gis";
     public static final String AVAILABILITIES_PATH = "/availabilities";
     public static final String EVENTS_PATH = "/events";
     public static final String GROUPS_PATH = "/groups";

@@ -100,8 +100,9 @@ class NotificationMessageServiceImplTest {
         void create_noNotificationForGivenId_throwNotFoundException() {
             Mockito.when(notificationService.findById(notificationMessageCreateDto.getNotificationId())).thenReturn(Optional.empty());
 
-            Assertions.assertThatThrownBy(() -> objectToTest.create(notificationMessageCreateDto))
-                    .isInstanceOf(NotFoundException.class)
+            Assertions.assertThatThrownBy(() -> {
+                objectToTest.create(notificationMessageCreateDto);
+            }).isInstanceOf(NotFoundException.class)
                     .hasMessage(MessageFormat.format(ErrorConstant.NO_NOTIFICATION_FOUND_FOR_ID, notificationMessageCreateDto.getNotificationId()));
         }
 
@@ -153,8 +154,9 @@ class NotificationMessageServiceImplTest {
         void update_noNotificationMessageForGivenId_throwNotFoundException() {
             Mockito.when(notificationMessageRepository.findById(givenId)).thenReturn(Optional.empty());
 
-            Assertions.assertThatThrownBy(() -> objectToTest.update(givenId, notificationMessageUpdateDto))
-                    .isInstanceOf(NotFoundException.class)
+            Assertions.assertThatThrownBy(() -> {
+                objectToTest.update(givenId, notificationMessageUpdateDto);
+            }).isInstanceOf(NotFoundException.class)
                     .hasMessage(MessageFormat.format(ErrorConstant.NO_NOTIFICATION_MESSAGE_FOUND_FOR_ID, givenId));
         }
 

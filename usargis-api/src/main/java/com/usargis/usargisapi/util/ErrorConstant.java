@@ -27,13 +27,9 @@ public abstract class ErrorConstant {
     public static final String START_DATE_MUST_BE_DEFINED_WHEN_STATUS_IS = "Start date must be defined when status is {0}";
     public static final String END_DATE_MUST_BE_DEFINED_WHEN_STATUS_IS = "End date must be defined when status is {0}";
 
-    public static final String AVAILABILITY_CANT_BE_CREATED_OR_UPDATED_WHEN_LINKED_MISSION_STATUS_IS = "Availability can''t be created or updated when linked mission status is {0}";
-    public static final String AVAILABILITY_ALREADY_COVERED_BY_THE_AVAILABILITY_OF_ID_WITH_START_DATE_AND_END_DATE = "The availability submitted contains part of its date being already covered by the availability of id {0} with start date : {1} and end date {2}";
-    public static final String AVAILABILITY_START_DATE_CANT_BE_AFTER_END_DATE = "Availability start date can't be before end date";
-    public static final String AVAILABILITY_START_DATE_CANT_BE_EQUAL_TO_END_DATE = "Availability start date can't be equal to end date";
+    public static final String AVAILABILITY_CANT_BE_CREATED_OR_UPDATED_WHEN_LINKED_MISSION_STATUS_IS = "Availability can\'t be created or updated when linked mission status is {0}";
     public static final String VALIDATION_ERROR = "Validation error";
     public static final String MALFORMED_JSON_REQUEST = "Malformed JSON request";
-    public static final String MALFORMED_JSON_PATCH = "Malformed JSON request";
 
     private ErrorConstant() {
     }

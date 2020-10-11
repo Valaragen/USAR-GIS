@@ -7,7 +7,7 @@ import lombok.Value;
 public interface TeamMemberDto {
 
     @Builder
-    @Data
+    @Value
     class TeamMemberPostRequest implements TeamMemberDto {
         //Fields specific to this DTO
         private Long teamId;

@@ -10,7 +10,7 @@ import java.time.LocalDateTime;
 public interface InscriptionDto {
 
     @Builder
-    @Data
+    @Value
     class InscriptionPostRequest implements InscriptionDto {
         //Fields specific to this DTO
         private Long eventId;

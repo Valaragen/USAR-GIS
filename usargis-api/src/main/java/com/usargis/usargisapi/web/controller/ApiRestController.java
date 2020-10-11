@@ -6,6 +6,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @PreAuthorize("hasRole('" + Constant.ADMIN_ROLE + "')")
-@RequestMapping(Constant.API_PATH + Constant.V1_PATH)
+@RequestMapping(Constant.USARGIS_PATH + Constant.API_PATH + Constant.V1_PATH)
 interface ApiRestController {
 }

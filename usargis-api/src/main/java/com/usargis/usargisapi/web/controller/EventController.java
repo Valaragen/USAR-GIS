@@ -1,7 +1,5 @@
 package com.usargis.usargisapi.web.controller;
 
-import com.github.fge.jsonpatch.JsonPatch;
-import com.github.fge.jsonpatch.JsonPatchException;
 import com.usargis.usargisapi.core.dto.EventDto;
 import com.usargis.usargisapi.core.model.Event;
 import com.usargis.usargisapi.service.contract.EventService;
@@ -70,13 +68,6 @@ public class EventController implements ApiRestController {
     public ResponseEntity deleteEvent(@PathVariable Long id) {
         eventService.delete(eventService.findById(id).orElseThrow(() -> new NotFoundException(MessageFormat.format(ErrorConstant.NO_EVENT_FOUND_FOR_ID, id))));
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-    }
-
-    @PreAuthorize("hasRole('" + Constant.LEADER_ROLE + "')")
-    @PatchMapping(path = Constant.EVENTS_PATH + Constant.SLASH_ID_PATH, consumes = "application/json-patch+json")
-    public ResponseEntity<EventDto.EventResponse> patchEvent(@PathVariable Long id, @RequestBody JsonPatch patchDocument) throws JsonPatchException {
-        Event event = eventService.patch(id, patchDocument);
-        return new ResponseEntity<>(convertToResponseDto(event), HttpStatus.OK);
     }
 
     private EventDto.EventResponse convertToResponseDto(Event event) {
