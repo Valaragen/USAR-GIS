@@ -1,5 +1,9 @@
 package com.usargis.usargisapi.service.impl;
 
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.github.fge.jsonpatch.JsonPatch;
+import com.github.fge.jsonpatch.JsonPatchException;
 import com.usargis.usargisapi.core.dto.EventDto;
 import com.usargis.usargisapi.core.model.Event;
 import com.usargis.usargisapi.repository.EventRepository;
@@ -22,14 +26,16 @@ public class EventServiceImpl implements EventService {
     private EventRepository eventRepository;
     private UserInfoService userInfoService;
     private ModelMapperService modelMapperService;
+    private ObjectMapper objectMapper;
     private SecurityService securityService;
 
     @Autowired
     public EventServiceImpl(EventRepository eventRepository, UserInfoService userInfoService,
-                            ModelMapperService modelMapperService, SecurityService securityService) {
+                            ModelMapperService modelMapperService, ObjectMapper objectMapper, SecurityService securityService) {
         this.eventRepository = eventRepository;
         this.userInfoService = userInfoService;
         this.modelMapperService = modelMapperService;
+        this.objectMapper = objectMapper;
         this.securityService = securityService;
     }
 
@@ -75,5 +81,21 @@ public class EventServiceImpl implements EventService {
         );
         modelMapperService.map(updateDto, eventToUpdate);
         return save(eventToUpdate);
+    }
+
+    @Override
+    public Event patch(Long id, JsonPatch patchDocument) throws JsonPatchException {
+        Event eventToPatch = findById(id).orElseThrow(() -> new NotFoundException(
+                        MessageFormat.format(ErrorConstant.NO_EVENT_FOUND_FOR_ID, id)
+                )
+        );
+
+        EventDto.EventPostRequest missionPostRequest = EventDto.EventPostRequest.builder().build();
+        modelMapperService.map(eventToPatch, missionPostRequest);
+        JsonNode postRequestNode = objectMapper.valueToTree(missionPostRequest);
+        postRequestNode = patchDocument.apply(postRequestNode);
+        modelMapperService.map(objectMapper.convertValue(postRequestNode, EventDto.EventPostRequest.class), eventToPatch);
+
+        return save(eventToPatch);
     }
 }

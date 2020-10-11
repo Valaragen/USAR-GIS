@@ -1,5 +1,9 @@
 package com.usargis.usargisapi.service.impl;
 
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.github.fge.jsonpatch.JsonPatch;
+import com.github.fge.jsonpatch.JsonPatchException;
 import com.usargis.usargisapi.core.dto.AvailabilityDto;
 import com.usargis.usargisapi.core.model.Availability;
 import com.usargis.usargisapi.core.model.MissionStatus;
@@ -26,16 +30,18 @@ public class AvailabilityServiceImpl implements AvailabilityService {
     private SecurityService securityService;
 
     private ModelMapperService modelMapperService;
+    private ObjectMapper objectMapper;
 
     @Autowired
     public AvailabilityServiceImpl(AvailabilityRepository availabilityRepository, UserInfoService userInfoService,
                                    MissionService missionService, SecurityService securityService,
-                                   ModelMapperService modelMapperService) {
+                                   ModelMapperService modelMapperService, ObjectMapper objectMapper) {
         this.availabilityRepository = availabilityRepository;
         this.userInfoService = userInfoService;
         this.missionService = missionService;
         this.securityService = securityService;
         this.modelMapperService = modelMapperService;
+        this.objectMapper = objectMapper;
     }
 
     @Override
@@ -90,6 +96,22 @@ public class AvailabilityServiceImpl implements AvailabilityService {
         ));
         modelMapperService.map(updateDto, availabilityToUpdate);
         return save(availabilityToUpdate);
+    }
+
+    @Override
+    public Availability patch(Long id, JsonPatch patchDocument) throws JsonPatchException {
+        Availability availabilityToPatch = findById(id).orElseThrow(() -> new NotFoundException(
+                        MessageFormat.format(ErrorConstant.NO_AVAILABILITY_FOUND_FOR_ID, id)
+                )
+        );
+
+        AvailabilityDto.AvailabilityUpdate updateDto = AvailabilityDto.AvailabilityUpdate.builder().build();
+        modelMapperService.map(availabilityToPatch, updateDto);
+        JsonNode postRequestNode = objectMapper.valueToTree(updateDto);
+        postRequestNode = patchDocument.apply(postRequestNode);
+        modelMapperService.map(objectMapper.convertValue(postRequestNode, AvailabilityDto.AvailabilityUpdate.class), availabilityToPatch);
+
+        return save(availabilityToPatch);
     }
 
     private void checkValid(Availability availabilityToSave) {
