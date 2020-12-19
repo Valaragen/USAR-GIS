@@ -18,7 +18,7 @@ Le projet est **sécurisé** par des appels vers [**keycloak**](https://www.keyc
 * ##### gateway-server
   **API gateway**, le point d'entrée unique pour les API et microservices back-end(**usargis-api**)  
   **Port** : 9103
-#### Microservices de la bibliotheque
+#### Microservices du projet
 * ##### usargis-api
   **API** permettant de **créer, lire, mettre à jour et/ou supprimer** des **missions**, **événements** et de renseigner des **disponiblités**.  
   **L'API contient** des **endpoints protégés**, reservés aux **utilisateurs authentifiés** ou aux **membres du staff**, pour **obtenir l'autorisation** d'appeler ces endpoints il faut **fournir un token d'accès valide** dans l'entête de la requête http.  
@@ -30,7 +30,7 @@ Le projet est **sécurisé** par des appels vers [**keycloak**](https://www.keyc
   **Site web**, il ne permet pour l'instant que de se connecter et notamment de s'inscrire pour utiliser l'API.  
   **Port** : 8080  
 #### Keycloak
-Non integré sur ce repository git, keycloak est necessaire au fonctionnement des microservices de la bibliothèque. [Télécharger keycloak 10.0.2](https://www.keycloak.org/archive/downloads-10.0.2.html)  
+Non integré sur ce repository git, keycloak est necessaire au fonctionnement des microservices du projet. [Télécharger keycloak 10.0.2](https://www.keycloak.org/archive/downloads-10.0.2.html)  
 **Version** : 10.0.2  
 **Base de données** : Postgresql  
 **Nom de la base de données** : USARGIS_KEYCLOAK_DB  
@@ -59,8 +59,8 @@ Non integré sur ce repository git, keycloak est necessaire au fonctionnement de
    **Token name:** keycloak-bearer-token  
    **Grant type:** Authorization code  
    **Callback URL:** http://localhost:8080/sso/login  
-   **Auth URL:** http://localhost:8180/auth/realms/bibliotheque/protocol/openid-connect/auth  
-   **Access token URL:** http://localhost:8180/auth/realms/bibliotheque/protocol/openid-connect/token  
+   **Auth URL:** http://localhost:8180/auth/realms/usar-gis/protocol/openid-connect/auth  
+   **Access token URL:** http://localhost:8180/auth/realms/usar-gis/protocol/openid-connect/token  
    **Client ID:** webui  
    **Client secret:** 8f5f6aec-ac03-4bf3-b9dd-bad50a478536  
    **Scope:** openid profile email  

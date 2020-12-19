@@ -21,7 +21,7 @@ public interface TeamDto {
     }
 
     @Builder
-    @Data
+    @Value
     class TeamPostRequest implements TeamDto, Name, MissionId {
         //Fields inheriting from validation
         private String name;

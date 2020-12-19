@@ -14,7 +14,7 @@ public interface GroupDto {
     }
 
     @Builder
-    @Data
+    @Value
     class GroupPostRequest implements GroupDto, Name {
         //Fields inheriting from validation
         private String name;

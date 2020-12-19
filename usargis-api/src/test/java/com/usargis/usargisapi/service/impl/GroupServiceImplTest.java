@@ -128,8 +128,9 @@ class GroupServiceImplTest {
         void update_noGroupForGivenId_throwNotFoundException() {
             Mockito.when(groupRepository.findById(givenId)).thenReturn(Optional.empty());
 
-            Assertions.assertThatThrownBy(() -> objectToTest.update(givenId, groupUpdateDto))
-                    .isInstanceOf(NotFoundException.class)
+            Assertions.assertThatThrownBy(() -> {
+                objectToTest.update(givenId, groupUpdateDto);
+            }).isInstanceOf(NotFoundException.class)
                     .hasMessage(MessageFormat.format(ErrorConstant.NO_GROUP_FOUND_FOR_ID, givenId));
         }
 

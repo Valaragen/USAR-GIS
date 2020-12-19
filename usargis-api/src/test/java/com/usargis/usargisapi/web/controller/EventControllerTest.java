@@ -1,7 +1,5 @@
 package com.usargis.usargisapi.web.controller;
 
-import com.github.fge.jsonpatch.JsonPatch;
-import com.github.fge.jsonpatch.JsonPatchException;
 import com.usargis.usargisapi.core.dto.EventDto;
 import com.usargis.usargisapi.core.model.Event;
 import com.usargis.usargisapi.service.contract.EventService;
@@ -238,40 +236,6 @@ class EventControllerTest {
                     .isEqualTo(HttpStatus.NO_CONTENT);
             Assertions.assertThat(result.getBody())
                     .isNull();
-        }
-    }
-
-    @Nested
-    class patchEventTest {
-        private final Long eventId = 1L;
-        private final Event patchedEvent = new Event();
-        private final EventDto.EventResponse eventResponseDto = new EventDto.EventResponse();
-        private final JsonPatch jsonPatch = new JsonPatch(new ArrayList<>());
-
-        @BeforeEach
-        void setup() throws JsonPatchException {
-            Mockito.when(eventService.patch(eventId, jsonPatch)).thenReturn(patchedEvent);
-        }
-
-        @Test
-        void patchEvent_shouldCallServiceLayer() throws JsonPatchException {
-            objectToTest.patchEvent(eventId, jsonPatch);
-
-            Mockito.verify(eventService).patch(eventId, jsonPatch);
-        }
-
-        @Test
-        void patchEvent_eventPatched_returnStatusOkAndEventResponseDto() throws JsonPatchException {
-            Mockito.when(modelMapperService.map(patchedEvent, EventDto.EventResponse.class)).thenReturn(eventResponseDto);
-
-            ResponseEntity<EventDto.EventResponse> result =
-                    objectToTest.patchEvent(eventId, jsonPatch);
-
-            Assertions.assertThat(result.getStatusCode())
-                    .isEqualTo(HttpStatus.OK);
-            Assertions.assertThat(result.getBody())
-                    .isEqualTo(eventResponseDto);
-            Assertions.assertThat(result.getBody()).isInstanceOf(EventDto.EventResponse.class);
         }
     }
 }
