@@ -1,10 +1,9 @@
 import * as React from 'react';
-
 import { Provider } from 'react-redux';
-import Store from './Store/configureStore';
+import { RNKeycloak, ReactNativeKeycloakProvider} from '@react-keycloak/native';
 
-import { RNKeycloak, ReactNativeKeycloakProvider, useKeycloak } from '@react-keycloak/native';
-import Login from './Login';
+import Store from './Store/configureStore';
+import Navigation from './Navigation';
 
 export default function App() {
 
@@ -19,7 +18,7 @@ export default function App() {
       authClient={keycloakAuth}
       initOptions={{ redirectUri: 'usargis://Homepage' }}>
         <Provider store={Store}>
-          <Login />
+          <Navigation></Navigation>
         </Provider>
     </ReactNativeKeycloakProvider>
   );
