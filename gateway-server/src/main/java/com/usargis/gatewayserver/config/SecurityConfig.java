@@ -20,7 +20,7 @@ public class SecurityConfig {
                 .logout().disable()
                 .authorizeExchange()
                 .pathMatchers(HttpMethod.OPTIONS).permitAll()
-                .pathMatchers("/usargis-api/**").hasRole("MEMBER")
+                .pathMatchers("/usar-gis/api/**").hasRole("MEMBER")
                 .anyExchange().authenticated()
                 .and()
                 .oauth2ResourceServer()

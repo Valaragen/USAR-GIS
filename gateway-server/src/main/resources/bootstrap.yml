@@ -31,8 +31,8 @@ spring:
     oauth2:
       resourceserver:
         jwt:
-          issuer-uri: http://localhost:8180/auth/realms/USAR-GIS
-          jwk-set-uri: http://localhost:8180/auth/realms/USAR-GIS/protocol/openid-connect/certs
+          issuer-uri: http://192.168.1.12:8180/auth/realms/USAR-GIS
+          jwk-set-uri: http://192.168.1.12:8180/auth/realms/USAR-GIS/protocol/openid-connect/certs
 
 eureka:
   client:

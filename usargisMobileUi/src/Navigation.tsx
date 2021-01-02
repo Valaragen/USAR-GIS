@@ -5,7 +5,7 @@ import AppNavigation from './AppNavigation'
 import Login from './Login';
 
 const Navigation = () => {
-    const { keycloak, initialized } = useKeycloak();
+    const { keycloak } = useKeycloak();
 
     return (
         <>
@@ -13,8 +13,7 @@ const Navigation = () => {
                 <Login />
             ) : (
                 <AppNavigation />
-            )}
-            
+            )}     
         </>
     );
 }
