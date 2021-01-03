@@ -3,7 +3,7 @@ import { View, Text, Pressable, FlatList, Button } from 'react-native';
 import { useKeycloak } from '@react-keycloak/native';
 import { KeycloakTokenParsed } from '@react-keycloak/keycloak-ts';
 import { getAllMissions } from './API/usargisApi';
-import MissionItem from './components/MissionItem'
+import { MissionItem, Mission } from './components/MissionItem'
 
 type ParsedToken = KeycloakTokenParsed & {
     email?: string;
@@ -14,12 +14,12 @@ type ParsedToken = KeycloakTokenParsed & {
 
 const AppNavigation = () => {
     const { keycloak } = useKeycloak();
-    const [missionsState, setMissionsState] = useState([]);
+    const [missionsState, setMissionsState] = useState<Mission[]>([]);
     const parsedToken: ParsedToken | undefined = keycloak?.tokenParsed;
 
     function _loadMissions() {
-        console.log("loadMission")
-        getAllMissions().then(data => console.log(data));
+        getAllMissions().then(data => setMissionsState(data));
+        console.log(missionsState);
     }
 
     return (
@@ -31,7 +31,7 @@ const AppNavigation = () => {
             <FlatList
                 data={missionsState}
                 keyExtractor={(item) => item.id.toString()}
-                renderItem={({ item }) => <Text>{item.title}</Text>}
+                renderItem={({ item }) => <Text>{item.name}</Text>}
             />
             <Pressable onPress={() => _loadMissions()}>
                 <Text>load</Text>

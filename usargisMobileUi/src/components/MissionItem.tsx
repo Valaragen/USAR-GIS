@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 
-interface Mission {
+export interface Mission {
     id: number;
     name: string;
     status: string;
@@ -18,7 +18,7 @@ interface Mission {
     authorUsername: string;
 }
 
-const MissionItem = (item: Mission) => {
+export const MissionItem = (item: Mission) => {
     return (
         <View>
             <Text>{item.name}</Text>
@@ -31,5 +31,3 @@ const style = StyleSheet.create({
         height:50
     }
 });
-
-export default MissionItem;
