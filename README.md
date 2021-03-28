@@ -3,9 +3,7 @@
 [![Maintainability Rating](https://sonarcloud.io/api/project_badges/measure?project=Valaragen_USAR-GIS&metric=sqale_rating)](https://sonarcloud.io/dashboard?id=Valaragen_USAR-GIS)
 # USAR-GIS
 ## Description
-### À propos
-**Système de gestion d'interventions.**  
-Le projet respecte une **architecture orientée service**, il est composé des **microservices** (**batch**, **usargis-api**, **webui**) et des **edges microservices**(**config-server**, **eureka-server**, **gateway-server**). Tous ces microservices sont des projets **spring-boot** créés pour tourner de manière **autonome** sur des **serveurs tomcat**.  
+### À propos  
 Le projet est **sécurisé** par des appels vers [**keycloak**](https://www.keycloak.org/about.html "À propos de keycloak"), un **serveur de gestion d'identité et d'accès Opensource**.  
 ### Les microservices
 #### Edges microservices
@@ -27,7 +25,7 @@ Le projet est **sécurisé** par des appels vers [**keycloak**](https://www.keyc
   **Nom de la base de données** : USARGIS_DB  
   **Port** : 9001  
 * ##### webui  
-  **Site web**, il ne permet pour l'instant que de se connecter et notamment de s'inscrire pour utiliser l'API.  
+  **Site web**, UI de test permettant basiquement de se connecter et de s'inscrire pour utiliser l'API.  
   **Port** : 8080  
 #### Keycloak
 Non integré sur ce repository git, keycloak est necessaire au fonctionnement des microservices du projet. [Télécharger keycloak 10.0.2](https://www.keycloak.org/archive/downloads-10.0.2.html)  
