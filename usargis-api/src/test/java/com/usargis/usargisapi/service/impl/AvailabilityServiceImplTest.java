@@ -5,7 +5,7 @@ import com.usargis.usargisapi.core.model.Availability;
 import com.usargis.usargisapi.core.model.Mission;
 import com.usargis.usargisapi.core.model.MissionStatus;
 import com.usargis.usargisapi.core.model.UserInfo;
-import com.usargis.usargisapi.core.search.AvailabilitySearch;
+import com.usargis.usargisapi.core.search.AvailabilitySearchCriteria;
 import com.usargis.usargisapi.repository.AvailabilityRepository;
 import com.usargis.usargisapi.service.contract.AvailabilityService;
 import com.usargis.usargisapi.service.contract.MissionService;
@@ -115,13 +115,13 @@ class AvailabilityServiceImplTest {
     @Test
     void searchAll_shouldCallRepositoryAndReturnOptional() {
         List<Availability> returnedAvailabilityList = Collections.singletonList(new Availability());
-        AvailabilitySearch availabilitySearch = new AvailabilitySearch();
-        Mockito.when(availabilityRepository.searchAll(availabilitySearch)).thenReturn(returnedAvailabilityList);
+        AvailabilitySearchCriteria availabilitySearchCriteria = new AvailabilitySearchCriteria();
+        Mockito.when(availabilityRepository.searchAll(availabilitySearchCriteria)).thenReturn(returnedAvailabilityList);
 
-        List<Availability> result = objectToTest.searchAll(availabilitySearch);
+        List<Availability> result = objectToTest.searchAll(availabilitySearchCriteria);
 
         Assertions.assertThat(result).isEqualTo(returnedAvailabilityList);
-        Mockito.verify(availabilityRepository).searchAll(availabilitySearch);
+        Mockito.verify(availabilityRepository).searchAll(availabilitySearchCriteria);
     }
 
 

@@ -2,7 +2,7 @@ package com.usargis.usargisapi.web.controller;
 
 import com.usargis.usargisapi.core.dto.AvailabilityDto;
 import com.usargis.usargisapi.core.model.Availability;
-import com.usargis.usargisapi.core.search.AvailabilitySearch;
+import com.usargis.usargisapi.core.search.AvailabilitySearchCriteria;
 import com.usargis.usargisapi.service.contract.AvailabilityService;
 import com.usargis.usargisapi.service.contract.ModelMapperService;
 import com.usargis.usargisapi.service.contract.SecurityService;
@@ -35,7 +35,7 @@ class AvailabilityControllerTest {
 
     @Nested
     class searchAllAvailabilitiesTest {
-        private final AvailabilitySearch searchParameters = new AvailabilitySearch();
+        private final AvailabilitySearchCriteria searchParameters = new AvailabilitySearchCriteria();
         private final List<Availability> availabilitiesFound = Arrays.asList(new Availability(), new Availability());
 
         @Test

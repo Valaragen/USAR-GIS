@@ -2,9 +2,8 @@ package com.usargis.usargisapi.service.impl;
 
 import com.usargis.usargisapi.core.dto.AvailabilityDto;
 import com.usargis.usargisapi.core.model.Availability;
-import com.usargis.usargisapi.core.model.Mission;
 import com.usargis.usargisapi.core.model.MissionStatus;
-import com.usargis.usargisapi.core.search.AvailabilitySearch;
+import com.usargis.usargisapi.core.search.AvailabilitySearchCriteria;
 import com.usargis.usargisapi.repository.AvailabilityRepository;
 import com.usargis.usargisapi.service.contract.AvailabilityService;
 import com.usargis.usargisapi.service.contract.MissionService;
@@ -60,8 +59,8 @@ public class AvailabilityServiceImpl implements AvailabilityService {
     }
 
     @Override
-    public List<Availability> searchAll(AvailabilitySearch availabilitySearch) {
-        return availabilityRepository.searchAll(availabilitySearch);
+    public List<Availability> searchAll(AvailabilitySearchCriteria availabilitySearchCriteria) {
+        return availabilityRepository.searchAll(availabilitySearchCriteria);
     }
 
     @Override

@@ -2,6 +2,7 @@ package com.usargis.usargisapi.web.controller;
 
 import com.usargis.usargisapi.core.dto.MissionDto;
 import com.usargis.usargisapi.core.model.Mission;
+import com.usargis.usargisapi.core.search.MissionSearchCriteria;
 import com.usargis.usargisapi.service.contract.MissionService;
 import com.usargis.usargisapi.service.contract.ModelMapperService;
 import com.usargis.usargisapi.util.ErrorConstant;
@@ -30,43 +31,44 @@ class MissionControllerTest {
     }
 
     @Nested
-    class findAllMissionsTest {
+    class searchForMissionsTest {
+        private final MissionSearchCriteria searchParameters = new MissionSearchCriteria();
         private final List<Mission> missionsFound = Arrays.asList(new Mission(), new Mission());
 
         @Test
-        void findAllMissions_shouldCallServiceLayer() {
-            Mockito.when(missionService.findAll()).thenReturn(missionsFound);
+        void searchForMissions_shouldCallServiceLayer() {
+            Mockito.when(missionService.searchAll(searchParameters)).thenReturn(missionsFound);
 
-            objectToTest.findAllMissions();
+            objectToTest.searchForMissions(searchParameters);
 
-            Mockito.verify(missionService).findAll();
+            Mockito.verify(missionService).searchAll(searchParameters);
         }
 
         @Test
-        void findAllMissions_noMissionFound_throwNotFoundException() {
-            Mockito.when(missionService.findAll()).thenReturn(Collections.emptyList());
+        void searchForMissions_noMissionFound_throwNotFoundException() {
+            Mockito.when(missionService.searchAll(searchParameters)).thenReturn(Collections.emptyList());
 
-            Assertions.assertThatThrownBy(() -> objectToTest.findAllMissions())
+            Assertions.assertThatThrownBy(() -> objectToTest.searchForMissions(searchParameters))
                     .isInstanceOf(NotFoundException.class)
                     .hasMessage(ErrorConstant.NO_MISSION_FOUND);
         }
 
         @Test
-        void findAllMissions_shouldConvertMissionsToListOfResponseDto() {
-            Mockito.when(missionService.findAll()).thenReturn(missionsFound);
+        void searchForMissions_shouldConvertMissionsToListOfResponseDto() {
+            Mockito.when(missionService.searchAll(searchParameters)).thenReturn(missionsFound);
             Mockito.when(modelMapperService.map(Mockito.any(Mission.class), Mockito.any())).thenReturn(new MissionDto.MissionResponse());
 
-            objectToTest.findAllMissions();
+            objectToTest.searchForMissions(searchParameters);
 
             Mockito.verify(modelMapperService, Mockito.times(missionsFound.size())).map(Mockito.any(Mission.class), Mockito.any());
         }
 
         @Test
-        void findAllMissions_missionFound_returnStatusOkWithListOfMissionsResponseDto() {
-            Mockito.when(missionService.findAll()).thenReturn(missionsFound);
+        void searchForMissions_missionFound_returnStatusOkWithListOfMissionsResponseDto() {
+            Mockito.when(missionService.searchAll(searchParameters)).thenReturn(missionsFound);
             Mockito.when(modelMapperService.map(Mockito.any(Mission.class), Mockito.any())).thenReturn(new MissionDto.MissionResponse());
 
-            ResponseEntity<List<MissionDto.MissionResponse>> result = objectToTest.findAllMissions();
+            ResponseEntity<List<MissionDto.MissionResponse>> result = objectToTest.searchForMissions(searchParameters);
 
             Assertions.assertThat(result.getStatusCode()).isEqualTo(HttpStatus.OK);
             Assertions.assertThat(Objects.requireNonNull(result.getBody()).size()).isEqualTo(missionsFound.size());

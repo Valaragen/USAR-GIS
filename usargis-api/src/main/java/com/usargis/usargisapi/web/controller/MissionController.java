@@ -2,6 +2,7 @@ package com.usargis.usargisapi.web.controller;
 
 import com.usargis.usargisapi.core.dto.MissionDto;
 import com.usargis.usargisapi.core.model.Mission;
+import com.usargis.usargisapi.core.search.MissionSearchCriteria;
 import com.usargis.usargisapi.service.contract.MissionService;
 import com.usargis.usargisapi.service.contract.ModelMapperService;
 import com.usargis.usargisapi.util.Constant;
@@ -33,8 +34,8 @@ public class MissionController implements ApiRestController {
 
     @PreAuthorize("hasRole('" + Constant.MEMBER_ROLE + "')")
     @GetMapping(Constant.MISSIONS_PATH)
-    public ResponseEntity<List<MissionDto.MissionResponse>> findAllMissions() {
-        List<Mission> missions = missionService.findAll();
+    public ResponseEntity<List<MissionDto.MissionResponse>> searchForMissions(@Valid MissionSearchCriteria missionSearchCriteria) {
+        List<Mission> missions = missionService.searchAll(missionSearchCriteria);
         if (missions.isEmpty()) {
             throw new NotFoundException(ErrorConstant.NO_MISSION_FOUND);
         }

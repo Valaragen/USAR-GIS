@@ -2,7 +2,7 @@ package com.usargis.usargisapi.web.controller;
 
 import com.usargis.usargisapi.core.dto.AvailabilityDto;
 import com.usargis.usargisapi.core.model.Availability;
-import com.usargis.usargisapi.core.search.AvailabilitySearch;
+import com.usargis.usargisapi.core.search.AvailabilitySearchCriteria;
 import com.usargis.usargisapi.service.contract.AvailabilityService;
 import com.usargis.usargisapi.service.contract.ModelMapperService;
 import com.usargis.usargisapi.service.contract.SecurityService;
@@ -36,10 +36,10 @@ public class AvailabilityController implements ApiRestController {
         this.securityService = securityService;
     }
 
-    @PreAuthorize("hasRole('" + Constant.LEADER_ROLE + "') or @securityServiceImpl.isSameUsernameThanAuthenticatedUser(#availabilitySearch.userUsername)")
+    @PreAuthorize("hasRole('" + Constant.LEADER_ROLE + "') or @securityServiceImpl.isSameUsernameThanAuthenticatedUser(#availabilitySearchCriteria.userUsername)")
     @GetMapping(Constant.AVAILABILITIES_PATH)
-    public ResponseEntity<List<AvailabilityDto.AvailabilityResponse>> searchForAvailabilities(@Valid AvailabilitySearch availabilitySearch) {
-        List<Availability> availabilities = availabilityService.searchAll(availabilitySearch);
+    public ResponseEntity<List<AvailabilityDto.AvailabilityResponse>> searchForAvailabilities(@Valid AvailabilitySearchCriteria availabilitySearchCriteria) {
+        List<Availability> availabilities = availabilityService.searchAll(availabilitySearchCriteria);
         if (availabilities.isEmpty()) {
             throw new NotFoundException(ErrorConstant.NO_AVAILABILITY_FOUND);
         }

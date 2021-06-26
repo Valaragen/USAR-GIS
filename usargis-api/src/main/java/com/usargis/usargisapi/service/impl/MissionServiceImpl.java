@@ -1,9 +1,9 @@
 package com.usargis.usargisapi.service.impl;
 
 import com.usargis.usargisapi.core.dto.MissionDto;
-import com.usargis.usargisapi.core.model.Availability;
 import com.usargis.usargisapi.core.model.Mission;
 import com.usargis.usargisapi.core.model.MissionStatus;
+import com.usargis.usargisapi.core.search.MissionSearchCriteria;
 import com.usargis.usargisapi.repository.MissionRepository;
 import com.usargis.usargisapi.service.contract.MissionService;
 import com.usargis.usargisapi.service.contract.ModelMapperService;
@@ -55,6 +55,11 @@ public class MissionServiceImpl implements MissionService {
     @Override
     public void delete(Mission mission) {
         missionRepository.delete(mission);
+    }
+
+    @Override
+    public List<Mission> searchAll(MissionSearchCriteria missionSearchCriteria) {
+        return missionRepository.searchAll(missionSearchCriteria);
     }
 
     @Override

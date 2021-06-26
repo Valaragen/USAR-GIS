@@ -16,6 +16,19 @@ public class UserInfoMother {
                 .phoneVerified(true);
     }
 
+    public static UserInfo.UserInfoBuilder sample2() {
+        return UserInfo.builder()
+                .id("z7c596v5-255b-4d73-9024-614cd10c2c38")
+                .username("sampleUser2")
+                .lastName("sampleUser2Ln")
+                .firstName("sampleUser2Fn")
+                .email("sampleUser2@gmail.com")
+                .emailVerified(true)
+                .formattedAddress("sampleUser address")
+                .phone("684586235")
+                .phoneVerified(true);
+    }
+
     public static UserInfo.UserInfoBuilder sampleAuthor() {
         return UserInfo.builder()
                 .id("8f99352c-b3c6-4bdf-8278-b1614c40fda8")

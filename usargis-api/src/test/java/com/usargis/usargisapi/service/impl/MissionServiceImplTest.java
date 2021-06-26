@@ -4,6 +4,7 @@ import com.usargis.usargisapi.core.dto.MissionDto;
 import com.usargis.usargisapi.core.model.Mission;
 import com.usargis.usargisapi.core.model.MissionStatus;
 import com.usargis.usargisapi.core.model.UserInfo;
+import com.usargis.usargisapi.core.search.MissionSearchCriteria;
 import com.usargis.usargisapi.repository.MissionRepository;
 import com.usargis.usargisapi.service.contract.MissionService;
 import com.usargis.usargisapi.service.contract.ModelMapperService;
@@ -67,6 +68,18 @@ class MissionServiceImplTest {
 
         Assertions.assertThat(result).isEqualTo(expectedResult);
         Mockito.verify(missionRepository).findById(missionIdToFind);
+    }
+
+    @Test
+    void searchAll_shouldCallRepositoryAndReturnOptional() {
+        List<Mission> returnedMissionList = Collections.singletonList(new Mission());
+        MissionSearchCriteria missionSearchCriteria = new MissionSearchCriteria();
+        Mockito.when(missionRepository.searchAll(missionSearchCriteria)).thenReturn(returnedMissionList);
+
+        List<Mission> result = objectToTest.searchAll(missionSearchCriteria);
+
+        Assertions.assertThat(result).isEqualTo(returnedMissionList);
+        Mockito.verify(missionRepository).searchAll(missionSearchCriteria);
     }
 
     @Nested

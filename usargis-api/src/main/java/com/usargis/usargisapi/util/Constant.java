@@ -60,9 +60,22 @@ public abstract class Constant {
     public static final String NMCT_HTML = "HTML";
     public static final String NMCT_TEXT_CODE = "T";
     public static final String NMCT_TEXT = "TEXT";
+    //### CRITERIA ###
+    // DB FIELDS NAME
+    public static final String ID = "id";
+    public static final String START_DATE = "start_date";
+    public static final String END_DATE = "end_date";
+    public static final String USERNAME = "username";
+    public static final String NAME = "name";
+    public static final String STATUS = "status";
+
+    // ROOT NAMES
+    public static final String CR_ROOT_AVAILABILITY = "availability";
+    public static final String CR_ROOT_MISSION = "mission";
+    public static final String CR_ROOT_USER = "userInfo";
+
+
 
     private Constant() {
     }
-
-
 }
