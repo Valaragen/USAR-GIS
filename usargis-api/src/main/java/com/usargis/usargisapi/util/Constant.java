@@ -68,6 +68,15 @@ public abstract class Constant {
     public static final String USERNAME = "username";
     public static final String NAME = "name";
     public static final String STATUS = "status";
+    public static final String DESCRIPTION = "description";
+    public static final String PLANNED_START_DATE = "planned_start_date";
+    public static final String ADDRESS = "address";
+    public static final String CREATION_DATE = "creation_date";
+    public static final String LAST_EDITION_DATE = "last_edition_date";
+
+    // CAMELCASE FIELDS NAME
+    public static final String CAMEL_START_DATE = "startDate";
+
 
     // ROOT NAMES
     public static final String CR_ROOT_AVAILABILITY = "availability";

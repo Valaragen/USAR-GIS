@@ -12,7 +12,7 @@ type ParsedToken = KeycloakTokenParsed & {
     family_name?: string;
 }
 
-const AppNavigation = () => {
+function AppNavigation() {
     const { keycloak } = useKeycloak();
     const [missionsState, setMissionsState] = useState<Mission[]>([]);
     const parsedToken: ParsedToken | undefined = keycloak?.tokenParsed;
@@ -24,10 +24,6 @@ const AppNavigation = () => {
 
     return (
         <View>
-            {/* <Text>Bienvenue dans l'app USAR-GIS {parsedToken?.preferred_username}</Text>
-            <Text>Cliquez ici pour vous déconnecter</Text>
-            <Button onPress={() => keycloak?.logout()} title="Logout" /> */}
-
             <FlatList
                 data={missionsState}
                 keyExtractor={(item) => item.id.toString()}

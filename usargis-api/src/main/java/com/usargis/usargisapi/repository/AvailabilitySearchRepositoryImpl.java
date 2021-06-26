@@ -39,6 +39,7 @@ public class AvailabilitySearchRepositoryImpl implements AvailabilitySearchRepos
         Path<UserInfo> userInfoPath = availabilityRoot.get("userInfo");
         Path<Mission> missionPath = availabilityRoot.get("mission");
 
+        //Filter
         Predicate predicate = getPredicate(availabilitySearchCriteria, userInfoPath, missionPath);
 
         criteriaQuery.select(availabilityRoot)
@@ -63,14 +64,16 @@ public class AvailabilitySearchRepositoryImpl implements AvailabilitySearchRepos
                                    Path<Mission> missionPath) {
         List<Predicate> andPredicates = new ArrayList<>();
 
+        //User username
         if (Objects.nonNull(availabilitySearchCriteria.getUserUsername())) {
-            andPredicates.add(criteriaBuilder.like(userInfoPath.get("username"), availabilitySearchCriteria.getUserUsername()));
+            andPredicates.add(criteriaBuilder.like(userInfoPath.get(Constant.USERNAME), availabilitySearchCriteria.getUserUsername()));
         } else {
-            andPredicates.add(criteriaBuilder.like(userInfoPath.get("username"), "%"));
+            andPredicates.add(criteriaBuilder.like(userInfoPath.get(Constant.USERNAME), "%"));
         }
 
+        //Mission Id
         if (Objects.nonNull(availabilitySearchCriteria.getMissionId())) {
-            andPredicates.add(criteriaBuilder.equal(missionPath.get("id"), availabilitySearchCriteria.getMissionId()));
+            andPredicates.add(criteriaBuilder.equal(missionPath.get(Constant.ID), availabilitySearchCriteria.getMissionId()));
         }
         return criteriaBuilder.and(andPredicates.toArray(new Predicate[0]));
     }

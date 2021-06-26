@@ -7,6 +7,8 @@ import org.springframework.data.domain.Sort;
 public class AvailabilitySearchCriteria {
     private String userUsername;
     private Long missionId;
+
+    //Pagination and sort
     private AvailabilityCriteriaSortBy sortBy = AvailabilityCriteriaSortBy.DEFAULT;
     private Sort.Direction order = Sort.Direction.DESC;
     private Integer pageNo = 0;
