@@ -23,6 +23,7 @@ export const searchForMissions = async (pagesize:number, page:number): Promise<M
         if (response.ok) {
             return await response.json();
         } else {
+            console.log("error");
             throw new Error("Bad Response from server : " + response.status);
         }
     } catch (error) {

@@ -23,48 +23,71 @@ function AppNavigation() {
     const [isLoading, setIsLoading] = useState(false);
     const [page, setPage] = useState(0);
     const [hasMorePages, setHasMorePages] = useState(true);
+    const [isRefreshing, setIsRefreshing] = useState(false);
+    const [shouldLoad, setShouldLoad] = useState(true);
 
     //Load missions on component creation
     useEffect(() => {
-        let isSubscribed = true;
-        _loadMissions(page, isSubscribed);
-        setPage(page + 1)
-        return () => {
-            isSubscribed = false;
-            setIsLoading(false);
+        if (shouldLoad) {
+            let isSubscribed = true;
+            console.log("useEffect is called")
+            _loadMissions(isSubscribed);
+
+            return () => {
+                isSubscribed = false;
+            }
         }
-    }, [])
+    }, [shouldLoad])
 
     //Load missions from API
-    function _loadMissions(pageNo:number, isSubscribed:boolean = true) {
-        setIsLoading(true);
-        searchForMissions(missionFetchPerLoadNb, pageNo)
-        .then(data => {
+    function _loadMissions(isSubscribed:boolean) {
+        if (!isLoading) {
+            setIsLoading(true);
+            console.log("searching for page " + page)
+            searchForMissions(missionFetchPerLoadNb, page)
+            .then(data => {
                 //Do not change state if component is unmounted
                 if(isSubscribed) {
                     if (page === 0) {
                         setMissions(data);
                     } else {
-                        setMissions([...missions, ...data]);
+                        setMissions(prevMissions => [...prevMissions, ...data]);
                     }
+                    setPage(page => page + 1);
                 }
             })
             .catch((error) => {
-                setHasMorePages(false);
+                if(isSubscribed) {
+                    setHasMorePages(false);
+                }
+                console.log(error);
             })
             .finally(() => {
                 if(isSubscribed) {
                     setIsLoading(false);
+                    setIsRefreshing(false);
+                    setShouldLoad(false);
                 }
-            });
-
+            }); 
+        } else {
+            console.log('missions are currently fetched, can\'t load more')
+        }
     }
 
     function _loadMoreMissions() {
-        setPage(page + 1);
-        _loadMissions(page);
-        setIsLoading(true);
-        console.log("loadmore")
+        if (hasMorePages) {
+            console.log("Loading more missions");
+            setShouldLoad(true);
+        }
+    }
+
+    function _refresh() {
+        console.log("Refreshing...");
+        setIsRefreshing(true);
+        setHasMorePages(true);
+        setPage(0);
+        setMissions([]);
+        setShouldLoad(true);
     }
 
     //Display an ActivityIndicator during application loading
@@ -74,7 +97,7 @@ function AppNavigation() {
                 { hasMorePages ?
                     <ActivityIndicator size='large' color='#e22013' animating={isLoading}/>
                     :
-                    <Text>Fin de la recherche</Text>
+                    <Text>Aucun autre résultat</Text>
                 }
                 </>
             )
@@ -90,15 +113,14 @@ function AppNavigation() {
                 data={missions}
                 keyExtractor={(item) => item.id.toString()}
                 renderItem={({ item }) => <MissionItem mission={item}/>}
-                onEndReached={() => {
-                    if (hasMorePages) {
-                        _loadMoreMissions()}
-                    }
-                }
+                onEndReached={() => _loadMoreMissions()}
                 onEndReachedThreshold={0.15}
                 initialNumToRender={10}
                 ListFooterComponent={() => _renderFlatListFooter()}
+                onRefresh={() => _refresh()}
+                refreshing={isRefreshing}
             />
+            {console.log("RENDER")}
             {/* <Button title="logout" onPress={() => keycloak?.logout()}></Button> */}
         </View>
     )
