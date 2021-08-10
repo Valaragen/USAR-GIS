@@ -1,8 +1,8 @@
 import * as React from 'react';
 import { useKeycloak } from '@react-keycloak/native';
 
-import AppNavigation from './AppNavigation'
-import Login from './Login';
+import AppNavigation from 'components/AppNavigation'
+import Login from 'components/Login';
 
 const Navigation = () => {
     const { keycloak } = useKeycloak();

@@ -9,7 +9,7 @@ const Login = () => {
     <View style={styles.container}>
       <Image
         style={styles.image}
-        source={require('./img/logo-usar-gis.png')}
+        source={require('../img/logo-usar-gis.png')}
       />
       <View>
         <Pressable style={({ pressed }) => [
