@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { View, Text, Pressable, FlatList, Button, ActivityIndicator } from 'react-native';
 import { useKeycloak } from '@react-keycloak/native';
 import { KeycloakTokenParsed } from '@react-keycloak/keycloak-ts';
@@ -20,9 +20,9 @@ function AppNavigation() {
     const missionFetchPerLoadNb = 10;
     //state
     const [missions, setMissions] = useState<Mission[]>([]);
-    const [isLoading, setIsLoading] = useState(false);
-    const [page, setPage] = useState(0);
+    const page = useRef(0);
     const [hasMorePages, setHasMorePages] = useState(true);
+    const [isLoading, setIsLoading] = useState(false);
     const [isRefreshing, setIsRefreshing] = useState(false);
     const [shouldLoad, setShouldLoad] = useState(true);
 
@@ -41,37 +41,34 @@ function AppNavigation() {
 
     //Load missions from API
     function _loadMissions(isSubscribed:boolean) {
-        if (!isLoading) {
-            setIsLoading(true);
-            console.log("searching for page " + page)
-            searchForMissions(missionFetchPerLoadNb, page)
-            .then(data => {
-                //Do not change state if component is unmounted
-                if(isSubscribed) {
-                    if (page === 0) {
-                        setMissions(data);
-                    } else {
-                        setMissions(prevMissions => [...prevMissions, ...data]);
-                    }
-                    setPage(page => page + 1);
+        setIsLoading(true);
+        console.log("searching for page " + page.current);
+        searchForMissions(missionFetchPerLoadNb, page.current)
+        .then(data => {
+            //Do not change state if component is unmounted
+            if(isSubscribed) {
+                if (data.length < missionFetchPerLoadNb) setHasMorePages(false);
+                if (page.current === 0) {
+                    setMissions(data);
+                } else {
+                    setMissions(prevMissions => [...prevMissions, ...data]);
                 }
-            })
-            .catch((error) => {
-                if(isSubscribed) {
-                    setHasMorePages(false);
-                }
-                console.log(error);
-            })
-            .finally(() => {
-                if(isSubscribed) {
-                    setIsLoading(false);
-                    setIsRefreshing(false);
-                    setShouldLoad(false);
-                }
-            }); 
-        } else {
-            console.log('missions are currently fetched, can\'t load more')
-        }
+                page.current = page.current + 1;
+            }
+        })
+        .catch((error) => {
+            if(isSubscribed) {
+                setHasMorePages(false);
+            }
+            console.log(error);
+        })
+        .finally(() => {
+            if(isSubscribed) {
+                setIsLoading(false);
+                setIsRefreshing(false);
+                setShouldLoad(false);
+            }
+        }); 
     }
 
     function _loadMoreMissions() {
@@ -85,7 +82,7 @@ function AppNavigation() {
         console.log("Refreshing...");
         setIsRefreshing(true);
         setHasMorePages(true);
-        setPage(0);
+        page.current = 0;
         setMissions([]);
         setShouldLoad(true);
     }
@@ -120,7 +117,6 @@ function AppNavigation() {
                 onRefresh={() => _refresh()}
                 refreshing={isRefreshing}
             />
-            {console.log("RENDER")}
             {/* <Button title="logout" onPress={() => keycloak?.logout()}></Button> */}
         </View>
     )

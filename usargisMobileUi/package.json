@@ -11,12 +11,17 @@
   },
   "dependencies": {
     "@react-keycloak/native": "^0.5.5",
+    "@react-native-community/masked-view": "^0.1.11",
     "@react-navigation/native": "^5.9.6",
     "@react-navigation/stack": "^5.14.7",
     "babel-plugin-module-resolver": "^4.1.0",
     "react": "16.13.1",
     "react-native": "^0.64.2",
+    "react-native-gesture-handler": "^1.10.3",
     "react-native-inappbrowser-reborn": "^3.6.3",
+    "react-native-reanimated": "^2.2.0",
+    "react-native-safe-area-context": "^3.3.0",
+    "react-native-screens": "^3.5.0",
     "react-redux": "^7.2.4",
     "redux": "^4.1.1"
   },
