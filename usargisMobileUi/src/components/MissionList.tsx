@@ -1,21 +1,11 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { View, Text, Pressable, FlatList, Button, ActivityIndicator, StyleSheet } from 'react-native';
-import { useKeycloak } from '@react-keycloak/native';
-import { KeycloakTokenParsed } from '@react-keycloak/keycloak-ts';
+import { View, Text, FlatList, ActivityIndicator, StyleSheet } from 'react-native';
 import { searchForMissions } from 'api/usargisApi';
-import { MissionItem, Mission } from 'components/MissionItem';
+import { Mission } from 'utils/types/apiTypes';
+import { MissionItem } from 'components/MissionItem';
+import { MissionListScreenProps } from 'utils/types/NavigatorTypes';
 
-type ParsedToken = KeycloakTokenParsed & {
-    email?: string;
-    preferred_username?: string;
-    given_name?: string;
-    family_name?: string;
-}
-
-export default function AppNavigation() {
-    //Keycloak
-    const { keycloak } = useKeycloak();
-    const parsedToken: ParsedToken | undefined = keycloak?.tokenParsed;
+export default function MissionList({ navigation }: MissionListScreenProps) {
     //const
     const missionFetchPerLoadNb = 10;
     //state
@@ -40,35 +30,35 @@ export default function AppNavigation() {
     }, [shouldLoad])
 
     //Load missions from API
-    function _loadMissions(isSubscribed:boolean) {
+    function _loadMissions(isSubscribed: boolean) {
         setIsLoading(true);
         console.log("searching for page " + page.current);
         searchForMissions(missionFetchPerLoadNb, page.current)
-        .then(data => {
-            //Do not change state if component is unmounted
-            if(isSubscribed) {
-                if (data.length < missionFetchPerLoadNb) setHasMorePages(false);
-                if (page.current === 0) {
-                    setMissions(data);
-                } else {
-                    setMissions(prevMissions => [...prevMissions, ...data]);
+            .then(data => {
+                //Do not change state if component is unmounted
+                if (isSubscribed) {
+                    if (data.length < missionFetchPerLoadNb) setHasMorePages(false);
+                    if (page.current === 0) {
+                        setMissions(data);
+                    } else {
+                        setMissions(prevMissions => [...prevMissions, ...data]);
+                    }
+                    page.current = page.current + 1;
                 }
-                page.current = page.current + 1;
-            }
-        })
-        .catch((error) => {
-            if(isSubscribed) {
-                setHasMorePages(false);
-            }
-            console.log(error);
-        })
-        .finally(() => {
-            if(isSubscribed) {
-                setIsLoading(false);
-                setIsRefreshing(false);
-                setShouldLoad(false);
-            }
-        }); 
+            })
+            .catch((error) => {
+                if (isSubscribed) {
+                    setHasMorePages(false);
+                }
+                console.log(error);
+            })
+            .finally(() => {
+                if (isSubscribed) {
+                    setIsLoading(false);
+                    setIsRefreshing(false);
+                    setShouldLoad(false);
+                }
+            });
     }
 
     function _loadMoreMissions() {
@@ -88,28 +78,28 @@ export default function AppNavigation() {
     }
 
     //Display an ActivityIndicator during application loading
-    function _displayLoading() {
-            return (
-                <>
-                { hasMorePages ?
-                    <ActivityIndicator size='large' color='#e22013' animating={isLoading}/>
+    function _renderFlatListFooter() {
+        return (
+            <>
+                {hasMorePages ?
+                    <ActivityIndicator size='large' color='#e22013' animating={isLoading} />
                     :
                     <Text style={style.noMoreResultsText}>Aucun autre résultat</Text>
                 }
-                </>
-            )
+            </>
+        )
     }
 
-    function _renderFlatListFooter() {
-        return _displayLoading();
+    function _displayDetailForFilm(missionId:number) {
+        navigation.navigate('MissionDetails', {missionId: missionId});
     }
 
     return (
-        <View style={{flex:1}}>
+        <View style={{ flex: 1 }}>
             <FlatList
                 data={missions}
                 keyExtractor={(item) => item.id.toString()}
-                renderItem={({ item }) => <MissionItem mission={item}/>}
+                renderItem={({ item }) => <MissionItem mission={item} displayDetailForFilm={_displayDetailForFilm}/>}
                 onEndReached={() => _loadMoreMissions()}
                 onEndReachedThreshold={0.15}
                 initialNumToRender={10}

@@ -1,36 +1,23 @@
 import * as React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
-import styles from 'styles/globalStyles';
+import { StyleSheet, Text, View, Pressable } from 'react-native';
+import { Mission } from 'utils/types/apiTypes';
 
-export interface Mission {
-    id: number;
-    name: string;
-    status: string;
-    description?: string;
-    startDate?: Date;
-    endDate?: Date;
-    plannedStartDate?: Date;
-    expectedDurationInDays?: number;
-    address?: string;
-    latitude: number;
-    longitude: number;
-    creationDate?: Date;
-    lastEditionDate?: Date;
-    authorUsername: string;
-}
-
-export const MissionItem = ({ mission }: { mission: Mission }) => {
+export const MissionItem = ({ mission, displayDetailForFilm}: { mission: Mission, displayDetailForFilm: Function}) => {
     return (
-        <View style={style.mainContainer}>
+        <Pressable style={({ pressed }) => [
+            style.mainContainer,
+            pressed ? style.pressed : []
+        ]}
+            onPress={() => displayDetailForFilm(mission.id)}>
             <View style={style.leftWrapper}>
                 <Text style={style.title}>{mission.name}</Text>
                 <Text style={style.description} numberOfLines={2}>{mission.description}</Text>
             </View>
             <View style={style.rightWrapper}>
                 {/* <Text>{mission.status}</Text> */}
-                <View style={style.statusColor}></View>
+                {/* <View style={style.statusColor}></View> */}
             </View>
-        </View>
+        </Pressable>
     )
 }
 
@@ -59,20 +46,31 @@ const style = StyleSheet.create({
         elevation: 3,
 
         overflow: 'hidden',
-        flexDirection: 'row'
+        flexDirection: 'row',
     },
+    pressed: {
+        borderColor: '#ed5142',
+        // backgroundColor: '#ededed',
+
+        shadowOpacity: 0.18,
+        shadowRadius: 1.00,
+
+        elevation: 1,
+
+    },
+
     title: {
-        fontWeight:'bold'
+        fontWeight: 'bold'
     },
     description: {
 
     },
     leftWrapper: {
         flex: 9,
-        paddingTop:5,
-        paddingBottom:5,
-        paddingLeft:10,
-        paddingRight:10,
+        paddingTop: 5,
+        paddingBottom: 5,
+        paddingLeft: 10,
+        paddingRight: 10,
     },
     rightWrapper: {
         flex: 1
