@@ -12,10 +12,10 @@
   "dependencies": {
     "@react-keycloak/native": "^0.5.5",
     "@react-native-community/masked-view": "^0.1.11",
-    "@react-navigation/native": "^5.9.6",
-    "@react-navigation/stack": "^5.14.7",
+    "@react-navigation/native": "^6.0.2",
+    "@react-navigation/native-stack": "^6.0.4",
     "babel-plugin-module-resolver": "^4.1.0",
-    "react": "16.13.1",
+    "react": "17.0.1",
     "react-native": "^0.64.2",
     "react-native-gesture-handler": "^1.10.3",
     "react-native-inappbrowser-reborn": "^3.6.3",
@@ -42,7 +42,7 @@
     "eslint-plugin-react-native": "^3.11.0",
     "jest": "^25.1.0",
     "metro-react-native-babel-preset": "^0.59.0",
-    "react-test-renderer": "16.13.1",
+    "react-test-renderer": "17.0.1",
     "typescript": "^3.9.10"
   },
   "jest": {

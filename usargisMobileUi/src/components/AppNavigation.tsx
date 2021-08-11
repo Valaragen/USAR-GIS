@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { View, Text, Pressable, FlatList, Button, ActivityIndicator } from 'react-native';
+import { View, Text, Pressable, FlatList, Button, ActivityIndicator, StyleSheet } from 'react-native';
 import { useKeycloak } from '@react-keycloak/native';
 import { KeycloakTokenParsed } from '@react-keycloak/keycloak-ts';
 import { searchForMissions } from 'api/usargisApi';
@@ -12,7 +12,7 @@ type ParsedToken = KeycloakTokenParsed & {
     family_name?: string;
 }
 
-function AppNavigation() {
+export default function AppNavigation() {
     //Keycloak
     const { keycloak } = useKeycloak();
     const parsedToken: ParsedToken | undefined = keycloak?.tokenParsed;
@@ -94,7 +94,7 @@ function AppNavigation() {
                 { hasMorePages ?
                     <ActivityIndicator size='large' color='#e22013' animating={isLoading}/>
                     :
-                    <Text>Aucun autre résultat</Text>
+                    <Text style={style.noMoreResultsText}>Aucun autre résultat</Text>
                 }
                 </>
             )
@@ -122,4 +122,11 @@ function AppNavigation() {
     )
 }
 
-export default AppNavigation;
+const style = StyleSheet.create({
+    noMoreResultsText: {
+        textAlign: 'center',
+        fontWeight: 'bold',
+        fontSize: 16,
+        marginBottom: 10
+    },
+})
