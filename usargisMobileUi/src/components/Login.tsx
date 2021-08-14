@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, Pressable, Image, StyleSheet, ImageBackground } from 'react-native';
+import { View, Text, Pressable, Image, StyleSheet } from 'react-native';
 import { useKeycloak } from '@react-keycloak/native';
 
 const Login = () => {

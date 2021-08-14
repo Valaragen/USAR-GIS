@@ -21,7 +21,6 @@ export default function MissionDetails({ route, navigation }: MissionDetailsScre
     }, [])
 
     function _loadMissions(isSubscribed: boolean) {
-        setIsLoading(true);
         console.log('Looking for mission with id', missionId)
         getMissionById(missionId)
             .then(data => {

@@ -16,11 +16,11 @@ const Navigation = () => {
     return (
             <Stack.Navigator>
                 {!keycloak?.authenticated ? (
-                    <Stack.Screen name="Login" component={Login} />
+                    <Stack.Screen name="Login" component={Login} options={{headerShown: false}} />
                 ) : (
                     <>
-                        <Stack.Screen name="MissionList" component={MissionList} />
-                        <Stack.Screen name="MissionDetails" component={MissionDetails} />
+                        <Stack.Screen name="MissionList" component={MissionList} options={{title: 'Missions'}} />
+                        <Stack.Screen name="MissionDetails" component={MissionDetails} options={{title: 'Détails'}} />
                     </>
                 )}
             </Stack.Navigator>
