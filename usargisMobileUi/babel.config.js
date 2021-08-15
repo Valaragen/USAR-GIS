@@ -15,6 +15,12 @@ module.exports = {
           utils: "./src/utils"
         }
       }
-    ]
-  ]
+    ],
+    "optional-require"
+  ],
+  env: {
+    production: {
+      plugins: ['react-native-paper/babel'],
+    },
+  },
 };

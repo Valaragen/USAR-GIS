@@ -3,7 +3,7 @@ import { View, Text, FlatList, ActivityIndicator, StyleSheet } from 'react-nativ
 import { searchForMissions } from 'api/usargisApi';
 import { Mission } from 'utils/types/apiTypes';
 import { MissionItem } from 'components/MissionItem';
-import { MissionListScreenProps } from 'utils/types/NavigatorTypes';
+import { MissionListScreenProps } from 'utils/types/navigatorTypes';
 
 export default function MissionList({ navigation }: MissionListScreenProps) {
     //const

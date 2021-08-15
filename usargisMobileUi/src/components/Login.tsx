@@ -2,35 +2,35 @@ import React from 'react';
 import { View, Text, Pressable, Image, StyleSheet } from 'react-native';
 import { useKeycloak } from '@react-keycloak/native';
 
-const Login = () => {
+function Login() {
   const { keycloak } = useKeycloak();
 
   return (
-    <View style={styles.container}>
+    <View style={style.container}>
       <Image
-        style={styles.image}
+        style={style.image}
         source={require('../img/logo-usar-gis.png')}
       />
       <View>
         <Pressable style={({ pressed }) => [
-          styles.button,
-          pressed && styles.buttonPressed
+          style.button,
+          pressed && style.buttonPressed
         ]} onPress={() => keycloak?.login()}>
-          <Text style={styles.buttonText}>Connexion</Text>
+          <Text style={style.buttonText}>Connexion</Text>
         </Pressable>
         <Pressable style={({ pressed }) => [
-          styles.button,
-          pressed && styles.buttonPressed,
-          styles.marginTop
+          style.button,
+          pressed && style.buttonPressed,
+          style.marginTop
         ]} onPress={() => keycloak?.register()}>
-          <Text style={styles.buttonText}>Inscription</Text>
+          <Text style={style.buttonText}>Inscription</Text>
         </Pressable>
       </View>
     </View>
   );
 };
 
-const styles = StyleSheet.create({
+const style = StyleSheet.create({
   container: {
     flex: 1,
     flexDirection: 'column',
