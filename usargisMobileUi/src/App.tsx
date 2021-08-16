@@ -6,6 +6,8 @@ import Store from './store/configureStore';
 import { Provider as PaperProvider } from 'react-native-paper'
 import { NavigationContainer } from '@react-navigation/native';
 import Navigation from './components/Navigation';
+import PaperCustomTheme from 'styles/PaperCustomTheme';
+import NavigationDefaultTheme from 'styles/NavigationCustomTheme';
 
 export default function App() {
 
@@ -17,8 +19,8 @@ export default function App() {
         console.log('onKeycloakEvent', event, error);
       }}>
       <StoreProvider store={Store}>
-        <PaperProvider>
-          <NavigationContainer>
+        <PaperProvider theme={PaperCustomTheme}>
+          <NavigationContainer theme={NavigationDefaultTheme}>
             <Navigation></Navigation>
           </NavigationContainer>
         </PaperProvider>

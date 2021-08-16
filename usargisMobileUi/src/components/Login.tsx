@@ -1,6 +1,7 @@
 import React from 'react';
 import { View, Text, Pressable, Image, StyleSheet } from 'react-native';
 import { useKeycloak } from '@react-keycloak/native';
+import { Button } from 'react-native-paper';
 
 function Login() {
   const { keycloak } = useKeycloak();
@@ -12,19 +13,12 @@ function Login() {
         source={require('../img/logo-usar-gis.png')}
       />
       <View>
-        <Pressable style={({ pressed }) => [
-          style.button,
-          pressed && style.buttonPressed
-        ]} onPress={() => keycloak?.login()}>
+        <Button mode='contained' style={{marginBottom: 20}} contentStyle={{margin: 5}} onPress={() => keycloak?.login()}>
           <Text style={style.buttonText}>Connexion</Text>
-        </Pressable>
-        <Pressable style={({ pressed }) => [
-          style.button,
-          pressed && style.buttonPressed,
-          style.marginTop
-        ]} onPress={() => keycloak?.register()}>
+        </Button>
+        <Button mode='contained' contentStyle={{margin: 5}} onPress={() => keycloak?.register()}>
           <Text style={style.buttonText}>Inscription</Text>
-        </Pressable>
+        </Button>
       </View>
     </View>
   );

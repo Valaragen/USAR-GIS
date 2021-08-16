@@ -1,11 +1,18 @@
 import React from 'react';
-import { Text, View } from 'react-native';
+import { View } from 'react-native';
+import { Card, Title, Paragraph, Button } from 'react-native-paper';
 
 
 export default function Profile() {
-    return ( 
+    return (
         <View style={{ flex: 1 }}>
-            <Text>Profile</Text>
+            <Card>
+                <Card.Content>
+                    <Title>Hello</Title>
+                    <Paragraph>Pepegino</Paragraph>
+                    <Button mode='contained'>Presserino pls</Button>
+                </Card.Content>
+            </Card>
         </View>
     );
 }
