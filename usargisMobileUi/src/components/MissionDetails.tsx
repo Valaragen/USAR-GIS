@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, ScrollView, Text, StyleSheet, ActivityIndicator } from 'react-native';
+import { ScrollView, Text, StyleSheet, ActivityIndicator } from 'react-native';
 import moment from 'moment';
 
 import { getMissionById } from 'api/usargisApi';

@@ -14,7 +14,6 @@ import { Snackbar } from 'react-native-paper';
 const Stack = createNativeStackNavigator<RootStackParamList>();
 const Tab = createMaterialBottomTabNavigator<RootStackParamList>();
 
-
 function Navigation() {
     const { keycloak } = useKeycloak();
 
@@ -34,12 +33,7 @@ function Navigation() {
 
 function HomeTabs() {
     return (
-        <Tab.Navigator
-            initialRouteName="MissionList"
-        // activeColor="#f0edf6"
-        // inactiveColor="#3e2465"
-        // barStyle={{ backgroundColor: '#694fad' }}
-        >
+        <Tab.Navigator initialRouteName="MissionList">
             <Tab.Screen
                 name="MissionList"
                 component={MissionList}

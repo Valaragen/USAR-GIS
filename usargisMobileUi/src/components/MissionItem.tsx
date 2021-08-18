@@ -1,6 +1,8 @@
 import * as React from 'react';
+import color from 'color';
 import { StyleSheet, Text, View, Pressable } from 'react-native';
 import { Mission } from 'utils/types/apiTypes';
+import { lighterPrimary } from 'styles/themeConst';
 
 export const MissionItem = ({ mission, displayDetailForFilm}: { mission: Mission, displayDetailForFilm: Function}) => {
     return (
@@ -13,10 +15,6 @@ export const MissionItem = ({ mission, displayDetailForFilm}: { mission: Mission
                 <Text style={style.title}>{mission.name}</Text>
                 <Text style={style.description} numberOfLines={2}>{mission.description}</Text>
             </View>
-            <View style={style.rightWrapper}>
-                {/* <Text>{mission.status}</Text> */}
-                {/* <View style={style.statusColor}></View> */}
-            </View>
         </Pressable>
     )
 }
@@ -26,7 +24,7 @@ const style = StyleSheet.create({
         height: 100,
         margin: 10,
 
-        borderColor: '#FA5546',
+        borderColor: lighterPrimary,
         borderStyle: 'dashed',
         borderTopWidth: 10,
         borderRightWidth: 0,
@@ -49,8 +47,7 @@ const style = StyleSheet.create({
         flexDirection: 'row',
     },
     pressed: {
-        borderColor: '#ed5142',
-        // backgroundColor: '#ededed',
+        borderColor: color(lighterPrimary).lighten(0.1).hex(),
 
         shadowOpacity: 0.18,
         shadowRadius: 1.00,
@@ -72,13 +69,4 @@ const style = StyleSheet.create({
         paddingLeft: 10,
         paddingRight: 10,
     },
-    rightWrapper: {
-        flex: 1
-    },
-    statusColor: {
-        flex: 1,
-        marginVertical: 5,
-        borderRadius: 100,
-    }
-
 });

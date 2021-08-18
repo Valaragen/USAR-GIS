@@ -1,11 +1,11 @@
 import { Theme } from "@react-navigation/native";
-import { primary } from "./themeConst";
+import { background, primary } from "./themeConst";
 
 const NavigationCustomTheme: Theme = {
     dark: false,
     colors: {
       primary: primary,
-      background: 'rgb(242, 242, 242)',
+      background: background,
       card: 'rgb(255, 255, 255)',
       text: 'rgb(28, 28, 30)',
       border: 'rgb(199, 199, 204)',

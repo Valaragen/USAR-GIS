@@ -1,24 +1,88 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useReducer, useEffect, useRef } from 'react';
 import { View, Text, FlatList, ActivityIndicator, StyleSheet } from 'react-native';
 import { searchForMissions } from 'api/usargisApi';
 import { Mission } from 'utils/types/apiTypes';
 import { MissionItem } from 'components/MissionItem';
 import { MissionListScreenProps } from 'utils/types/navigatorTypes';
+import HttpError from 'api/HttpError';
+
+
+//const
+const missionFetchPerLoadNb = 10;
+
+type State = {
+    missions: Mission[],
+    hasMorePages: boolean,
+    isLoading: boolean,
+    shouldLoad: boolean,
+}
+
+type Action = { type: 'REFRESH' } 
+| { type: 'NO_MORE_PAGES'}
+| { type: 'MISSIONS_FOUND', payload: Mission[] }
+| { type: 'LOADING_END' }
+| { type: 'SHOULD_LOAD'}
+
+const initialState: State = {
+    missions: [],
+    hasMorePages: true,
+    isLoading: false,
+    shouldLoad: true,
+}
+
+function reducer(state: State, action: Action): State {
+    switch (action.type) {
+        case 'REFRESH':
+            return {
+                ...state,
+                missions: [],
+                hasMorePages: true,
+                shouldLoad: true,
+                isLoading: true,
+            };
+        case 'NO_MORE_PAGES':
+            return {
+                ...state,
+                hasMorePages: false,
+                isLoading: false,
+                shouldLoad: false,
+            };
+        case 'MISSIONS_FOUND':
+            return {
+                ...state,
+                missions: [...state.missions, ...action.payload],
+                hasMorePages: (action.payload.length < missionFetchPerLoadNb) ? false : true,
+                isLoading: false,
+                shouldLoad: false,
+            };
+        case 'SHOULD_LOAD':
+            return {
+                ...state,
+                shouldLoad: true,
+                isLoading: true,
+            };
+        case 'LOADING_END':
+            return {
+                ...state,
+                isLoading: false,
+                shouldLoad: false
+            }
+        default:
+            throw new Error();
+    }
+}
 
 export default function MissionList({ navigation }: MissionListScreenProps) {
-    //const
-    const missionFetchPerLoadNb = 10;
     //state
-    const [missions, setMissions] = useState<Mission[]>([]);
     const page = useRef(0);
-    const [hasMorePages, setHasMorePages] = useState(true);
-    const [isLoading, setIsLoading] = useState(false);
-    const [isRefreshing, setIsRefreshing] = useState(false);
-    const [shouldLoad, setShouldLoad] = useState(true);
+    const isRefreshing = useRef(false);
+
+    const [state, dispatch] = useReducer(reducer, initialState);
+
 
     //Load missions on component creation
     useEffect(() => {
-        if (shouldLoad) {
+        if (state.shouldLoad) {
             let isSubscribed = true;
             console.log("useEffect is called")
             _loadMissions(isSubscribed);
@@ -27,62 +91,55 @@ export default function MissionList({ navigation }: MissionListScreenProps) {
                 isSubscribed = false;
             }
         }
-    }, [shouldLoad])
+    }, [state.shouldLoad])
 
     //Load missions from API
     function _loadMissions(isSubscribed: boolean) {
-        setIsLoading(true);
         console.log("searching for page " + page.current);
         searchForMissions(missionFetchPerLoadNb, page.current)
             .then(data => {
                 //Do not change state if component is unmounted
                 if (isSubscribed) {
-                    if (data.length < missionFetchPerLoadNb) setHasMorePages(false);
-                    if (page.current === 0) {
-                        setMissions(data);
-                    } else {
-                        setMissions(prevMissions => [...prevMissions, ...data]);
-                    }
+                    dispatch({type: 'MISSIONS_FOUND', payload: data})
                     page.current = page.current + 1;
                 }
             })
             .catch((error) => {
                 if (isSubscribed) {
-                    setHasMorePages(false);
+                    if (error instanceof HttpError) {
+                        if (error.statusCode === 404) {
+                            dispatch({ type: 'NO_MORE_PAGES' });
+                        } else {
+                            dispatch({ type: 'LOADING_END'})
+                        }
+                    } else {
+                        throw new Error("Unhandled error");
+                    }
                 }
-                console.log(error);
             })
-            .finally(() => {
-                if (isSubscribed) {
-                    setIsLoading(false);
-                    setIsRefreshing(false);
-                    setShouldLoad(false);
-                }
-            });
+            isRefreshing.current = false;
     }
 
     function _loadMoreMissions() {
-        if (hasMorePages) {
+        if (state.hasMorePages) {
             console.log("Loading more missions");
-            setShouldLoad(true);
+            dispatch({ type: 'SHOULD_LOAD' });
         }
     }
 
     function _refresh() {
-        console.log("Refreshing...");
-        setIsRefreshing(true);
-        setHasMorePages(true);
+        isRefreshing.current = true;
         page.current = 0;
-        setMissions([]);
-        setShouldLoad(true);
+        console.log("Refreshing...");
+        dispatch({ type: "REFRESH" });
     }
 
     //Display an ActivityIndicator during application loading
     function _renderFlatListFooter() {
         return (
             <>
-                {hasMorePages ?
-                    <ActivityIndicator size='large' color='#e22013' animating={isLoading} />
+                {state.hasMorePages ?
+                    <ActivityIndicator size='large' color='#e22013' animating={state.isLoading} />
                     :
                     <Text style={style.noMoreResultsText}>Aucun autre résultat</Text>
                 }
@@ -90,22 +147,22 @@ export default function MissionList({ navigation }: MissionListScreenProps) {
         )
     }
 
-    function _displayDetailForFilm(missionId:number) {
-        navigation.navigate('MissionDetails', {missionId: missionId});
+    function _displayDetailForFilm(missionId: number) {
+        navigation.navigate('MissionDetails', { missionId: missionId });
     }
 
     return (
         <View style={{ flex: 1 }}>
             <FlatList
-                data={missions}
+                data={state.missions}
                 keyExtractor={(item) => item.id.toString()}
-                renderItem={({ item }) => <MissionItem mission={item} displayDetailForFilm={_displayDetailForFilm}/>}
+                renderItem={({ item }) => <MissionItem mission={item} displayDetailForFilm={_displayDetailForFilm} />}
                 onEndReached={() => _loadMoreMissions()}
                 onEndReachedThreshold={0.15}
                 initialNumToRender={10}
                 ListFooterComponent={() => _renderFlatListFooter()}
                 onRefresh={() => _refresh()}
-                refreshing={isRefreshing}
+                refreshing={isRefreshing.current}
             />
             {/* <Button title="logout" onPress={() => keycloak?.logout()}></Button> */}
         </View>

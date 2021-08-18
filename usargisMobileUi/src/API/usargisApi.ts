@@ -1,6 +1,7 @@
 import { GATEWAY_URL, API_PATH } from 'utils/const';
 import keycloak from 'utils/keycloak';
 import { Mission } from 'utils/types/apiTypes';
+import HttpError from 'api/HttpError';
 
 const path = GATEWAY_URL + API_PATH;
 
@@ -15,7 +16,7 @@ async function _handleGetRequest(url:string) {
         if (response.ok) {
             return await response.json();
         } else {
-            throw new Error("Bad Response from server : " + response.status);
+            throw new HttpError(response.status);
         }
     } catch (error) {
         throw new Error("Bad Response from server : " + error);
